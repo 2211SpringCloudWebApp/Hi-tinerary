@@ -5,7 +5,9 @@
 		<setting name="jdbcTypeForNull" value="NULL"></setting>
 	</settings>
 	<typeAliases>
+		<typeAlias alias="User" type="com.semi.hitinerary.user.domain.User"/>
 	</typeAliases>
 	<mappers>
+		<mapper resource="mappers/user-mapper.xml"/>
 	</mappers>
 </configuration>

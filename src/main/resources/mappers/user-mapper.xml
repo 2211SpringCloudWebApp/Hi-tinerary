@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserMapper">
+	
+	<resultMap type="User" id="userResultMap">
+		<id property="userNo" column="USER_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="userPw" column="UESR_PW"/>
+		<result property="userNickname" column="USER_NICKNAME"/>
+		<result property="userEmail" column="USER_EMAIL"/>
+		<result property="userPhone" column="USER_PHONE"/>
+		<result property="userBirthDate" column="USER_BIRTH_DATE"/>
+		<result property="userGender" column="USER_GENDER"/>
+		<result property="companyRegiNo" column="COMPANY_REGI_NO"/>
+		<result property="userGrade" column="USER_GRADE"/>
+	</resultMap>
+	
+	<select id="selectUser" resultMap="userResultMap">
+		SELECT * FROM USER_TBL WHERE USER_NO = 1
+	</select>
+	
+	<select id="selectUserById" resultType="_int" parameterType="string">
+		SELECT USER_NO FROM USER_TBL WHERE USER_ID = #{leaderUserId}
+	</select>
+	
+</mapper>

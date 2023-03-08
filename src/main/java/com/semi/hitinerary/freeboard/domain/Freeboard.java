@@ -2,15 +2,15 @@ package com.semi.hitinerary.freeboard.domain;
 import java.sql.Timestamp;
 
 public class Freeboard {
-	private int boardNo; // 
-	private String boardHead;
-	private Timestamp writeDate;
-	private String boardTitle;
-	private String boardSubject;
-	private Timestamp updateDate;
-	private String boardImage;
-	private int boardCheck;
-	private int userNo;
+	private int boardNo;			// 게시글 번호
+	private String boardHead;		// 말머리
+	private Timestamp writeDate;	// 작성날짜
+	private String boardTitle;		// 제목
+	private String boardSubject;	// 내용
+	private Timestamp updateDate;	// 최종 수정날짜
+	private String boardImage;		// (NULL)이미지파일 이름
+	private int boardCheck;			// (NULL)답변 여부(DEFAULT = 0/ 0:답변전 / 1:답변후)
+	private int userNo;				// 유저번호(작성자 구분을 위해.. 이용해서 유저 정보 불러옴..)
 
 	public Freeboard() {}
 
@@ -27,6 +27,7 @@ public class Freeboard {
 		this.boardCheck = boardCheck;
 		this.userNo = userNo;
 	}
+	
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -81,6 +82,7 @@ public class Freeboard {
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
+	
 	@Override
 	public String toString() {
 		return "Freeboard [boardNo=" + boardNo + ", boardHead=" + boardHead + ", writeDate=" + writeDate

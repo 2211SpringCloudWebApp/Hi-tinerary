@@ -6,8 +6,10 @@
 	</settings>
 	<typeAliases>
 		<typeAlias alias="User" type="com.semi.hitinerary.user.domain.User"/>
+		<typeAlias alias="Freeboard" type="com.semi.hitinerary.freeboard.domain.Freeboard"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
+		<mapper resource="mappers/freeboard-mapper.xml"/>
 	</mappers>
 </configuration>

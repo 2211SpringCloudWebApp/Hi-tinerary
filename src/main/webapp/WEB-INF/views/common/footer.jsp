@@ -10,13 +10,10 @@
 	        p{
 	            font-family: Pretendard-Regular;
 	        }
-	        html, body {
-	            height: 100%;
-	            margin: 0;
-	        }
 	        footer {
 	            border-top: 1px dashed #0F8D80;
 	            height: 150px;
+	            width : 1200px
 	        }
 	        #footer-logo{
 	            float: left;

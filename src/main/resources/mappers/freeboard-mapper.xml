@@ -18,9 +18,28 @@
 		SELECT * FROM FREE_BOARD_TBL WHERE USER_NO = 1
 	</select>
 	
+	<select id="selectOne" resultMap="freeboardResultMapper">
+		SELECT * FROM FREE_BOARD_TBL WHERE BOARD_NO = #{boardNo }
+	</select>
+	
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*) FROM FREE_BOARD_TBL
+	</select>
+	
+	<select id="selectFreeboardList" resultMap="freeboardResultMapper">
+		SELECT * FROM FREE_BOARD_TBL ORDER BY BOARD_NO DESC
+	</select>
+	
 	<!-- 질문글/잡담글 등록 -->
+	<!-- 나중에 유저넘버 추가예정. -->
 	<insert id="insertFreeboard">
-		INSERT INTO FREE_BOARD_TBL VALUES(FB_SEQUENCE.NEXTVAL, #{boardHead}, SYSTIMESTAMP, #{boardTitle}, #{boardSubject}, SYSTIMESTAMP, #{boardImage}, DEFAULT, #{userNo});
+		INSERT INTO FREE_BOARD_TBL VALUES(FB_SEQUENCE.NEXTVAL, #{boardHead}, DEFAULT, #{boardTitle}, #{boardSubject}, DEFAULT, #{boardImage}, DEFAULT, 1)
 	</insert>
+	
+	<delete id="deleteOne">
+		DELETE FROM FREE_BOARD_TBL WHERE BOARD_NO = #{boardNo}
+	</delete>
+	
+
 
 </mapper>

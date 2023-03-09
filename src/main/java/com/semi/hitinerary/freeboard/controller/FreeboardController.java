@@ -1,6 +1,7 @@
 package com.semi.hitinerary.freeboard.controller;
 
 import java.io.File;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
 
 import com.semi.hitinerary.freeboard.domain.Freeboard;
+import com.semi.hitinerary.freeboard.domain.PageInfo;
 import com.semi.hitinerary.freeboard.service.FreeboardService;
 
 @Controller
@@ -26,6 +30,40 @@ public class FreeboardController {
 	@RequestMapping(value = "/freeboard/write", method=RequestMethod.GET)
 	public String writeView() {
 		return "freeboard/write";
+	}
+	
+	// 자유게시판 목록 조회
+	@RequestMapping(value = "/freeboard/list", method=RequestMethod.GET)
+	public ModelAndView freeboardView(ModelAndView mv
+			, @RequestParam(value="page"
+			, required=false
+			, defaultValue="1") Integer page) {
+		// 게시글 전체 수 조회
+		int totalCount = fService.getListCount();
+		System.out.println(totalCount);
+		// 페이지 처리를 위한 함수
+		PageInfo pi = this.getPageInfo(page, totalCount);
+		System.out.println(pi);
+		
+		List<Freeboard> fList = fService.selectFreeboardList(pi);
+		
+		mv.addObject("pi",pi).addObject("fList", fList).setViewName("/freeboard/list");
+		return mv;
+	}
+	
+	//게시글 상세 조회
+	@RequestMapping(value = "/freeboard/detail", method=RequestMethod.GET)
+	public String freeboardView(@RequestParam("boardNo") int boardNo
+			, Model model) {
+		try {
+			Freeboard freeboard = fService.selectOneById(boardNo);
+			model.addAttribute("freeboard",freeboard);
+			return "freeboard/detail";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
+			return "common/error";
+		}
 	}
 	
 	// 자유게시판 글 등록하기
@@ -47,9 +85,27 @@ public class FreeboardController {
 			}
 			int result = fService.insertFreeboard(freeboard);
 			if(result > 0) {
-				return "redirect:/freeboard/write";
+				return "redirect:/freeboard/list";
 			}else {
-				model.addAttribute("msg", "공지사항이 등록되지 않았습니다.");
+				model.addAttribute("msg", "게시글이 등록되지 않았습니다.");
+				return "common/error";
+			}
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getMessage());
+			return "common/error";
+		}
+	}
+	
+	// 게시글 삭제
+	@RequestMapping(value="/freeboard/remove", method = RequestMethod.GET)
+	public String freeboardRemove(@RequestParam("boardNo") int boardNo
+			, Model model) {
+		try {
+			int result = fService.deleteFreeboard(boardNo);
+			if(result > 0) {
+				return "redirect:/freeboard/list";
+			}else {
+				model.addAttribute("msg", "삭제가 완료되지 않았습니다.");
 				return "common/error";
 			}
 		} catch (Exception e) {
@@ -63,12 +119,14 @@ public class FreeboardController {
 		// 내가 원하는 경로 : 프로젝트 경로
 		try {
 			String root = request.getSession().getServletContext().getRealPath("resources");
-			String savePath = root + "\\nuploadFiles";
+			String savePath = root + "\\wuploadFiles\\" + "freeBoard";
+			
 			// 폴더가 없을 경우 자동으로 생성하는 코드
 			File folder = new File(savePath);
 			if(!folder.exists()) {
 				folder.mkdir();
 			}
+			
 			// 파일저장
 			String filePath = savePath + "\\" + uploadFile.getOriginalFilename();
 			File file = new File(filePath);
@@ -77,6 +135,37 @@ public class FreeboardController {
 		} catch (Exception e) { // 예외 발생시 null값 반환
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	// navigator start, end값 설정 method()
+	private PageInfo getPageInfo(int currentPage, int totalCount) {
+		PageInfo pi = null;
+		int boardLimit = 10;
+		int naviLimit = 5;
+		int maxPage;
+		int startNavi;
+		int endNavi;
+			
+		maxPage = (int)((double)totalCount/boardLimit+0.9);
+		// Math.ceil((double)totalCount/boardLimit);
+		startNavi = (((int)((double)currentPage/naviLimit+0.9))-1) * naviLimit + 1;
+		endNavi = startNavi + naviLimit - 1;
+		if(endNavi > maxPage) {
+			endNavi = maxPage;
+		}
+		pi = new PageInfo(currentPage, boardLimit, naviLimit, startNavi, endNavi, totalCount, maxPage);
+		return pi;
+	}
+		
+	//파일삭제
+	private void deleteFile(String filename, HttpServletRequest request) throws Exception{
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String delPath = root + "\\nuploadFiles";
+		String delFilepath = delPath + "\\" + filename;
+		File delFile = new File(delFilepath);
+		if(delFile.exists()) {
+			delFile.delete();
 		}
 	}
 }

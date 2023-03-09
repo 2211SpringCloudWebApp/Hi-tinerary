@@ -6,8 +6,12 @@
 	</settings>
 	<typeAliases>
 		<typeAlias alias="User" type="com.semi.hitinerary.user.domain.User"/>
+		<typeAlias alias="Group" type="com.semi.hitinerary.group.domain.Group"/>
+		<typeAlias alias="Timecapsule" type="com.semi.hitinerary.timecapsule.domain.Timecapsule"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
+		<mapper resource="mappers/group-mapper.xml"/>
+		<mapper resource="mappers/timecapsule-mapper.xml"/>
 	</mappers>
 </configuration>

@@ -14,6 +14,15 @@ public class Group {
 	
 	public Group() {}
 	
+	public Group(Timestamp startDate, Timestamp endDate, int maxPeople, String groupName, int leaderUserNo) {
+		super();
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.maxPeople = maxPeople;
+		this.groupName = groupName;
+		this.leaderUserNo = leaderUserNo;
+	}
+
 	public int getGroupNo() {
 		return groupNo;
 	}
@@ -61,6 +70,13 @@ public class Group {
 	}
 	public void setLeaderUserNo(int leaderUserNo) {
 		this.leaderUserNo = leaderUserNo;
+	}
+
+	@Override
+	public String toString() {
+		return "Group [groupNo=" + groupNo + ", startDate=" + startDate + ", endDate=" + endDate + ", maxPeople="
+				+ maxPeople + ", currentPeople=" + currentPeople + ", writeDate=" + writeDate + ", groupName="
+				+ groupName + ", leaderUserNo=" + leaderUserNo + "]";
 	}
 	
 	

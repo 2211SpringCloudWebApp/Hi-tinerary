@@ -1,11 +1,18 @@
 package com.semi.hitinerary.group.service;
 
-import com.semi.hitinerary.user.domain.User;
+import java.util.List;
+
+import com.semi.hitinerary.group.domain.Group;
+import com.semi.hitinerary.timecapsule.domain.Timecapsule;
 
 public interface GroupService {
 
-	public int selectUserById(String leaderUserId);
+	public int createGroup(Group group);
 
-	public User selectUser();
+
+	public Group SelectOneByUserNoRecent(int userNo);
+
+
+	public List<Group> selectByUserNo(int userNo);
 
 }

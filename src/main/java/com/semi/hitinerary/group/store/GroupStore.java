@@ -1,13 +1,19 @@
 package com.semi.hitinerary.group.store;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
-import com.semi.hitinerary.user.domain.User;
+import com.semi.hitinerary.group.domain.Group;
+import com.semi.hitinerary.timecapsule.domain.Timecapsule;
 
 public interface GroupStore {
 
-	public int selectUserById(String leaderUserId, SqlSession session);
+	public int createGroup(SqlSession session, Group group);
 
-	public User selectUser(SqlSession session);
+	public List<Group> selectByUserNo(SqlSession session, int userNo);
+
+	public Group SelectOneByUserNoRecent(SqlSession session, int userNo);
+	
 
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="capsuleMapper">
+	
+	<resultMap type="Timecapsule" id="capsuleResultMap">
+		<id property="capsuleIden" column="CAPSULE_IDEN"/>
+		<result property="groupNo" column="GROUP_NO"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="capsuleSubject" column="CAPSULE_SUBJECT"/>
+		<result property="capsuleTitle" column="CAPSULE_TITLE"/>
+		<result property="capsuleImage" column="CAPSULE_IMAGE"/>
+		<result property="userEmail" column="USER_EMAIL"/>
+	</resultMap>
+
+	<insert id="registGroup" parameterType="Timecapsule">
+		INSERT INTO GROUP_USERS_TBL VALUES(#{capsuleIden}, #{groupNo}, #{userNo}, NULL, NULL, NULL, #{userEmail})
+	</insert>
+</mapper>

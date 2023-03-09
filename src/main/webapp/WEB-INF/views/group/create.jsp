@@ -11,8 +11,8 @@
 		<form action="/group/register.do" method="post">
 			그룹명 : <input type="text" name="groupName">
 			<div>
-			시작날짜 : <input type="text" name="startDate">
-			종료날짜 : <input type="text" name="endDate">
+			시작날짜 : <input type="date" name="startDate">
+			종료날짜 : <input type="date" name="endDate">
 			</div>
 			최대인원 : <input type="text" name="maxPeople">
 			<div>

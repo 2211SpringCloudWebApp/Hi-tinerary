@@ -15,12 +15,8 @@
 		<result property="userGrade" column="USER_GRADE"/>
 	</resultMap>
 	
-	<select id="selectUser" resultMap="userResultMap">
-		SELECT * FROM USER_TBL WHERE USER_NO = 1
-	</select>
-	
-	<select id="selectUserById" resultType="_int" parameterType="string">
-		SELECT USER_NO FROM USER_TBL WHERE USER_ID = #{leaderUserId}
+	<select id="selectUserById" resultMap="userResultMap" parameterType="_int">
+		SELECT * FROM USER_TBL WHERE USER_NO = #{userNo}
 	</select>
 	
 </mapper>

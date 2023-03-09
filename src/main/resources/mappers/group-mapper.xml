@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="groupMapper">
+	
+	<resultMap type="Group" id="groupResultMap">
+		<id property="groupNo" column="GROUP_NO"/>
+		<result property="startDate" column="START_DATE"/>
+		<result property="endDate" column="END_DATE"/>
+		<result property="maxPeople" column="MAX_PEOPLE"/>
+		<result property="currentPeople" column="CURRENT_PEOPLE"/>
+		<result property="writeDate" column="WRITE_DATE"/>
+		<result property="groupName" column="GROUP_NAME"/>
+		<result property="leaderUserNo" column="LEADER_USER_NO"/>
+	</resultMap>	
+	
+	<insert id="createGroup" parameterType="Group">
+		INSERT INTO GROUP_TBL VALUES(SEQ_GROUP.NEXTVAL, #{startDate}, #{endDate}, #{maxPeople}, 1, SYSTIMESTAMP, #{groupName}, #{leaderUserNo})
+	</insert>
+
+	<select id="selectByUserNo" resultMap="groupResultMap" parameterType="_int">
+		SELECT I.* FROM USER_TBL E JOIN GROUP_USERS_TBL F ON E.USER_NO = F.USER_NO JOIN GROUP_TBL I ON I.GROUP_NO = F.GROUP_NO WHERE E.USER_NO = #{userNo}
+	</select>
+	
+	<select id="SelectOneByUserNoRecent" resultMap="groupResultMap" parameterType="_int">
+		SELECT * FROM (SELECT * FROM GROUP_TBL WHERE LEADER_USER_NO = #{userNo} ORDER BY WRITE_DATE DESC) WHERE ROWNUM = 1
+	</select>
+	
+</mapper>

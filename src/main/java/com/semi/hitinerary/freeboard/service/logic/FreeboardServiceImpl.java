@@ -1,7 +1,9 @@
 package com.semi.hitinerary.freeboard.service.logic;
 
-import com.semi.hitinerary.freeboard.service.FreeboardService;
+import org.springframework.stereotype.Service;
 
+import com.semi.hitinerary.freeboard.service.FreeboardService;
+@Service
 public class FreeboardServiceImpl implements FreeboardService{
 
 }

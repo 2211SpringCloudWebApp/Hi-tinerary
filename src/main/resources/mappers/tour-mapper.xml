@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TourMapper">
+
+	<resultMap type="Tour" id="tourResultMap">
+		<id property="tourNo" column="TOUR_NO" />
+		<result property="tourTitle" column="TOUR_TITLE" />
+		<result property="tourContent" column="TOUR_CONTENT" />
+		<result property="startDate" column="START_DATE" />
+		<result property="endDate" column="END_DATE" />
+		<result property="Price" column="PRICE" />
+		<result property="deadline" column="DEADLINE" />
+		<result property="currentPeople" column="CURRENT_PEOPLE" />
+		<result property="maxPeople" column="MAX_PEOPLE" />
+		<result property="minPeople" column="MIN_PEOPLE" />
+		<result property="tourImage" column="TOUR_IMAGE" />
+		<result property="thumbnail" column="TOUR_THUMBNAIL" />
+		<result property="writeDate" column="WRITE_DATE" />
+		<result property="userNo" column="USER_NO" />	
+	</resultMap>
+	
+	<insert id="insertTour">
+		INSERT INTO TOUR_TBL VALUES(SEQ_TOUR_NO.NEXTVAL, #{tourTitle}, #{tourContent}, #{startDate}, #{endDate}, #{price}, #{deadline}, '0', #{maxPeople}, #{minPeople}, null, null, DEFAULT, '1')
+	</insert>
+	
+</mapper>

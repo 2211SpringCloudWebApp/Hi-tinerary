@@ -1,0 +1,43 @@
+footer {
+	border-top: 1px dashed #0F8D80;
+	height: 150px;
+	width: 1200px;
+	--position: relative;
+    display: flex;
+    padding-top: 10px;
+}
+
+#footer-logo {
+    display: flex;
+    width: 200px;
+	float: left;
+	margin-top: 10px;
+	margin-left: 40px;
+    --position: relative;
+}
+
+#footer-logo img{
+    height: 30px;
+    float: left;
+    
+}
+#footer-logo1{
+    float: left;
+    
+}
+#footer-logo1{
+    float: left;
+}
+
+
+#footer1{
+    float: left;
+    width: 650px;
+    font-size: 5px;
+    margin-top:10px;
+}
+#footer2{
+    float: right;
+    font-size: 3px;
+    margin-top:10px;
+}

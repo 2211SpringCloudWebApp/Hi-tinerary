@@ -1,22 +1,24 @@
 package com.semi.hitinerary.withboard.domain;
 
+import java.sql.Timestamp;
+
 public class With {
 	private int boardNo;
 	private int userNo;
 	private String boardTitle;
 	private String boardContent;
 	private String boardImage;
-	private String startDate;
-	private String endDate;
+	private Timestamp startDate;
+	private Timestamp endDate;
 	private int maxPeople;
 	private int currentPeople;
-	private String writeDate;
-	private String updateDate;
+	private Timestamp writeDate;
+	private Timestamp updateDate;
 	
 	public With() {}
 
-	public With(int boardNo, int userNo, String boardTitle, String boardContent, String boardImage, String startDate,
-			String endDate, int maxPeople, int currentPeople, String writeDate, String updateDate) {
+	public With(int boardNo, int userNo, String boardTitle, String boardContent, String boardImage, Timestamp startDate,
+			Timestamp endDate, int maxPeople, int currentPeople, Timestamp writeDate, Timestamp updateDate) {
 		super();
 		this.boardNo = boardNo;
 		this.userNo = userNo;
@@ -31,7 +33,6 @@ public class With {
 		this.updateDate = updateDate;
 	}
 
-	// getter,setter
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -72,19 +73,19 @@ public class With {
 		this.boardImage = boardImage;
 	}
 
-	public String getStartDate() {
+	public Timestamp getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(String startDate) {
+	public void setStartDate(Timestamp startDate) {
 		this.startDate = startDate;
 	}
 
-	public String getEndDate() {
+	public Timestamp getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(Timestamp endDate) {
 		this.endDate = endDate;
 	}
 
@@ -104,24 +105,22 @@ public class With {
 		this.currentPeople = currentPeople;
 	}
 
-	public String getWriteDate() {
+	public Timestamp getWriteDate() {
 		return writeDate;
 	}
 
-	public void setWriteDate(String writeDate) {
+	public void setWriteDate(Timestamp writeDate) {
 		this.writeDate = writeDate;
 	}
 
-	public String getUpdateDate() {
+	public Timestamp getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setUpdateDate(String updateDate) {
+	public void setUpdateDate(Timestamp updateDate) {
 		this.updateDate = updateDate;
 	}
 
-
-	// toString()
 	@Override
 	public String toString() {
 		return "With [boardNo=" + boardNo + ", userNo=" + userNo + ", boardTitle=" + boardTitle + ", boardContent="
@@ -129,4 +128,5 @@ public class With {
 				+ ", maxPeople=" + maxPeople + ", currentPeople=" + currentPeople + ", writeDate=" + writeDate
 				+ ", updateDate=" + updateDate + "]";
 	}
+
 }

@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+p {
+	font-family: Pretendard-Regular;
+}
+
+footer {
+	border-top: 1px dashed #0F8D80;
+	height: 150px;
+	width: 1200px;
+	margin: 0 auto;
+}
+
+#footer-logo {
+	float: left;
+	display: flex;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+#footer1 {
+	float: left;
+}
+
+#footer1 p:not(#first) {
+	margin: 3px 0px;
+	font-size: 10px;
+}
+
+#footer3 {
+	display: flex;
+	height: 15px;
+	width: 500px;
+	margin: 3px 0px;
+}
+
+#footer3 p {
+	padding-right: 10px;
+	height: 12px;
+}
+
+#footer3 p:not(:first-of-type) {
+	border-left: 1px solid black;
+	padding-left: 10px;
+}
+
+#footer2 {
+	float: right;
+}
+
+#footer2 p {
+	font-size: 10px;
+	margin: 3px 0px;
+}
+
+@font-face {
+	font-family: 'Pretendard-Regular';
+	src:
+		url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+		format('woff');
+	font-weight: 400;
+	font-style: normal;
+}

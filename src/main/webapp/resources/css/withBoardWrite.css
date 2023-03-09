@@ -1,0 +1,81 @@
+@charset "UTF-8";
+
+#bar {
+	width: 7px;
+	height: 35px;
+	background-color: #F39081;
+	float: left;
+	margin-top: 39px;
+	margin-left: 50px;
+	margin-right: 10px;
+}
+
+#withBoardList {
+	width: 1200px; 0
+	margin: 0 auto;
+}
+
+#withBoardList p {
+	font-size: 35px;
+	float: left;
+	margin-top: 20;
+}
+
+#withBoardList button {
+	float: right;
+	margin-top: 25px;
+	margin-right: 30px;
+	position: relative;
+	border: 0;
+	border-radius: 10px;
+	padding: 15px 25px;
+	display: inline-block;
+	text-align: center;
+	color: white;
+	background-color: #FBD188;
+}
+
+#withBoardList button:active {
+	top: 4px
+}
+
+/*  슬라이드 바 */
+.slidecontainer {
+	/* width:300px; */
+	/* margin : 40px auto 0; */
+	
+}
+
+.slider {
+	-webkit-appearance: none;
+	width: 300px;
+	height: 5px;
+	border-radius: 5px;
+	background: #d3d3d3;
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+}
+
+.slider:hover {
+	opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 15px;
+	height: 15px;
+	border-radius: 150px;
+	background: #F39081;
+	cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	background: #F39081;
+	cursor: pointer;
+}

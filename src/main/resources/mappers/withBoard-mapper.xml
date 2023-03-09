@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WithBoardMapper">
+
+<insert id= "insertWithBoard">
+INSERT INTO WITH_BOARD_TBL VALUES(SEQ_WITH_BOARD.NEXTVAL,#{boardTitle}, #{boardContent}, #{boardImage},DEFAULT, DEFAULT,#{startDate}, #{endDate}, #{userNo}, #{maxPeople}, 2)
+</insert>
+</mapper>

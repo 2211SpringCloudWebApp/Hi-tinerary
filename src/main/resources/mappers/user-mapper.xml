@@ -18,5 +18,7 @@
 	<select id="selectUserById" resultMap="userResultMap" parameterType="_int">
 		SELECT * FROM USER_TBL WHERE USER_NO = #{userNo}
 	</select>
-	
+	<select id="Login" resultMap="userResultMap">
+		SELECT USER_NO, USER_NICKNAME FROM USER_TBL WHERE USER_ID = #{userId} AND USER_PW = #{userPw}
+	</select>
 </mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="freeboardMapper">
+
+	<resultMap type="Freeboard" id="freeboardResultMapper">
+		<id property="boardNo" column="BOARD_NO"/>
+		<result property="boardHead" column="BOARD_HEAD"/>
+		<result property="writeDate" column="WRITE_DATE"/>
+		<result property="boardTitle" column="BOARD_TITLE"/>
+		<result property="boardSubject" column="BOARD_SUBJECT"/>
+		<result property="updateDate" column="UPDATE_DATE"/>
+		<result property="boardImage" column="BOARD_IMAGE"/>
+		<result property="boardCheck" column="BOARD_CHECK"/>
+		<result property="userNo" column="USER_NO"/>
+	</resultMap>
+	
+	<select id="selectUser" resultMap="freeboardResultMapper">
+		SELECT * FROM FREE_BOARD_TBL WHERE USER_NO = 1
+	</select>
+	
+	<select id="selectOne" resultMap="freeboardResultMapper">
+		SELECT * FROM FREE_BOARD_TBL WHERE BOARD_NO = #{boardNo }
+	</select>
+	
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*) FROM FREE_BOARD_TBL
+	</select>
+	
+	<select id="selectFreeboardList" resultMap="freeboardResultMapper">
+		SELECT * FROM FREE_BOARD_TBL ORDER BY BOARD_NO DESC
+	</select>
+	
+	<!-- 질문글/잡담글 등록 -->
+	<!-- 나중에 유저넘버 추가예정. -->
+	<insert id="insertFreeboard">
+		INSERT INTO FREE_BOARD_TBL VALUES(FB_SEQUENCE.NEXTVAL, #{boardHead}, DEFAULT, #{boardTitle}, #{boardSubject}, DEFAULT, #{boardImage}, DEFAULT, 1)
+	</insert>
+	
+	<delete id="deleteOne">
+		DELETE FROM FREE_BOARD_TBL WHERE BOARD_NO = #{boardNo}
+	</delete>
+	
+
+
+</mapper>

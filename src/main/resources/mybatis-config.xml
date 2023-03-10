@@ -8,10 +8,12 @@
 		<typeAlias alias="User" type="com.semi.hitinerary.user.domain.User"/>
 		<typeAlias alias="Group" type="com.semi.hitinerary.group.domain.Group"/>
 		<typeAlias alias="Timecapsule" type="com.semi.hitinerary.timecapsule.domain.Timecapsule"/>
+		<typeAlias alias="Freeboard" type="com.semi.hitinerary.freeboard.domain.Freeboard"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
 		<mapper resource="mappers/group-mapper.xml"/>
 		<mapper resource="mappers/timecapsule-mapper.xml"/>
+		<mapper resource="mappers/freeboard-mapper.xml"/>
 	</mappers>
 </configuration>

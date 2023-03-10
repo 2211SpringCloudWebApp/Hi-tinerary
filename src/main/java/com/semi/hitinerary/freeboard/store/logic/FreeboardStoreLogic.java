@@ -1,13 +1,14 @@
 package com.semi.hitinerary.freeboard.store.logic;
 
 import java.util.List;
+
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+
 import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.freeboard.domain.PageInfo;
 import com.semi.hitinerary.freeboard.store.FreeboardStore;
-
 @Repository
 public class FreeboardStoreLogic implements FreeboardStore{
 

@@ -10,7 +10,6 @@ import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.freeboard.domain.PageInfo;
 import com.semi.hitinerary.freeboard.service.FreeboardService;
 import com.semi.hitinerary.freeboard.store.FreeboardStore;
-
 @Service
 public class FreeboardServiceImpl implements FreeboardService{
 	

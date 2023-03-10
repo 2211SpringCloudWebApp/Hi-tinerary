@@ -22,12 +22,52 @@
 		SELECT * FROM FREE_BOARD_TBL WHERE BOARD_NO = #{boardNo }
 	</select>
 	
+	<!-- 검색 목록 개수 가져오기 -->
 	<select id="getListCount" resultType="_int">
 		SELECT COUNT(*) FROM FREE_BOARD_TBL
+		<if test="searchCondition == 'free'">
+			WHERE BOARD_HEAD = #{searchCondition }
+		</if>
+		<if test="searchCondition == 'question'">
+			WHERE BOARD_HEAD = #{searchCondition }
+		</if>
 	</select>
 	
+	<!-- 게시글 리스트 보여주기. -->
 	<select id="selectFreeboardList" resultMap="freeboardResultMapper">
-		SELECT * FROM FREE_BOARD_TBL ORDER BY BOARD_NO DESC
+		SELECT * FROM FREE_BOARD_TBL
+		<if test="searchCondition == 'free'">
+			WHERE BOARD_HEAD = #{searchCondition }
+		</if>
+		<if test="searchCondition == 'question'">
+			WHERE BOARD_HEAD = #{searchCondition }
+		</if>
+		ORDER BY BOARD_NO DESC
+	</select>
+	
+	<!-- 검색 목록 개수 가져오기 -->
+	<select id="getSearchListCount" resultType="_int">
+		SELECT COUNT(*) FROM FREE_BOARD_TBL
+		<choose>
+			<when test="searchCondition == 'free'">
+				WHERE BOARD_HEAD = #{searchCondition }
+			</when>
+			<when test="searchCondition == 'question'">
+				WHERE BOARD_HEAD = #{searchCondition }
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 검색 목록 불러오기 -->
+	<select id="selectListByKeyword" resultMap="freeboardResultMapper">
+		SELECT * FROM FREE_BOARD_TBL
+		<if test="searchCondition == 'free'">
+			WHERE BOARD_HEAD = #{searchCondition }
+		</if>
+		<if test="searchCondition == 'question'">
+			WHERE BOARD_HEAD = #{searchCondition }
+		</if>
+		ORDER BY WRITE_DATE DESC
 	</select>
 	
 	<!-- 질문글/잡담글 등록 -->

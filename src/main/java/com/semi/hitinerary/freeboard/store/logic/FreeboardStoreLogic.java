@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.freeboard.domain.PageInfo;
+import com.semi.hitinerary.freeboard.domain.Search;
 import com.semi.hitinerary.freeboard.store.FreeboardStore;
 @Repository
 public class FreeboardStoreLogic implements FreeboardStore{
@@ -23,12 +24,13 @@ public class FreeboardStoreLogic implements FreeboardStore{
 	}
 
 	@Override
-	public List<Freeboard> selectFreeboardList(SqlSession session, PageInfo pi) {
+	public List<Freeboard> selectFreeboardList(SqlSession session, PageInfo pi, Search search) {
 		int limit = pi.getBoardLimit();
 		int currentPage = pi.getCurrentPage();
 		int offset = (currentPage - 1) * limit;
+		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		List<Freeboard> fList = session.selectList("freeboardMapper.selectFreeboardList", null, rowBounds);
+		List<Freeboard> fList = session.selectList("freeboardMapper.selectFreeboardList", search, rowBounds);
 		return fList;
 	}
 
@@ -40,6 +42,22 @@ public class FreeboardStoreLogic implements FreeboardStore{
 	@Override
 	public int deleteFreeboard(SqlSession session, int boardNo) {
 		return session.delete("freeboardMapper.deleteOne", boardNo);
+	}
+
+	@Override
+	public int getSearchListCount(SqlSession session, Search search) {
+		return session.selectOne("freeboardMapper.getSearchListCount", search);
+	}
+
+	@Override
+	public List<Freeboard> selectListByKeyword(SqlSession session, PageInfo pi, Search search) {
+		int limit = pi.getBoardLimit();
+		int currentPage = pi.getCurrentPage();
+		int offset = (currentPage - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<Freeboard> searchList = session.selectList("freeboardMapper.selectListByKeyword", search, rowBounds);
+		return searchList;
 	}
 
 }

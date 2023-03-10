@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.freeboard.domain.PageInfo;
+import com.semi.hitinerary.freeboard.domain.Search;
 
 public interface FreeboardService {
 
@@ -25,7 +26,7 @@ public interface FreeboardService {
 	 * @param pi
 	 * @return List<Freeboard>
 	 */
-	public List<Freeboard> selectFreeboardList(PageInfo pi);
+	public List<Freeboard> selectFreeboardList(PageInfo pi, Search search);
 
 	/**
 	 * 게시글 상세조회 Service
@@ -40,5 +41,20 @@ public interface FreeboardService {
 	 * @return
 	 */
 	public int deleteFreeboard(int boardNo);
+
+	/**
+	 * 게시글 검색 게시물 수 Service
+	 * @param search
+	 * @return int
+	 */
+	public int getSearchListCount(Search search);
+
+	/**
+	 * 게시글 검색 목록 조회 Service
+	 * @param pi
+	 * @param search
+	 * @return List<Freeboard>
+	 */
+	public List<Freeboard> selectListByKeyword(PageInfo pi, Search search);
 
 }

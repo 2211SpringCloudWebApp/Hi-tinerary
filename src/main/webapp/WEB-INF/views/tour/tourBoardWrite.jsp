@@ -51,15 +51,15 @@
                         <div class="oneHundredX8times"> 
                             <div><textarea name="tourContent" placeholder="상세내용"></textarea></div>              
                         </div>	
-<!--                         <div class="oneHundred">  -->
-<!--                             <div class="infos">썸네일</div> -->
-<!--                             <div><input type="file" name="thumbnail"></div>            -->
-<!--                         </div>	 -->
-<!--                         <div class="oneHundred">  -->
-<!--                             <div class="infos">본문이미지첨부</div> -->
-<!--                             <div><input type="file" name="tourImage" ></div>    -->
+                        <div class="oneHundred"> 
+                            <div class="infos">썸네일</div>
+                            <div><input type="file" name="thumbnail"></div>           
+                        </div>	
+                        <div class="oneHundred"> 
+                            <div class="infos">본문이미지첨부</div>
+                            <div><input type="file" name="tourImage" ></div>   
                                       
-<!--                         </div>	 -->
+                        </div>	
                         <div class="half">
                         <button id="up">글올리기</button>
                         </div>
@@ -71,5 +71,9 @@
             </main>
             
 	    <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>  
+	    
+	    <script>
+	    
+	    </script>
 	</body>
 </html>

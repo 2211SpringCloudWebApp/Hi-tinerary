@@ -9,6 +9,7 @@
 		<typeAlias alias="Group" type="com.semi.hitinerary.group.domain.Group"/>
 		<typeAlias alias="Timecapsule" type="com.semi.hitinerary.timecapsule.domain.Timecapsule"/>
 		<typeAlias alias="Freeboard" type="com.semi.hitinerary.freeboard.domain.Freeboard"/>
+		<typeAlias alias="Tour" type="com.semi.hitinerary.tour.domain.Tour"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
@@ -16,5 +17,6 @@
 		<mapper resource="mappers/timecapsule-mapper.xml"/>
 		<mapper resource="mappers/freeboard-mapper.xml"/>
 		<mapper resource="mappers/withBoard-mapper.xml"/>
+		<mapper resource="mappers/tour-mapper.xml"/>
 	</mappers>
 </configuration>

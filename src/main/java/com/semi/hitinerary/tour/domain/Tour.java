@@ -1,7 +1,8 @@
 package com.semi.hitinerary.tour.domain;
 
-import java.sql.Date;
+
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class Tour {
 
@@ -24,24 +25,23 @@ public class Tour {
 		super();
 	}
 
-	public Tour(int tourNo, String tourTitle, String tourContent, Timestamp startDate, Timestamp endDate, int price,
-			Date deadline, int currentPeople, int maxPeople, int minPeople, String tourImage, String thumbnail,
-			Timestamp writeDate, int userNo) {
+	public Tour(String tourTitle, String tourContent, Timestamp startDate, Timestamp endDate, int price,
+			Date deadline, int maxPeople, int minPeople) {
+		
 		super();
-		this.tourNo = tourNo;
+		
 		this.tourTitle = tourTitle;
 		this.tourContent = tourContent;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.price = price;
 		this.deadline = deadline;
-		this.currentPeople = currentPeople;
+	
 		this.maxPeople = maxPeople;
 		this.minPeople = minPeople;
-		this.tourImage = tourImage;
-		this.thumbnail = thumbnail;
-		this.writeDate = writeDate;
-		this.userNo = userNo;
+		
+		
+		
 	}
 
 	public int getTourNo() {

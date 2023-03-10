@@ -1,5 +1,7 @@
 package com.semi.hitinerary.withboard.service;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +19,19 @@ public class WithServiceImpl implements WithService{
 	private SqlSession session;
 
 	/**
-	 * 동행 찾기 게시판 등록 ServiceImpl
+	 * 동행찾기 게시판 등록 ServiceImpl
 	 */
 	@Override
 	public int insertWithBoard(With with) {
 		return wStore.insertWithBoard(session, with);
+	}
+
+	/**
+	 * 동행찾기 목록 조회 ServiceImpl
+	 */
+	@Override
+	public List<With> selectWithBoardList() {
+		List<With> wList = wStore.selectWithBoardList(session);
+		return wList;
 	}
 }

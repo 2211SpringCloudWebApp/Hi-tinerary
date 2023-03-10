@@ -4,10 +4,15 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title>에러페이지</title>
 	</head>
 	<body>
 		<h1>에러페이지</h1>
-		<h2>${msg }</h2>
+		<%-- <h2>${msg }</h2> --%>
+		<p>${msg}</p>
+    <script>
+        alert("${msg}");
+        history.back();
+    </script>
 	</body>
 </html>

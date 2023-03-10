@@ -1,5 +1,7 @@
 package com.semi.hitinerary.withboard.store;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +17,15 @@ public class WithStoreLogic implements WithStore{
 	public int insertWithBoard(SqlSession session, With with) {
 		int result = session.insert("WithBoardMapper.insertWithBoard", with);
 		return result;
+	}
+
+	/**
+	 * 동행찾기 게시판 목록 조회 WithStoreLogic
+	 */
+	@Override
+	public List<With> selectWithBoardList(SqlSession session) {
+		List<With> wList = session.selectList("WithBoardMapper.selectWithBoardList");
+		return wList;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.semi.hitinerary.withboard.controller;
 
 import java.io.File;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,7 +60,6 @@ public class WithController {
 			if(result > 0) {
 				return "redirect:/withboard/withBoardList";
 			} else {
-				System.out.println(1);
 				model.addAttribute("msg", "글 등록이 완료되지 않았습니다.");
 				return "common/error";
 			}
@@ -93,14 +93,34 @@ public class WithController {
 		}
 	}
 	
-//	private void deleteFile(String filename, HttpServletRequest request) throws Exception{
-//		String root = request.getSession().getServletContext().getRealPath("resources");
-//		int userNo = 1;
-//		String delPath = root + "\\wuploadFiles\\" + userNo + "withBoard";
-//		String delFilepath = delPath + "\\" + filename;
-//		File delFile = new File(delFilepath);
-//		if(delFile.exists()) {
-//			delFile.delete();
-//		}
-//	}
+	// 파일 삭제
+	/*
+	private void deleteFile(String filename, HttpServletRequest request) throws Exception{
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		int userNo = 1;
+		String delPath = root + "\\wuploadFiles\\" + userNo + "withBoard";
+		String delFilepath = delPath + "\\" + filename;
+		File delFile = new File(delFilepath);
+		if(delFile.exists()) {
+			delFile.delete();
+		}
+	}*/
+	
+	// 동행게시판 목록 보여주기
+	@RequestMapping(value="/withBoard/withBoardList", method=RequestMethod.GET)
+	public String showWithBoard(Model model) {
+		try {
+			List<With> wList = wService.selectWithBoardList();
+			if(!wList.isEmpty()) {
+				model.addAttribute("wList", wList);
+				return "withboard/withBoardList";
+			} else {
+				model.addAttribute("msg", "데이터가 존재하지 않습니다.");
+				return "common/error";
+			}
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getMessage());
+			return "common/error";
+		}
+	}
 }

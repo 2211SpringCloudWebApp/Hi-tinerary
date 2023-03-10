@@ -2,8 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="WithBoardMapper">
-
+	<resultMap type="withBoard" id="withBoardResultMap">
+	<id property="boardNo" column="BOARD_NO"/>
+	<result property="boardTitle" column="BOARD_TITLE"></result>
+	<result property="boardContent" column="BOARD_CONTENT"></result>
+	<result property="boardImage" column="BOARD_IMAGE"></result>
+	<result property="writeDate" column="WRITE_DATE"></result>
+	<result property="updateDate" column="UPDATE_DATE"></result>
+	<result property="startDate" column="START_DATE"></result>
+	<result property="endDate" column="END_DATE"></result>
+	<result property="userNo" column="USER_NO"></result>
+	<result property="maxPeople" column="MAX_PEOPLE"></result>
+	<result property="currentPeople" column="CURRENT_PEOPLE"></result>
+	</resultMap>
 <insert id= "insertWithBoard">
 INSERT INTO WITH_BOARD_TBL VALUES(SEQ_WITH_BOARD.NEXTVAL,#{boardTitle}, #{boardContent}, #{boardImage},DEFAULT, DEFAULT,#{startDate}, #{endDate}, #{userNo}, #{maxPeople}, 2)
 </insert>
+
+<select id="selectWithBoardList" resultMap="withBoardResultMap">
+SELECT * FROM WITH_BOARD_TBL
+</select>
 </mapper>

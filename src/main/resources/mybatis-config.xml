@@ -15,5 +15,6 @@
 		<mapper resource="mappers/group-mapper.xml"/>
 		<mapper resource="mappers/timecapsule-mapper.xml"/>
 		<mapper resource="mappers/freeboard-mapper.xml"/>
+		<mapper resource="mappers/withBoard-mapper.xml"/>
 	</mappers>
 </configuration>

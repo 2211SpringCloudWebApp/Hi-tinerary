@@ -21,8 +21,6 @@
                         <li>&nbsp;&nbsp; <a href="/index.jsp">홈</a>&nbsp;&nbsp; | </li>
                         <li>&nbsp;&nbsp; <a href="#">투어상품</a>&nbsp;&nbsp; | </li>
                         <li>&nbsp;&nbsp; <a href="/withBoard/withBoardList">동행구하기</a>&nbsp;&nbsp; |</li>
-                        <li>&nbsp;&nbsp; <a href="#">자유게시판</a>&nbsp;&nbsp; |</li>
-                        <li>&nbsp;&nbsp; <a href="#">동행구하기</a>&nbsp;&nbsp; |</li>
                         <li>&nbsp;&nbsp; <a href="/freeboard/list">자유게시판</a>&nbsp;&nbsp; |</li>
                     </ul>
                 </nav>

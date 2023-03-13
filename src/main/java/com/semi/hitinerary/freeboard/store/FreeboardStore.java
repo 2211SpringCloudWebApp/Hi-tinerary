@@ -23,7 +23,7 @@ public interface FreeboardStore {
 	 * @param session
 	 * @return int
 	 */
-	public int getListCount(SqlSession session);
+	public int getListCount(SqlSession session, Search search);
 
 	/**
 	 * 게시글 수 Store
@@ -65,5 +65,7 @@ public interface FreeboardStore {
 	 * @return
 	 */
 	public List<Freeboard> selectListByKeyword(SqlSession session, PageInfo pi, Search search);
+
+	
 
 }

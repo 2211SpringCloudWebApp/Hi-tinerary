@@ -19,7 +19,7 @@ public interface FreeboardService {
 	 * 게시글 전체 개수 Service
 	 * @return int
 	 */
-	public int getListCount();
+	public int getListCount(Search search);
 
 	/**
 	 * 게시글 리스트 조회 Service
@@ -56,5 +56,9 @@ public interface FreeboardService {
 	 * @return List<Freeboard>
 	 */
 	public List<Freeboard> selectListByKeyword(PageInfo pi, Search search);
+
+
+
+	
 
 }

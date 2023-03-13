@@ -1,38 +1,116 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
-	<html>
+<html>
 	<head>
-		<meta charset="UTF-8">
-		<title>자유게시판 상세조회</title>
+	<meta charset="UTF-8">
+	<title>자유게시판 상세조회</title>
 		<style>
-			#freeboardDiv{
-                width: 1200px;
-                margin-bottom: 50px; 
-                margin-top: 50px; 
-            }
+			#detail-content {
+				width: 1200px;
+				margin: 0 auto;
+			}
+			
+			table {
+				width: 100%;
+			}
+			
+			#detailTable1 {
+				margin-top: 20px;
+				border-top: 1px solid #FBD188;
+				border-bottom: 1px solid #FBD188;
+				text-align: center;
+				height: 50px;
+			}
+			
+			#detailTable1 td:nth-child(1) {
+				width: 10%;
+			}
+			
+			#detailTable1 td:nth-child(2) {
+				text-align: left;
+				width: 70%;
+			}
+			
+			#detailTable1 td:nth-child(3) {
+				width: 10%;
+			}
+			
+			#detailTable1 td:nth-child(4) {
+				width: 10%;
+			}
+			
+			#detailTable1 td:nth-child(4) div {
+				display: flex; /* flexbox를 이용하여 요소를 수직 정렬 */
+				justify-content: center; /* 가로 중앙 정렬 */
+				align-items: center; /* 세로 중앙 정렬 */
+				width: 90%;
+				height: 90%;
+				border-radius: 10px;
+				background-color: #F39081;
+				margin: 0 auto;
+				text-align: center;
+				line-height: 1.8; /* 텍스트의 세로 가운데 정렬 */
+			}
+			
+			#detailTable2 {
+				font-size: 10px;
+				height: 30px;
+			}
+			
+			#detailTable2 td:nth-child(1) {
+				width: 80%;
+			}
+			
+			#detailTable2 td:nth-child(2) {
+				text-align: left;
+				width: 20%;
+			}
+			
+			#detailTable3 {
+				border-bottom: 1px solid #FBD188;
+			}
+			
+			#textArea {
+				border: 0;
+				height: 400px;
+				width: 100%;
+			}
 		</style>
 	</head>
 	<body>
-		<h1>자유게시판 상세</h1>
-		<b>번호</b> 　　: ${freeboard.boardNo } / 제목 : ${freeboard.boardTitle } / 작성자 : (추가예정) / 작성날짜 : ${freeboard.updateDate }
-		<br>
-		<b>내용</b> 　　: ${freeboard.boardSubject }
-		<br>
-		<b>첨부파일</b> : ${freeboard.boardImage }
-		<br>
-		<b>파일경로</b> : ${freeboard.boardImage }
-		<br>
-		<c:url var="nModify" value="/freeboard/modifyView">
-			<c:param name="boardNo" value="${freeboard.boardNo }"/>
-		</c:url>
-		<a href="${fModify }">수정 페이지로 이동</a>
-		<a href="/freeboard/remove?boardNo=${freeboard.boardNo }" onclick="return confirm('정말 삭제하시겠습니까?')">삭제하기</a>
-		<a href="/freeboard/list">목록으로 이동</a>
-		<footer>
-			<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
-		</footer>
+		<header>
+            <jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
+        </header>
+        <main>
+            <div id="detail-content">
+                <table id="detailTable1">
+                    <tr>
+                        <td>${freeboard.boardHead }</td>
+                        <td>${freeboard.boardTitle }</td>
+                        <td>[닉네임]</td>
+                        <td><div>${freeboard.boardCheck }</div></td>
+                    </tr>
+                </table>
+                <table id="detailTable2">
+                    <tr>
+                        <td></td>
+                        <td>${freeboard.writeDate } <a href="#">수정</a> | <a href="#">삭제</a></td>
+                    </tr>
+                </table>
+                <table id="detailTable3">
+                    <tr>
+                        <input type="text" id="textArea" value="${freeboard.boardSubject }">
+                            
+                        </input>
+                    </tr>
+                </table>
+            </div>
+        </main>
+        <footer>
+            <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+        </footer>
 	</body>
 </html>

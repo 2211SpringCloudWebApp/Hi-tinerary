@@ -23,6 +23,7 @@ h1{
 	<jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
 	<h1>동행찾기 게시판</h1>
 	<div>
+	<button onclick="location.href='/withboard/withWriteView'">글쓰기</button>
 		<table>
 			<thead>
 				<tr>
@@ -40,11 +41,12 @@ h1{
 				<c:forEach items="${ wList}" var="withBoard" varStatus="i">
 					<tr>
 						<td>${i.count }</td>
-						<td><a href="">${withBoard.boardTitle }</a></td>
+						<td>${withBoard.boardTitle }</td>
 						<td>${withBoard. userNo}</td>
 						<td>
-							<c:if test="${!empty withBoard.boardImage }">O</c:if> 
-							<c:if test="${empty withBoard.boardImage }">X</c:if>
+							<a href="/withboard/withBoardDetail?boardNo=${withBoard.boardNo }">
+		                	<img src="${withBoard.boardImage != null ? withBoard.boardImage.replace('C:\\Users\\samsung\\eclipse-workspace\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : '/resources/images/noboardImage.png'}">
+		                	</a>
 						</td>
 						<td>${withBoard.startDate }</td>
 						<td>${withBoard.endDate }</td>

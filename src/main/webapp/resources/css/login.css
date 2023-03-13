@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-area {
+    margin: 0 auto;
+    padding-top: 30px;
+    width: 330px;
+    height: 210px;
+    border: 3px solid;
+    border-radius: 20px;
+    border-color: #F38981;
+    text-align: center;
+}
+.input-area{
+    position:relative;
+    margin:10px 0;
+}
+.input-area > input{
+    background:transparent;
+    border:none;
+    border-bottom: solid 1px black;
+    padding:20px 0px 5px 0px;
+    text-align: center;
+}
+input::placeholder{
+	color:transparent;
+}
+input:placeholder-shown + label{
+    top:15px;
+}
+input:focus + label, label{
+    font-size:10pt;
+    pointer-events: none;
+    position: absolute;
+    left:80px;
+    top:0px;
+    transition: all 0.2s ease ;
+}
+input:focus, input:not(:placeholder-shown){
+    outline:none;
+}
+
+#btn-area {
+    margin: 5px;
+    color: #0F8D80;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+    input[type=submit], input[type=button]{
+        width: 120px;
+        height: 30px;
+        font-weight: bold;
+        color: white;
+        background-color: #0F8D80;
+        border: 1px solid #0F8D80;
+        border-radius: 5px;
+        text-align: center;
+    }

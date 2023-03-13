@@ -21,6 +21,12 @@ public class UserServiceImpl implements UserService {
 		User user = uStore.selectOneByNo(session, userNo);
 		return user;
 	}
+
+	@Override
+	public User Login(User user) {
+		User result = uStore.Login(session, user);
+		return result;
+	}
 	
 	
 }

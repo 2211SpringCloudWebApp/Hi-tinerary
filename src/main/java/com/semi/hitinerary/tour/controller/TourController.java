@@ -1,6 +1,7 @@
 package com.semi.hitinerary.tour.controller;
 
 import java.util.Date;
+import java.util.List;
 import java.io.File;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -26,7 +27,9 @@ public class TourController {
 
 	// 패키지게시판 리스트 보기
 	@RequestMapping(value = "/tour/tourBoardList", method = RequestMethod.GET)
-	public String TourBoardListView() {
+	public String TourBoardListView(Model model) {
+		List<Tour> tList = tService.selectTourList();
+		model.addAttribute("tList", tList);
 		return "tour/tourBoardList";
 	}
 
@@ -36,52 +39,78 @@ public class TourController {
 		return "tour/tourBoardWrite";
 	}
 
-	
-	
+	// 패키지게시판 글 상세 보기
+	@RequestMapping(value = "/tour/tourBoardDetail", method = RequestMethod.GET)
+	public String TourBoardDetailView(@RequestParam("tourNo") int tourNo, Model model) {
+
+		Tour tour = tService.selectOneByNo(tourNo);
+
+		model.addAttribute("tour", tour);
+		return "/tour/tourBoardDetail";
+	}
+
+	// 패키지게시판 수정 페이지
+	@RequestMapping(value = "/tour/modifyView", method = RequestMethod.GET)
+	public String modifyTourBoardView(@RequestParam("tourNo") int tourNo, Model model) {
+		try {
+			Tour tour = tService.selectOneByNo(tourNo);
+			if (tour != null) {
+				model.addAttribute("tour", tour);
+				return "notify/modify";
+			} else {
+				model.addAttribute("msg", "데이터 조회 실패");
+				return "common/error";
+
+			}
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getMessage());
+			return "common/error";
+
+		}
+	}
+
+	// 패키지 게시판 글올리기
 	@RequestMapping(value = "/tour/tourBoardWriteUp", method = RequestMethod.POST)
-	public String TourBoardWriteUp(Model model, HttpServletRequest request
-			, @RequestParam(value="thumbnail", required=false) MultipartFile thumbnail
-			, @RequestParam(value="tourImage", required=false) MultipartFile tourImage
-			) throws ParseException {
-		
+	public String TourBoardWriteUp(Model model, HttpServletRequest request,
+			@RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail,
+			@RequestParam(value = "tourImage", required = false) MultipartFile tourImage) throws ParseException {
+
 		Tour tour = null;
-		
+
 		String startDateStr = request.getParameter("startDate");
 		String endDateStr = request.getParameter("endDate");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
 		Date startDateD = sdf.parse(startDateStr);
 		Date endDateD = sdf.parse(endDateStr);
-		
+
 		String deadlineStr = request.getParameter("deadline");
 		SimpleDateFormat sdfDeadline = new SimpleDateFormat("yyyyMMdd");
 		sdfDeadline.setLenient(false);
-		
+
 		String tourTitle = request.getParameter("tourTitle");
 		String tourContent = request.getParameter("tourContent");
-		
-		Timestamp startDate= new Timestamp(startDateD.getTime());
-		Timestamp endDate= new Timestamp(endDateD.getTime());
-		
-		Date deadline = sdfDeadline.parse(deadlineStr);	
-		
+
+		Timestamp startDate = new Timestamp(startDateD.getTime());
+		Timestamp endDate = new Timestamp(endDateD.getTime());
+
+		Date deadline = sdfDeadline.parse(deadlineStr);
+
 		int price = Integer.parseInt(request.getParameter("price"));
 		int maxPeople = Integer.parseInt(request.getParameter("maxPeople"));
 		int minPeople = Integer.parseInt(request.getParameter("minPeople"));
-		
-		
+
 		tour = new Tour(tourTitle, tourContent, startDate, endDate, price, deadline, maxPeople, minPeople);
-		if(thumbnail != null && !thumbnail.isEmpty() && !thumbnail.getOriginalFilename().equals("")) {
-			String tourImagePath = savetourImage(tourImage, request);	
+		if (thumbnail != null && !thumbnail.isEmpty() && !thumbnail.getOriginalFilename().equals("")) {
+			String tourImagePath = savetourImage(tourImage, request);
 			tour.setTourImage(tourImagePath);
-			
+
 		}
-		if(tourImage != null && !tourImage.isEmpty() && !tourImage.getOriginalFilename().equals("")) {
+		if (tourImage != null && !tourImage.isEmpty() && !tourImage.getOriginalFilename().equals("")) {
 			String thumbnailPath = saveThumbnail(thumbnail, request);
 			tour.setThumbnail(thumbnailPath);
-			
+
 		}
-		
-		
+
 		int result = tService.insertPosting(tour);
 		if (result > 0) {
 			return "redirect:/tour/tourBoardList";
@@ -91,20 +120,32 @@ public class TourController {
 		}
 
 	}
-	
-	
-	
-	
-	
-	
-	//지정 경로로 본문이미지 복사(업로드)
-	private String savetourImage( MultipartFile tourImage, HttpServletRequest request) {
+
+	// 패키지게시판 게시물 지우기
+	@RequestMapping(value = "/tour/deletePosting", method = RequestMethod.GET)
+	public String deletePosting(@RequestParam("tourNo") int tourNo, Model model) {
+		try {
+			int result = tService.deleteTour(tourNo);
+			if (result > 0) {
+				return "redirect: /tour/tourBoardList";
+			} else {
+				model.addAttribute("msg", "투어 게시물 삭제 실패");
+				return "common/error";
+			}
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getMessage());
+			return "common/error";
+		}
+	}
+
+	// 지정 경로로 본문이미지 복사(업로드)
+	private String savetourImage(MultipartFile tourImage, HttpServletRequest request) {
 		try {
 			String root = request.getSession().getServletContext().getRealPath("resources");
 			int userNo = 1;
 			String savePath = root + "\\tuploadImgs\\" + userNo + "tourBoard";
 			File folder = new File(savePath);
-			if(!folder.exists()) {
+			if (!folder.exists()) {
 				folder.mkdirs();
 			}
 			String filePath = savePath + "\\" + tourImage.getOriginalFilename();
@@ -116,14 +157,15 @@ public class TourController {
 			return null;
 		}
 	}
-	//지정 경로로 썸넹리 복사(업로드)
-	private String saveThumbnail( MultipartFile thumbnail, HttpServletRequest request) {
+
+	// 지정 경로로 썸넹리 복사(업로드)
+	private String saveThumbnail(MultipartFile thumbnail, HttpServletRequest request) {
 		try {
 			String root = request.getSession().getServletContext().getRealPath("resources");
 			int userNo = 1;
 			String savePath = root + "\\tuploadImgs\\" + userNo + "tourBoard";
 			File folder = new File(savePath);
-			if(!folder.exists()) {
+			if (!folder.exists()) {
 				folder.mkdirs();
 			}
 			String filePath = savePath + "\\" + thumbnail.getOriginalFilename();

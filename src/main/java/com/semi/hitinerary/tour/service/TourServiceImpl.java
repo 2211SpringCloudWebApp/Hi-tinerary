@@ -1,6 +1,8 @@
 package com.semi.hitinerary.tour.service;
 
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +19,26 @@ public class TourServiceImpl implements TourService {
 	private SqlSession session;
 	
 	@Override
+	public List<Tour> selectTourList() {
+		List<Tour> tList = tStore.selectTourList(session);
+		return tList;
+	}
+
+	@Override
+	public Tour selectOneByNo(int tourNo) {
+		Tour tour = tStore.selecOneByNo(session, tourNo);
+		return tour;
+	}
+
+	@Override
 	public int insertPosting(Tour tour) {
 		int result = tStore.insertPosting(session, tour);
+		return result;
+	}
+
+	@Override
+	public int deleteTour(int tourNo) {
+		int result = tStore.deleteTour(session, tourNo);
 		return result;
 	}
 

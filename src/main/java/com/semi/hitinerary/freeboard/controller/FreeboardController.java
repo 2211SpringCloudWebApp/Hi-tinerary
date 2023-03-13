@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.freeboard.domain.PageInfo;
+import com.semi.hitinerary.freeboard.domain.Search;
 import com.semi.hitinerary.freeboard.service.FreeboardService;
 
 @Controller
@@ -25,8 +25,9 @@ public class FreeboardController {
 
 	@Autowired
 	private FreeboardService fService;
+
 	
-	// 자유게시판 등록 화면
+	// 자유게시판 글쓰기 화면
 	@RequestMapping(value = "/freeboard/write", method=RequestMethod.GET)
 	public String writeView() {
 		return "freeboard/write";
@@ -35,20 +36,48 @@ public class FreeboardController {
 	// 자유게시판 목록 조회
 	@RequestMapping(value = "/freeboard/list", method=RequestMethod.GET)
 	public ModelAndView freeboardView(ModelAndView mv
-			, @RequestParam(value="page"
-			, required=false
-			, defaultValue="1") Integer page) {
+			, @ModelAttribute Search search
+			, @RequestParam(value="page", required=false, defaultValue="1") Integer page) {
+		
 		// 게시글 전체 수 조회
 		int totalCount = fService.getListCount();
-		System.out.println(totalCount);
+		System.out.println("freeboardView함수 totalCount값은 : " + totalCount);
+		
 		// 페이지 처리를 위한 함수
 		PageInfo pi = this.getPageInfo(page, totalCount);
-		System.out.println(pi);
-		
-		List<Freeboard> fList = fService.selectFreeboardList(pi);
-		
+		System.out.println("freeboardView함수 pi값은 : " + pi);
+		List<Freeboard> fList = fService.selectFreeboardList(pi, search);
 		mv.addObject("pi",pi).addObject("fList", fList).setViewName("/freeboard/list");
 		return mv;
+	}
+
+	//게시글 탭에 따라 목록 리스트 조회
+	@RequestMapping(value="/freeboard/search", method=RequestMethod.GET)
+	public String freeboardSearchView(@ModelAttribute Search search
+			, @RequestParam(value="page", required = false, defaultValue = "1") Integer currentPage 
+			,Model model) {
+		try {
+			// search값을 스트링 값으로 화면이 출력해봄
+			System.out.println("freeboardSearchView함수 search.toString()값은 : " + search.toString());
+			// 전체 페이지 수 검색해서 가져옴
+			int totalCount = fService.getSearchListCount(search);
+			PageInfo pi = this.getPageInfo(currentPage, totalCount);
+			
+			List<Freeboard> searchList = fService.selectListByKeyword(pi, search);
+			
+			if(!searchList.isEmpty()) {
+				model.addAttribute("search", search);
+				model.addAttribute("pi", pi);
+				model.addAttribute("fList", searchList);
+				return "freeboard/list";
+			} else {
+				model.addAttribute("msg", "조회에 실패하였습니다.");
+				return "common/error";
+			}
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getMessage());
+			return "common/error";
+		}
 	}
 	
 	//게시글 상세 조회
@@ -116,23 +145,24 @@ public class FreeboardController {
 	// 아래부분 다시 봐야함.
 	// 지정 경로로 파일 복사(파일 업로드)
 	private String saveFile(MultipartFile uploadFile, HttpServletRequest request) {
-		// 내가 원하는 경로 : 프로젝트 경로
 		try {
+			//내가 원하는 경로 : 프로젝트 경로
 			String root = request.getSession().getServletContext().getRealPath("resources");
-			String savePath = root + "\\wuploadFiles\\" + "freeBoard";
-			
-			// 폴더가 없을 경우 자동으로 생성하는 코드
+			int userNo = 1;
+			String savePath = root + "\\wuploadFiles\\" + userNo + "freeBoard";
+			//폴더가 없을 경우 자동으로 만들어주기 위한 코드(폴더가 있는 경우 동작 안함)
 			File folder = new File(savePath);
+			
 			if(!folder.exists()) {
-				folder.mkdir();
+				folder.mkdirs();
 			}
 			
-			// 파일저장
+			//실제 파일 저장
 			String filePath = savePath + "\\" + uploadFile.getOriginalFilename();
 			File file = new File(filePath);
-			uploadFile.transferTo(file); // 복사해서 저장하는 명령어
+			uploadFile.transferTo(file);
 			return filePath;
-		} catch (Exception e) { // 예외 발생시 null값 반환
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -141,19 +171,27 @@ public class FreeboardController {
 	// navigator start, end값 설정 method()
 	private PageInfo getPageInfo(int currentPage, int totalCount) {
 		PageInfo pi = null;
-		int boardLimit = 10;
-		int naviLimit = 5;
+		int boardLimit = 10; 
+		int naviLimit = 5; // 최대 페이지 리미트
 		int maxPage;
 		int startNavi;
 		int endNavi;
-			
+		
+		//ex) 게시글수 170
+		//최대 페이지 구하기 = 17
 		maxPage = (int)((double)totalCount/boardLimit+0.9);
+		System.out.println("getPageInfo함수 maxPage 값은 : "+maxPage);
 		// Math.ceil((double)totalCount/boardLimit);
 		startNavi = (((int)((double)currentPage/naviLimit+0.9))-1) * naviLimit + 1;
 		endNavi = startNavi + naviLimit - 1;
+		// 리미트보다 높으면 최대치로 설정해줌.
+		/*
 		if(endNavi > maxPage) {
 			endNavi = maxPage;
 		}
+		*/
+		System.out.println("getPageInfo함수 endNavi 값은 : "+endNavi);
+		
 		pi = new PageInfo(currentPage, boardLimit, naviLimit, startNavi, endNavi, totalCount, maxPage);
 		return pi;
 	}

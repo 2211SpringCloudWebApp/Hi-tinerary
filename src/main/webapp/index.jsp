@@ -2,23 +2,19 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
-	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
-</body>
-
-
 	<head>
-		<meta charset="UTF-8">
-		<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>메인페이지</title>
 	</head>
 	<body>
-		<jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
-		<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+		<header>
+			<jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
+		</header>
+		<main style="height: 600px">
+		
+		</main>	
+		<footer>
+			<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+		</footer>
 	</body>
-
 </html>

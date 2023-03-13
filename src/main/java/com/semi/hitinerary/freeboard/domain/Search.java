@@ -1,8 +1,8 @@
 package com.semi.hitinerary.freeboard.domain;
 
 public class Search {
-	private String searchValue;
-	private String searchCondition;
+	private String searchValue; // 검색할 값
+	private String searchCondition; // 검색할 말머리
 	
 	public Search() {}
 

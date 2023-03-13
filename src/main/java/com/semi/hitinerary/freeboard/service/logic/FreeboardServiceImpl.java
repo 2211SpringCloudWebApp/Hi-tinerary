@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.freeboard.domain.PageInfo;
+import com.semi.hitinerary.freeboard.domain.Search;
 import com.semi.hitinerary.freeboard.service.FreeboardService;
 import com.semi.hitinerary.freeboard.store.FreeboardStore;
 @Service
@@ -32,8 +33,8 @@ public class FreeboardServiceImpl implements FreeboardService{
 
 
 	@Override
-	public List<Freeboard> selectFreeboardList(PageInfo pi) {
-		return fStore.selectFreeboardList(session, pi);
+	public List<Freeboard> selectFreeboardList(PageInfo pi, Search search) {
+		return fStore.selectFreeboardList(session, pi, search);
 	}
 
 
@@ -46,6 +47,18 @@ public class FreeboardServiceImpl implements FreeboardService{
 	@Override
 	public int deleteFreeboard(int boardNo) {
 		return fStore.deleteFreeboard(session, boardNo);
+	}
+
+
+	@Override
+	public int getSearchListCount(Search search) {
+		return fStore.getSearchListCount(session, search);
+	}
+
+
+	@Override
+	public List<Freeboard> selectListByKeyword(PageInfo pi, Search search) {
+		return fStore.selectListByKeyword(session, pi, search);
 	}
 
 }

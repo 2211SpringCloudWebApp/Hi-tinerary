@@ -7,7 +7,6 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>headerNav</title>
         <link rel="stylesheet" href="../../../resources/css/headerNav.css">
     </head>
     <body>
@@ -19,10 +18,12 @@
                 </div>
                 <nav>
                     <ul>
-                        <li>&nbsp;&nbsp; <a href="#">홈</a>&nbsp;&nbsp; | </li>
+                        <li>&nbsp;&nbsp; <a href="/index.jsp">홈</a>&nbsp;&nbsp; | </li>
                         <li>&nbsp;&nbsp; <a href="#">투어상품</a>&nbsp;&nbsp; | </li>
                         <li>&nbsp;&nbsp; <a href="/withBoard/withBoardList">동행구하기</a>&nbsp;&nbsp; |</li>
                         <li>&nbsp;&nbsp; <a href="#">자유게시판</a>&nbsp;&nbsp; |</li>
+                        <li>&nbsp;&nbsp; <a href="#">동행구하기</a>&nbsp;&nbsp; |</li>
+                        <li>&nbsp;&nbsp; <a href="/freeboard/list">자유게시판</a>&nbsp;&nbsp; |</li>
                     </ul>
                 </nav>
                 <c:if test="${sessionScope.loginUser eq null }">

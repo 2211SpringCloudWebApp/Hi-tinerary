@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.freeboard.domain.PageInfo;
+import com.semi.hitinerary.freeboard.domain.Search;
 
 public interface FreeboardStore {
 
@@ -30,7 +31,7 @@ public interface FreeboardStore {
 	 * @param pi
 	 * @return
 	 */
-	public List<Freeboard> selectFreeboardList(SqlSession session, PageInfo pi);
+	public List<Freeboard> selectFreeboardList(SqlSession session, PageInfo pi, Search search);
 
 	/**
 	 * 게시글 상세 조회 Store
@@ -47,5 +48,22 @@ public interface FreeboardStore {
 	 * @return int
 	 */
 	public int deleteFreeboard(SqlSession session, int boardNo);
+
+	/**
+	 * 게시글 검색 수 Store
+	 * @param session
+	 * @param search
+	 * @return
+	 */
+	public int getSearchListCount(SqlSession session, Search search);
+
+	/**
+	 * 게시글 검색 목록 조회 Store
+	 * @param session
+	 * @param pi
+	 * @param search
+	 * @return
+	 */
+	public List<Freeboard> selectListByKeyword(SqlSession session, PageInfo pi, Search search);
 
 }

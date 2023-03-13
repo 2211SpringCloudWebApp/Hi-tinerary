@@ -21,4 +21,10 @@
 	<select id="Login" resultMap="userResultMap">
 		SELECT USER_NO, USER_NICKNAME FROM USER_TBL WHERE USER_ID = #{userId} AND USER_PW = #{userPw}
 	</select>
+	
+	<select id="selectByGroupNo" resultMap="userResultMap">
+		SELECT E.USER_NO, E.USER_NICKNAME, E.USER_EMAIL, FLOOR((SYSDATE - TO_DATE(E.USER_BIRTH_DATE, 'YY-MM-DD')) / 365) USER_BIRTH_DATE, USER_GENDER
+		FROM GROUP_USERS_TBL F JOIN USER_TBL E ON E.USER_NO = F.USER_NO 
+		WHERE GROUP_NO = #{groupNo}
+	</select>
 </mapper>

@@ -31,5 +31,11 @@ public class GroupStoreLogic implements GroupStore {
 		return group;
 	}
 
+	@Override
+	public int minusCurrentPeople(SqlSession session, String groupNo) {
+		int result = session.update("groupMapper.minusCurrentPeople", groupNo);
+		return result;
+	}
+
 
 }

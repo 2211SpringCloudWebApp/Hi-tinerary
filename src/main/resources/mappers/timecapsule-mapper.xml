@@ -15,4 +15,10 @@
 	<insert id="registGroup" parameterType="Timecapsule">
 		INSERT INTO GROUP_USERS_TBL VALUES(#{capsuleIden}, #{groupNo}, #{userNo}, NULL, NULL, NULL, #{userEmail})
 	</insert>
+	
+	<delete id="deleteGroupUser" parameterType="string">
+		DELETE FROM GROUP_USERS_TBL WHERE CAPSULE_IDEN = #{groupNoUserNo}
+	</delete>
+	
+	
 </mapper>

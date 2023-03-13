@@ -24,8 +24,7 @@
             margin-right : 0px;
             width : 500px
         }
-        .title-area a{
-        	text-decoration : none;
+        .title-area input{
         	text-align : center;
         	color : black;
         	height : 20px;
@@ -58,6 +57,12 @@
                 padding: 10px 65px;
                 display : block;
                 width : 120px;
+            }
+                #group-nav a:nth-of-type(${groupIndex+2}){
+ 				color : white;
+                background-color: pink;
+                border: 1px solid pink;
+
             }
         #group-area{
             float: left;
@@ -124,17 +129,25 @@
             td{
             	border-bottom : 1px dashed black;
             }
-            td a{
-            text-decoration : none;
-        	text-align : center;
-        	color : black;
-        	background-color : green;
-        	border : 1px solid green;
-        	border-radius : 5px;
+            td input{
+	        	text-align : center;
+	        	color : black;
+	        	background-color : green;
+	        	border : 1px solid green;
+	        	border-radius : 5px;
             }
-/*             th:not(:first-of-type), td:not(:first-of-type){ */
-/*                 border-left : 1px solid black; */
-/*             } */
+            #writeBoard{
+            	text-decoration: none;
+            	font-size : 15px;
+                color : white;
+                background-color: green;
+            	float : right;
+            	margin-right : 30px;
+            	margin-bottom : 30px;
+            	margin-top : 20px;
+            	border : 1px solid green;
+            	border-radius : 5px;
+            }
     	</style>
 	</head>
 	<body>
@@ -150,8 +163,12 @@
 				<form action="/group/register.do" method="post">
 				그룹명 : <input type="text" name="groupName">
 				<div>
-				시작날짜 : <input min="${now }" type="date" name="startDate" onchange="startDecide()">
-				종료날짜 : <input type="date" name="endDate" onchange="endDecide()">
+				시작날짜 : <input min="${now }" type="date" name="startDate" onchange="startDecide()" required>
+				종료날짜 : <input min="${now }" type="date" name="endDate" onchange="endDecide()">
+				</div>
+				<div>
+				시간추가 : on <input type="radio" name="addtime" onclick="addTime();"> 
+						   off <input type="radio" name="addtime" onclick="removeTime();" checked>
 				</div>
 				최대인원 : <input type="text" name="maxPeople">
 				<div>
@@ -179,6 +196,44 @@
 		                <p>개의 캡슐이 작성됨</p>
 		            </div>
 					<div>
+						<c:if test="${gBList eq null }">
+							<h1>그룹 게시글이 없어요!</h1>
+						</c:if>
+						<c:if test="${gBList ne null }">
+							<table>
+								<thead>
+									<tr>
+										<th width="200px">제목</th>
+										<th width="140px">작성일</th>
+										<th width="180px">작성자</th>
+										<th width="60px">수정</th>
+										<th width="60px">삭제</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${gBList}" var="groupBoard">
+										<tr>
+											<td>${groupBoard.boardTitle }</td>
+											<td>${groupBoard.writeDate }</td>
+											<td>${groupBoard.userNo }</td>
+											<td><a href="#">123</a></td>
+											<td><a href="#">123</a></td>
+										</tr>								
+									</c:forEach>
+								</tbody>
+								<tfoot>
+									<c:forEach begin="${pi.startNavi }" end="${pi.endNavi }" var="p">
+											<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${p}">${p}</a>&nbsp;
+									</c:forEach>
+								</tfoot>
+							</table>
+						</c:if>
+						<form action="/group/writeView" method="post">
+							<input type="hidden" name="groupIndex" value="${groupIndex }">
+							<input type="hidden" name="groupName" value="${group.groupName }">
+							<input type="hidden" name="groupNo" value="${group.groupNo }">
+							<input id="writeBoard" type="submit" value="글쓰기">
+						</form>
 			        </div>
 				</c:if>
 				<c:if test="${groupUserView eq 'T' }">
@@ -195,19 +250,34 @@
 			            			<th width="60">성별</th>
 			            			<th width="100">버튼</th>
 			            		</tr>
-			            		<tr>
-			            			<td>끼얏호우</td>
-			            			<td>easea@iei.or.kr</td>
-			            			<td>45</td>
-			            			<td>남</td>
-			  	                    <td><a href="#">내보내기</a></td>
-			            		</tr>
+			            		<c:forEach items="${uList }" var="User">
+				            		<tr>
+				            			<td>${User.userNickname }</td>
+				            			<td>${User.userEmail }</td>
+				            			<td>${User.userBirthDate }</td>
+				            			<td>${User.userGender }</td>
+				  	                    <td>
+				  	                    	<c:if test="${group.leaderUserNo ne User.userNo}">
+					  	                    	<form action="/group/dropUser" method="post">
+					  	                    		<input type="hidden" name="groupNo" value="${group.groupNo }">
+					  	                    		<input type="hidden" name="userNo" value="${User.userNo }">
+					  	                    		<input type="submit" value="내보내기">
+					  	                    	</form>
+				  	                    	</c:if>
+				  	                    </td>
+				            		</tr>
+			            		</c:forEach>
 			            	</table>
 			            </div>						
 					</c:if>
 					<c:if test="${group.leaderUserNo ne sessionScope.loginUser}">
 						<div class="title-area">
-			                <h1 class="title">${group.groupName }</h1> <a href="#">나가기</a>
+			                <h1 class="title">${group.groupName }</h1> 
+			                <form action="/group/dropUser" method="post">
+				  	        	<input type="hidden" name="groupNo" value="${group.groupNo }">
+				  	            <input type="hidden" name="userNo" value="${sessionScope.loginUser }">
+				  	            <input type="submit" value="나가기">
+				  	        </form>
 			            </div>
 			            <div>
 			            	<table>
@@ -217,12 +287,14 @@
 			            			<th width="60">나이</th>
 			            			<th width="60">성별</th>
 			            		</tr>
-			            		<tr>
-			            			<td>끼얏호우</td>
-			            			<td>easea@iei.or.kr</td>
-			            			<td>45</td>
-			            			<td>남</td>
-			            		</tr>
+			            		<c:forEach items="${uList }" var="User">
+				            		<tr>
+				            			<td>${User.userNickname }</td>
+				            			<td>${User.userEmail }</td>
+				            			<td>${User.userBirthDate }</td>
+				            			<td>${User.userGender }</td>
+				            		</tr>
+			            		</c:forEach>
 			            	</table>
 			            </div>				
 					</c:if>
@@ -230,20 +302,83 @@
 			</c:if>
 		</div>
 		<script>
+			var viewDate = document.querySelector("#second-p")
+			viewDate.innerHTML = viewDate.innerHTML.substr(0, 16) + viewDate.innerHTML.substr(21,19);
 			function startDecide(){
-				var startDate = document.querySelector("[name=startDate]");
-				var endDate = document.querySelector("[name=endDate]");
-                endDate.setAttribute('min', startDate.value);
-                if(endDate.value < startDate.value){
-                	endDate.value = startDate.value;
-                }
+				var startDate = document.querySelector("[name=startDate]")
+				var endDate = document.querySelector("[name=endDate]")
+				if(startDate.value > endDate.value){
+					endDate.value = startDate.value;
+				}
 			}
+			
 			function endDecide(){
-				var endDate = document.querySelector("[name=endDate]");
-				var startDate = document.querySelector("[name=startDate]");
-                if(endDate.value < startDate.value){
-                	endDate.value = startDate.value;
-                }
+				var startDate = document.querySelector("[name=startDate]")
+				var endDate = document.querySelector("[name=endDate]")
+				if(startDate.value > endDate.value){
+					alert("종료날짜가 시작날짜보다 이릅니다.")
+					endDate.value = startDate.value;
+				}
+			}
+		
+			function addTime(){
+				var startDate = document.querySelector("[name=startDate]")
+				var endDate = document.querySelector("[name=endDate]")
+				if(startDate.value != "" && endDate.value != ""){
+					startDate.readOnly = true;
+					endDate.readOnly = true;
+					if(document.querySelector("[name=startTime]") == null && document.querySelector("[name=endTime]") == null){
+						var a = document.createElement('input');
+						a.setAttribute("type", "time");
+						a.required = true;
+						var b = a.cloneNode(false);
+						a.setAttribute("name", "startTime");
+						a.setAttribute("onchange", "startTimeDecide()")
+						b.setAttribute("name", "endTime");
+						b.setAttribute("onchange", "endTimeDecide()")
+						startDate.after(a);
+						endDate.after(b);						
+					}
+				}else{
+					alert("날짜를 먼저 정해주세요")
+					document.querySelectorAll("[name=addtime]")[1].checked = true;
+				}
+			}
+			function removeTime(){
+				var a = document.querySelector("[name=startTime]");
+				var b = document.querySelector("[name=endTime]");
+				var startDate = document.querySelector("[name=startDate]")
+				var endDate = document.querySelector("[name=endDate]")
+				startDate.readOnly = false;
+				endDate.readOnly = false;
+				if(a != null && b != null){
+					a.remove();
+					b.remove();
+				}
+			}
+			
+			function startTimeDecide(){
+				var startDate = document.querySelector("[name=startDate]")
+				var endDate = document.querySelector("[name=endDate]")
+				if(startDate.value == endDate.value){
+					var a = document.querySelector("[name=startTime]");
+					var b = document.querySelector("[name=endTime]");
+					b.value = "";
+					b.min = a.value;					
+				}
+			}
+			
+			function endTimeDecide(){
+				var a = document.querySelector("[name=startTime]");
+				var b = document.querySelector("[name=endTime]");
+				var startDate = document.querySelector("[name=startDate]")
+				var endDate = document.querySelector("[name=endDate]")
+				if(startDate.value == endDate.value){
+					if(b.value < a.value){
+						b.value = "";
+						alert("종료시간이 더 이릅니다.")
+					}					
+				}
 			}
 		</script>
 	</body>

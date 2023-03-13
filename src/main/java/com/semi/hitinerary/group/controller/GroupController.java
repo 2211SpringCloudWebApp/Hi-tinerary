@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.group.domain.Group;
 import com.semi.hitinerary.group.service.GroupService;
+import com.semi.hitinerary.groupboard.controller.GroupboardController;
+import com.semi.hitinerary.groupboard.domain.Groupboard;
+import com.semi.hitinerary.groupboard.domain.NavigationNList;
 import com.semi.hitinerary.timecapsule.domain.Timecapsule;
 import com.semi.hitinerary.timecapsule.service.TimecapsuleService;
 import com.semi.hitinerary.user.domain.User;
@@ -22,6 +26,9 @@ import com.semi.hitinerary.user.service.UserService;
 
 @Controller
 public class GroupController {
+	
+	@Autowired
+	GroupboardController gBController;
 	
 	@Autowired
 	GroupService gService;
@@ -38,6 +45,7 @@ public class GroupController {
 			,@RequestParam(value="groupIndex", required=false, defaultValue="0") String groupIndex
 			,@RequestParam(value="groupUserView", required=false, defaultValue="F") String groupUserView
 			,HttpSession session
+			,@RequestParam(value="currentPage", required=false, defaultValue = "1")String currentPage
 			) {
 		int userNo = 3;
 		session.setAttribute("loginUser", userNo);
@@ -50,7 +58,18 @@ public class GroupController {
 			if(Integer.parseInt(groupIndex) > -1 ) {
 				group = gList.get(Integer.parseInt(groupIndex));				
 			}
-			model.addAttribute("group", group);	
+			model.addAttribute("group", group);
+			NavigationNList naviNList = gBController.groupBoardList(group.getGroupNo(), Integer.parseInt(currentPage));
+			List<Groupboard> gBList = naviNList.getgBList();
+			Pagination pi = naviNList.getPi();
+			if(!gBList.isEmpty()) {
+				model.addAttribute("gBList", gBList);
+				model.addAttribute("pi", pi);
+			}
+		}
+		if(groupUserView.equals("T")) {
+				List<User> uList = uService.selectByGroupNo(group.getGroupNo());
+				model.addAttribute("uList", uList);
 		}
 		LocalDate now = LocalDate.now();
 		model.addAttribute("groupIndex", groupIndex);
@@ -64,13 +83,6 @@ public class GroupController {
 		return "group/create";
 	}
 	
-	public String dateToTimestamp(String date) {
-		if(date.length() == 10) {
-			date += " 00:00:00";
-		}
-		return date;
-	}
-	
 	@RequestMapping(value="/group/register.do", method = RequestMethod.POST)
 	public String createGroup(
 			HttpSession session
@@ -78,11 +90,13 @@ public class GroupController {
 			,String startDate
 			,String endDate
 			,String maxPeople
+			,@RequestParam(value="startTime", required = false, defaultValue= "00:00:00") String startTime
+			,@RequestParam(value="endTime", required = false, defaultValue = "00:00:00") String endTime
 			){
 //		int userNo = (Integer)session.getAttribute("userNo");	
 		int userNo = 3;
-		startDate = this.dateToTimestamp(startDate);
-		endDate = this.dateToTimestamp(endDate);
+		startDate = startDate + " " + startTime + ":00";
+		endDate =  endDate + " " + endTime + ":00";
 		Group group = new Group(Timestamp.valueOf(startDate), Timestamp.valueOf(endDate), Integer.parseInt(maxPeople), groupName, userNo);
 		int result = gService.createGroup(group);
 		if(result > 0) {
@@ -91,6 +105,18 @@ public class GroupController {
 			Timecapsule timecapsule = new Timecapsule(group.getGroupNo(), user.getUserNo(), user.getUserEmail());
 			timecapsule.createIden();
 			tService.registGroup(timecapsule);
+		}
+		return "redirect:/group/groupinfopage";
+	}
+	
+	@RequestMapping(value="/group/dropUser" , method = RequestMethod.POST)
+	public String deleteGroupUser(
+			@RequestParam("userNo") String userNo,
+			@RequestParam("groupNo") String groupNo
+			) {
+		int result = tService.deleteGroupUser(groupNo + "," + userNo);
+		if(result > 0) {
+			result = gService.minusCurrentPeople(groupNo);
 		}
 		return "redirect:/group/groupinfopage";
 	}

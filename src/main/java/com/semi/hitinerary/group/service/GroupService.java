@@ -15,4 +15,9 @@ public interface GroupService {
 
 	public List<Group> selectByUserNo(int userNo);
 
+
+	public int minusCurrentPeople(String groupNo);
+
+
+
 }

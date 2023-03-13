@@ -1,5 +1,7 @@
 package com.semi.hitinerary.user.store;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +20,12 @@ public class UserStoreLogic implements UserStore{
 	public User Login(SqlSession session, User user) {
 		User result = session.selectOne("UserMapper.Login", user);
 		return result;
+	}
+
+	@Override
+	public List<User> selectByGroupNo(SqlSession session, int groupNo) {
+		List<User> uList = session.selectList("UserMapper.selectByGroupNo", groupNo);
+		return uList;
 	}
 
 }

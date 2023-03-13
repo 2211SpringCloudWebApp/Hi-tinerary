@@ -11,6 +11,7 @@
 		<typeAlias alias="Freeboard" type="com.semi.hitinerary.freeboard.domain.Freeboard"/>
 		<typeAlias alias="withBoard" type="com.semi.hitinerary.withboard.domain.With"/>
 		<typeAlias alias="Tour" type="com.semi.hitinerary.tour.domain.Tour"/>
+		<typeAlias alias="groupBoard" type="com.semi.hitinerary.groupboard.domain.Groupboard"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
@@ -19,5 +20,6 @@
 		<mapper resource="mappers/freeboard-mapper.xml"/>
 		<mapper resource="mappers/withBoard-mapper.xml"/>
 		<mapper resource="mappers/tour-mapper.xml"/>
+		<mapper resource="mappers/groupboard-mapper.xml"/>
 	</mappers>
 </configuration>

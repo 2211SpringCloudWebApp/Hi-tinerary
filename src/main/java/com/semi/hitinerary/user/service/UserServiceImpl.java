@@ -1,5 +1,7 @@
 package com.semi.hitinerary.user.service;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,12 @@ public class UserServiceImpl implements UserService {
 	public User Login(User user) {
 		User result = uStore.Login(session, user);
 		return result;
+	}
+
+	@Override
+	public List<User> selectByGroupNo(int groupNo) {
+		List<User> uList = uStore.selectByGroupNo(session, groupNo);
+		return uList;
 	}
 	
 	

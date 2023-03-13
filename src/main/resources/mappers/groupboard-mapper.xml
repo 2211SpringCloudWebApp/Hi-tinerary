@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="groupBoardMapper">
+	
+	<resultMap type="groupBoard" id="groupBoardResultMap">
+		<id property="boardNo" column="BOARD_NO"/>
+		<result property="boardTitle" column="BOARD_TITLE"/>
+		<result property="boardSubject" column="BOARD_SUBJECT"/>
+		<result property="writeDate" column="WRITE_DATE"/>
+		<result property="groupNo" column="GROUP_NO"/>
+		<result property="userNo" column="UserNo"/>
+	</resultMap>
+	
+	<insert id="insertBoard" parameterType="groupBoard">
+		INSERT INTO GROUP_BOARD_TBL VALUES(SEQ_GROUP_BOARD.NEXTVAL, #{boardTitle}, #{boardSubject}, DEFAULT, #{groupNo}, #{userNo})
+	</insert>
+	
+	<select id="selectListBoardByGroupNo" resultMap="groupBoardResultMap">
+		SELECT * FROM GROUP_BOARD_TBL WHERE GROUP_NO = #{groupNo}
+	</select>
+	
+	<select id="selectTotalCount" resultType="_int">
+		SELECT COUNT(*) FROM GROUP_BOARD_TBL WHERE GROUP_NO = #{groupNo}
+	</select>
+</mapper>

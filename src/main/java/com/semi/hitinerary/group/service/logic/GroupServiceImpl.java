@@ -38,6 +38,12 @@ public class GroupServiceImpl implements GroupService{
 		Group group = gStore.SelectOneByUserNoRecent(session, userNo);
 		return group;
 	}
+
+	@Override
+	public int minusCurrentPeople(String groupNo) {
+		int result = gStore.minusCurrentPeople(session, groupNo);
+		return result;
+	}
 	
 
 }

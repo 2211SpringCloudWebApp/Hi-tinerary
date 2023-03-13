@@ -25,4 +25,7 @@
 		SELECT * FROM (SELECT * FROM GROUP_TBL WHERE LEADER_USER_NO = #{userNo} ORDER BY WRITE_DATE DESC) WHERE ROWNUM = 1
 	</select>
 	
+	<update id="minusCurrentPeople">
+		UPDATE GROUP_TBL SET CURRENT_PEOPLE = CURRENT_PEOPLE - 1 WHERE GROUP_NO = #{groupNo}
+	</update>
 </mapper>

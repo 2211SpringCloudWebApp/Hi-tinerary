@@ -11,8 +11,8 @@
 		<%-- <h2>${msg }</h2> --%>
 		<p>${msg}</p>
     <script>
-        alert("${msg}");
-        history.back();
+       /*  alert("${msg}");
+        history.back(); */
     </script>
 	</body>
 </html>

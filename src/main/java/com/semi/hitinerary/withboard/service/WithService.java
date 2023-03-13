@@ -18,4 +18,11 @@ public interface WithService {
 	 * @return
 	 */
 	public List<With> selectWithBoardList();
+
+	/**
+	 * 동행찾기 상세 조회 Service
+	 * @param boardNo
+	 * @return With
+	 */
+	public With selectOneById(int boardNo);
 }

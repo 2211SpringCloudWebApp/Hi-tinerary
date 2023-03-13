@@ -14,13 +14,21 @@ public interface WithStore {
 	 * @param with
 	 * @return int
 	 */
-	int insertWithBoard(SqlSession session, With with);
+	public int insertWithBoard(SqlSession session, With with);
 
 	/**
 	 * 동행찾기 게시판 목록 조회 Store
 	 * @param session
 	 * @return List<With>
 	 */
-	List<With> selectWithBoardList(SqlSession session);
+	public List<With> selectWithBoardList(SqlSession session);
+
+	/**
+	 * 동행찾기 게시판 상세조회 Stroe
+	 * @param session
+	 * @param boardNo
+	 * @return With
+	 */
+	public With selectOneById(SqlSession session, int boardNo);
 
 }

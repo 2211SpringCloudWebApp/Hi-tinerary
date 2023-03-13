@@ -34,4 +34,13 @@ public class WithServiceImpl implements WithService{
 		List<With> wList = wStore.selectWithBoardList(session);
 		return wList;
 	}
+
+	/**
+	 * 동행찾기 상세 조회 ServiceImpl
+	 */
+	@Override
+	public With selectOneById(int boardNo) {
+		With with = wStore.selectOneById(session, boardNo);
+		return with;
+	}
 }

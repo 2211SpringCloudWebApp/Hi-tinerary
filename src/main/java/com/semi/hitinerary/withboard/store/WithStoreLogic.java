@@ -28,4 +28,13 @@ public class WithStoreLogic implements WithStore{
 		return wList;
 	}
 
+	/**
+	 * 동행찾기 게시판 상세조회 WithStoreLogic
+	 */
+	@Override
+	public With selectOneById(SqlSession session, int boardNo) {
+		With with = session.selectOne("WithBoardMapper.selectOneById", boardNo);
+		return with;
+	}
+
 }

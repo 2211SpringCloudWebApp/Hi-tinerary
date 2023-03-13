@@ -58,7 +58,7 @@ public class WithController {
 			with.setUserNo(1);
 			int result = wService.insertWithBoard(with);
 			if(result > 0) {
-				return "redirect:/withboard/withBoardList";
+				return "redirect:/withBoard/withBoardList";
 			} else {
 				model.addAttribute("msg", "글 등록이 완료되지 않았습니다.");
 				return "common/error";
@@ -119,6 +119,20 @@ public class WithController {
 				return "common/error";
 			}
 		} catch (Exception e) {
+			model.addAttribute("msg", e.getMessage());
+			return "common/error";
+		}
+	}
+	
+	//동행게시판 상세페이지
+	@RequestMapping(value="/withboard/withBoardDetail", method=RequestMethod.GET)
+	public String withBoardDetailView(@RequestParam("boardNo") int boardNo, Model model) {
+		try {
+			With with = wService.selectOneById(boardNo);
+			model.addAttribute("withBoard", with);
+			return "withboard/withBoardDetail";
+		} catch (Exception e) {
+			e.printStackTrace();
 			model.addAttribute("msg", e.getMessage());
 			return "common/error";
 		}

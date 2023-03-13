@@ -22,4 +22,7 @@ INSERT INTO WITH_BOARD_TBL VALUES(SEQ_WITH_BOARD.NEXTVAL,#{boardTitle}, #{boardC
 <select id="selectWithBoardList" resultMap="withBoardResultMap">
 SELECT * FROM WITH_BOARD_TBL
 </select>
+<select id="selectOneById" resultMap="withBoardResultMap">
+SELECT * FROM WITH_BOARD_TBL WHERE BOARD_NO=#{boardNo}
+</select>
 </mapper>

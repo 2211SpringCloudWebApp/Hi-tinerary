@@ -8,7 +8,7 @@
 		<result property="tourContent" column="TOUR_CONTENT" />
 		<result property="startDate" column="START_DATE" />
 		<result property="endDate" column="END_DATE" />
-		<result property="Price" column="PRICE" />
+		<result property="price" column="PRICE" />
 		<result property="deadline" column="DEADLINE" />
 		<result property="currentPeople" column="CURRENT_PEOPLE" />
 		<result property="maxPeople" column="MAX_PEOPLE" />
@@ -18,9 +18,19 @@
 		<result property="writeDate" column="WRITE_DATE" />
 		<result property="userNo" column="USER_NO" />	
 	</resultMap>
+	<select id="selectTourList" resultMap="tourResultMap">
+		SELECT * FROM TOUR_TBL ORDER BY 13 DESC
+	</select>
+	<select id="selectOne" resultMap="tourResultMap">
+		SELECT * FROM TOUR_TBL WHERE TOUR_NO = #{tourNo}
+	</select>
 	
 	<insert id="insertTour">
 		INSERT INTO TOUR_TBL VALUES(SEQ_TOUR_NO.NEXTVAL, #{tourTitle}, #{tourContent}, #{startDate}, #{endDate}, #{price}, #{deadline}, '0', #{maxPeople}, #{minPeople}, #{tourImage}, #{thumbnail}, DEFAULT, '1')
 	</insert>
+	
+	<delete id="deleteTour">
+		DELETE FROM TOUR_TBL WHERE TOUR_NO=#{tourNo}
+	</delete>
 	
 </mapper>

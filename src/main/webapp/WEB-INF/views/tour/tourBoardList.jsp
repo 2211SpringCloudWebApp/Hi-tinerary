@@ -16,8 +16,19 @@
 	                    <p>투어 / 패키지 상품</p>
 	                    <a href="/tour/tourBoardWrite"><button>새글쓰기</button></a>
 	                </div>
+	                
+	                <div id="tourList">
+		                <c:forEach items="${tList}" var="tour">
+		                	<a href="/tour/tourBoardDetail?tourNo=${tour.tourNo }">
+		                	<img src="${tour.thumbnail != null ? tour.thumbnail.replace('C:\\Users\\user1\\git\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : '/resources/images/noThumbnail.png'}">
+		                	</a>
+		                </c:forEach>
+	                </div>
+	               
+	                
 	            </main>
 	     	    <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>  
+	     	    
 
 	</body>
 </html>

@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>투어상품게시판</title>
+		<title>투어상품 게시물 수정</title>
 		 <link rel="stylesheet" href="${path }../../../resources/css/tourBoardWrite.css"/>
 	</head>
 	<body>

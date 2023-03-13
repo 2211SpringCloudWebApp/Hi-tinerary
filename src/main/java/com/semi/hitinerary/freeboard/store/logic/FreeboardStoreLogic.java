@@ -18,9 +18,10 @@ public class FreeboardStoreLogic implements FreeboardStore{
 		return session.insert("freeboardMapper.insertFreeboard", freeboard);
 	}
 
+	// 게시글 수 확인하기
 	@Override
-	public int getListCount(SqlSession session) {
-		return session.selectOne("freeboardMapper.getListCount");
+	public int getListCount(SqlSession session, Search search) {
+		return session.selectOne("freeboardMapper.getListCount", search);
 	}
 
 	@Override
@@ -30,6 +31,7 @@ public class FreeboardStoreLogic implements FreeboardStore{
 		int offset = (currentPage - 1) * limit;
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
+		System.out.println("SearchCondition :" +search.getSearchCondition());
 		List<Freeboard> fList = session.selectList("freeboardMapper.selectFreeboardList", search, rowBounds);
 		return fList;
 	}

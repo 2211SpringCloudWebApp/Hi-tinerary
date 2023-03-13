@@ -32,35 +32,20 @@ public class FreeboardController {
 	public String writeView() {
 		return "freeboard/write";
 	}
-	
-	// 자유게시판 목록 조회
-	@RequestMapping(value = "/freeboard/list", method=RequestMethod.GET)
-	public ModelAndView freeboardView(ModelAndView mv
-			, @ModelAttribute Search search
-			, @RequestParam(value="page", required=false, defaultValue="1") Integer page) {
-		
-		// 게시글 전체 수 조회
-		int totalCount = fService.getListCount();
-		System.out.println("freeboardView함수 totalCount값은 : " + totalCount);
-		
-		// 페이지 처리를 위한 함수
-		PageInfo pi = this.getPageInfo(page, totalCount);
-		System.out.println("freeboardView함수 pi값은 : " + pi);
-		List<Freeboard> fList = fService.selectFreeboardList(pi, search);
-		mv.addObject("pi",pi).addObject("fList", fList).setViewName("/freeboard/list");
-		return mv;
-	}
 
-	//게시글 탭에 따라 목록 리스트 조회
-	@RequestMapping(value="/freeboard/search", method=RequestMethod.GET)
+	//게시글 목록 조회 (페이징 처리)
+	@RequestMapping(value="/freeboard/list", method=RequestMethod.GET)
 	public String freeboardSearchView(@ModelAttribute Search search
 			, @RequestParam(value="page", required = false, defaultValue = "1") Integer currentPage 
+			, @RequestParam(value="searchCondition", required = false, defaultValue = "all") String searchCondition 
 			,Model model) {
+		search.setSearchCondition(searchCondition);
 		try {
 			// search값을 스트링 값으로 화면이 출력해봄
 			System.out.println("freeboardSearchView함수 search.toString()값은 : " + search.toString());
 			// 전체 페이지 수 검색해서 가져옴
 			int totalCount = fService.getSearchListCount(search);
+			System.out.println("freeboardView함수 totalCount값은 : " + totalCount);
 			PageInfo pi = this.getPageInfo(currentPage, totalCount);
 			
 			List<Freeboard> searchList = fService.selectListByKeyword(pi, search);
@@ -142,6 +127,7 @@ public class FreeboardController {
 			return "common/error";
 		}
 	}
+
 	// 아래부분 다시 봐야함.
 	// 지정 경로로 파일 복사(파일 업로드)
 	private String saveFile(MultipartFile uploadFile, HttpServletRequest request) {
@@ -167,35 +153,35 @@ public class FreeboardController {
 			return null;
 		}
 	}
-	
+
 	// navigator start, end값 설정 method()
 	private PageInfo getPageInfo(int currentPage, int totalCount) {
 		PageInfo pi = null;
-		int boardLimit = 10; 
-		int naviLimit = 5; // 최대 페이지 리미트
-		int maxPage;
-		int startNavi;
-		int endNavi;
+		int boardLimit = 10; // recordCountPerPage 한페이지에 보여줄 게시물 수
+		int naviLimit = 5; // naviCountPerPage 한 네비에 보여줄 네비 수
+		int maxPage; // 최대 페이지 수
+		int startNavi; // 시작 네비값
+		int endNavi; // 긑 네비값
 		
 		//ex) 게시글수 170
 		//최대 페이지 구하기 = 17
 		maxPage = (int)((double)totalCount/boardLimit+0.9);
-		System.out.println("getPageInfo함수 maxPage 값은 : "+maxPage);
-		// Math.ceil((double)totalCount/boardLimit);
+		System.out.println("최대페이지 값은 : "+ maxPage);
+		// 시작 네비값 세팅.
 		startNavi = (((int)((double)currentPage/naviLimit+0.9))-1) * naviLimit + 1;
+		// 끝 네비값 세팅.
 		endNavi = startNavi + naviLimit - 1;
-		// 리미트보다 높으면 최대치로 설정해줌.
-		/*
+		
 		if(endNavi > maxPage) {
 			endNavi = maxPage;
 		}
-		*/
-		System.out.println("getPageInfo함수 endNavi 값은 : "+endNavi);
+		
+		System.out.println("끝 네비값은 : "+endNavi);
 		
 		pi = new PageInfo(currentPage, boardLimit, naviLimit, startNavi, endNavi, totalCount, maxPage);
 		return pi;
 	}
-		
+
 	//파일삭제
 	private void deleteFile(String filename, HttpServletRequest request) throws Exception{
 		String root = request.getSession().getServletContext().getRealPath("resources");

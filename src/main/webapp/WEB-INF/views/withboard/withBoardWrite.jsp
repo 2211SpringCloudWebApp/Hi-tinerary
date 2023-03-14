@@ -37,6 +37,7 @@
                             <input type="file" name="uploadFile" id="withImage">
                         </div>                 
                     </div>
+				<!-- <input type="text" placeholder="작성자"><br> -->
 				<input type="text" placeholder="ex) 12월 3박 4일 강릉 바다 보러갈 동행 3명 구해요" name="boardTitle"><br>
 				<textarea name="boardContent" id="" cols="30" rows="10"></textarea><br> 
                 
@@ -56,10 +57,11 @@
                 output.innerHTML = this.value;
             }
 
+            
             const tourImageInput = document.getElementById('withImage');
             const tourContentDiv = document.querySelector('div[name="withContent"]');
 
-            tourImageInput.addEventListener('change', function() {
+            withImageInput.addEventListener('change', function() {
                 const files = this.files;
                 if (files.length > 0) {
                     const filename = files[0].name;
@@ -76,7 +78,8 @@
                     reader.readAsDataURL(file);
                 }
             });
-            const tourContentDiv1 = document.querySelector('div#textarea');
+            
+			const tourContentDiv1 = document.querySelector('div#textarea');
             const tourContentInput1 = document.querySelector('input[name="withContent"]');
 
             tourContentDiv1.addEventListener('input', function() {

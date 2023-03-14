@@ -137,4 +137,22 @@ public class WithController {
 			return "common/error";
 		}
 	}
+	
+	//동행게시판 수정하기(화면)
+	@RequestMapping(value="/withboard/withModifyView", method=RequestMethod.GET)
+	public String withModifyView(@RequestParam("boardNo") Integer boardNo, Model model) {
+		try {
+			With with = wService.selectOneById(boardNo);
+			if(with != null) {
+				model.addAttribute("withBoard", with);
+				return "withboard/withBoardModify";
+			} else {
+				model.addAttribute("msg", "데이터 조회에 실패하였습니다.");
+				return "common/error";
+			}
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getMessage());
+			return "common/error";
+		}
+	}
 }

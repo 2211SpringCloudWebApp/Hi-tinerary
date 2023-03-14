@@ -71,9 +71,8 @@
 	</select>
 	
 	<!-- 질문글/잡담글 등록 -->
-	<!-- 나중에 유저넘버 추가예정. -->
 	<insert id="insertFreeboard">
-		INSERT INTO FREE_BOARD_TBL VALUES(FB_SEQUENCE.NEXTVAL, #{boardHead}, DEFAULT, #{boardTitle}, #{boardSubject}, DEFAULT, #{boardImage}, DEFAULT, 1)
+		INSERT INTO FREE_BOARD_TBL VALUES(FB_SEQUENCE.NEXTVAL, #{boardHead}, DEFAULT, #{boardTitle}, #{boardSubject}, DEFAULT, #{boardImage}, DEFAULT, #{userNo})
 	</insert>
 	
 	<delete id="deleteOne">

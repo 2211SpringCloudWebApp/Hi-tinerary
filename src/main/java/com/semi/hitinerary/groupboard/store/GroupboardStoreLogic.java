@@ -23,7 +23,6 @@ public class GroupboardStoreLogic implements GroupboardStore {
 	public List<Groupboard> selectListBoardByGroupNo(SqlSession session, PagiInfoGroupBoard piInfo) {
 		Pagination pi = piInfo.getPi();
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		System.out.println(pi.getCurrentPage());
 		RowBounds rowbounds = new RowBounds(offset, pi.getBoardLimit());
 		int groupNo = piInfo.getGroupNo();
 		List<Groupboard> gBList = session.selectList("groupBoardMapper.selectListBoardByGroupNo", groupNo, rowbounds);
@@ -34,6 +33,18 @@ public class GroupboardStoreLogic implements GroupboardStore {
 	public int selectTotalCount(SqlSession session, int groupNo) {
 		int result = session.selectOne("groupBoardMapper.selectTotalCount", groupNo);
 		return result;
+	}
+
+	@Override
+	public int deleteBoard(SqlSession session, String boardNo) {
+		int result = session.delete("groupBoardMapper.deleteBoard", boardNo);
+		return result;
+	}
+
+	@Override
+	public Groupboard selectOneGroupBoard(SqlSession session, int groupBoardNo) {
+		Groupboard gBoard = session.selectOne("groupBoardMapper.selectOneGroupBoard", groupBoardNo);
+		return gBoard;
 	}
 
 

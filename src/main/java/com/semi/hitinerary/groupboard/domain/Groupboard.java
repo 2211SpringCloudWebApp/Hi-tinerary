@@ -9,6 +9,8 @@ public class Groupboard {
 	private Timestamp writeDate;
 	private int groupNo;
 	private int userNo;
+	private String userNickname;
+	private String groupName;
 	
 	public Groupboard() {}
 	
@@ -68,6 +70,22 @@ public class Groupboard {
 
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
+	}
+
+	public String getUserNickname() {
+		return userNickname;
+	}
+
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
+	}
+	
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
 
 	@Override

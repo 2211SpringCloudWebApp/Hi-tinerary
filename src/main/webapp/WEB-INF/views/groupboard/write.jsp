@@ -9,7 +9,7 @@
 	<body>
 		<h1>${groupName } 그룹 글쓰기</h1>
 		<div>
-			<form action="/group/write" method="post">
+			<form action="/group/board/write" method="post">
 				<input type="hidden" name="groupNo" value="${groupNo }">
 				<input type="hidden" name="groupIndex" value="${groupIndex }">
 				<input type="text" name="groupTitle">

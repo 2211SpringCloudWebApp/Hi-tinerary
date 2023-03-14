@@ -129,7 +129,7 @@
             td{
             	border-bottom : 1px dashed black;
             }
-            td input{
+            #groupList-tbl input{
 	        	text-align : center;
 	        	color : black;
 	        	background-color : green;
@@ -147,6 +147,24 @@
             	margin-top : 20px;
             	border : 1px solid green;
             	border-radius : 5px;
+            }
+            #board-navi a{
+            	text-decoration : none;
+            	color : black;
+            }
+            #groupBoardList-tbl td:nth-of-type(4) input{
+            	text-align : center;
+	        	color : white;
+	        	background-color : #F39081;
+	        	border : 1px solid #F39081;
+	        	border-radius : 5px;
+            }
+            #groupBoardList-tbl td:nth-of-type(5) input{
+            	text-align : center;
+	        	color : white;
+	        	background-color : #FBD188;
+	        	border : 1px solid #FBD188;
+	        	border-radius : 5px;
             }
     	</style>
 	</head>
@@ -200,7 +218,7 @@
 							<h1>그룹 게시글이 없어요!</h1>
 						</c:if>
 						<c:if test="${gBList ne null }">
-							<table>
+							<table id="groupBoardList-tbl">
 								<thead>
 									<tr>
 										<th width="200px">제목</th>
@@ -213,22 +231,44 @@
 								<tbody>
 									<c:forEach items="${gBList}" var="groupBoard">
 										<tr>
-											<td>${groupBoard.boardTitle }</td>
+											<td><a href="/group/board/detail?groupBoardNo=${groupBoard.boardNo}&groupIndex=${groupIndex}">${groupBoard.boardTitle }</a></td>
 											<td>${groupBoard.writeDate }</td>
-											<td>${groupBoard.userNo }</td>
-											<td><a href="#">123</a></td>
-											<td><a href="#">123</a></td>
+											<td>${groupBoard.userNickname }</td>
+											<td>
+												<form action="">
+													<input type="hidden" name="groupBoardNo" value="${groupBoard.boardNo}">
+													<input type="hidden" name="groupIndex" value="${groupIndex }">
+													<input type="submit" value="수정">
+												</form>
+											</td>
+											<td>
+												<form action="/group/board/delete" method="post">
+													<input type="hidden" name="groupIndex" value="${groupIndex }">
+													<input type="hidden" name="groupBoardNo" value="${groupBoard.boardNo}">
+													<input type="submit" value="삭제">
+												</form>
+											</td>
 										</tr>								
 									</c:forEach>
 								</tbody>
 								<tfoot>
-									<c:forEach begin="${pi.startNavi }" end="${pi.endNavi }" var="p">
-											<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${p}">${p}</a>&nbsp;
-									</c:forEach>
+									<tr>
+										<td colspan="5" id="board-navi">
+											<c:if test="${pi.currentPage ne '1' }">
+												<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${pi.currentPage - 1}">&lt;</a>&nbsp;
+											</c:if>
+											<c:forEach begin="${pi.startNavi }" end="${pi.endNavi }" var="p">
+													<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${p}">${p}</a>&nbsp;
+											</c:forEach>
+											<c:if test="${pi.currentPage ne pi.maxNavi }">
+												<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${pi.currentPage + 1}">&gt;</a>&nbsp;
+											</c:if>
+										</td>
+									</tr>
 								</tfoot>
 							</table>
 						</c:if>
-						<form action="/group/writeView" method="post">
+						<form action="/group/board/writeView" method="post">
 							<input type="hidden" name="groupIndex" value="${groupIndex }">
 							<input type="hidden" name="groupName" value="${group.groupName }">
 							<input type="hidden" name="groupNo" value="${group.groupNo }">
@@ -242,7 +282,7 @@
 			                <h1 class="title">${group.groupName }</h1>
 			            </div>
 			            <div>
-			            	<table>
+			            	<table id="groupList-tbl">
 			            		<tr>
 			            			<th width="150">닉네임</th>
 			            			<th width="300">메일주소</th>

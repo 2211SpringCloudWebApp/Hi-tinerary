@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="commentMapper">
+
+	<resultMap type="Comment" id="commentResultMapper">
+		<id property="commentNo" column="COMMENT_NO"/>
+		<result property="content" column="CONTENT"/>
+		<result property="writeDate" column="WRITE_DATE"/>
+		<result property="updateDate" column="UPDATE_DATE"/>
+		<result property="depth" column="DEPTH"/>
+		<result property="packageNo" column="PACKAGE_NO"/>
+		<result property="withBoardNo" column="WITH_BOARD_NO"/>
+		<result property="freeBoardNo" column="FREE_BOARD_NO"/>
+		<result property="groupBoardNo" column="GROUP_BOARD_NO"/>
+		<result property="status" column="STATUS"/>
+		<result property="refCommentNo" column="REF_COMMENT_NO"/>
+		<result property="userNo" column="USER_NO"/>
+	</resultMap>
+		
+	<select id="selectListComment" resultMap="commentResultMapper">
+		SELECT * FROM COMMENT_TBL WHERE GROUP_BOARD_NO = #{boardNo}
+	</select>	
+	
+</mapper>

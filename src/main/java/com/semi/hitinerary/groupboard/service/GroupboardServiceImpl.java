@@ -36,6 +36,18 @@ public class GroupboardServiceImpl implements GroupboardService{
 		int result = gBStore.selectTotalCount(session, groupNo);
 		return result;
 	}
+
+	@Override
+	public int deleteBoard(String boardNo) {
+		int result = gBStore.deleteBoard(session, boardNo);
+		return result;
+	}
+
+	@Override
+	public Groupboard selectOneGroupBoard(int groupBoardNo) {
+		Groupboard gBoard = gBStore.selectOneGroupBoard(session, groupBoardNo);
+		return gBoard;
+	}
 	
 
 }

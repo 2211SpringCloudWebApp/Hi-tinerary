@@ -57,14 +57,14 @@ public class GroupController {
 			model.addAttribute("gList", gList);
 			if(Integer.parseInt(groupIndex) > -1 ) {
 				group = gList.get(Integer.parseInt(groupIndex));				
-			}
-			model.addAttribute("group", group);
-			NavigationNList naviNList = gBController.groupBoardList(group.getGroupNo(), Integer.parseInt(currentPage));
-			List<Groupboard> gBList = naviNList.getgBList();
-			Pagination pi = naviNList.getPi();
-			if(!gBList.isEmpty()) {
-				model.addAttribute("gBList", gBList);
-				model.addAttribute("pi", pi);
+				model.addAttribute("group", group);
+				NavigationNList naviNList = gBController.groupBoardList(group.getGroupNo(), Integer.parseInt(currentPage));
+				List<Groupboard> gBList = naviNList.getgBList();
+				Pagination pi = naviNList.getPi();
+				if(!gBList.isEmpty()) {
+					model.addAttribute("gBList", gBList);
+					model.addAttribute("pi", pi);
+				}
 			}
 		}
 		if(groupUserView.equals("T")) {

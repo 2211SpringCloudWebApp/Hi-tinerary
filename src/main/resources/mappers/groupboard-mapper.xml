@@ -8,18 +8,28 @@
 		<result property="boardSubject" column="BOARD_SUBJECT"/>
 		<result property="writeDate" column="WRITE_DATE"/>
 		<result property="groupNo" column="GROUP_NO"/>
-		<result property="userNo" column="UserNo"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="userNickname" column="USER_NICKNAME"/>
+		<result property="groupName" column="GROUP_NAME"/>
 	</resultMap>
 	
 	<insert id="insertBoard" parameterType="groupBoard">
 		INSERT INTO GROUP_BOARD_TBL VALUES(SEQ_GROUP_BOARD.NEXTVAL, #{boardTitle}, #{boardSubject}, DEFAULT, #{groupNo}, #{userNo})
 	</insert>
 	
+	<delete id="deleteBoard" parameterType="string">
+		DELETE FROM GROUP_BOARD_TBL WHERE BOARD_NO = #{boardNo}
+	</delete>
+	
 	<select id="selectListBoardByGroupNo" resultMap="groupBoardResultMap">
-		SELECT * FROM GROUP_BOARD_TBL WHERE GROUP_NO = #{groupNo}
+		SELECT A.* , B.USER_NICKNAME AS USER_NICKNAME FROM GROUP_BOARD_TBL A JOIN USER_TBL B ON A.USER_NO = B.USER_NO WHERE GROUP_NO = #{groupNo} ORDER BY WRITE_DATE
 	</select>
 	
 	<select id="selectTotalCount" resultType="_int">
 		SELECT COUNT(*) FROM GROUP_BOARD_TBL WHERE GROUP_NO = #{groupNo}
+	</select>
+	
+	<select id="selectOneGroupBoard" resultMap="groupBoardResultMap">
+		SELECT A.* , B.USER_NICKNAME AS USER_NICKNAME, C.GROUP_NAME AS GROUP_NAME FROM GROUP_BOARD_TBL A JOIN USER_TBL B ON A.USER_NO = B.USER_NO JOIN GROUP_TBL C ON C.GROUP_NO = A.GROUP_NO WHERE BOARD_NO = #{groupBoardNo}
 	</select>
 </mapper>

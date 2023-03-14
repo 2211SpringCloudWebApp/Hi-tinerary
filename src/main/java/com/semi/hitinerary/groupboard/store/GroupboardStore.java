@@ -15,5 +15,9 @@ public interface GroupboardStore {
 
 	public int selectTotalCount(SqlSession session, int groupNo);
 
+	public int deleteBoard(SqlSession session, String boardNo);
+
+	public Groupboard selectOneGroupBoard(SqlSession session, int groupBoardNo);
+
 
 }

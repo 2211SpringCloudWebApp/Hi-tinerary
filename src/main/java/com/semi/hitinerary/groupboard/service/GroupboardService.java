@@ -13,5 +13,9 @@ public interface GroupboardService {
 
 	public int selectTotalCount(int groupNo);
 
+	public int deleteBoard(String boardNo);
+
+	public Groupboard selectOneGroupBoard(int groupBoardNo);
+
 
 }

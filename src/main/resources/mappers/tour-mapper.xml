@@ -32,5 +32,8 @@
 	<delete id="deleteTour">
 		DELETE FROM TOUR_TBL WHERE TOUR_NO=#{tourNo}
 	</delete>
+	<update id="updateTour">
+		UPDATE TOUR_TBL SET TOUR_TITLE=#{tourTitle}, TOUR_CONTENT=#{tourContent}, START_DATE=#{startDate}, END_DATE=#{endDate}, PRICE=#{price}, DEADLINE=#{deadline}, MAX_PEOPLE=#{maxPeople}, MIN_PEOPLE=#{minPeople}, TOUR_IMAGE=#{tourImage}, TOUR_THUMBNAIL=#{thumbnail} WHERE TOUR_NO=#{tourNo}
+	</update>
 	
 </mapper>

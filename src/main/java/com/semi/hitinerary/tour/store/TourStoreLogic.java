@@ -35,4 +35,10 @@ public class TourStoreLogic implements TourStore {
 		return result;
 	}
 
+	@Override
+	public int updateTour(SqlSession session, Tour tour) {
+		int result = session.update("TourMapper.updateTour", tour);
+		return result;
+	}
+
 }

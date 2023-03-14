@@ -42,5 +42,11 @@ public class TourServiceImpl implements TourService {
 		return result;
 	}
 
+	@Override
+	public int updatePosting(Tour tour) {
+		int result = tStore.updateTour(session, tour);
+		return result;
+	}
+
 	
 }

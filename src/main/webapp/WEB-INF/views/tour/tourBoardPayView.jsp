@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>투어상품게시판</title>
+		<title>투어상품결제페이지</title>
 		 <link rel="stylesheet" href="${path }../../../resources/css/tourBoardDetail.css"/>
 	</head>
 	<body>
@@ -14,7 +14,7 @@
 			<main id="tourBoardDetail">
 	            <div id="boardTitle">
 	                <div id="bar">  </div>
-	                <p>투어 / 패키지 상품</p>                    
+	                <p>투어 / 패키지 상품 결제</p>                    
 	            </div>
 
 <!-- 													${tour } -->
@@ -60,26 +60,12 @@
                     </div>    
                 </div>    
             </div>
-            <div id="partition1">
-                상세일정 안내
-            </div>
-            <div id="tourContent">
-                 ${tour.tourContent } <br>
-                  <img src="${tour.tourImage != null ? tour.tourImage.replace('C:\\Users\\user1\\git\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : ' '}">
-            </div>
-            <div id="replyDiv">
-               댓글영역 ~두둥~ 댓글영역
-            </div>
+            
+     
         </main>    
                 
         
-        <script>
-        	function removeCheck(tourNo){
-        		if(confirm("정말 삭제하시겠어요?")){
-        			location.href="/tour/deletePosting?tourNo="+tourNo;
-        		}
-        	}
-        </script>
+      
         
             
 	    <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>  

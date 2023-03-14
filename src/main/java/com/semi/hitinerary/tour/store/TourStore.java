@@ -39,4 +39,12 @@ public interface TourStore {
 	 */
 	public int deleteTour(SqlSession session, int tourNo);
 
+	/**
+	 * 패키지게시판 게시물 수정 Store
+	 * @param session
+	 * @param tour
+	 * @return int
+	 */
+	public int updateTour(SqlSession session, Tour tour);
+
 }

@@ -46,10 +46,11 @@
                                     <div><input type="text" name="deadline"></div>
                                 </div>
                                 <div class="half"> 
+                                	<div class="infos1">최소인원</div>
+                                    <div><input type="number" name="minPeople"></div>
                                     <div class="infos1">최대인원</div>
                                     <div><input type="number" name="maxPeople"></div>
-                                    <div class="infos1">최소인원</div>
-                                    <div><input type="number" name="minPeople"></div>
+                                    
                                 </div>
                             </div>
                             <div class="oneHundredX8times"> 

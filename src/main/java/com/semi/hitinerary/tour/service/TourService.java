@@ -33,4 +33,11 @@ public interface TourService {
 	 */
 	public int deleteTour(int tourNo);
 
+	/**
+	 * 투어게시판 게시물 수정 Service
+	 * @param tour
+	 * @return int
+	 */
+	public int updatePosting(Tour tour);
+
 }

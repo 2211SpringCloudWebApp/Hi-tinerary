@@ -1,0 +1,104 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+*{
+    box-sizing: border-box;
+    font-family: 'Pretendard-Regular';
+}
+#container{
+    background-color: bisque;
+    width : 1200px;
+    margin: 0 auto;
+}
+#detail-content {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+table {
+	width: 100%;
+}
+
+
+
+#detailTable1 {
+	margin-top: 20px;
+	border-top: 1px solid #FBD188;
+	border-bottom: 1px solid #FBD188;
+	text-align: center;
+	height: 50px;
+}
+
+#detailTable1 td:nth-child(1) {
+	width: 10%;
+}
+
+#detailTable1 td:nth-child(2) {
+	text-align: left;
+	width: 70%;
+}
+
+#detailTable1 td:nth-child(3) {
+	width: 10%;
+}
+
+#detailTable1 td:nth-child(4) {
+	width: 10%;
+}
+
+#detailDiv1 {
+	display: flex; /* flexbox를 이용하여 요소를 수직 정렬 */
+	justify-content: center; /* 가로 중앙 정렬 */
+	align-items: center; /* 세로 중앙 정렬 */
+	width: 90%;
+	height: 90%;
+	border-radius: 10px;
+	background-color: #F39081;
+	margin: 0 auto;
+	text-align: center;
+	line-height: 1.8; /* 텍스트의 세로 가운데 정렬 */
+}
+
+#detailDiv2{
+	display: flex; /* flexbox를 이용하여 요소를 수직 정렬 */
+	justify-content: center; /* 가로 중앙 정렬 */
+	align-items: center; /* 세로 중앙 정렬 */
+	width: 90%;
+	height: 90%;
+	border-radius: 10px;
+	background-color: #FBD188;
+	margin: 0 auto;
+	text-align: center;
+	line-height: 1.8; /* 텍스트의 세로 가운데 정렬 */
+}
+
+#detailTable2 {
+	font-size: 14px;
+	height: 30px;
+}
+
+#detailTable2 td:nth-child(1) {
+	width: 80%;
+}
+
+#detailTable2 td:nth-child(2) {
+	text-align: left;
+	width: 20%;
+}
+
+#accusation{
+		color: red;
+}
+#detailTable3 {
+	border-bottom: 1px solid #FBD188;
+}
+
+#textArea {
+	border: 0;
+	height: 400px;
+	width: 100%;
+}

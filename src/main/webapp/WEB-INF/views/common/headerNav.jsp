@@ -27,17 +27,21 @@
                 <c:if test="${sessionScope.loginUser eq null }">
                	 	<div id="user-id">
 	                    <ul>
-	                        <li>|&nbsp;&nbsp; <a href="#">회원가입</a>&nbsp;&nbsp; |</li>
-	                        <li>&nbsp;&nbsp; <a href="#">로그인</a> &nbsp;&nbsp;|</li>
+	                        <li>|&nbsp;&nbsp; <a href="/user/register">회원가입</a>&nbsp;&nbsp; |</li>
+	                        <li>&nbsp;&nbsp; <a href="/user/login">로그인</a> &nbsp;&nbsp;|</li>
 	                    </ul>
-                	</div>
-                </c:if>
-                <c:if test="${sessionScope.loginUser ne null }">
-                	<div>
-                		<b></b>님 환영합니다.
-                		<a href="">마이페이지</a>
-                		<a href="">로그아웃</a>
-                	</div>
+	                </div>
+	                </c:if>
+	                <c:if test= "${sessionScope.loginUser ne null }">
+					<div id="user-id">
+						<p>
+							${sessionScope.loginUser.userNickname } 님 환영합니다!	
+						</p>
+	                    <ul>
+	                        <li>|&nbsp;&nbsp; <a href="/user/register">마이페이지</a>&nbsp;&nbsp; |</li>
+	                        <li>&nbsp;&nbsp; <a href="/user/logout">로그아웃</a> &nbsp;&nbsp;|</li>
+	                    </ul>
+	                </div>
                 </c:if>
             </header>
         </div>    

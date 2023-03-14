@@ -1,0 +1,146 @@
+@charset "UTF-8";
+
+@font-face {
+	font-family: 'Pretendard-Regular';
+	src:
+		url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+		format('woff');
+	font-weight: 400;
+	font-style: normal;
+}
+* {
+	box-sizing: border-box;
+	font-family: 'Pretendard-Regular';
+}
+#write-content {
+	width: 1200px;
+	margin: 0 auto;
+}
+table {
+	width: 100%;
+}
+#writeTable1 {
+	margin-top: 20px;
+	border-top: 1px solid #FBD188;
+	border-bottom: 1px solid #FBD188;
+	text-align: center;
+	height: 50px;
+}
+#selecthead {
+	font-size: 16px;
+	color: #333;
+	padding: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	background-color: #fff;
+}
+
+#inputtitle{
+	font-size: 16px;
+	height:30px;
+	width:700px;
+	border: 0;
+}
+
+#writeTable1 td:nth-child(1) {
+	width: 10%;
+}
+
+#writeTable1 td:nth-child(2) {
+	text-align: left;
+	width: 70%;
+}
+
+#writeTable1 td:nth-child(3) {
+	width: 10%;
+}
+
+#writeTable1 td:nth-child(4) {
+	width: 10%;
+}
+
+#writeDiv1 {
+	display: flex; /* flexbox를 이용하여 요소를 수직 정렬 */
+	justify-content: center; /* 가로 중앙 정렬 */
+	align-items: center; /* 세로 중앙 정렬 */
+	width: 90%;
+	height: 90%;
+	border-radius: 10px;
+	background-color: #F39081;
+	margin: 0 auto;
+	text-align: center;
+	line-height: 1.8; /* 텍스트의 세로 가운데 정렬 */
+}
+
+#writeTable2 {
+	border-bottom: 1px solid #FBD188;
+}
+
+#writeTable3 {
+	margin-top: 20px;
+	height: 50px;
+	border: 1px solid rgb(168, 167, 167);
+}
+
+#writeTable3 td:nth-child(1) {
+	padding-left: 10px;
+	width: 10%;
+	color: #F39081;
+}
+
+#writeTable3 td:nth-child(2) {
+	text-align: left;
+	width: 70%;
+	color: rgb(168, 167, 167);
+}
+
+#writeTable3 td:nth-child(3) {
+	width: 10%;
+	text-align: center;
+}
+
+#writeTable3 td:nth-child(3) button {
+	width: 80px;
+	height: 30px;
+	border: 0; border-radius : 10px;
+	background-color: #F39081;
+	border-radius: 10px;
+	color: white;
+	font-weight: 600;
+}
+
+#writeTable3 td:nth-child(3) button:hover {
+	box-shadow: 1px 1px 2px #000000;
+}
+
+#writeTable4 {
+	
+	height: 150px;
+	text-align: center;
+}
+
+#uplodebutton {
+	height: 40px;
+	width: 100px;
+	border: 0;
+	color: white;
+	font-weight: 600;
+	border-radius: 10px;
+	background-color: #0F8D80;
+}
+
+#viewlistbutton {
+	height: 40px;
+	width: 100px;
+	border: 0;
+	color: white;
+	font-weight: 600;
+	border-radius: 10px;
+	background-color: #FBD188;
+}
+
+#textArea {
+	border: 0;
+	height: 400px;
+	width: 100%;
+}

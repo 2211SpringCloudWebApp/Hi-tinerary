@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+@font-face {
+	font-family: 'Pretendard-Regular';
+	src:
+		url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+		format('woff');
+	font-weight: 400;
+	font-style: normal;
+}
+
+* {
+	box-sizing: border-box;
+	font-family: 'Pretendard-Regular';
+}
+
+#container {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+#freeboardNav {
+	width: 1200px;
+	height: 50px;
+	margin: 0 auto;
+}
+
+#freeboardNav td:nth-child(1) {
+	width: 10%;
+	font-size: 20px;
+	font-weight: 600;
+}
+
+#freeboardNav td:nth-child(1) span {
+	color: #FBD188;
+}
+
+#freeboardNav td:nth-child(2) {
+	width: 20%;
+}
+
+#freeboardNav td:nth-child(2) a {
+	color: inherit;
+	text-decoration: none;
+}
+
+#freeboardNav td:nth-child(2) a:hover {
+	color: #FBD188;
+	text-shadow: 1px 1px 2px #000000;
+}
+
+#freeboardNav td:nth-child(3) {
+	width: 60%;
+}
+
+#freeboardNav td:nth-child(4) {
+	text-align:center;
+	width: 10%;
+}
+
+#freeboardNav td:nth-child(4) button {
+	width: 80px;
+	height: 30px;
+	border: 0;
+	border-radius: 10px;
+	color: white;
+	font-weight: 600;
+	background-color: #FBD188;
+}
+
+#freeboardNav td:nth-child(4) button:hover {
+	box-shadow: 1px 1px 2px #000000;
+}

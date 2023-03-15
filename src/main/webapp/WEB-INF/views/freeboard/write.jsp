@@ -32,7 +32,10 @@
 									<option value="question">질문</option>
 								</select>
 	                        </td>
-	                        <td><input id="inputtitle" name="boardTitle" type="text" > </td>
+	                        <td>
+	                        	<input id="inputtitle" name="boardTitle" type="text" > 
+	                      		<input name="userNo" type="text" value="${loginUser.userNo }" style="display:none">
+	                        </td>
 	                        <td><span name="nickname">${loginUser.userNickname }</span></td>
 	                        <td>
 	                        </td>

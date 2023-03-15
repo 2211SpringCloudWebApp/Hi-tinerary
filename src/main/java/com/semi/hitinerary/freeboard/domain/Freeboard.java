@@ -11,11 +11,12 @@ public class Freeboard {
 	private String boardImage;		// (NULL)이미지파일 이름
 	private int boardCheck;			// (NULL)답변 여부(DEFAULT = 0/ 0:답변전 / 1:답변후)
 	private int userNo;				// 유저번호(작성자 구분을 위해.. 이용해서 유저 정보 불러옴..)
-
+	private String userNickname;	// 유저닉네임
+	
 	public Freeboard() {}
 
 	public Freeboard(int boardNo, String boardHead, Timestamp writeDate, String boardTitle, String boardSubject,
-			Timestamp updateDate, String boardImage, int boardCheck, int userNo) {
+			Timestamp updateDate, String boardImage, int boardCheck, int userNo, String userNickname) {
 		super();
 		this.boardNo = boardNo;
 		this.boardHead = boardHead;
@@ -26,6 +27,7 @@ public class Freeboard {
 		this.boardImage = boardImage;
 		this.boardCheck = boardCheck;
 		this.userNo = userNo;
+		this.userNickname = userNickname;
 	}
 	
 	public int getBoardNo() {
@@ -82,11 +84,18 @@ public class Freeboard {
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
-	
+	public String getUserNickname() {
+		return userNickname;
+	}
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
+	}
+
 	@Override
 	public String toString() {
 		return "Freeboard [boardNo=" + boardNo + ", boardHead=" + boardHead + ", writeDate=" + writeDate
 				+ ", boardTitle=" + boardTitle + ", boardSubject=" + boardSubject + ", updateDate=" + updateDate
-				+ ", boardImage=" + boardImage + ", boardCheck=" + boardCheck + ", userNo=" + userNo + "]";
+				+ ", boardImage=" + boardImage + ", boardCheck=" + boardCheck + ", userNo=" + userNo + ", userNickname="
+				+ userNickname + "]";
 	}
 }

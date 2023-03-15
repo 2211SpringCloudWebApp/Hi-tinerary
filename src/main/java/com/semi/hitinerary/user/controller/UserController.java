@@ -20,10 +20,10 @@ public class UserController {
 	private UserService uService;
 	
 	// 회원가입 분류창
-		@RequestMapping(value="/user/registerType", method = RequestMethod.GET)
-		public String registerType() {
-			return "user/registerType";
-		}
+	@RequestMapping(value="/user/registerType", method = RequestMethod.GET)
+	public String registerType() {
+		return "user/registerType";
+	}
 	
 	// 로그인창
 	@RequestMapping(value="/user/login", method = RequestMethod.GET)
@@ -62,5 +62,11 @@ public class UserController {
 			model.addAttribute("msg", "로그아웃 실패");
 			return "common/error";
 		}
+	}
+	
+	// 관리자 마이페이지 화면 접속
+	@RequestMapping(value = "/manager/mypage", method=RequestMethod.GET)
+	public String writeView() {
+		return "manager/mypage";
 	}
 }

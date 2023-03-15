@@ -10,7 +10,6 @@
     font-family: 'Pretendard-Regular';
 }
 #container{
-    background-color: bisque;
     width : 1200px;
     margin: 0 auto;
 }
@@ -31,6 +30,7 @@ table {
 	border-bottom: 1px solid #FBD188;
 	text-align: center;
 	height: 50px;
+	font-size: 20px;
 }
 
 #detailTable1 td:nth-child(1) {
@@ -49,35 +49,29 @@ table {
 #detailTable1 td:nth-child(4) {
 	width: 10%;
 }
-
-#detailDiv1 {
+.detailDiv{
+	color: white;
+	font-size: 15px;
 	display: flex; /* flexbox를 이용하여 요소를 수직 정렬 */
 	justify-content: center; /* 가로 중앙 정렬 */
 	align-items: center; /* 세로 중앙 정렬 */
 	width: 90%;
 	height: 90%;
-	border-radius: 10px;
-	background-color: #F39081;
+	border-radius: 5px;
 	margin: 0 auto;
 	text-align: center;
-	line-height: 1.8; /* 텍스트의 세로 가운데 정렬 */
+	line-height: 1.8; /* 텍스트의 세로 가운데 정렬 */	
+}
+#detailDiv1 {
+	background-color: #F39081;
 }
 
 #detailDiv2{
-	display: flex; /* flexbox를 이용하여 요소를 수직 정렬 */
-	justify-content: center; /* 가로 중앙 정렬 */
-	align-items: center; /* 세로 중앙 정렬 */
-	width: 90%;
-	height: 90%;
-	border-radius: 10px;
 	background-color: #FBD188;
-	margin: 0 auto;
-	text-align: center;
-	line-height: 1.8; /* 텍스트의 세로 가운데 정렬 */
 }
 
 #detailTable2 {
-	font-size: 14px;
+	
 	height: 30px;
 }
 
@@ -91,13 +85,14 @@ table {
 }
 
 #accusation{
-		color: red;
+	color: red;
 }
 #detailTable3 {
 	border-bottom: 1px solid #FBD188;
 }
 
 #textArea {
+	font-size: 20px;
 	border: 0;
 	height: 400px;
 	width: 100%;

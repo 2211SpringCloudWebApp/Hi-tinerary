@@ -39,12 +39,12 @@
 									<a href="/freeboard/detail?boardNo=${freeboard.boardNo }">${freeboard.boardTitle }</a>
 								</td>
 								<td>
-									${loginUser.userNickname }
+									${freeboard.userNickname }
 								</td>
 								<td>
 									<c:if test="${freeboard.boardHead == 'question'}">
-										<c:if test="${freeboard.boardCheck == 0}"><span id ="freespan1">답변대기</span></c:if>
-										<c:if test="${freeboard.boardCheck == 1}"><span id ="freespan2">답변완료</span></c:if>					
+										<c:if test="${freeboard.boardCheck == 0}"><div class="freespan" id ="freespan1">답변대기</div></c:if>
+										<c:if test="${freeboard.boardCheck == 1}"><div class="freespan" id ="freespan2">답변완료</div></c:if>					
 									</c:if>
 								</td>
 							</tr>

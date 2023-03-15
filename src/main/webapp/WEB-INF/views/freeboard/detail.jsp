@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
 	<head>
-	<meta charset="UTF-8">
-	<title>자유게시판 상세조회</title>
-	<link rel="stylesheet" href="../../../resources/css/freeboardDetail.css">
+		<meta charset="UTF-8">
+		<title>자유게시판 상세조회</title>
+		<link rel="stylesheet" href="../../../resources/css/freeboardDetail.css">
 	</head>
 	<body>
 		<!-- 헤더 -->
@@ -26,15 +27,15 @@
                         	<c:if test="${freeboard.boardHead == 'free'}">잡담</c:if>
                         </td>
                         <td>${freeboard.boardTitle }</td>
-                        <td>${loginUser.userNickname }</td>
+                        <td>${freeboard.userNickname }</td>
                         <td>
                         	<c:if test="${freeboard.boardHead == 'question'}">
                         		<c:if test="${freeboard.boardCheck == 0}">
-                        			<div id = "detailDiv1">답변대기</div>
+                        			<div class="detailDiv" id = "detailDiv1">답변대기</div>
                         		</c:if>
                         		
                         		<c:if test="${freeboard.boardCheck == 1}">
-                        			<div id = "detailDiv2">답변완료</div>
+                        			<div class="detailDiv" id = "detailDiv2">답변완료</div>
                         		</c:if>
                         	</c:if>
                         </td>
@@ -44,9 +45,11 @@
                     <tr>
                         <td></td>
                         <td>
-                        	${freeboard.writeDate }
+                        	${fn:substring(freeboard.writeDate, 0, 10)} 오전 ${fn:substring(freeboard.writeDate, 11, 13)}시
                         	<c:if test="${freeboard.userNo == loginUser.userNo}">
-        	                	<a href="#">수정</a> | 
+                        		<a href="/freeboard/modify?boardNo=${freeboard.boardNo}">수정</a> | 
+                        	</c:if>
+                        	<c:if test="${freeboard.userNo == loginUser.userNo || loginUser.userGrade == 4}">
     	                    	<a href="/freeboard/remove?boardNo=${freeboard.boardNo }" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
                         	</c:if>
                         	<c:if test="${freeboard.userNo != loginUser.userNo}">

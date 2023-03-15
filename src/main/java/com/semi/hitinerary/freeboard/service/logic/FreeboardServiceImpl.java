@@ -16,6 +16,7 @@ public class FreeboardServiceImpl implements FreeboardService{
 	
 	@Autowired
 	private FreeboardStore fStore;
+	
 	@Autowired
 	private SqlSession session;
 	
@@ -24,7 +25,11 @@ public class FreeboardServiceImpl implements FreeboardService{
 	public int insertFreeboard(Freeboard freeboard) {
 		return fStore.insertFreeboard(session, freeboard);
 	}
-
+	
+	@Override
+	public int modifyFreeboard(Freeboard freeboard) {
+		return fStore.modifyFreeboard(session, freeboard);
+	}
 
 	@Override
 	public int getListCount(Search search) {
@@ -41,7 +46,11 @@ public class FreeboardServiceImpl implements FreeboardService{
 	public Freeboard selectOneById(int boardNo) {
 		return fStore.selectOneById(session, boardNo);
 	}
-
+	
+	@Override
+	public String selectNickname(int boardNo) {
+		return fStore.selectNickname(session, boardNo);
+	}
 
 	@Override
 	public int deleteFreeboard(int boardNo) {
@@ -59,6 +68,9 @@ public class FreeboardServiceImpl implements FreeboardService{
 	public List<Freeboard> selectListByKeyword(PageInfo pi, Search search) {
 		return fStore.selectListByKeyword(session, pi, search);
 	}
+
+
+
 
 
 

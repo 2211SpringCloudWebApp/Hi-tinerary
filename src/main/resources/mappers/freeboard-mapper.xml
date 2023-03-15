@@ -12,10 +12,16 @@
 		<result property="boardImage" column="BOARD_IMAGE"/>
 		<result property="boardCheck" column="BOARD_CHECK"/>
 		<result property="userNo" column="USER_NO"/>
+		<result property="userNickname" column="USER_NICKNAME"/>
 	</resultMap>
 	
 	<select id="selectUser" resultMap="freeboardResultMapper">
 		SELECT * FROM FREE_BOARD_TBL WHERE USER_NO = 1
+	</select>
+	
+	<!-- 닉네임 가져오기 -->
+	<select id="selectNickname" resultType="java.lang.String">
+		SELECT UT.USER_NICKNAME FROM USER_TBL UT JOIN FREE_BOARD_TBL FT ON UT.USER_NO = FT.USER_NO WHERE FT.BOARD_NO = #{boardNo }
 	</select>
 	
 	<select id="selectOne" resultMap="freeboardResultMapper">
@@ -60,20 +66,27 @@
 	
 	<!-- 검색 목록 불러오기 -->
 	<select id="selectListByKeyword" resultMap="freeboardResultMapper">
-		SELECT * FROM FREE_BOARD_TBL
+		SELECT FT.*, UT.USER_NICKNAME
+		FROM FREE_BOARD_TBL FT
+		LEFT JOIN USER_TBL UT
+		ON UT.USER_NO = FT.USER_NO
 		<if test="searchCondition == 'free'">
-			WHERE BOARD_HEAD = #{searchCondition }
+			WHERE FT.BOARD_HEAD = #{searchCondition }
 		</if>
 		<if test="searchCondition == 'question'">
-			WHERE BOARD_HEAD = #{searchCondition }
+			WHERE FT.BOARD_HEAD = #{searchCondition }
 		</if>
-		ORDER BY WRITE_DATE DESC
+		ORDER BY FT.WRITE_DATE DESC
 	</select>
 	
 	<!-- 질문글/잡담글 등록 -->
 	<insert id="insertFreeboard">
 		INSERT INTO FREE_BOARD_TBL VALUES(FB_SEQUENCE.NEXTVAL, #{boardHead}, DEFAULT, #{boardTitle}, #{boardSubject}, DEFAULT, #{boardImage}, DEFAULT, #{userNo})
 	</insert>
+	
+	<update id="modifyFreeboard">
+		UPDATE FREE_BOARD_TBL SET BOARD_TITLE = #{boardTitle}, BOARD_SUBJECT = #{boardSubject}, BOARD_IMAGE = #{boardImage}, UPDATE_DATE = DEFAULT WHERE BOARD_NO = #{boardNo}
+	</update>
 	
 	<delete id="deleteOne">
 		DELETE FROM FREE_BOARD_TBL WHERE BOARD_NO = #{boardNo}

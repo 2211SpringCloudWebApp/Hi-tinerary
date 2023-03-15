@@ -46,6 +46,7 @@ h1{
 						<td>
 							<a href="/withboard/withBoardDetail?boardNo=${withBoard.boardNo }">
 		                	<img src="${withBoard.boardImage != null ? withBoard.boardImage.replace('C:\\Users\\samsung\\eclipse-workspace\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : '/resources/images/noboardImage.png'}">
+		                	
 		                	</a>
 						</td>
 						<td>${withBoard.startDate }</td>

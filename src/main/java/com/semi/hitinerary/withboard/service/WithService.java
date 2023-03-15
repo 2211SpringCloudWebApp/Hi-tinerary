@@ -25,4 +25,11 @@ public interface WithService {
 	 * @return With
 	 */
 	public With selectOneById(int boardNo);
+
+	/**
+	 * 동행찾기 공지사항 수정 Service
+	 * @param with
+	 * @return int
+	 */
+	public int updateWithBoard(With with);
 }

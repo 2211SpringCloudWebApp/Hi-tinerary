@@ -15,6 +15,9 @@ public class With {
 	private Timestamp writeDate;
 	private Timestamp updateDate;
 	
+	private String userGender;
+	private String userBirthDate;
+	
 	public With() {}
 
 	public With(int boardNo, int userNo, String boardTitle, String boardContent, String boardImage, Timestamp startDate,
@@ -31,6 +34,14 @@ public class With {
 		this.currentPeople = currentPeople;
 		this.writeDate = writeDate;
 		this.updateDate = updateDate;
+	}
+
+	//User 정보
+	public With(int userNo, String userGender, String userBirthDate) {
+		super();
+		this.userNo = userNo;
+		this.userGender = userGender;
+		this.userBirthDate = userBirthDate;
 	}
 
 	public int getBoardNo() {
@@ -121,12 +132,28 @@ public class With {
 		this.updateDate = updateDate;
 	}
 
+	public String getUserGender() {
+		return userGender;
+	}
+
+	public void setUserGender(String userGender) {
+		this.userGender = userGender;
+	}
+
+	public String getUserBirthDate() {
+		return userBirthDate;
+	}
+
+	public void setUserBirthDate(String userBirthDate) {
+		this.userBirthDate = userBirthDate;
+	}
+
 	@Override
 	public String toString() {
 		return "With [boardNo=" + boardNo + ", userNo=" + userNo + ", boardTitle=" + boardTitle + ", boardContent="
 				+ boardContent + ", boardImage=" + boardImage + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", maxPeople=" + maxPeople + ", currentPeople=" + currentPeople + ", writeDate=" + writeDate
-				+ ", updateDate=" + updateDate + "]";
+				+ ", updateDate=" + updateDate + ", userGender=" + userGender + ", userBirthDate=" + userBirthDate
+				+ "]";
 	}
-
 }

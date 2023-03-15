@@ -24,11 +24,19 @@ public interface WithStore {
 	public List<With> selectWithBoardList(SqlSession session);
 
 	/**
-	 * 동행찾기 게시판 상세조회 Stroe
+	 * 동행찾기 게시판 상세조회 Store
 	 * @param session
 	 * @param boardNo
 	 * @return With
 	 */
 	public With selectOneById(SqlSession session, int boardNo);
+
+	/**
+	 * 동행찾기 게시판 수정하기 Store
+	 * @param session
+	 * @param with
+	 * @return int
+	 */
+	public int updateWithBoard(SqlSession session, With with);
 
 }

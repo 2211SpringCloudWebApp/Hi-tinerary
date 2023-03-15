@@ -37,4 +37,13 @@ public class WithStoreLogic implements WithStore{
 		return with;
 	}
 
+	/**
+	 * 동행찾기 게시판 수정하기 WithStoreLogic
+	 */
+	@Override
+	public int updateWithBoard(SqlSession session, With with) {
+		int result = session.update("WithBoardMapper.updateWithBoard", with);
+		return result;
+	}
+
 }

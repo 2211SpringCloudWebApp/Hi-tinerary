@@ -36,7 +36,8 @@ public class WithController {
 	public String withWrite(
 			@ModelAttribute With with,
 			@RequestParam(value="start-Date") String startDate,
-			@RequestParam(value="end-Date") String endDate
+			@RequestParam(value="end-Date") String endDate,
+			int loginUserNo
 			, @RequestParam(value="uploadFile", required = false) MultipartFile uploadFile
 			, HttpServletRequest request
 			, Model model) {
@@ -55,7 +56,7 @@ public class WithController {
 			startDate += " 00:00:00";
 			with.setStartDate(Timestamp.valueOf(startDate));
 			with.setEndDate(Timestamp.valueOf(endDate));
-			with.setUserNo(1);
+			with.setUserNo(loginUserNo);
 			int result = wService.insertWithBoard(with);
 			if(result > 0) {
 				return "redirect:/withBoard/withBoardList";
@@ -93,18 +94,7 @@ public class WithController {
 		}
 	}
 	
-	// 파일 삭제
-	/*
-	private void deleteFile(String filename, HttpServletRequest request) throws Exception{
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		int userNo = 1;
-		String delPath = root + "\\wuploadFiles\\" + userNo + "withBoard";
-		String delFilepath = delPath + "\\" + filename;
-		File delFile = new File(delFilepath);
-		if(delFile.exists()) {
-			delFile.delete();
-		}
-	}*/
+	
 	
 	// 동행게시판 목록 보여주기
 	@RequestMapping(value="/withBoard/withBoardList", method=RequestMethod.GET)
@@ -153,6 +143,62 @@ public class WithController {
 		} catch (Exception e) {
 			model.addAttribute("msg", e.getMessage());
 			return "common/error";
+		}
+	}
+	
+	//동행게시판 수정하기
+	@RequestMapping(value="/withboard/withBoardModify", method=RequestMethod.POST)
+	public String withModify(
+			@ModelAttribute With with,
+			@RequestParam(value="start-Date") String startDate,
+			@RequestParam(value="end-Date") String endDate,
+			@RequestParam(value="reloadFile", required = false) MultipartFile reloadFile, HttpServletRequest request,
+			Model model) {
+		try {
+			//수정할 경우, 새로 업로드된 파일이 있는 경우
+			if(!reloadFile.isEmpty()) {
+				//기존 업로드 된 파일 체크 후
+				if(with.getBoardImage() != null) {
+					//기존 파일 삭제
+					this.deleteFile(with.getBoardImage(), request);
+				}
+				//새로 업로드 된 파일 복사(지정된 경로 업로드)
+				String modifyPath = this.saveFile(reloadFile, request);
+				if(modifyPath != null) {
+					//with에 새로운 파일 이름, 파일 경로 set
+					with.setBoardImage(reloadFile.getOriginalFilename());
+					with.setBoardImage(modifyPath);
+				}
+			}
+			endDate += " 00:00:00";
+			startDate += " 00:00:00";
+			with.setStartDate(Timestamp.valueOf(startDate));
+			with.setEndDate(Timestamp.valueOf(endDate));
+			
+			//DB에서 공지사항 수정(UPDATE)
+			int result = wService.updateWithBoard(with);
+			if(result > 0) {
+				return "redirect:/withboard/withBoardDetail?boardNo=" + with.getBoardNo();
+			} else {
+				model.addAttribute("msg", "공지사항 수정이 완료되지 않았습니다.");
+				return "common/error";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
+			return "common/error";
+		}
+	}
+	
+	// 파일 삭제
+	private void deleteFile(String filename, HttpServletRequest request) throws Exception {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		int userNo = 1;
+		String delPath = root + "\\wuploadFiles\\" + userNo + "withBoard";
+		String delFilepath = delPath + "\\" + filename;
+		File delFile = new File(delFilepath);
+		if (delFile.exists()) {
+			delFile.delete();
 		}
 	}
 }

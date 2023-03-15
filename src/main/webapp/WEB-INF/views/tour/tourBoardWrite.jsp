@@ -22,7 +22,9 @@
                          
                          
                             <input type="hidden" name="tourNo">
-                            <input type="hidden" name="userNo">
+                            <input type="hidden" name="userNo" value=${sessionScope.loginUser.userNo }>
+                            <input type="hidden" name="userNickname" value=${sessionScope.loginUser.userNickname }>
+                            <input type="hidden" name="userGrade" value=${sessionScope.loginUser.userGrade }>
     
                             <div class="oneHundred"> 
                                 <div class="infos">제목</div>

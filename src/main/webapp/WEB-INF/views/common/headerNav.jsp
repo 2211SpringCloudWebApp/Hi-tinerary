@@ -36,6 +36,9 @@
 					<div id="user-id">
 						<p>
 							${sessionScope.loginUser.userNickname } 님 환영합니다!	
+							<input type="hidden" value="${sessionScope.loginUser.userGrade }">
+							<input type="hidden" value="${sessionScope.loginUser.userNo }">
+							
 						</p>
 	                    <ul>
 	                        <li>|&nbsp;&nbsp; <a href="/user/register">마이페이지</a>&nbsp;&nbsp; |</li>

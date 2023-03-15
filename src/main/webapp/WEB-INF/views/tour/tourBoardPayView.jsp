@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>투어상품결제페이지</title>
-		 <link rel="stylesheet" href="${path }../../../resources/css/tourBoardDetail.css"/>
+		 <link rel="stylesheet" href="${path }../../../resources/css/tourPayView.css"/>
 	</head>
 	<body>
 		<jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
@@ -17,7 +17,9 @@
 	                <p>투어 / 패키지 상품 결제</p>                    
 	            </div>
 
-<!-- 													${tour } -->
+ 				<input type="hidden" name="payuserNo" value="${sessionScope.loginUser.userNo }">									
+ 									
+ 										
                 
             <div id="thumbnailAndInfos">
                 <div id="thumbnail">
@@ -27,44 +29,64 @@
                 <div id="tourInfos">
                     <div id="writerDiv">
                         <div>한투어</div>
+                    </div>
+                    <div class="oneHundred"> 
+                                <div class="infos">상품명</div>
+                                <div><input type="text" name="tourTitle"  value="${tour.tourTitle }" readonly></div>
+                            </div>	
+                    <div class="oneHundred"> 
+                        <div class="infos">모집마감</div>
+                        <div><fmt:formatDate pattern="MM/dd" value="${tour.deadline }"/></div>
+                    </div> 
+                    <div class="oneHundred"> 
+                        <div class="infos">여행기간</div>
+                        <div><fmt:formatDate pattern="yy.MM.dd h시" value="${tour.startDate }"/></div>
+                        ~&nbsp;
+                        <div><fmt:formatDate pattern="yy.MM.dd h시" value="${tour.endDate }"/></div>
+                    </div>	
+                    <div class="oneHundred"> 
+                        <div class="infos">총결제금액</div>
+                        <div><fmt:formatNumber pattern="#,###,###" value="${tour.price }"/> 원</div>
+                    </div>
+                    <div class="oneHundred"> 
+                        <div class="infos">예약자성함</div>
                         <div>
-                        	<a href="/tour/tourBoardModifyView?tourNo=${tour.tourNo }">수정</a> | 
-                        	<a href="javascript:void(0);" onclick="removeCheck(${tour.tourNo});">삭제</a>
+                        <input type="hidden" name="userNo">
+                        <input type="text" name="userName" value="${user.userName}" readonly>
                         </div>
                     </div>
-                    <div id="titleDiv">
-<!--                         울릉도여행/포항영일만항 출발 울릉 크루즈 울릉도 3박4일 패키지/3월11일 출발 -->
-                        ${tour.tourTitle }
+                    <div class="oneHundred"> 
+                        <div class="infos">예약자연락처</div>
+                        <div><input type="text" name="userPhone" value="${user.userPhone}" readonly></div>
                     </div>
-                    <div id="priceDiv">
-<!--                         396,000원 -->
-						<fmt:formatNumber pattern="#,###,###" value="${tour.price }"/> 원
+                    <div class="oneHundred"> 
+                        <div class="infos">예약자이메일</div>
+                        <div><input type="text" name="userEmail" value="${user.userEmail}" readonly></div>
                     </div>
-                    <div id="daysDiv">
-<!--                         3/11토~3/14화 -->
-                        <fmt:formatDate pattern="yy.MM.dd h시" value="${tour.startDate }"/>  
-                        ~  
-                        <fmt:formatDate pattern="yy.MM.dd h시" value="${tour.endDate }"/>  
-                       
-                    </div>
-                    <div id="buyDiv">
-                        <div><button id="pay">결제하기</button></div>
-                        <div>신고하기</div>
-                    </div>
-                    <div id="currentDiv">
-                        <p>
-	                        ${tour.currentPeople } / ${tour.maxPeople }명 정원<br>
-	                        모집마감~ 
-	                        <fmt:formatDate pattern="MM/dd" value="${tour.deadline }"/>
-                        </p>
-                    </div>    
-                </div>    
+                    <form action="/tour/paid" method="post">
+	                    <input type="hidden" name="tourNo" value="${tour.tourNo }">
+	                    <input type="hidden" name="userNo" value="${user.userNo }">
+	                    
+		                <div id="half-button1">
+		                    <button id="up" onclick="submitForm()">결제하기</button>
+		                </div>
+	                </form>
+	                <div id="half-button2">  				
+	                    <a href="/tour/tourBoardList"><button type="button" id="back" >페이지나가기</button></a>
+	                </div>    
+                </div>
             </div>
             
      
         </main>    
                 
-        
+        <script>
+	        function submitForm() {
+	        	if (confirm("결제하시겠습니까?")) {
+	                document.querySelector('form').submit();
+	            }
+	        }
+        </script>
       
         
             

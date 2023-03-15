@@ -40,6 +40,8 @@ public class UserController {
 				HttpSession session = request.getSession();
 				session.setAttribute("loginUser", result);
 				model.addAttribute("name", user.getUserNickname());
+				model.addAttribute("userGrade", user.getUserGrade());
+				model.addAttribute("userNo", user.getUserNo());
 				return "redirect:/index.jsp";
 			} else {
 				model.addAttribute("msg", "로그인 실패");

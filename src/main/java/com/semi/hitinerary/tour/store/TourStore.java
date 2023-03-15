@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.semi.hitinerary.tour.domain.Tour;
+import com.semi.hitinerary.tour.domain.TourPay;
+import com.semi.hitinerary.user.domain.User;
 
 public interface TourStore {
 
@@ -46,5 +48,21 @@ public interface TourStore {
 	 * @return int
 	 */
 	public int updateTour(SqlSession session, Tour tour);
+
+	/**
+	 * 패키지 게시물 예약자 정보 불러오기 Store
+	 * @param session
+	 * @param payUserNo
+	 * @return User
+	 */
+	public User selectUserByNo(SqlSession session, int payUserNo);
+
+	/**
+	 * 투어 상품 구매 정보 저장(입력하기) Store
+	 * @param session
+	 * @param tPay
+	 * @return int 
+	 */
+	public int insertPay(SqlSession session, TourPay tPay);
 
 }

@@ -17,16 +17,18 @@
 		<result property="thumbnail" column="TOUR_THUMBNAIL" />
 		<result property="writeDate" column="WRITE_DATE" />
 		<result property="userNo" column="USER_NO" />	
+		<result property="userNickname" column="USER_NICKNAME" />	
+		<result property="userGrade" column="USER_GRADE" />	
 	</resultMap>
 	<select id="selectTourList" resultMap="tourResultMap">
-		SELECT * FROM TOUR_TBL ORDER BY 13 DESC
+		SELECT * FROM TOUR_TBL JOIN USER_TBL USING(USER_NO) ORDER BY WRITE_DATE DESC
 	</select>
 	<select id="selectOne" resultMap="tourResultMap">
-		SELECT * FROM TOUR_TBL WHERE TOUR_NO = #{tourNo}
+		SELECT * FROM TOUR_TBL JOIN USER_TBL USING(USER_NO) WHERE TOUR_NO = #{tourNo}
 	</select>
 	
 	<insert id="insertTour">
-		INSERT INTO TOUR_TBL VALUES(SEQ_TOUR_NO.NEXTVAL, #{tourTitle}, #{tourContent}, #{startDate}, #{endDate}, #{price}, #{deadline}, '0', #{maxPeople}, #{minPeople}, #{tourImage}, #{thumbnail}, DEFAULT, '1')
+		INSERT INTO TOUR_TBL VALUES(SEQ_TOUR_NO.NEXTVAL, #{tourTitle}, #{tourContent}, #{startDate}, #{endDate}, #{price}, #{deadline}, '0', #{maxPeople}, #{minPeople}, #{tourImage}, #{thumbnail}, DEFAULT, #{userNo})
 	</insert>
 	
 	<delete id="deleteTour">

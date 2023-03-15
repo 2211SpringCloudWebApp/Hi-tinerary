@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TourPayMapper">
+
+	<resultMap type="TourPay" id="tourPayResultMap">
+		<result property="tourNo" column="TOUR_NO" />
+		<result property="userNo" column="USER_NO" />	
+		<result property="payDate" column="PAY_DATE" />	
+	</resultMap>
+	
+	<insert id="insertPay">
+		INSERT INTO TOUR_BUY_USER_TBL VALUES(DEFAULT, #{userNo}, #{tourNo})
+	</insert>
+	
+	
+</mapper>

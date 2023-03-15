@@ -3,6 +3,8 @@ package com.semi.hitinerary.tour.service;
 import java.util.List;
 
 import com.semi.hitinerary.tour.domain.Tour;
+import com.semi.hitinerary.tour.domain.TourPay;
+import com.semi.hitinerary.user.domain.User;
 
 public interface TourService {
 
@@ -39,5 +41,20 @@ public interface TourService {
 	 * @return int
 	 */
 	public int updatePosting(Tour tour);
+
+	/**
+	 * 투어 게시물 예약자 정보 불러오기 Service
+	 * @param payUserNo
+	 * @return User
+	 */
+	public User selectUserByNo(int payUserNo);
+
+	
+	/**
+	 * 투어상품 구매 정보 저장(입력하기) Service
+	 * @param tPay
+	 * @return int
+	 */
+	public int payTour(TourPay tPay);
 
 }

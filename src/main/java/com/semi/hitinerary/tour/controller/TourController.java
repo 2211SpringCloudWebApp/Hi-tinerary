@@ -19,13 +19,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.semi.hitinerary.tour.domain.Tour;
+import com.semi.hitinerary.tour.domain.TourPay;
 import com.semi.hitinerary.tour.service.TourService;
+import com.semi.hitinerary.user.domain.User;
 
 @Controller
 public class TourController {
 	@Autowired
 	private TourService tService;
 
+	
 	// 패키지게시판 리스트 보기
 	@RequestMapping(value = "/tour/tourBoardList", method = RequestMethod.GET)
 	public String TourBoardListView(Model model) {
@@ -49,6 +52,32 @@ public class TourController {
 		model.addAttribute("tour", tour);
 		return "tour/tourBoardDetail";
 	}
+	
+	// 패키지게시물 결제페이지 보기
+		@RequestMapping(value = "/tour/tourBoardPayView", method = RequestMethod.GET)
+		public String TourBoardPayView(@RequestParam("tourNo") int tourNo, Model model, HttpServletRequest request) {
+			
+			try {
+				String payUserNoString = request.getParameter("payUserNo");
+				if (payUserNoString == null) {
+					model.addAttribute("msg", "데이터 조회 실패");
+					return "common/error";
+				}
+				
+				int payUserNo = Integer.parseInt(payUserNoString);
+				//int payUserNo = 0;
+				Tour tour = tService.selectOneByNo(tourNo);
+				User user = tService.selectUserByNo(payUserNo);
+				model.addAttribute("tour", tour);
+				model.addAttribute("user", user);
+				return "tour/tourBoardPayView";
+			
+				
+			} catch (Exception e) {
+				e.getMessage();
+				return "common/error";
+			}
+		}
 
 	// 패키지게시판 수정 페이지 보기
 	@RequestMapping(value = "/tour/tourBoardModifyView", method = RequestMethod.GET)
@@ -99,8 +128,11 @@ public class TourController {
 		int price = Integer.parseInt(request.getParameter("price"));
 		int maxPeople = Integer.parseInt(request.getParameter("maxPeople"));
 		int minPeople = Integer.parseInt(request.getParameter("minPeople"));
+		int userNo = Integer.parseInt(request.getParameter("userNo"));
+		int userGrade = Integer.parseInt(request.getParameter("userGrade"));
+		String userNickname = request.getParameter("userNickname");
 
-		tour = new Tour(tourTitle, tourContent, startDate, endDate, price, deadline, maxPeople, minPeople);
+		tour = new Tour(tourTitle, tourContent, startDate, endDate, price, deadline, maxPeople, minPeople, userNo, userGrade, userNickname);
 		if (thumbnail != null && !thumbnail.isEmpty() && !thumbnail.getOriginalFilename().equals("")) {
 			String tourImagePath = savetourImage(tourImage, request);
 			tour.setTourImage(tourImagePath);
@@ -121,6 +153,17 @@ public class TourController {
 		}
 
 	}
+	
+	
+	//패키지 상품 결제하기(tour-pay테이블 insert)
+	@RequestMapping(value="/tour/paid", method=RequestMethod.POST)
+	public String payTour(@ModelAttribute TourPay tPay		
+			, Model model) {
+		int result =tService.payTour(tPay);
+		
+		return "redirect:/tour/tourBoardList";//마이페이지로 이동하는걸로 고치기!
+	}
+	
 	
 	//게시물 수정
 	@RequestMapping(value="/tour/modify", method=RequestMethod.POST)

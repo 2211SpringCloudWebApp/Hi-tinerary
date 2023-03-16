@@ -17,5 +17,7 @@ public interface GroupboardService {
 
 	public Groupboard selectOneGroupBoard(int groupBoardNo);
 
+	public int updateGroupBoard(Groupboard board);
+
 
 }

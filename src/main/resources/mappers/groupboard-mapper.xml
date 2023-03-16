@@ -21,6 +21,10 @@
 		DELETE FROM GROUP_BOARD_TBL WHERE BOARD_NO = #{boardNo}
 	</delete>
 	
+	<update id="updateGroupBoard">
+		UPDATE GROUP_BOARD_TBL SET BOARD_TITLE = #{boardTitle}, BOARD_SUBJECT = #{boardSubject} WHERE BOARD_NO = #{boardNo} 
+	</update>
+		
 	<select id="selectListBoardByGroupNo" resultMap="groupBoardResultMap">
 		SELECT A.* , B.USER_NICKNAME AS USER_NICKNAME FROM GROUP_BOARD_TBL A JOIN USER_TBL B ON A.USER_NO = B.USER_NO WHERE GROUP_NO = #{groupNo} ORDER BY WRITE_DATE
 	</select>

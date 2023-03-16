@@ -10,5 +10,12 @@ public interface CommentStore {
 
 	public List<Comment> selectListComment(SqlSession session,int boardNo);
 
+	public int insertGroupBoardComment(SqlSession session, Comment comment);
+
+	public int insertGroupBoardReply(SqlSession session, Comment comment);
+
+	public int deleteGroupBoardComment(SqlSession session, int commentNo);
+
+
 
 }

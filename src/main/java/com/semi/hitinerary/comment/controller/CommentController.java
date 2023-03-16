@@ -7,6 +7,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.semi.hitinerary.comment.domain.Comment;
 import com.semi.hitinerary.comment.domain.CommentInfo;
@@ -17,6 +21,37 @@ public class CommentController {
 	
 	@Autowired
 	CommentService cService;
+	
+	@RequestMapping(value="/group/board/comment/write", method=RequestMethod.POST)
+	public String insertGroupBoardComment(
+			String groupIndex
+			,@ModelAttribute Comment comment
+			,Model model) {
+		int result = cService.insertGroupBoardComment(comment);
+		int groupBoardNo = comment.getGroupBoardNo();
+		return "redirect:/group/board/detail?groupBoardNo=" + groupBoardNo + "&groupIndex=" + groupIndex;
+	}
+	
+	@RequestMapping(value="/group/board/reply/write", method=RequestMethod.POST)
+	public String insertGroupBoardReply(
+			String groupIndex
+			,@ModelAttribute Comment comment
+			,Model model) {
+		int result = cService.insertGroupBoardReply(comment);
+		int groupBoardNo = comment.getGroupBoardNo();
+		return "redirect:/group/board/detail?groupBoardNo=" + groupBoardNo + "&groupIndex=" + groupIndex;
+	}
+	
+	@RequestMapping(value="/group/board/comment/delete",method=RequestMethod.POST)
+	public String deleteGroupComment(
+			String groupIndex
+			,int commentNo
+			,int groupBoardNo
+			,Model model) {
+		System.out.println(groupIndex);
+		int result = cService.deleteGroupBoardComment(commentNo);
+		return "redirect:/group/board/detail?groupBoardNo=" + groupBoardNo + "&groupIndex=" + groupIndex;
+	}
 	
 	public CommentInfo CommentList(int boardNo) {
 		List<Integer> cNumber = null;
@@ -44,22 +79,5 @@ public class CommentController {
 			return cInfo;
 		}
 		return null;
-	}
-	
-	public String ListToHtml(CommentInfo cInfo) {
-		List<Integer> cNumber = cInfo.getcNumber();
-		Map<Integer, List<Comment>> cMap = cInfo.getcMap();
-		StringBuilder sb = new StringBuilder();
-		for(int num : cNumber) {
-			List<Comment> cList = cMap.get(num);
-			Comment comment = cList.get(0);
-			sb.append("<div class='comment-area'><span>" + comment.getUserNo() +"</span><span>" + comment.getContent() + "</span></div>");
-			for(int i = 1; i < cList.size(); i++) {
-				comment = cList.get(i);
-				sb.append("<div class='reply-area'><span>" + comment.getUserNo() +"</span><span>" + comment.getContent() + "</span></div>");
-			}
-			
-		}
-		return sb.toString();
 	}
 }

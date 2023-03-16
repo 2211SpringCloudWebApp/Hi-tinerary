@@ -48,4 +48,12 @@ public class GroupboardStoreLogic implements GroupboardStore {
 	}
 
 
+	@Override
+	public int updateGroupBoard(SqlSession session, Groupboard board) {
+		int result = session.update("groupBoardMapper.updateGroupBoard", board);
+		return result;
+	}
+
+
+
 }

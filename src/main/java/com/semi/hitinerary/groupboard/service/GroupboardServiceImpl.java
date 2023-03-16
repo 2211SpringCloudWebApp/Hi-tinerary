@@ -48,6 +48,12 @@ public class GroupboardServiceImpl implements GroupboardService{
 		Groupboard gBoard = gBStore.selectOneGroupBoard(session, groupBoardNo);
 		return gBoard;
 	}
+
+	@Override
+	public int updateGroupBoard(Groupboard board) {
+		int result = gBStore.updateGroupBoard(session, board);
+		return result;
+	}
 	
 
 }

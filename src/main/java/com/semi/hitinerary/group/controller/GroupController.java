@@ -47,8 +47,8 @@ public class GroupController {
 			,@RequestParam(value="currentPage", required=false, defaultValue = "1")String currentPage
 			,HttpSession session
 			) {
-		int userNo = 3;
-		session.setAttribute("loginUser", userNo);
+		User user = (User)session.getAttribute("loginUser");
+		int userNo = user.getUserNo();
 		List<Group> gList = gService.selectByUserNo(userNo);
 		Group group = null;
 		if(gList.isEmpty()) {

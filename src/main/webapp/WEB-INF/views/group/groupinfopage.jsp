@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -11,6 +12,10 @@
             width: 1200px;
             margin : 0 auto;
         }
+        #group-container{
+         	overflow:hidden;
+        	height:auto;
+       	} 
         .title-area{
             border-bottom: 1px solid black;
             width: 820px;
@@ -39,7 +44,7 @@
             float: left;
             width: 280px;
             border: 1px solid green;
-            margin : 0 10px;
+            margin-left : 10px;
         }
             #group-nav p{
                 margin: 5px 0px;
@@ -54,9 +59,9 @@
                 background-color: darkgray;
                 border: 1px solid darkgray;
                 border-radius: 15px;
-                padding: 10px 65px;
+                padding: 10px 0px;
                 display : block;
-                width : 120px;
+                width : 200px;
             }
                 #group-nav a:nth-of-type(${groupIndex+2}){
  				color : white;
@@ -80,7 +85,7 @@
         }
             #area1 p:first-of-type{
                 margin : 5px 0px;
-                margin-left: 40px;                
+                margin-left: 140px;                
             }
             #second-p{
                 margin : 5px 0px;
@@ -169,181 +174,185 @@
     	</style>
 	</head>
 	<body>
-		<div id="group-nav">
-            <p>123</p>
-            <a href="/group/groupinfopage?groupIndex=-1">그룹만들기</a>
-            <c:forEach items="${gList}" var="group" varStatus="status">
-            	<a href="/group/groupinfopage?groupIndex=${status.index }">${group.groupName }</a>
-            </c:forEach>
-        </div>
-		<div id="group-area">
-			<c:if test="${groupIndex eq -1}">
-				<form action="/group/register.do" method="post">
-				그룹명 : <input type="text" name="groupName">
-				<div>
-				시작날짜 : <input min="${now }" type="date" name="startDate" onchange="startDecide()" required>
-				종료날짜 : <input min="${now }" type="date" name="endDate" onchange="endDecide()">
-				</div>
-				<div>
-				시간추가 : on <input type="radio" name="addtime" onclick="addTime();"> 
-						   off <input type="radio" name="addtime" onclick="removeTime();" checked>
-				</div>
-				최대인원 : <input type="text" name="maxPeople">
-				<div>
-				<input type="submit"> <a href="#">321</a>
-				</div>
-				</form>	
-			</c:if>
-			<c:if test="${group ne null }">
-				<c:if test="${groupUserView eq 'F' }">
-		            <div class="title-area">
-		                <h1 class="title">${group.groupName }</h1>
-		            </div>
-				    <div id="info-area">
-		                <div id="area1">
-		                    <p>시작날짜 ~ 종료날짜</p>
-		                    <p id="second-p">${group.startDate } ~ ${group.endDate }</p>
-		                </div>
-		                <div id="area2">
-		                    <p>그룹인원 ${group.currentPeople }/${group.maxPeople }</p>
-		                    <a href="/group/groupinfopage?groupIndex=${groupIndex }&groupUserView=T">인원조회</a>
-		                </div>
-		            </div>
-		            <div id="area3">
-		                <button>타임캡슐 작성/수정</button>
-		                <p>개의 캡슐이 작성됨</p>
-		            </div>
+		<jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
+		<div id="group-container">
+			<div id="group-nav">
+	            <p>123</p>
+	            <a href="/group/groupinfopage?groupIndex=-1">그룹만들기</a>
+	            <c:forEach items="${gList}" var="group" varStatus="status">
+	            	<a href="/group/groupinfopage?groupIndex=${status.index }">${group.groupName }</a>
+	            </c:forEach>
+	        </div>
+			<div id="group-area">
+				<c:if test="${groupIndex eq -1}">
+					<form action="/group/register.do" method="post">
+					그룹명 : <input type="text" name="groupName">
 					<div>
-						<c:if test="${gBList eq null }">
-							<h1>그룹 게시글이 없어요!</h1>
-						</c:if>
-						<c:if test="${gBList ne null }">
-							<table id="groupBoardList-tbl">
-								<thead>
-									<tr>
-										<th width="200px">제목</th>
-										<th width="140px">작성일</th>
-										<th width="180px">작성자</th>
-										<th width="60px">수정</th>
-										<th width="60px">삭제</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${gBList}" var="groupBoard">
-										<tr>
-											<td><a href="/group/board/detail?groupBoardNo=${groupBoard.boardNo}&groupIndex=${groupIndex}">${groupBoard.boardTitle }</a></td>
-											<td>${groupBoard.writeDate }</td>
-											<td>${groupBoard.userNickname }</td>
-												<td>
-													<form action="/group/board/updateView" method="post" onsubmit="return BoardBtn('${groupBoard.userNo}')">
-														<input type="hidden" name="groupBoardNo" value="${groupBoard.boardNo}">
-														<input type="hidden" name="groupIndex" value="${groupIndex }">
-														<input type="submit" value="수정">
-													</form>
-												</td>
-												<td>
-													<form action="/group/board/delete" method="post" onsubmit="return BoardBtn('${groupBoard.userNo}')">
-														<input type="hidden" name="groupIndex" value="${groupIndex }">
-														<input type="hidden" name="groupBoardNo" value="${groupBoard.boardNo}">
-														<input type="submit" value="삭제" >
-													</form>
-												</td>
-										</tr>								
-									</c:forEach>
-								</tbody>
-								<tfoot>
-									<tr>
-										<td colspan="5" id="board-navi">
-											<c:if test="${pi.currentPage ne '1' }">
-												<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${pi.currentPage - 1}">&lt;</a>&nbsp;
-											</c:if>
-											<c:forEach begin="${pi.startNavi }" end="${pi.endNavi }" var="p">
-													<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${p}">${p}</a>&nbsp;
-											</c:forEach>
-											<c:if test="${pi.currentPage ne pi.maxNavi }">
-												<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${pi.currentPage + 1}">&gt;</a>&nbsp;
-											</c:if>
-										</td>
-									</tr>
-								</tfoot>
-							</table>
-						</c:if>
-						<form action="/group/board/writeView" method="post">
-							<input type="hidden" name="groupIndex" value="${groupIndex }">
-							<input type="hidden" name="groupName" value="${group.groupName }">
-							<input type="hidden" name="groupNo" value="${group.groupNo }">
-							<input id="writeBoard" type="submit" value="글쓰기">
-						</form>
-			        </div>
+					시작날짜 : <input min="${now }" type="date" name="startDate" onchange="startDecide()" required>
+					종료날짜 : <input min="${now }" type="date" name="endDate" onchange="endDecide()">
+					</div>
+					<div>
+					시간추가 : on <input type="radio" name="addtime" onclick="addTime();"> 
+							   off <input type="radio" name="addtime" onclick="removeTime();" checked>
+					</div>
+					최대인원 : <input type="text" name="maxPeople">
+					<div>
+					<input type="submit"> <a href="#">321</a>
+					</div>
+					</form>	
 				</c:if>
-				<c:if test="${groupUserView eq 'T' }">
-					<c:if test="${group.leaderUserNo eq sessionScope.loginUser}">
-						<div class="title-area">
+				<c:if test="${group ne null }">
+					<c:if test="${groupUserView eq 'F' }">
+			            <div class="title-area">
 			                <h1 class="title">${group.groupName }</h1>
 			            </div>
-			            <div>
-			            	<table id="groupList-tbl">
-			            		<tr>
-			            			<th width="150">닉네임</th>
-			            			<th width="300">메일주소</th>
-			            			<th width="60">나이</th>
-			            			<th width="60">성별</th>
-			            			<th width="100">버튼</th>
-			            		</tr>
-			            		<c:forEach items="${uList }" var="User">
-				            		<tr>
-				            			<td>${User.userNickname }</td>
-				            			<td>${User.userEmail }</td>
-				            			<td>${User.userBirthDate }</td>
-				            			<td>${User.userGender }</td>
-				  	                    <td>
-				  	                    	<c:if test="${group.leaderUserNo ne User.userNo}">
-					  	                    	<form action="/group/dropUser" method="post">
-					  	                    		<input type="hidden" name="groupNo" value="${group.groupNo }">
-					  	                    		<input type="hidden" name="userNo" value="${User.userNo }">
-					  	                    		<input type="submit" value="내보내기">
-					  	                    	</form>
-				  	                    	</c:if>
-				  	                    </td>
-				            		</tr>
-			            		</c:forEach>
-			            	</table>
-			            </div>						
-					</c:if>
-					<c:if test="${group.leaderUserNo ne sessionScope.loginUser}">
-						<div class="title-area">
-			                <h1 class="title">${group.groupName }</h1> 
-			                <form action="/group/dropUser" method="post">
-				  	        	<input type="hidden" name="groupNo" value="${group.groupNo }">
-				  	            <input type="hidden" name="userNo" value="${sessionScope.loginUser }">
-				  	            <input type="submit" value="나가기">
-				  	        </form>
+					    <div id="info-area">
+			                <div id="area1">
+			                    <p>시작날짜 ~ 종료날짜</p>
+			                    <p id="second-p"><fmt:formatDate value="${group.startDate }" pattern="yyyy-MM-dd ahh:mm" /> ~ <fmt:formatDate value="${group.endDate }" pattern="yyyy-MM-dd ahh:mm" /></p>
+			                </div>
+			                <div id="area2">
+			                    <p>그룹인원 ${group.currentPeople }/${group.maxPeople }</p>
+			                    <a href="/group/groupinfopage?groupIndex=${groupIndex }&groupUserView=T">인원조회</a>
+			                </div>
 			            </div>
-			            <div>
-			            	<table>
-			            		<tr>
-			            			<th width="150">닉네임</th>
-			            			<th width="300">메일주소</th>
-			            			<th width="60">나이</th>
-			            			<th width="60">성별</th>
-			            		</tr>
-			            		<c:forEach items="${uList }" var="User">
+			            <div id="area3">
+			                <button>타임캡슐 작성/수정</button>
+			                <p>개의 캡슐이 작성됨</p>
+			            </div>
+						<div>
+							<c:if test="${gBList eq null }">
+								<h1>그룹 게시글이 없어요!</h1>
+							</c:if>
+							<c:if test="${gBList ne null }">
+								<table id="groupBoardList-tbl">
+									<thead>
+										<tr>
+											<th width="240px">제목</th>
+											<th width="100px">작성일</th>
+											<th width="180px">작성자</th>
+											<th width="60px">수정</th>
+											<th width="60px">삭제</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${gBList}" var="groupBoard">
+											<tr>
+												<td><a href="/group/board/detail?groupBoardNo=${groupBoard.boardNo}&groupIndex=${groupIndex}">${groupBoard.boardTitle }</a></td>
+												<td><fmt:formatDate value="${groupBoard.writeDate }" pattern="yyyy-MM-dd ahh:mm" /></td>
+												<td>${groupBoard.userNickname }</td>
+													<td>
+														<form action="/group/board/updateView" method="post" onsubmit="return BoardBtn('${groupBoard.userNo}')">
+															<input type="hidden" name="groupName" value="${group.groupName }">
+															<input type="hidden" name="groupBoardNo" value="${groupBoard.boardNo}">
+															<input type="hidden" name="groupIndex" value="${groupIndex }">
+															<input type="submit" value="수정">
+														</form>
+													</td>
+													<td>
+														<form action="/group/board/delete" method="post" onsubmit="return BoardBtn('${groupBoard.userNo}')">
+															<input type="hidden" name="groupIndex" value="${groupIndex }">
+															<input type="hidden" name="groupBoardNo" value="${groupBoard.boardNo}">
+															<input type="submit" value="삭제" >
+														</form>
+													</td>
+											</tr>								
+										</c:forEach>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td colspan="5" id="board-navi">
+												<c:if test="${pi.currentPage ne '1' }">
+													<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${pi.currentPage - 1}">&lt;</a>&nbsp;
+												</c:if>
+												<c:forEach begin="${pi.startNavi }" end="${pi.endNavi }" var="p">
+														<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${p}">${p}</a>&nbsp;
+												</c:forEach>
+												<c:if test="${pi.currentPage ne pi.maxNavi }">
+													<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${pi.currentPage + 1}">&gt;</a>&nbsp;
+												</c:if>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</c:if>
+							<form action="/group/board/writeView" method="post">
+								<input type="hidden" name="groupIndex" value="${groupIndex }">
+								<input type="hidden" name="groupName" value="${group.groupName }">
+								<input type="hidden" name="groupNo" value="${group.groupNo }">
+								<input id="writeBoard" type="submit" value="글쓰기">
+							</form>
+				        </div>
+					</c:if>
+					<c:if test="${groupUserView eq 'T' }">
+						<c:if test="${group.leaderUserNo eq sessionScope.loginUser.userNo}">
+							<div class="title-area">
+				                <h1 class="title">${group.groupName }</h1>
+				            </div>
+				            <div>
+				            	<table id="groupList-tbl">
 				            		<tr>
-				            			<td>${User.userNickname }</td>
-				            			<td>${User.userEmail }</td>
-				            			<td>${User.userBirthDate }</td>
-				            			<td>${User.userGender }</td>
+				            			<th width="150">닉네임</th>
+				            			<th width="300">메일주소</th>
+				            			<th width="60">나이</th>
+				            			<th width="60">성별</th>
+				            			<th width="100">버튼</th>
 				            		</tr>
-			            		</c:forEach>
-			            	</table>
-			            </div>				
+				            		<c:forEach items="${uList }" var="User">
+					            		<tr>
+					            			<td>${User.userNickname }</td>
+					            			<td>${User.userEmail }</td>
+					            			<td>${User.userBirthDate }</td>
+					            			<td>${User.userGender }</td>
+					  	                    <td>
+					  	                    	<c:if test="${group.leaderUserNo ne User.userNo}">
+						  	                    	<form action="/group/dropUser" method="post">
+						  	                    		<input type="hidden" name="groupNo" value="${group.groupNo }">
+						  	                    		<input type="hidden" name="userNo" value="${User.userNo }">
+						  	                    		<input type="submit" value="내보내기">
+						  	                    	</form>
+					  	                    	</c:if>
+					  	                    </td>
+					            		</tr>
+				            		</c:forEach>
+				            	</table>
+				            </div>						
+						</c:if>
+						<c:if test="${group.leaderUserNo ne sessionScope.loginUser.userNo}">
+							<div class="title-area">
+				                <h1 class="title">${group.groupName }</h1> 
+				                <form action="/group/dropUser" method="post">
+					  	        	<input type="hidden" name="groupNo" value="${group.groupNo }">
+					  	            <input type="hidden" name="userNo" value="${sessionScope.loginUser.userNo }">
+					  	            <input type="submit" value="나가기">
+					  	        </form>
+				            </div>
+				            <div>
+				            	<table>
+				            		<tr>
+				            			<th width="150">닉네임</th>
+				            			<th width="300">메일주소</th>
+				            			<th width="60">나이</th>
+				            			<th width="60">성별</th>
+				            		</tr>
+				            		<c:forEach items="${uList }" var="User">
+					            		<tr>
+					            			<td>${User.userNickname }</td>
+					            			<td>${User.userEmail }</td>
+					            			<td>${User.userBirthDate }</td>
+					            			<td>${User.userGender }</td>
+					            		</tr>
+				            		</c:forEach>
+				            	</table>
+				            </div>				
+						</c:if>
 					</c:if>
 				</c:if>
-			</c:if>
+			</div>
 		</div>
+		<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+	</body>
 		<script>
-			var viewDate = document.querySelector("#second-p")
-			viewDate.innerHTML = viewDate.innerHTML.substr(0, 16) + viewDate.innerHTML.substr(21,19);
 			function startDecide(){
 				var startDate = document.querySelector("[name=startDate]")
 				var endDate = document.querySelector("[name=endDate]")
@@ -421,7 +430,7 @@
 				}
 			}
 			function BoardBtn(writer){
-				if(writer == ${loginUser}){
+				if(writer == ${loginUser.userNo}){
 					return true;
 				}else{
 					alert('권한없음');
@@ -429,5 +438,4 @@
 				}
 			}
 		</script>
-	</body>
 </html>

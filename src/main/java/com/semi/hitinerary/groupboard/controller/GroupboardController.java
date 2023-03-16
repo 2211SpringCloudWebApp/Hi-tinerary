@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import com.semi.hitinerary.groupboard.domain.Groupboard;
 import com.semi.hitinerary.groupboard.domain.NavigationNList;
 import com.semi.hitinerary.groupboard.domain.PagiInfoGroupBoard;
 import com.semi.hitinerary.groupboard.service.GroupboardService;
+import com.semi.hitinerary.user.domain.User;
 
 @Controller
 public class GroupboardController {
@@ -54,7 +56,8 @@ public class GroupboardController {
 				,String groupTitle
 				,String groupSubject
 				,HttpSession session) {
-		int userNo = (Integer)session.getAttribute("loginUser");
+		User user = (User)session.getAttribute("loginUser");
+		int userNo = user.getUserNo();
 		Groupboard gBoard = new Groupboard(groupTitle, groupSubject, Integer.parseInt(groupNo), userNo);
 		int result = gBService.insertBoard(gBoard);
 		return "redirect:/group/groupinfopage?groupIndex=" + groupIndex;
@@ -70,8 +73,6 @@ public class GroupboardController {
 		CommentInfo cInfo = null;
 		cInfo = cController.CommentList(groupBoardNo);
 		if(cInfo != null) {
-			String html = cController.ListToHtml(cInfo);
-			//model.addAttribute("write", html);			
 			model.addAttribute("cInfo", cInfo);			
 		}
 		model.addAttribute("groupIndex", groupIndex);
@@ -87,9 +88,24 @@ public class GroupboardController {
 	}
 	
 	@RequestMapping(value="/group/board/updateView", method = RequestMethod.POST)
-	public String groupBoardUpdate() {
-		
+	public String groupBoardUpdateView(
+			int groupBoardNo,
+			String groupIndex,
+			String groupName,
+			Model model) {
+		Groupboard gBoard = gBService.selectOneGroupBoard(groupBoardNo);
+		model.addAttribute("board", gBoard);
+		model.addAttribute("groupIndex", groupIndex);
+		model.addAttribute("groupName", groupName);
 		return "groupboard/update";
+	}
+	
+	@RequestMapping(value="/group/board/update",method=RequestMethod.POST)
+	public String groupBoardUpdate(
+			String groupIndex
+			,@ModelAttribute Groupboard board) {
+		int result = gBService.updateGroupBoard(board);
+		return "redirect:/group/board/detail?groupBoardNo=" + board.getBoardNo() + "&groupIndex=" + groupIndex;
 	}
 	
 	public NavigationNList groupBoardList(int groupNo, int currentPage) {

@@ -17,4 +17,23 @@ public class CommentStoreLogic implements CommentStore{
 		return cList;
 	}
 
+	@Override
+	public int insertGroupBoardComment(SqlSession session, Comment comment) {
+		int result = session.insert("commentMapper.insertGroupBoardComment", comment);
+		return result;
+	}
+
+	@Override
+	public int insertGroupBoardReply(SqlSession session, Comment comment) {
+		int result = session.insert("commentMapper.insertGroupBoardReply", comment);
+		return result;
+	}
+
+	@Override
+	public int deleteGroupBoardComment(SqlSession session, int commentNo) {
+		int result = session.delete("commentMapper.deleteGroupBoardComment", commentNo);
+		return result;
+	}
+
+
 }

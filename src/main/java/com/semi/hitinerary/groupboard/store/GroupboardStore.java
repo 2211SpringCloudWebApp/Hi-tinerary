@@ -19,5 +19,7 @@ public interface GroupboardStore {
 
 	public Groupboard selectOneGroupBoard(SqlSession session, int groupBoardNo);
 
+	public int updateGroupBoard(SqlSession session, Groupboard board);
+
 
 }

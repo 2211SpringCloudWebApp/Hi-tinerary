@@ -17,11 +17,26 @@
 		<result property="userNo" column="USER_NO"/>
 		<result property="userNickname" column="USER_NICKNAME"/>
 	</resultMap>
-		
-	<select id="selectListComment" resultMap="commentResultMapper">
-		SELECT B.*, A.USER_NICKNAME FROM COMMENT_TBL B JOIN USER_TBL A ON A.USER_NO = B.USER_NO  WHERE GROUP_BOARD_NO = #{boardNo} ORDER BY DEPTH
-	</select>
 	
+	<insert id="insertGroupBoardComment">
+		INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL, #{content}, DEFAULT, DEFAULT, 0, NULL, NULL, NULL, #{groupBoardNo}, NULL, NULL, #{userNo})
+	</insert>
+	
+	<insert id="insertGroupBoardReply">
+		INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL, #{content}, DEFAULT, DEFAULT, 1, NULL, NULL, NULL, #{groupBoardNo}, NULL, #{refCommentNo}, #{userNo})
+	</insert>	
+	
+	<delete id="deleteGroupBoardComment">
+		DELETE FROM COMMENT_TBL WHERE COMMENT_NO = #{commentNo}
+	</delete>
+	
+	<update id="updateGroupBoardComment">
+		UPDATE COMMENT_TBL SET CONTENT = #{content} WHERE COMMENT_NO = #{commentNo} 
+	</update>
+	
+	<select id="selectListComment" resultMap="commentResultMapper">
+		SELECT B.*, A.USER_NICKNAME FROM COMMENT_TBL B JOIN USER_TBL A ON A.USER_NO = B.USER_NO  WHERE GROUP_BOARD_NO = #{boardNo} ORDER BY DEPTH, UPDATE_DATE
+	</select>
 <!-- 	WHERE에 해당 그룹 그룹번호 주면 됨  -->
 	<select id="ListComment" resultMap="commentResultMapper">
 		SELECT * FROM COMMENT_TBL WHERE GROUP_BOARD_NO = 130 START WITH DEPTH = 0 CONNECT BY REF_COMMENT_NO = PRIOR COMMENT_NO

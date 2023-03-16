@@ -8,5 +8,12 @@ public interface CommentService {
 
 	public List<Comment> selectListComment(int boardNo);
 
+	public int insertGroupBoardComment(Comment comment);
+
+	public int insertGroupBoardReply(Comment comment);
+
+	public int deleteGroupBoardComment(int commentNo);
+
+
 
 }

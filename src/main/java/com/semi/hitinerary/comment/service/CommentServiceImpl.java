@@ -24,4 +24,23 @@ public class CommentServiceImpl implements CommentService {
 		return cList;
 	}
 
+	@Override
+	public int insertGroupBoardComment(Comment comment) {
+		int result = cStore.insertGroupBoardComment(session, comment);
+		return result;
+	}
+
+	@Override
+	public int insertGroupBoardReply(Comment comment) {
+		int result = cStore.insertGroupBoardReply(session, comment);
+		return result;
+	}
+
+	@Override
+	public int deleteGroupBoardComment(int commentNo) {
+		int result = cStore.deleteGroupBoardComment(session, commentNo);
+		return result;
+	}
+
+
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.semi.hitinerary.tour.domain.PageInfo;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
 import com.semi.hitinerary.tour.service.TourService;
@@ -31,7 +32,16 @@ public class TourController {
 	
 	// 패키지게시판 리스트 보기
 	@RequestMapping(value = "/tour/tourBoardList", method = RequestMethod.GET)
-	public String TourBoardListView(Model model) {
+	public String TourBoardListView(Model model
+			, @RequestParam(defaultValue="1") int page
+			/*, @RequestParam(defaultValue="9") int perPage*/) {
+			int numPerPage = 9;
+		
+		
+		
+		int totalCount = tService.getListCount(); //게시물 개수 받아옴!
+		//int currentPage = 받아올 것.
+		PageInfo pi = this.getPageInfo(page, totalCount);
 		List<Tour> tList = tService.selectTourList();
 		model.addAttribute("tList", tList);
 		return "tour/tourBoardList";
@@ -48,7 +58,7 @@ public class TourController {
 	public String TourBoardDetailView(@RequestParam("tourNo") int tourNo, Model model) {
 
 		Tour tour = tService.selectOneByNo(tourNo);
-
+		
 		model.addAttribute("tour", tour);
 		return "tour/tourBoardDetail";
 	}
@@ -290,4 +300,25 @@ public class TourController {
 		}
 	}
 
+	
+	//paging
+	private PageInfo getPageInfo(int currentPage, int totalCount) {
+		int postingLimit = 12;
+		int naviLimit =5;
+		int maxPage;
+		int startNavi;
+		int endNavi;
+		
+		maxPage = (int)((double)totalCount / postingLimit + 0.9);
+		startNavi =((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+		endNavi = startNavi + naviLimit -1;
+		if(endNavi > maxPage) {
+			endNavi = maxPage;
+		}
+		PageInfo pi = new PageInfo(currentPage, postingLimit, totalCount, currentPage, startNavi, naviLimit, endNavi);
+		return pi;
+	}
 }
+
+
+

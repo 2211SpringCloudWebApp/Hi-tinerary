@@ -65,4 +65,11 @@ public interface TourStore {
 	 */
 	public int insertPay(SqlSession session, TourPay tPay);
 
+	/**
+	 * 패키지 게시판 게시물 전체 개수 가져오기 Store
+	 * @param session
+	 * @return int
+	 */
+	public int selectTotalCount(SqlSession session);
+
 }

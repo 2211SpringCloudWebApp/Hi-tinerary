@@ -1,6 +1,9 @@
 package com.semi.hitinerary.freeboard.controller;
 
 import java.io.File;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,13 +29,17 @@ public class FreeboardController {
 	@Autowired
 	private FreeboardService fService;
 
-	
-	// 자유게시판 글쓰기 화면
-	@RequestMapping(value = "/freeboard/write", method=RequestMethod.GET)
-	public String writeView() {
-		return "freeboard/write";
+	//날짜 바꾸기
+	public String timeFormatted(Timestamp timestamp) {
+	    // Timestamp 객체를 LocalDateTime 객체로 변환
+	    LocalDateTime dateTime = timestamp.toLocalDateTime();
+	    // 출력 포맷 지정
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd a hh시");
+	    // 포맷에 맞게 변환
+	    String formattedDateString = dateTime.format(formatter);
+	    return formattedDateString;
 	}
-
+	
 	//게시글 목록 조회 (페이징 처리)
 	@RequestMapping(value="/freeboard/list", method=RequestMethod.GET)
 	public String freeboardSearchView(@ModelAttribute Search search
@@ -42,10 +49,10 @@ public class FreeboardController {
 		search.setSearchCondition(searchCondition);
 		try {
 			// search값을 스트링 값으로 화면이 출력해봄
-			System.out.println("freeboardSearchView함수 search.toString()값은 : " + search.toString());
+			//System.out.println("freeboardSearchView함수 search.toString()값은 : " + search.toString());
 			// 전체 페이지 수 검색해서 가져옴
 			int totalCount = fService.getSearchListCount(search);
-			System.out.println("freeboardView함수 totalCount값은 : " + totalCount);
+			//System.out.println("freeboardView함수 totalCount값은 : " + totalCount);
 			PageInfo pi = this.getPageInfo(currentPage, totalCount);
 			
 			List<Freeboard> searchList = fService.selectListByKeyword(pi, search);
@@ -69,8 +76,12 @@ public class FreeboardController {
 	@RequestMapping(value = "/freeboard/detail", method=RequestMethod.GET)
 	public String freeboardView(@RequestParam("boardNo") int boardNo
 			, Model model) {
+		
+		//닉네임 호출 테스트
+		System.out.println(fService.selectNickname(boardNo));
 		try {
 			Freeboard freeboard = fService.selectOneById(boardNo);
+			freeboard.setUserNickname(fService.selectNickname(boardNo));
 			model.addAttribute("freeboard",freeboard);
 			return "freeboard/detail";
 		} catch (Exception e) {
@@ -78,6 +89,12 @@ public class FreeboardController {
 			model.addAttribute("msg", e.getMessage());
 			return "common/error";
 		}
+	}
+	
+	// 자유게시판 글등록 화면
+	@RequestMapping(value = "/freeboard/write", method=RequestMethod.GET)
+	public String writeView() {
+		return "freeboard/write";
 	}
 	
 	// 자유게시판 글 등록하기
@@ -97,6 +114,7 @@ public class FreeboardController {
 					freeboard.setBoardImage(filePath);
 				}
 			}
+			System.out.println(freeboard);
 			int result = fService.insertFreeboard(freeboard);
 			if(result > 0) {
 				return "redirect:/freeboard/list";
@@ -105,6 +123,65 @@ public class FreeboardController {
 				return "common/error";
 			}
 		} catch (Exception e) {
+			model.addAttribute("msg", e.getMessage());
+			return "common/error";
+		}
+	}
+	
+	//게시글 수정화면
+	@RequestMapping(value="/freeboard/modify", method=RequestMethod.GET)
+	public String noticeModifyView(@RequestParam("boardNo") Integer boardNo, Model model) {
+		try {
+			Freeboard freeboard = fService.selectOneById(boardNo);
+			if(freeboard != null) {
+				model.addAttribute("freeboard", freeboard);
+				return "freeboard/modify";
+			}else {
+				model.addAttribute("msg", "데이터 조회에 실패하였습니다.");
+				return "common/error";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
+			return "common/error";
+		}
+	}
+	
+	// 게시글 수정
+	@RequestMapping(value="/freeboard/modify", method=RequestMethod.POST)
+	public String noticeModify(
+		@ModelAttribute Freeboard freeboard
+		, @RequestParam(value="reloadFile", required=false) MultipartFile reloadFile
+		, Model model
+		, HttpServletRequest request) {
+		try {
+			// 수정할 때, 새로 업로드된 파일이 있는 경우)
+			if(!reloadFile.isEmpty()) {
+				// 기존 업로드 된 파일 체크 후
+				if(freeboard.getBoardImage() != null) {
+					// 기존 파일 삭제
+					this.deleteFile(freeboard.getBoardImage(), request);
+				}
+				// 새로 업로드된 파일 복사(지정된 경로 업로드)
+				String modifyPath = this.saveFile(reloadFile, request);
+				if(modifyPath != null) {
+					// notice에 새로운 파일 이름, 파일 경로 set
+					freeboard.setBoardImage(reloadFile.getOriginalFilename());
+					//freeboard.setNoticeFilepath(modifyPath);
+				}
+			}
+			
+			//DB에서 공지사항 수정(UPDATE)
+			int result = fService.modifyFreeboard(freeboard);
+			if(result > 0) {
+				return "redirect:/freeboard/detail?boardNo="+freeboard.getBoardNo();
+			}else {
+				model.addAttribute("msg", "수정이 완료되지 않았습니다.");
+				return "common/error";
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 			model.addAttribute("msg", e.getMessage());
 			return "common/error";
 		}
@@ -166,7 +243,7 @@ public class FreeboardController {
 		//ex) 게시글수 170
 		//최대 페이지 구하기 = 17
 		maxPage = (int)((double)totalCount/boardLimit+0.9);
-		System.out.println("최대페이지 값은 : "+ maxPage);
+		//System.out.println("최대페이지 값은 : "+ maxPage);
 		// 시작 네비값 세팅.
 		startNavi = (((int)((double)currentPage/naviLimit+0.9))-1) * naviLimit + 1;
 		// 끝 네비값 세팅.
@@ -176,7 +253,7 @@ public class FreeboardController {
 			endNavi = maxPage;
 		}
 		
-		System.out.println("끝 네비값은 : "+endNavi);
+		//System.out.println("끝 네비값은 : "+endNavi);
 		
 		pi = new PageInfo(currentPage, boardLimit, naviLimit, startNavi, endNavi, totalCount, maxPage);
 		return pi;

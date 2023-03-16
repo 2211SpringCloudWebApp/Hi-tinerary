@@ -15,25 +15,30 @@
 	margin: 0 auto;
 	margin-top: 50px;
 }
+.freespan{
+	width: 100px;
+	height: 35px;
+	line-height: 35px;
+	border-radius: 5px;
+	font-size: 15px;
+	vertical-align: middle;
+	color: white;
+}
+
 #freespan1{
-	width: 100%;
-	height: 90%;
-	border-radius: 10px;
 	background-color: #F39081;
 }
 #freespan2{
-	width: 100%;
-	height: 90%;
-	border-radius: 10px;
 	background-color: #0F8D80;
 }
 
 #listTable{
+	border-top: solid 1px #FBD188;
 	width: 100%;
 	font-size: 20px;
-	border-top: solid 1px #FBD188;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	height: 50px;
+	line-height: 50px;
+	vertical-align: middle;
 }
 #listTable td:nth-child(1){
 	width: 5%;

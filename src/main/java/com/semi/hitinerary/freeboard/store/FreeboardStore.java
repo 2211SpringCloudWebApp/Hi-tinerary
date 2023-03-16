@@ -17,6 +17,13 @@ public interface FreeboardStore {
 	 * @return int
 	 */
 	public int insertFreeboard(SqlSession session, Freeboard freeboard);
+	/**
+	 * 게시글 수정 Store
+	 * @param session
+	 * @param freeboard
+	 * @return int
+	 */
+	public int modifyFreeboard(SqlSession session, Freeboard freeboard);
 
 	/**
 	 * 게시글 전체수 Store
@@ -25,6 +32,13 @@ public interface FreeboardStore {
 	 */
 	public int getListCount(SqlSession session, Search search);
 
+	/**
+	 * 닉네임조회 Store
+	 * @param session
+	 * @param boardNo
+	 * @return
+	 */
+	public String selectNickname(SqlSession session, int boardNo);
 	/**
 	 * 게시글 수 Store
 	 * @param session
@@ -65,6 +79,7 @@ public interface FreeboardStore {
 	 * @return
 	 */
 	public List<Freeboard> selectListByKeyword(SqlSession session, PageInfo pi, Search search);
+
 
 	
 

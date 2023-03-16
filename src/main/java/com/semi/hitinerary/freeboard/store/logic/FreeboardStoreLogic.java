@@ -17,7 +17,12 @@ public class FreeboardStoreLogic implements FreeboardStore{
 	public int insertFreeboard(SqlSession session, Freeboard freeboard) {
 		return session.insert("freeboardMapper.insertFreeboard", freeboard);
 	}
-
+	
+	@Override
+	public int modifyFreeboard(SqlSession session, Freeboard freeboard) {
+		return session.update("freeboardMapper.modifyFreeboard", freeboard);
+	}
+	
 	// 게시글 수 확인하기
 	@Override
 	public int getListCount(SqlSession session, Search search) {
@@ -31,7 +36,7 @@ public class FreeboardStoreLogic implements FreeboardStore{
 		int offset = (currentPage - 1) * limit;
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		System.out.println("SearchCondition :" +search.getSearchCondition());
+		//System.out.println("SearchCondition :" +search.getSearchCondition());
 		List<Freeboard> fList = session.selectList("freeboardMapper.selectFreeboardList", search, rowBounds);
 		return fList;
 	}
@@ -44,6 +49,11 @@ public class FreeboardStoreLogic implements FreeboardStore{
 	@Override
 	public int deleteFreeboard(SqlSession session, int boardNo) {
 		return session.delete("freeboardMapper.deleteOne", boardNo);
+	}
+	
+	@Override
+	public String selectNickname(SqlSession session, int boardNo) {
+		return session.selectOne("freeboardMapper.selectNickname", boardNo);
 	}
 
 	@Override
@@ -61,5 +71,6 @@ public class FreeboardStoreLogic implements FreeboardStore{
 		List<Freeboard> searchList = session.selectList("freeboardMapper.selectListByKeyword", search, rowBounds);
 		return searchList;
 	}
+
 
 }

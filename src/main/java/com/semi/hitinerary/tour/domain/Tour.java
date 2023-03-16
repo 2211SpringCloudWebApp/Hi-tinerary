@@ -19,14 +19,17 @@ public class Tour {
 	private String tourImage; //입력
 	private String thumbnail; //입력
 	private Timestamp writeDate; //default 
-	private int userNo; //세션에서 갖고오기
+	
+	private int userNo; //user_table에서 갖고오기
+	private String userNickname;//user_table에서 갖고오기
+	private int userGrade;//user_table에서 갖고오기
 	
 	public Tour() {
 		super();
 	}
 
 	public Tour(String tourTitle, String tourContent, Timestamp startDate, Timestamp endDate, int price,
-			Date deadline, int maxPeople, int minPeople) {
+			Date deadline, int maxPeople, int minPeople, int userNo, int userGrade, String userNickname) {
 		
 		super();
 		
@@ -39,6 +42,11 @@ public class Tour {
 	
 		this.maxPeople = maxPeople;
 		this.minPeople = minPeople;
+		
+		this.userNo = userNo;
+		this.userNickname = userNickname;
+		this.userGrade = userGrade;
+		
 		
 		
 		
@@ -156,14 +164,32 @@ public class Tour {
 		this.userNo = userNo;
 	}
 
+	public String getUserNickname() {
+		return userNickname;
+	}
+
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
+	}
+
+	public int getUserGrade() {
+		return userGrade;
+	}
+
+	public void setUserGrade(int userGrade) {
+		this.userGrade = userGrade;
+	}
+
 	@Override
 	public String toString() {
 		return "Tour [tourNo=" + tourNo + ", tourTitle=" + tourTitle + ", tourContent=" + tourContent + ", startDate="
 				+ startDate + ", endDate=" + endDate + ", price=" + price + ", deadline=" + deadline
 				+ ", currentPeople=" + currentPeople + ", maxPeople=" + maxPeople + ", minPeople=" + minPeople
 				+ ", tourImage=" + tourImage + ", thumbnail=" + thumbnail + ", writeDate=" + writeDate + ", userNo="
-				+ userNo + "]";
+				+ userNo + ", userNickname=" + userNickname + ", userGrade=" + userGrade + "]";
 	}
+
+	
 	
 	
 }

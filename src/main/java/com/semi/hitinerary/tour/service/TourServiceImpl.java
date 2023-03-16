@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.semi.hitinerary.tour.domain.Tour;
+import com.semi.hitinerary.tour.domain.TourPay;
 import com.semi.hitinerary.tour.store.TourStore;
+import com.semi.hitinerary.user.domain.User;
 
 @Service
 public class TourServiceImpl implements TourService {
@@ -31,6 +33,12 @@ public class TourServiceImpl implements TourService {
 	}
 
 	@Override
+	public User selectUserByNo(int payUserNo) {
+		User user = tStore.selectUserByNo(session, payUserNo);
+		return user;
+	}
+
+	@Override
 	public int insertPosting(Tour tour) {
 		int result = tStore.insertPosting(session, tour);
 		return result;
@@ -45,6 +53,12 @@ public class TourServiceImpl implements TourService {
 	@Override
 	public int updatePosting(Tour tour) {
 		int result = tStore.updateTour(session, tour);
+		return result;
+	}
+
+	@Override
+	public int payTour(TourPay tPay) {
+		int result = tStore.insertPay(session, tPay);
 		return result;
 	}
 

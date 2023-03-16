@@ -17,7 +17,8 @@
 	                <p>투어 / 패키지 상품</p>                    
 	            </div>
 
-<!-- 													${tour } -->
+<!--  													${tour }  -->
+			<input type="hidden" name="payuserNo" value="${sessionScope.loginUser.userNo }">	
                 
             <div id="thumbnailAndInfos">
                 <div id="thumbnail">
@@ -48,7 +49,18 @@
                        
                     </div>
                     <div id="buyDiv">
-                        <div><button id="pay">결제하기</button></div>
+                        <div>
+	                        <c:if test= "${sessionScope.loginUser.userNickname ne null}"> 
+	                        	<form action="/tour/tourBoardPayView" method="GET">
+							    <button id="pay">결제하기</button>
+							    <input type="hidden" name="payUserNo" value="${sessionScope.loginUser.userNo}">
+							    <input type="hidden" name="tourNo" value="${tour.tourNo}">
+							</form>                  
+	                        </c:if>
+	                        <c:if test= "${sessionScope.loginUser.userNickname eq null}"> 
+	                        	<button id="pay" onclick="payButtonClicked()">결제하기</button>                       
+	                        </c:if>
+                        </div>
                         <div>신고하기</div>
                     </div>
                     <div id="currentDiv">
@@ -74,6 +86,18 @@
                 
         
         <script>
+        
+       //로그인 안돼있는데 결제버튼 눌렀을때 로그인페이지로 이동
+        function payButtonClicked() {
+          if (confirm('로그인이 필요합니다. 로그인 하시겠습니까?')) {
+            location.href = '/user/login';
+          } else {
+            // 아무 작업도 하지 않고 그대로 머무릅니다.
+          }
+        }
+        
+        
+        //삭제하기 버튼 눌렀을때
         	function removeCheck(tourNo){
         		if(confirm("정말 삭제하시겠어요?")){
         			location.href="/tour/deletePosting?tourNo="+tourNo;

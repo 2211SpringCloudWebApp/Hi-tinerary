@@ -6,6 +6,7 @@
 		<id property="userNo" column="USER_NO"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="userPw" column="UESR_PW"/>
+		<result property="userName" column="USER_NAME"/>
 		<result property="userNickname" column="USER_NICKNAME"/>
 		<result property="userEmail" column="USER_EMAIL"/>
 		<result property="userPhone" column="USER_PHONE"/>
@@ -14,14 +15,18 @@
 		<result property="companyRegiNo" column="COMPANY_REGI_NO"/>
 		<result property="userGrade" column="USER_GRADE"/>
 	</resultMap>
-	
-	<select id="selectUserById" resultMap="userResultMap" parameterType="_int">
-		SELECT * FROM USER_TBL WHERE USER_NO = #{userNo}
-	</select>
+	<insert id="insertUser" parameterType="User">
+		INSERT INTO USER_TBL VALUES(USER_SEQUENCE.NEXTVAL, #{userId}, #{userPw}, #{userName}, #{userNickname}, #{userEmail}, #{userPhone}, #{userBirthDate}, #{userGender}, NULL, #{userGrade})
+	</insert>
+	<insert id="insertCoUser" parameterType="User">
+		INSERT INTO USER_TBL VALUES(USER_SEQUENCE.NEXTVAL, #{userId}, #{userPw}, #{userName}, #{userNickname}, #{userEmail}, #{userPhone}, #{userBirthDate}, NULL, #{companyRegiNo}, #{userGrade})
+	</insert>
 	<select id="Login" resultMap="userResultMap">
 		SELECT USER_NO, USER_NICKNAME, USER_GRADE FROM USER_TBL WHERE USER_ID = #{userId} AND USER_PW = #{userPw}
 	</select>
-	
+	<select id="selectUserById" resultMap="userResultMap" parameterType="_int">
+		SELECT * FROM USER_TBL WHERE USER_NO = #{userNo}
+	</select>	
 	<select id="selectByGroupNo" resultMap="userResultMap">
 		SELECT E.USER_NO, E.USER_NICKNAME, E.USER_EMAIL, FLOOR((SYSDATE - TO_DATE(E.USER_BIRTH_DATE, 'YY-MM-DD')) / 365) USER_BIRTH_DATE, USER_GENDER
 		FROM GROUP_USERS_TBL F JOIN USER_TBL E ON E.USER_NO = F.USER_NO 

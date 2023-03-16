@@ -12,13 +12,13 @@
             <div class="type-area">
                 <div class="btn-area">
                     <h3>일반회원</h3><br>
-                    <button>가입하기</button>
+                    <button><a href="/user/registerUser">가입하기</a></button>
                 </div>
             </div>
             <div class="type-area">
                 <div class="btn-area">
                     <h3>기업회원</h3><br>
-                    <button>가입하기</button>
+                    <button><a href="/user/registerCompany">가입하기</a></button>
                 </div>
             </div>
         </main>

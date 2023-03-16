@@ -27,7 +27,7 @@
                 <c:if test="${sessionScope.loginUser eq null }">
                	 	<div id="user-id">
 	                    <ul>
-	                        <li>|&nbsp;&nbsp; <a href="/user/register">회원가입</a>&nbsp;&nbsp; |</li>
+	                        <li>|&nbsp;&nbsp; <a href="/user/registerType">회원가입</a>&nbsp;&nbsp; |</li>
 	                        <li>&nbsp;&nbsp; <a href="/user/login">로그인</a> &nbsp;&nbsp;|</li>
 	                    </ul>
 	                </div>

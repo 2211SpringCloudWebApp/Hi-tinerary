@@ -47,7 +47,7 @@
                         </div>
                         <div class="info">
                             <label>휴대폰번호</label><span id=phone-err class="err"></span><br>
-                            <input type="text" id="userPhone" name="userPhone" placeholder="'-'없이 숫자만" required onkeyup="addHyphenToPhoneNum(this)">
+                            <input type="text" id="userPhone" name="userPhone" placeholder="'-'없이 숫자만 입력" required onkeyup="addHyphenToPhoneNum(this)">
                         </div>
                         <div class="info">
                             <label>생년월일</label><span id=birth-err class="err"></span><br>

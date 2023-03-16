@@ -20,7 +20,7 @@
                     <ul>
                         <li>&nbsp;&nbsp; <a href="/index.jsp">홈</a>&nbsp;&nbsp; | </li>
                         <li>&nbsp;&nbsp; <a href="/tour/tourBoardList">투어상품</a>&nbsp;&nbsp; | </li>
-                        <li>&nbsp;&nbsp; <a href="/withBoard/withBoardList">동행구하기</a>&nbsp;&nbsp; |</li>
+                        <li>&nbsp;&nbsp; <a href="/withboard/withBoardList">동행구하기</a>&nbsp;&nbsp; |</li>
                         <li>&nbsp;&nbsp; <a href="/freeboard/list">자유게시판</a>&nbsp;&nbsp; |</li>
                     </ul>
                 </nav>
@@ -37,11 +37,10 @@
 						<p>
 							${sessionScope.loginUser.userNickname } 님 환영합니다!	
 							<input type="hidden" value="${sessionScope.loginUser.userGrade }">
-							<input type="hidden" value="${sessionScope.loginUser.userNo }">
-							
+							<input type="hidden" name=userNo value="${sessionScope.loginUser.userNo }">	
 						</p>
-	                    <ul>
-	                        <li>|&nbsp;&nbsp; <a href="/user/register">마이페이지</a>&nbsp;&nbsp; |</li>
+	                    <ul>             
+	                        <li>|&nbsp;&nbsp; <a href="/user/">마이페이지</a>&nbsp;&nbsp; |</li>
 	                        <li>&nbsp;&nbsp; <a href="/user/logout">로그아웃</a> &nbsp;&nbsp;|</li>
 	                    </ul>
 	                </div>

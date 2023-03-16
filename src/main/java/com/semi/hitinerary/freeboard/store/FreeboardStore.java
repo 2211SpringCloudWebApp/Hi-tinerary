@@ -79,6 +79,13 @@ public interface FreeboardStore {
 	 * @return
 	 */
 	public List<Freeboard> selectListByKeyword(SqlSession session, PageInfo pi, Search search);
+	
+	/**
+	 * 시퀀스 넘버 조회 Store
+	 * @param session
+	 * @return
+	 */
+	public int getSequence(SqlSession session);
 
 
 	

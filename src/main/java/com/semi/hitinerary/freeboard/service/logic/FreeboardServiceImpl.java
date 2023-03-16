@@ -69,6 +69,11 @@ public class FreeboardServiceImpl implements FreeboardService{
 		return fStore.selectListByKeyword(session, pi, search);
 	}
 
+	@Override
+	public int getSequence() {
+		return fStore.getSequence(session);
+	}
+
 
 
 

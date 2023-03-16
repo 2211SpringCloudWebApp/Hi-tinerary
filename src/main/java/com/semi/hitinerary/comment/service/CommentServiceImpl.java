@@ -42,5 +42,13 @@ public class CommentServiceImpl implements CommentService {
 		return result;
 	}
 
+	public List<Comment> ListFreeboardComment(int freeBoardNo) {
+		return cStore.ListFreeboardComment(session, freeBoardNo);
+	}
+
+	@Override
+	public int insertFreeboardComment(Comment comment) {
+		return cStore.insertFreeboardComment(session, comment);
+	}
 
 }

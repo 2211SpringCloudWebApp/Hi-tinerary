@@ -14,6 +14,7 @@
 		<typeAlias alias="TourPay" type="com.semi.hitinerary.tour.domain.TourPay"/>
 		<typeAlias alias="groupBoard" type="com.semi.hitinerary.groupboard.domain.Groupboard"/>
 		<typeAlias alias="Comment" type="com.semi.hitinerary.comment.domain.Comment"/>
+		<typeAlias alias="Report" type="com.semi.hitinerary.report.domain.Report"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
@@ -25,5 +26,6 @@
 		<mapper resource="mappers/tour-pay-mapper.xml"/>
 		<mapper resource="mappers/groupboard-mapper.xml"/>
 		<mapper resource="mappers/comment-mapper.xml"/>
+		<mapper resource="mappers/report-mapper.xml"/>
 	</mappers>
 </configuration>

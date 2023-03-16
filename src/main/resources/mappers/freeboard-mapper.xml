@@ -28,6 +28,11 @@
 		SELECT * FROM FREE_BOARD_TBL WHERE BOARD_NO = #{boardNo }
 	</select>
 	
+	<!-- 시퀀스 넘버 조회 -->
+	<select id="getSequence" resultType="_int">
+		SELECT FB_SEQUENCE.NEXTVAL FROM DUAL
+	</select>
+	
 	<!-- 검색 목록 개수 가져오기 -->
 	<select id="getListCount" resultType="_int">
 		SELECT COUNT(*) FROM FREE_BOARD_TBL
@@ -81,7 +86,7 @@
 	
 	<!-- 질문글/잡담글 등록 -->
 	<insert id="insertFreeboard">
-		INSERT INTO FREE_BOARD_TBL VALUES(FB_SEQUENCE.NEXTVAL, #{boardHead}, DEFAULT, #{boardTitle}, #{boardSubject}, DEFAULT, #{boardImage}, DEFAULT, #{userNo})
+		INSERT INTO FREE_BOARD_TBL VALUES(#{boardNo}, #{boardHead}, DEFAULT, #{boardTitle}, #{boardSubject}, DEFAULT, #{boardImage}, DEFAULT, #{userNo})
 	</insert>
 	
 	<update id="modifyFreeboard">

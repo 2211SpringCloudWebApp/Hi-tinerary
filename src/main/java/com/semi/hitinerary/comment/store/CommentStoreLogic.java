@@ -35,5 +35,13 @@ public class CommentStoreLogic implements CommentStore{
 		return result;
 	}
 
+	public List<Comment> ListFreeboardComment(SqlSession session, int freeBoardNo) {
+		return session.selectList("commentMapper.ListFreeboardComment", freeBoardNo);
+	}
+
+	@Override
+	public int insertFreeboardComment(SqlSession session, Comment comment) {
+		return session.insert("commentMapper.insertFreeboardComment", comment);
+	}
 
 }

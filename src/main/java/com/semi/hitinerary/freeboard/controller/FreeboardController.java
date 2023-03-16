@@ -78,9 +78,10 @@ public class FreeboardController {
 			, Model model) {
 		
 		//닉네임 호출 테스트
-		System.out.println(fService.selectNickname(boardNo));
+		//System.out.println(fService.selectNickname(boardNo));
 		try {
 			Freeboard freeboard = fService.selectOneById(boardNo);
+			System.out.println(freeboard);
 			freeboard.setUserNickname(fService.selectNickname(boardNo));
 			model.addAttribute("freeboard",freeboard);
 			return "freeboard/detail";
@@ -105,17 +106,19 @@ public class FreeboardController {
 			, HttpServletRequest request
 			, Model model) {
 		try {
+			freeboard.setBoardNo(fService.getSequence());
 			// 파일이 있을 경우
 			if(!uploadFile.getOriginalFilename().equals("")) {
 				// 파일 복사(지정한 경로 업로드)
-				String filePath = saveFile(uploadFile, request);
+				String filePath = saveFile(uploadFile, request, freeboard.getBoardNo(), freeboard.getUserNo());
 				if(filePath != null) { // 파일복사가 성공했으면, null이 아니면
 					freeboard.setBoardImage(uploadFile.getOriginalFilename());
 					freeboard.setBoardImage(filePath);
 				}
 			}
-			System.out.println(freeboard);
+			//System.out.println(freeboard);
 			int result = fService.insertFreeboard(freeboard);
+			
 			if(result > 0) {
 				return "redirect:/freeboard/list";
 			}else {
@@ -163,7 +166,7 @@ public class FreeboardController {
 					this.deleteFile(freeboard.getBoardImage(), request);
 				}
 				// 새로 업로드된 파일 복사(지정된 경로 업로드)
-				String modifyPath = this.saveFile(reloadFile, request);
+				String modifyPath = this.saveFile(reloadFile, request, freeboard.getBoardNo(), freeboard.getUserNo());
 				if(modifyPath != null) {
 					// notice에 새로운 파일 이름, 파일 경로 set
 					freeboard.setBoardImage(reloadFile.getOriginalFilename());
@@ -207,11 +210,10 @@ public class FreeboardController {
 
 	// 아래부분 다시 봐야함.
 	// 지정 경로로 파일 복사(파일 업로드)
-	private String saveFile(MultipartFile uploadFile, HttpServletRequest request) {
+	private String saveFile(MultipartFile uploadFile, HttpServletRequest request, int boardNo, int userNo) {
 		try {
 			//내가 원하는 경로 : 프로젝트 경로
 			String root = request.getSession().getServletContext().getRealPath("resources");
-			int userNo = 1;
 			String savePath = root + "\\wuploadFiles\\" + userNo + "freeBoard";
 			//폴더가 없을 경우 자동으로 만들어주기 위한 코드(폴더가 있는 경우 동작 안함)
 			File folder = new File(savePath);
@@ -221,7 +223,7 @@ public class FreeboardController {
 			}
 			
 			//실제 파일 저장
-			String filePath = savePath + "\\" + uploadFile.getOriginalFilename();
+			String filePath = savePath + "\\" + boardNo + uploadFile.getOriginalFilename();
 			File file = new File(filePath);
 			uploadFile.transferTo(file);
 			return filePath;

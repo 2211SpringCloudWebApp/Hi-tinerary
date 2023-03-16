@@ -72,5 +72,10 @@ public class FreeboardStoreLogic implements FreeboardStore{
 		return searchList;
 	}
 
+	@Override
+	public int getSequence(SqlSession session) {
+		return session.selectOne("freeboardMapper.getSequence");
+	}
+
 
 }

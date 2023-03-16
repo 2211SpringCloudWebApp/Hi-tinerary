@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 
 public class With {
 	private int boardNo;
-	private int userNo;
 	private String boardTitle;
 	private String boardContent;
 	private String boardImage;
@@ -15,6 +14,9 @@ public class With {
 	private Timestamp writeDate;
 	private Timestamp updateDate;
 	
+	//USER_TBL에서 가지고오기
+	private int userNo;
+	private String userNickname;
 	private String userGender;
 	private String userBirthDate;
 	
@@ -36,9 +38,20 @@ public class With {
 		this.updateDate = updateDate;
 	}
 
-	//User 정보
-	public With(int userNo, String userGender, String userBirthDate) {
+	public With(int boardNo, String boardTitle, String boardContent, String boardImage, Timestamp startDate,
+			Timestamp endDate, int maxPeople, int currentPeople, Timestamp writeDate, Timestamp updateDate, int userNo,
+			String userGender, String userBirthDate) {
 		super();
+		this.boardNo = boardNo;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.boardImage = boardImage;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.maxPeople = maxPeople;
+		this.currentPeople = currentPeople;
+		this.writeDate = writeDate;
+		this.updateDate = updateDate;
 		this.userNo = userNo;
 		this.userGender = userGender;
 		this.userBirthDate = userBirthDate;
@@ -147,13 +160,21 @@ public class With {
 	public void setUserBirthDate(String userBirthDate) {
 		this.userBirthDate = userBirthDate;
 	}
+	
+	public String getUserNickname() {
+		return userNickname;
+	}
+
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
+	}
 
 	@Override
 	public String toString() {
-		return "With [boardNo=" + boardNo + ", userNo=" + userNo + ", boardTitle=" + boardTitle + ", boardContent="
-				+ boardContent + ", boardImage=" + boardImage + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", maxPeople=" + maxPeople + ", currentPeople=" + currentPeople + ", writeDate=" + writeDate
-				+ ", updateDate=" + updateDate + ", userGender=" + userGender + ", userBirthDate=" + userBirthDate
-				+ "]";
+		return "With [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
+				+ ", boardImage=" + boardImage + ", startDate=" + startDate + ", endDate=" + endDate + ", maxPeople="
+				+ maxPeople + ", currentPeople=" + currentPeople + ", writeDate=" + writeDate + ", updateDate="
+				+ updateDate + ", userNo=" + userNo + ", userNickname=" + userNickname + ", userGender=" + userGender
+				+ ", userBirthDate=" + userBirthDate + "]";
 	}
 }

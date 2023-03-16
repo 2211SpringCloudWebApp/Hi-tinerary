@@ -32,8 +32,8 @@ public class WithStoreLogic implements WithStore{
 	 * 동행찾기 게시판 상세조회 WithStoreLogic
 	 */
 	@Override
-	public With selectOneById(SqlSession session, int boardNo) {
-		With with = session.selectOne("WithBoardMapper.selectOneById", boardNo);
+	public With selectOneByNo(SqlSession session, int boardNo) {
+		With with = session.selectOne("WithBoardMapper.selectOneByNo", boardNo);
 		return with;
 	}
 
@@ -43,6 +43,15 @@ public class WithStoreLogic implements WithStore{
 	@Override
 	public int updateWithBoard(SqlSession session, With with) {
 		int result = session.update("WithBoardMapper.updateWithBoard", with);
+		return result;
+	}
+
+	/**
+	 * 동행찾기 게시판 삭제하기 WithStoreLogic
+	 */
+	@Override
+	public int deleteWithBoard(SqlSession session, int boardNo) {
+		int result = session.delete("WithBoardMapper.deleteWithBoard", boardNo);
 		return result;
 	}
 

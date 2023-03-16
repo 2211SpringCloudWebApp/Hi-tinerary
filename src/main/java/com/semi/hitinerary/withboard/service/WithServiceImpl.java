@@ -39,8 +39,8 @@ public class WithServiceImpl implements WithService{
 	 * 동행찾기 상세 조회 ServiceImpl
 	 */
 	@Override
-	public With selectOneById(int boardNo) {
-		With with = wStore.selectOneById(session, boardNo);
+	public With selectOneByNo(int boardNo) {
+		With with = wStore.selectOneByNo(session, boardNo);
 		return with;
 	}
 
@@ -50,5 +50,14 @@ public class WithServiceImpl implements WithService{
 	@Override
 	public int updateWithBoard(With with) {
 		return wStore.updateWithBoard(session, with);
+	}
+
+	/**
+	 * 동행찾기 게시물 삭제하기 ServiceImpl
+	 */
+	@Override
+	public int deleteWithBoard(int boardNo) {
+		int result = wStore.deleteWithBoard(session, boardNo);
+		return result;
 	}
 }

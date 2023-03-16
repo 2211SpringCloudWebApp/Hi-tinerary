@@ -78,6 +78,10 @@
     width: 270px;
     height: 200px;
 }
+.list_wrapper .img img{
+    width: 270px;
+    height: 200px;
+}
 .list_wrapper .tit{
 	text-align: center;
     font-size: 20px;

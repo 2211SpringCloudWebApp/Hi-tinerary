@@ -43,7 +43,7 @@
 	<input type="submit" value="수정하기">
 	</form>
 	<a href="">삭제하기</a>
-	<a href="">목록으로</a>
+	<a href="/withboard/withBoardList">목록으로</a>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 	
 	<script>

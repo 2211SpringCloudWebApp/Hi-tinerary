@@ -15,7 +15,7 @@ public interface WithService {
 
 	/**
 	 * 동행찾기 목록 조회 Service
-	 * @return
+	 * @return List<With>
 	 */
 	public List<With> selectWithBoardList();
 
@@ -24,12 +24,19 @@ public interface WithService {
 	 * @param boardNo
 	 * @return With
 	 */
-	public With selectOneById(int boardNo);
+	public With selectOneByNo(int boardNo);
 
 	/**
-	 * 동행찾기 공지사항 수정 Service
+	 * 동행찾기 수정 Service
 	 * @param with
 	 * @return int
 	 */
 	public int updateWithBoard(With with);
+
+	/**
+	 * 동행찾기 게시물 삭제 Service
+	 * @param boardNo
+	 * @return int
+	 */
+	public int deleteWithBoard(int boardNo);
 }

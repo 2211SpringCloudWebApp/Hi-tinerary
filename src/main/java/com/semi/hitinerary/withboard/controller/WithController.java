@@ -2,6 +2,7 @@ package com.semi.hitinerary.withboard.controller;
 
 import java.io.File;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,9 @@ public class WithController {
 	private WithService wService;
 	
 	@RequestMapping(value="/withboard/withWriteView", method=RequestMethod.GET)
-	public String withWriteView() {
+	public String withWriteView(Model model) {
+		LocalDate now = LocalDate.now();
+		model.addAttribute("now", now);
 		return "withboard/withBoardWrite";
 	}
 	/**
@@ -52,6 +55,7 @@ public class WithController {
 					with.setBoardImage(filePath);
 				}
 			}
+			
 			endDate += " 00:00:00";
 			startDate += " 00:00:00";
 			with.setStartDate(Timestamp.valueOf(startDate));
@@ -59,7 +63,7 @@ public class WithController {
 			with.setUserNo(loginUserNo);
 			int result = wService.insertWithBoard(with);
 			if(result > 0) {
-				return "redirect:/withBoard/withBoardList";
+				return "redirect:/withboard/withBoardList";
 			} else {
 				model.addAttribute("msg", "글 등록이 완료되지 않았습니다.");
 				return "common/error";
@@ -97,13 +101,13 @@ public class WithController {
 	
 	
 	// 동행게시판 목록 보여주기
-	@RequestMapping(value="/withBoard/withBoardList", method=RequestMethod.GET)
+	@RequestMapping(value="/withboard/withBoardList", method=RequestMethod.GET)
 	public String showWithBoard(Model model) {
 		try {
 			List<With> wList = wService.selectWithBoardList();
 			if(!wList.isEmpty()) {
 				model.addAttribute("wList", wList);
-				return "withboard/withBoardList";
+				return "/withboard/withBoardList";
 			} else {
 				model.addAttribute("msg", "데이터가 존재하지 않습니다.");
 				return "common/error";
@@ -118,7 +122,7 @@ public class WithController {
 	@RequestMapping(value="/withboard/withBoardDetail", method=RequestMethod.GET)
 	public String withBoardDetailView(@RequestParam("boardNo") int boardNo, Model model) {
 		try {
-			With with = wService.selectOneById(boardNo);
+			With with = wService.selectOneByNo(boardNo);
 			model.addAttribute("withBoard", with);
 			return "withboard/withBoardDetail";
 		} catch (Exception e) {
@@ -132,7 +136,7 @@ public class WithController {
 	@RequestMapping(value="/withboard/withModifyView", method=RequestMethod.GET)
 	public String withModifyView(@RequestParam("boardNo") Integer boardNo, Model model) {
 		try {
-			With with = wService.selectOneById(boardNo);
+			With with = wService.selectOneByNo(boardNo);
 			if(with != null) {
 				model.addAttribute("withBoard", with);
 				return "withboard/withBoardModify";
@@ -199,6 +203,23 @@ public class WithController {
 		File delFile = new File(delFilepath);
 		if (delFile.exists()) {
 			delFile.delete();
+		}
+	}
+	
+	// 동행게시판 삭제하기
+	@RequestMapping(value="/withboard/deletePosting", method=RequestMethod.GET)
+	public String deletePosting(@RequestParam("boardNo") int boardNo, Model model) {
+		try {
+			int result = wService.deleteWithBoard(boardNo);
+			if(result > 0) {
+				return "redirect:/withBoard/withBoardList";
+			} else {
+				model.addAttribute("msg","동행 게시판 삭제 실패");
+				return "common/error";
+			}
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getMessage());
+			return "common/error";
 		}
 	}
 }

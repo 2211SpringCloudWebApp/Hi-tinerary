@@ -17,14 +17,18 @@
 			<button>새글쓰기</button>
 		</div>
 		
-		<form action="/withboard/withBoardWrite" method="post" enctype="multipart/form-data">
+		<form action="/withboard/withBoardWrite" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
 		<input type="hidden" value="${loginUser.userNo }" name="loginUserNo">
+		<input type="hidden" value="${loginUser.userNickname}" name="userNickname">
+		<input type="hidden" value="${loginUser.userGender}" name="userGender">
+		<input type="hidden" value="${loginUser.userBirthDate }" name="usesrBirthDate"> 
             <div class="">
                 <label>모집인원</label> 
 				<input type="range" min="1" max="10" value="1" class="slider" id="myRange" name="maxPeople"> 
 				<span id="value"></span>명<br>
 				<label>날짜 선택</label> 
-				<input type="date" name="start-Date"> - <input type="date" name="end-Date"><br>
+				<input type="date" name="start-Date" onchange="startDecide()" min="${now }" required> - 
+				<input type="date" name="end-Date" onchange="endDecide()" min="${now }" required><br>
 				<div id="Container" contentEditable="true"></div>
 				<div class="oneHundred">
 				  <div class="infos">본문이미지첨부</div>
@@ -36,8 +40,8 @@
 				</div>
 				
 				<!-- <input type="text" placeholder="작성자"><br> -->
-				<input type="text" placeholder="ex) 12월 3박 4일 강릉 바다 보러갈 동행 3명 구해요" name="boardTitle"><br>
-				<textarea name="boardContent" id="" cols="30" rows="10"></textarea><br> 
+				<input type="text" placeholder="ex) 12월 3박 4일 강릉 바다 보러갈 동행 3명 구해요" name="boardTitle" required><br>
+				<textarea name="boardContent" id="" cols="30" rows="10" required></textarea><br> 
                 
                 <div class="writeButton">
                     <button type="submit" id="submit">글 올리기</button>
@@ -85,6 +89,24 @@
                 reader.readAsDataURL(file);
               }
             });
+            
+            //유효성 체크 부분
+            function startDecide(){
+            	var startDate = document.querySelector("[name=start-Date]");
+            	var endDate = document.querySelector("[name=end-Date]");
+            	if(startDate.value > endDate.value){
+            		endDate.value = startDate.value;
+            	}
+            }
+            
+            function endDecide(){
+				var startDate = document.querySelector("[name=start-Date]")
+				var endDate = document.querySelector("[name=end-Date]")
+				if(startDate.value > endDate.value){
+					alert("종료날짜가 시작날짜보다 이릅니다.")
+					endDate.value = startDate.value;
+				}
+			}
         </script>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 </body>

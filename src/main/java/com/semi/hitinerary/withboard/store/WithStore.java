@@ -29,7 +29,7 @@ public interface WithStore {
 	 * @param boardNo
 	 * @return With
 	 */
-	public With selectOneById(SqlSession session, int boardNo);
+	public With selectOneByNo(SqlSession session, int boardNo);
 
 	/**
 	 * 동행찾기 게시판 수정하기 Store
@@ -38,5 +38,13 @@ public interface WithStore {
 	 * @return int
 	 */
 	public int updateWithBoard(SqlSession session, With with);
+
+	/**
+	 * 동행찾기 게시판 삭제하기 Store
+	 * @param session
+	 * @param boardNo
+	 * @return int
+	 */
+	public int deleteWithBoard(SqlSession session, int boardNo);
 
 }

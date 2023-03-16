@@ -16,7 +16,6 @@
 	                <div id="boardTitle">
 	                    <div id="bar">  </div>
 	                    <p>투어 / 패키지 상품</p>
-	                   
 	                    <c:if test="${sessionScope.loginUser.userGrade == 2}">
 						  <a href="/tour/tourBoardWrite"><button>새글쓰기</button></a>
 						</c:if>

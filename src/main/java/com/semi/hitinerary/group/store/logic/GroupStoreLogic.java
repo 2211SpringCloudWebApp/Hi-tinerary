@@ -16,7 +16,10 @@ public class GroupStoreLogic implements GroupStore {
 	@Override
 	public int createGroup(SqlSession session, Group group) {
 		int result = session.insert("groupMapper.createGroup", group);
-		return result;
+		if(result > 0) {
+			return group.getGroupNo();
+		}
+		return 0;
 	}
 
 	@Override
@@ -26,8 +29,8 @@ public class GroupStoreLogic implements GroupStore {
 	}
 
 	@Override
-	public Group SelectOneByUserNoRecent(SqlSession session, int userNo) {
-		Group group = session.selectOne("groupMapper.SelectOneByUserNoRecent", userNo);
+	public Group SelectOneByGroupNo(SqlSession session, int groupNo) {
+		Group group = session.selectOne("groupMapper.SelectOneByGroupNo", groupNo);
 		return group;
 	}
 

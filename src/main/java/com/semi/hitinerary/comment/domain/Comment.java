@@ -15,6 +15,7 @@ public class Comment {
 	private int status;
 	private int refCommentNo;
 	private int userNo;
+	private String userNickname;
 	
 	public Comment() {}
 	
@@ -89,6 +90,14 @@ public class Comment {
 	}
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
+	}
+	
+	public String getUserNickname() {
+		return userNickname;
+	}
+
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
 	}
 
 	@Override

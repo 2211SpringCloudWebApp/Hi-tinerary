@@ -34,8 +34,8 @@ public class GroupServiceImpl implements GroupService{
 
 
 	@Override
-	public Group SelectOneByUserNoRecent(int userNo) {
-		Group group = gStore.SelectOneByUserNoRecent(session, userNo);
+	public Group SelectOneByGroupNo(int groupNo) {
+		Group group = gStore.SelectOneByGroupNo(session, groupNo);
 		return group;
 	}
 

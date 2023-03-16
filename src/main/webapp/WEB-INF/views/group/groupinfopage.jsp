@@ -234,20 +234,20 @@
 											<td><a href="/group/board/detail?groupBoardNo=${groupBoard.boardNo}&groupIndex=${groupIndex}">${groupBoard.boardTitle }</a></td>
 											<td>${groupBoard.writeDate }</td>
 											<td>${groupBoard.userNickname }</td>
-											<td>
-												<form action="">
-													<input type="hidden" name="groupBoardNo" value="${groupBoard.boardNo}">
-													<input type="hidden" name="groupIndex" value="${groupIndex }">
-													<input type="submit" value="수정">
-												</form>
-											</td>
-											<td>
-												<form action="/group/board/delete" method="post">
-													<input type="hidden" name="groupIndex" value="${groupIndex }">
-													<input type="hidden" name="groupBoardNo" value="${groupBoard.boardNo}">
-													<input type="submit" value="삭제">
-												</form>
-											</td>
+												<td>
+													<form action="/group/board/updateView" method="post" onsubmit="return BoardBtn('${groupBoard.userNo}')">
+														<input type="hidden" name="groupBoardNo" value="${groupBoard.boardNo}">
+														<input type="hidden" name="groupIndex" value="${groupIndex }">
+														<input type="submit" value="수정">
+													</form>
+												</td>
+												<td>
+													<form action="/group/board/delete" method="post" onsubmit="return BoardBtn('${groupBoard.userNo}')">
+														<input type="hidden" name="groupIndex" value="${groupIndex }">
+														<input type="hidden" name="groupBoardNo" value="${groupBoard.boardNo}">
+														<input type="submit" value="삭제" >
+													</form>
+												</td>
 										</tr>								
 									</c:forEach>
 								</tbody>
@@ -418,6 +418,14 @@
 						b.value = "";
 						alert("종료시간이 더 이릅니다.")
 					}					
+				}
+			}
+			function BoardBtn(writer){
+				if(writer == ${loginUser}){
+					return true;
+				}else{
+					alert('권한없음');
+					return false;
 				}
 			}
 		</script>

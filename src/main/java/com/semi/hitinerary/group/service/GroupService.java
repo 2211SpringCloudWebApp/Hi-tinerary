@@ -10,7 +10,7 @@ public interface GroupService {
 	public int createGroup(Group group);
 
 
-	public Group SelectOneByUserNoRecent(int userNo);
+	public Group SelectOneByGroupNo(int groupNo);
 
 
 	public List<Group> selectByUserNo(int userNo);

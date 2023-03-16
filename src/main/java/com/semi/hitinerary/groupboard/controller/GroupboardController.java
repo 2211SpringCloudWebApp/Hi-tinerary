@@ -71,7 +71,8 @@ public class GroupboardController {
 		cInfo = cController.CommentList(groupBoardNo);
 		if(cInfo != null) {
 			String html = cController.ListToHtml(cInfo);
-			model.addAttribute("write", html);			
+			//model.addAttribute("write", html);			
+			model.addAttribute("cInfo", cInfo);			
 		}
 		model.addAttribute("groupIndex", groupIndex);
 		return "groupboard/detail";
@@ -83,6 +84,12 @@ public class GroupboardController {
 			,String groupBoardNo) {
 		int result = gBService.deleteBoard(groupBoardNo);
 		return "redirect:/group/groupinfopage?groupIndex=" + groupIndex;
+	}
+	
+	@RequestMapping(value="/group/board/updateView", method = RequestMethod.POST)
+	public String groupBoardUpdate() {
+		
+		return "groupboard/update";
 	}
 	
 	public NavigationNList groupBoardList(int groupNo, int currentPage) {

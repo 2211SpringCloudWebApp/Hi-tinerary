@@ -44,8 +44,8 @@ public class GroupController {
 			Model model
 			,@RequestParam(value="groupIndex", required=false, defaultValue="0") String groupIndex
 			,@RequestParam(value="groupUserView", required=false, defaultValue="F") String groupUserView
-			,HttpSession session
 			,@RequestParam(value="currentPage", required=false, defaultValue = "1")String currentPage
+			,HttpSession session
 			) {
 		int userNo = 3;
 		session.setAttribute("loginUser", userNo);
@@ -90,8 +90,8 @@ public class GroupController {
 			,String startDate
 			,String endDate
 			,String maxPeople
-			,@RequestParam(value="startTime", required = false, defaultValue= "00:00:00") String startTime
-			,@RequestParam(value="endTime", required = false, defaultValue = "00:00:00") String endTime
+			,@RequestParam(value="startTime", required = false, defaultValue= "00:00") String startTime
+			,@RequestParam(value="endTime", required = false, defaultValue = "00:00") String endTime
 			){
 //		int userNo = (Integer)session.getAttribute("userNo");	
 		int userNo = 3;
@@ -100,7 +100,7 @@ public class GroupController {
 		Group group = new Group(Timestamp.valueOf(startDate), Timestamp.valueOf(endDate), Integer.parseInt(maxPeople), groupName, userNo);
 		int result = gService.createGroup(group);
 		if(result > 0) {
-			group = gService.SelectOneByUserNoRecent(userNo);
+			group = gService.SelectOneByGroupNo(result);
 			User user = uService.selectOneByNo(userNo);
 			Timecapsule timecapsule = new Timecapsule(group.getGroupNo(), user.getUserNo(), user.getUserEmail());
 			timecapsule.createIden();

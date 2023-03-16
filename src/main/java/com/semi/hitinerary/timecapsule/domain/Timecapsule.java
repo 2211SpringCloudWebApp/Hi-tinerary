@@ -11,6 +11,7 @@ public class Timecapsule {
 	
 	public Timecapsule() {}
 
+
 	public Timecapsule(int groupNo, int userNo, String userEmail) {
 		super();
 		this.groupNo = groupNo;
@@ -74,9 +75,6 @@ public class Timecapsule {
 		this.userEmail = userEmail;
 	}
 
-	public void createIden() {
-		this.capsuleIden = this.groupNo +","+ this.userNo;
-	}
 	@Override
 	public String toString() {
 		return "Timecapsule [capsuleIden=" + capsuleIden + ", groupNo=" + groupNo + ", userNo=" + userNo
@@ -84,4 +82,7 @@ public class Timecapsule {
 				+ capsuleImage + ", userEmail=" + userEmail + "]";
 	}
 	
+	public void createIden() {
+		this.capsuleIden = this.groupNo +","+ this.userNo;
+	}
 }

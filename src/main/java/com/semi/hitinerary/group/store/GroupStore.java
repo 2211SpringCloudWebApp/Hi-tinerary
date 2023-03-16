@@ -13,7 +13,7 @@ public interface GroupStore {
 
 	public List<Group> selectByUserNo(SqlSession session, int userNo);
 
-	public Group SelectOneByUserNoRecent(SqlSession session, int userNo);
+	public Group SelectOneByGroupNo(SqlSession session, int groupNo);
 
 	public int minusCurrentPeople(SqlSession session, String groupNo);
 	

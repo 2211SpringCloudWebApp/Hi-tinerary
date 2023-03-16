@@ -1,0 +1,87 @@
+@charset "UTF-8";
+
+@font-face {
+	font-family: 'Pretendard-Regular';
+	src:
+		url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+		format('woff');
+	font-weight: 400;
+	font-style: normal;
+}
+
+* {
+	box-sizing: border-box;
+	font-family: 'Pretendard-Regular';
+}
+
+#container {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+#reportTable {
+	width: 100%;
+	height: 200px;
+	border-top: 2px solid #FBD188;
+	border-bottom: 1px solid #FBD188;
+	font-size: 20px;
+	margin: 0 auto;
+}
+
+#selectTd {
+	text-align: center;
+	height: 20%;
+	width: 15%;
+}
+
+#reportSelect {
+	font-size: 20px;
+	width: 100px;
+	border: 0;
+}
+
+#titleTd {
+	height: 20%;
+	width: 65%;
+}
+
+#nicknameTd {
+	text-align: center;
+	height: 20%;
+	width: 20%;
+}
+
+#subjectTd {
+	padding-left: 50px;
+	padding-top: 20px;
+	border-top: 1px solid #FBD188;
+	height: 80%;
+	vertical-align: top;
+}
+
+#reportButtonTable {
+	margin-top: 50px;
+	width: 100%;
+	height: 50px;
+	text-align: center;
+}
+
+#reportButtonTable button {
+	border-radius: 10px;
+	border: 0;
+	width: 130px;
+	height: 40px;
+	font-size: 20px;
+}
+
+#reportButtonTable button:hover {
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#reportButton {
+	background-color: #0F8D80;
+}
+
+#gobackButton {
+	background-color: #FBD188;
+}

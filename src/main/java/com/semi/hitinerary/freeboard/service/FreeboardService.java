@@ -68,6 +68,12 @@ public interface FreeboardService {
 	 * @return
 	 */
 	public String selectNickname(int boardNo);
+	
+	/**
+	 * 시퀀스 넘버 조회 Service
+	 * @return int
+	 */
+	public int getSequence();
 
 
 

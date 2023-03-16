@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reportMapper">
+	<resultMap type="Report" id="reportResultMapper">
+		<id property="reportNo" column="REPORT_NO"/>
+		<result property="reportDate" column="REPORT_DATE"/>
+		<result property="reportReason" column="REPORT_REASON"/>
+		<result property="userNo" column="USER_NO"/>
+		<result property="withBoardNo" column="WITH_BOARD_NO"/>
+		<result property="freeBoardNo" column="FREE_BOARD_NO"/>
+		<result property="TourNo" column="TOUR_NO"/>
+		<result property="commentNo" column="COMMENT_NO"/>
+	</resultMap>
+	
+	
+</mapper>

@@ -1,28 +1,19 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    width: 1200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 #login-area {
-    margin: 0 auto;
-    padding-top: 30px;
+    margin: 200px auto;
     width: 330px;
-    height: 210px;
-    border: 3px solid;
+    height: 230px;
+    border: 1px solid;
     border-radius: 20px;
     border-color: #F38981;
     text-align: center;
 }
+
+h2{
+	margin-top: 22px;
+}
+
 .input-area{
     position:relative;
-    margin:10px 0;
 }
 .input-area > input{
     background:transparent;
@@ -50,7 +41,7 @@ input:focus, input:not(:placeholder-shown){
 }
 
 #btn-area {
-    margin: 5px;
+    margin: 15px;
     color: #0F8D80;
     display: flex;
     flex-direction: row;

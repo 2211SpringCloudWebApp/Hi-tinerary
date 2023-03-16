@@ -57,4 +57,10 @@ public interface TourService {
 	 */
 	public int payTour(TourPay tPay);
 
+	/**
+	 * 투어상품리스트 전체페이지개수 가져오기 Service
+	 * @return int
+	 */
+	public int getListCount();
+
 }

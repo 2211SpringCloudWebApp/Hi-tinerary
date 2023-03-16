@@ -54,4 +54,10 @@ public class TourStoreLogic implements TourStore {
 		return result;
 	}
 
+	@Override
+	public int selectTotalCount(SqlSession session) {
+		int totalCount = session.selectOne("TourMapper.getTotalCount");
+		return totalCount;
+	}
+
 }

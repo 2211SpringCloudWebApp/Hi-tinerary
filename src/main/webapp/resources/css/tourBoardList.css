@@ -58,3 +58,68 @@
 #tourBoardList button:active{
     top: 2px
 }
+
+
+
+
+#tourList {
+    width: 1200px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    position: relative;
+}
+    
+.frameDiv {
+    width: 400px;
+    position: relative;
+}
+
+.frame {
+    width: 400px;
+    height: 300px;
+}
+
+.inframe {
+    width: 130px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+}
+
+.startDate{
+    z-index: 1;
+    font-size: 30px !important;
+    font-weight: bold;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-20%, -80%);  
+    text-shadow: 1.5px 1.5px 0 #ffffff, -1.5px -1.5px 0 #ffffff, 1.5px -1.5px 0 #ffffff, -1.5px 1.5px 0 #ffffff;  
+}
+
+.tourTitle{
+    font-size: 13px !important;
+    font-weight: bold;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 140%);
+    
+}
+
+.tourContent{
+    font-size: 11px !important;
+    font-weight: bold;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 170%);
+    
+}
+
+

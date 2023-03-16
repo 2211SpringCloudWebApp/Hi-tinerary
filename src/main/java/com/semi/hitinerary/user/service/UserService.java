@@ -5,8 +5,20 @@ import java.util.List;
 import com.semi.hitinerary.user.domain.User;
 
 public interface UserService {
+	
+	/**
+	 * 일반회원가입 Service
+	 * @param user
+	 * @return int
+	 */
+	public int insertUser(User user);
 
-	public User selectOneByNo(int userNo);
+	/**
+	 * 기업회원가입 Service
+	 * @param user
+	 * @return int
+	 */
+	public int insertCoUser(User user);
 
 	/**
 	 * 유저 로그인 Service
@@ -14,6 +26,8 @@ public interface UserService {
 	 * @return User
 	 */
 	public User Login(User user);
+
+	public User selectOneByNo(int userNo);
 
 	public List<User> selectByGroupNo(int groupNo);
 	

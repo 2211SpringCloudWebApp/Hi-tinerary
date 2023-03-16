@@ -19,15 +19,27 @@ public class UserServiceImpl implements UserService {
 	SqlSession session;
 
 	@Override
-	public User selectOneByNo(int userNo) {
-		User user = uStore.selectOneByNo(session, userNo);
-		return user;
+	public int insertUser(User user) {
+		int result = uStore.insertUser(session, user);
+		return result;
+	}
+
+	@Override
+	public int insertCoUser(User user) {
+		int result = uStore.insertCoUser(session, user);
+		return result;
 	}
 
 	@Override
 	public User Login(User user) {
 		User result = uStore.Login(session, user);
 		return result;
+	}
+
+	@Override
+	public User selectOneByNo(int userNo) {
+		User user = uStore.selectOneByNo(session, userNo);
+		return user;
 	}
 
 	@Override

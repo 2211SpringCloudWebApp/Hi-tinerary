@@ -28,5 +28,18 @@ public interface CommentService {
 	 */
 	public int insertFreeboardComment(Comment comment);
 
+	/**
+	 * 동행게시판 댓글 작성하기 Service
+	 * @param comment
+	 * @return
+	 */
+	public int insertWithBoardComment(Comment comment);
+
+	/**
+	 * 동행게시판 댓글 목록조회 Service
+	 * @param boardNo
+	 * @return
+	 */
+	public List<Comment> selectListWithComment(int boardNo);
 
 }

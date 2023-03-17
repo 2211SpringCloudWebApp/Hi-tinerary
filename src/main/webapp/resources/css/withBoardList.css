@@ -74,6 +74,11 @@
     display: inline-block;
     margin: 30px 0 0 30px;
 }
+
+.list_wrapper li:hover {
+     transform: scale(1.2);
+}
+
 .list_wrapper .img{
     width: 270px;
     height: 200px;
@@ -81,6 +86,7 @@
 .list_wrapper .img img{
     width: 270px;
     height: 200px;
+    border-radius:10px;
 }
 .list_wrapper .tit{
 	text-align: center;
@@ -90,6 +96,7 @@
 .list_wrapper .date{
     display: block;
 }
+
 .list_wrapper .writer{
     float: left;
 }
@@ -98,4 +105,7 @@
     float: right;
     font-size: 30px;
     font-weight: bolder;
+}
+.expired {
+   opacity: 0.5;
 }

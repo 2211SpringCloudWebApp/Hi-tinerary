@@ -44,4 +44,22 @@ public class CommentStoreLogic implements CommentStore{
 		return session.insert("commentMapper.insertFreeboardComment", comment);
 	}
 
+	/**
+	 * 동행 게시판 댓글 작성 StoreLogic
+	 */
+	@Override
+	public int insertWithBoardComment(SqlSession session, Comment comment) {
+		int result = session.insert("commentMapper.insertWithBoardComment", comment);
+		return result;
+	}
+
+	/**
+	 * 동행 게시판 댓글 목록 조회 StoreLogic
+	 */
+	@Override
+	public List<Comment> selectListWithComment(SqlSession session, int boardNo) {
+		List<Comment> cList = session.selectList("commentMapper.selectListWithComment", boardNo);
+		return cList;
+	}
+
 }

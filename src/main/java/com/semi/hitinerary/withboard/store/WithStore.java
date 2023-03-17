@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.semi.hitinerary.common.Pagination;
+import com.semi.hitinerary.freeboard.domain.PageInfo;
+import com.semi.hitinerary.freeboard.domain.Search;
 import com.semi.hitinerary.withboard.domain.With;
 
 public interface WithStore {
@@ -19,9 +22,10 @@ public interface WithStore {
 	/**
 	 * 동행찾기 게시판 목록 조회 Store
 	 * @param session
+	 * @param pi 
 	 * @return List<With>
 	 */
-	public List<With> selectWithBoardList(SqlSession session);
+	public List<With> selectWithBoardList(SqlSession session, Pagination pi);
 
 	/**
 	 * 동행찾기 게시판 상세조회 Store
@@ -46,5 +50,19 @@ public interface WithStore {
 	 * @return int
 	 */
 	public int deleteWithBoard(SqlSession session, int boardNo);
+
+	/**
+	 * 시퀀스 넘버 조회 Store
+	 * @param session
+	 * @return int
+	 */
+	public int getSequence(SqlSession session);
+
+	/**
+	 * 동행찾기 게시물 개수 조회 Store
+	 * @return
+	 */
+	public int selectWithBoardCount(SqlSession session);
+
 
 }

@@ -2,9 +2,11 @@ package com.semi.hitinerary.withboard.store;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.withboard.domain.With;
 
 @Repository
@@ -23,8 +25,11 @@ public class WithStoreLogic implements WithStore{
 	 * 동행찾기 게시판 목록 조회 WithStoreLogic
 	 */
 	@Override
-	public List<With> selectWithBoardList(SqlSession session) {
-		List<With> wList = session.selectList("WithBoardMapper.selectWithBoardList");
+	public List<With> selectWithBoardList(SqlSession session, Pagination pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<With> wList = session.selectList("WithBoardMapper.selectWithBoardList", null, rowBounds );
 		return wList;
 	}
 
@@ -53,6 +58,20 @@ public class WithStoreLogic implements WithStore{
 	public int deleteWithBoard(SqlSession session, int boardNo) {
 		int result = session.delete("WithBoardMapper.deleteWithBoard", boardNo);
 		return result;
+	}
+
+	/**
+	 * 시퀀스 넘버 조회 WithStoreLogic
+	 */
+	@Override
+	public int getSequence(SqlSession session) {
+		return session.selectOne("WithBoardMapper.getSequence");
+	}
+
+	@Override
+	public int selectWithBoardCount(SqlSession session) {
+		int totalCount = session.selectOne("WithBoardMapper.selectWithBoardCount");
+		return totalCount;
 	}
 
 }

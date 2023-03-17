@@ -51,5 +51,13 @@
 	<insert id="insertFreeboardComment">
 		INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL,'#{content},DEFAULT,DEFAULT,#{depth},null,null,{freeBoardNo},null,DEFAULT,#{status},#{userNo})
 	</insert>
-			
+	
+	<!-- 동행게시판 댓글 등록하기 -->
+	<insert id="insertWithBoardComment">
+	INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL, #{content}, DEFAULT, DEFAULT, 0, NULL, #{withBoardNo}, NULL, NULL, 0 , NULL, #{userNo})
+	</insert>
+	
+	<select id="selectListWithComment" resultMap="commentResultMapper">
+	SELECT * FROM COMMENT_TBL WHERE WITH_BOARD_NO = #{boardNo} START WITH DEPTH = 0 CONNECT BY REF_COMMENT_NO = PRIOR COMMENT_NO
+	</select>
 </mapper>

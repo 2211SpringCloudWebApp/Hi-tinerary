@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.withboard.domain.With;
 import com.semi.hitinerary.withboard.store.WithStore;
 
@@ -30,8 +31,8 @@ public class WithServiceImpl implements WithService{
 	 * 동행찾기 목록 조회 ServiceImpl
 	 */
 	@Override
-	public List<With> selectWithBoardList() {
-		List<With> wList = wStore.selectWithBoardList(session);
+	public List<With> selectWithBoardList(Pagination pi) {
+		List<With> wList = wStore.selectWithBoardList(session, pi);
 		return wList;
 	}
 
@@ -59,5 +60,19 @@ public class WithServiceImpl implements WithService{
 	public int deleteWithBoard(int boardNo) {
 		int result = wStore.deleteWithBoard(session, boardNo);
 		return result;
+	}
+
+	/**
+	 * 시퀀스 넘버 조회 ServiceImpl
+	 */
+	@Override
+	public int getSequence() {
+		return wStore.getSequence(session);
+	}
+
+	@Override
+	public int selectWithBoardCount() {
+		int totalCount = wStore.selectWithBoardCount(session);
+		return totalCount;
 	}
 }

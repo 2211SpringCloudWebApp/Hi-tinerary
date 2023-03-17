@@ -31,5 +31,21 @@ public interface CommentStore {
 	 */
 	public int insertFreeboardComment(SqlSession session, Comment comment);
 
+	/**
+	 * 동행게시판 댓글 작성 Store
+	 * @param session
+	 * @param comment
+	 * @return int
+	 */
+	public int insertWithBoardComment(SqlSession session, Comment comment);
+
+	/**
+	 * 동행게시판 댓글 목록 조회 Store
+	 * @param session
+	 * @param boardNo
+	 * @return
+	 */
+	public List<Comment> selectListWithComment(SqlSession session, int boardNo);
+
 
 }

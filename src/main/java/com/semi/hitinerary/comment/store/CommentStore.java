@@ -27,9 +27,25 @@ public interface CommentStore {
 	 * 자유게시판 댓글 작성 Store
 	 * @param session
 	 * @param comment
-	 * @return
+	 * @param boardNo 
+	 * @return int
 	 */
 	public int insertFreeboardComment(SqlSession session, Comment comment);
+
+	/**
+	 * 자유게시판 댓글 채택 Store
+	 * @param session
+	 * @param comment
+	 * @return int
+	 */
+	public int updateFreeBoardComment(SqlSession session, Comment comment);
+
+	/**
+	 * 자유게시판 댓글 삭제 Store
+	 * @param commentNo
+	 * @return int
+	 */
+	public int deleteFreeBoardComment(SqlSession session, int commentNo);
 
 
 }

@@ -93,6 +93,10 @@
 		UPDATE FREE_BOARD_TBL SET BOARD_TITLE = #{boardTitle}, BOARD_SUBJECT = #{boardSubject}, BOARD_IMAGE = #{boardImage}, UPDATE_DATE = DEFAULT WHERE BOARD_NO = #{boardNo}
 	</update>
 	
+	<update id="updateFreeBoardCheck">
+		UPDATE FREE_BOARD_TBL SET BOARD_CHECK = 1 WHERE BOARD_NO = #{boardNo}
+	</update>
+	
 	<delete id="deleteOne">
 		DELETE FROM FREE_BOARD_TBL WHERE BOARD_NO = #{boardNo}
 	</delete>

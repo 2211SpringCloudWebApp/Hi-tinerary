@@ -74,6 +74,11 @@ public class FreeboardServiceImpl implements FreeboardService{
 		return fStore.getSequence(session);
 	}
 
+	@Override
+	public int updateFreeBoardCheck(int freeBoardNo) {
+		return fStore.updateFreeBoardCheck(session, freeBoardNo);
+	}
+
 
 
 

@@ -8,7 +8,7 @@
 		<result property="writeDate" column="WRITE_DATE"/>
 		<result property="updateDate" column="UPDATE_DATE"/>
 		<result property="depth" column="DEPTH"/>
-		<result property="packageNo" column="PACKAGE_NO"/>
+		<result property="packageNo" column="TOUR_NO"/>
 		<result property="withBoardNo" column="WITH_BOARD_NO"/>
 		<result property="freeBoardNo" column="FREE_BOARD_NO"/>
 		<result property="groupBoardNo" column="GROUP_BOARD_NO"/>
@@ -33,6 +33,10 @@
 	<update id="updateGroupBoardComment">
 		UPDATE COMMENT_TBL SET CONTENT = #{content} WHERE COMMENT_NO = #{commentNo} 
 	</update>
+	<!-- 자유게시판 댓글 채택 -->
+	<update id="updateFreeBoardComment">
+		UPDATE COMMENT_TBL SET STATUS = 1 WHERE COMMENT_NO = #{commentNo}
+	</update>
 	
 	<select id="selectListComment" resultMap="commentResultMapper">
 		SELECT B.*, A.USER_NICKNAME FROM COMMENT_TBL B JOIN USER_TBL A ON A.USER_NO = B.USER_NO  WHERE GROUP_BOARD_NO = #{boardNo} ORDER BY DEPTH, UPDATE_DATE
@@ -44,12 +48,20 @@
 	
 	<!-- 자유게시판 댓글 리스트 불러오기 -->
 	<select id="ListFreeboardComment" resultMap="commentResultMapper">
-		SELECT * FROM COMMENT_TBL WHERE FREE_BOARD_NO = #{freeBoardNo} START WITH DEPTH = 0 CONNECT BY REF_COMMENT_NO = PRIOR COMMENT_NO
+		SELECT C.COMMENT_NO, C.CONTENT, C.WRITE_DATE, C.UPDATE_DATE, C.DEPTH, C.TOUR_NO, C.WITH_BOARD_NO, C.FREE_BOARD_NO, 
+		C.GROUP_BOARD_NO, C.STATUS, C.REF_COMMENT_NO, C.USER_NO, U.USER_NICKNAME
+		FROM COMMENT_TBL C
+		JOIN USER_TBL U ON C.USER_NO = U.USER_NO WHERE FREE_BOARD_NO = #{freeBoardNo}
 	</select>
 	
 	<!-- 자유게시판 댓글 등록하기 -->
 	<insert id="insertFreeboardComment">
-		INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL,'#{content},DEFAULT,DEFAULT,#{depth},null,null,{freeBoardNo},null,DEFAULT,#{status},#{userNo})
+		INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL, #{content}, DEFAULT, DEFAULT, #{depth}, null,null,#{freeBoardNo},null,DEFAULT,#{refCommentNo},#{userNo})
 	</insert>
+	
+	<!-- 자유게시판 댓글 삭제 -->
+	<delete id="deleteFreeBoardComment">
+		DELETE FROM COMMENT_TBL WHERE COMMENT_NO = #{commentNo}
+	</delete>
 			
 </mapper>

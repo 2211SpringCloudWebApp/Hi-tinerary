@@ -26,7 +26,20 @@ public interface CommentService {
 	 * @param comment
 	 * @return
 	 */
-	public int insertFreeboardComment(Comment comment);
+	public int insertFreeBoardComment(Comment comment);
+
+	/**
+	 * 자유게시판 댓글 채택 Service
+	 * @param comment
+	 */
+	public int updateFreeBoardComment(Comment comment);
+
+	/**
+	 * 자유게시판 댓글 삭제 Service
+	 * @param commentNo
+	 * @return
+	 */
+	public int deleteFreeBoardComment(int commentNo);
 
 
 }

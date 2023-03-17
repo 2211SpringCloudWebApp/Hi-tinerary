@@ -13,17 +13,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.semi.hitinerary.comment.domain.Comment;
 import com.semi.hitinerary.comment.domain.CommentInfo;
 import com.semi.hitinerary.comment.service.CommentService;
 import com.semi.hitinerary.freeboard.domain.Freeboard;
+import com.semi.hitinerary.freeboard.service.FreeboardService;
 
 @Controller
 public class CommentController {
 	
 	@Autowired
 	CommentService cService;
+	
+	@Autowired
+	FreeboardService fService;
 	
 	@RequestMapping(value="/group/board/comment/write", method=RequestMethod.POST)
 	public String insertGroupBoardComment(
@@ -84,32 +89,59 @@ public class CommentController {
 		return null;
 	}
 	
-	@RequestMapping(value = "/freeboard/comment/write", method=RequestMethod.POST)
-	public String writeFreeboardComment(
-			@ModelAttribute Freeboard freeboard
-			, Model model
-			, HttpServletRequest request) {
-		try {
-			Comment comment = new Comment();
-			int result = cService.insertFreeboardComment(comment);
-
-			if(result > 0) {
-				return "redirect:/freeboard/detail?boardNo="+freeboard.getBoardNo();
-			}else {
-				model.addAttribute("msg", "댓글 등록되지 않았습니다.");
-				return "common/error";
-			}
-		} catch (Exception e) {
-			model.addAttribute("msg", e.getMessage());
-			return "common/error";
-		}
+	// 자유게시판 댓글 리스트 출력
+	public List<Comment> ListFreeboardComment(int boardNo) {
+		System.out.println("댓글 진입");
+		List<Comment> cList = cService.ListFreeboardComment(boardNo);
+		System.out.println(cList);
+		return cList;
 	}
 	
-	@RequestMapping(value="/freeboard/comment/list", method=RequestMethod.GET)
-	public void ListFreeboardComment(
-			@ModelAttribute Comment comment
-			) {
-		int freeBoardNo = 1;
-		List<Comment> cList = cService.ListFreeboardComment(freeBoardNo);
+	// 자유게시판 댓글쓰기
+	@RequestMapping(value="/freeboard/comment/write", method=RequestMethod.POST)
+	public String insertFreeBoardComment(
+			@RequestParam("boardNo") int freeBoardNo
+			,@ModelAttribute Comment comment
+			,Model model) {
+		System.out.println("댓글진입 프리보드 : " + freeBoardNo);
+		comment.setFreeBoardNo(freeBoardNo);
+		System.out.println("댓글진입 커맨트 : " + comment);
+		int result = cService.insertFreeBoardComment(comment);
+		return "redirect:/freeboard/detail?boardNo=" + freeBoardNo;
 	}
+	//자유게시판 댓글 채택하기
+	@RequestMapping(value="/freeboard/comment/status", method=RequestMethod.POST)
+	public String statusFreeBoardComment(
+			@ModelAttribute Comment comment
+			,@RequestParam("boardNo") int freeBoardNo) {
+		
+		int cResult = cService.updateFreeBoardComment(comment);
+		int fResult = fService.updateFreeBoardCheck(freeBoardNo);
+		
+		return "redirect:/freeboard/detail?boardNo=" + freeBoardNo;
+	}
+	// 자유게시판 댓글 삭제
+	@RequestMapping(value="/freeboard/comment/delete",method=RequestMethod.POST)
+	public String deleteFreeboardComment(
+			@RequestParam("boardNo") int boardNo
+			,@RequestParam("commentNo") int commentNo
+			,Model model) {
+		int result = cService.deleteFreeBoardComment(commentNo);
+		return "redirect:/freeboard/detail?boardNo=" + boardNo;
+	}
+	
+	// 자유게시판 대댓글쓰기
+	@RequestMapping(value="/freeboard/reply/write", method=RequestMethod.POST)
+	public String insertFreeBoardReply(
+			int BoardNo
+			,@ModelAttribute Comment comment
+			,Model model) {
+		
+		//int result = cService.insertFreeBoardReply(comment);
+		int groupBoardNo = comment.getGroupBoardNo();
+		return "redirect:/freeboard/detail?boardNo="+ BoardNo;
+	}
+	
+
+
 }

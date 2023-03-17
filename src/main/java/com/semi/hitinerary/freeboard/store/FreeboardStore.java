@@ -86,6 +86,14 @@ public interface FreeboardStore {
 	 * @return
 	 */
 	public int getSequence(SqlSession session);
+	
+	/**
+	 * 질문글 답변 채택 Store
+	 * @param session
+	 * @param freeBoardNo
+	 * @return
+	 */
+	public int updateFreeBoardCheck(SqlSession session, int freeBoardNo);
 
 
 	

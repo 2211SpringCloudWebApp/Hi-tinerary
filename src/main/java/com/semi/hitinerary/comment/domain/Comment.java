@@ -105,7 +105,9 @@ public class Comment {
 		return "Comment [commentNo=" + commentNo + ", content=" + content + ", writeDate=" + writeDate + ", updateDate="
 				+ updateDate + ", depth=" + depth + ", packageNo=" + packageNo + ", withBoardNo=" + withBoardNo
 				+ ", freeBoardNo=" + freeBoardNo + ", groupBoardNo=" + groupBoardNo + ", status=" + status
-				+ ", refCommentNo=" + refCommentNo + ", userNo=" + userNo + "]";
+				+ ", refCommentNo=" + refCommentNo + ", userNo=" + userNo + ", userNickname=" + userNickname + "]";
 	}
+
+
 	
 }

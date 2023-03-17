@@ -46,8 +46,9 @@ public class CommentServiceImpl implements CommentService {
 		return cStore.ListFreeboardComment(session, freeBoardNo);
 	}
 
+
 	@Override
-	public int insertFreeboardComment(Comment comment) {
+	public int insertFreeBoardComment(Comment comment) {
 		return cStore.insertFreeboardComment(session, comment);
 	}
 
@@ -67,6 +68,17 @@ public class CommentServiceImpl implements CommentService {
 	public List<Comment> selectListWithComment(int boardNo) {
 		List<Comment> cList = cStore.selectListWithComment(session, boardNo);
 		return cList;
+	}
+	
+	
+	@Override
+	public int updateFreeBoardComment(Comment comment) {
+		return cStore.updateFreeBoardComment(session, comment);
+	}
+
+	@Override
+	public int deleteFreeBoardComment(int commentNo) {
+		return cStore.deleteFreeBoardComment(session, commentNo);
 	}
 
 }

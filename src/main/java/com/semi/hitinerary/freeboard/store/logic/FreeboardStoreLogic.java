@@ -77,5 +77,10 @@ public class FreeboardStoreLogic implements FreeboardStore{
 		return session.selectOne("freeboardMapper.getSequence");
 	}
 
+	@Override
+	public int updateFreeBoardCheck(SqlSession session, int freeBoardNo) {
+		return session.update("freeboardMapper.updateFreeBoardCheck", freeBoardNo);
+	}
+
 
 }

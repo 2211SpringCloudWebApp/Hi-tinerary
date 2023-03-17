@@ -72,6 +72,7 @@ public class GroupboardController {
 		model.addAttribute("gBoard", gBoard);
 		CommentInfo cInfo = null;
 		cInfo = cController.CommentList(groupBoardNo);
+		
 		if(cInfo != null) {
 			model.addAttribute("cInfo", cInfo);			
 		}

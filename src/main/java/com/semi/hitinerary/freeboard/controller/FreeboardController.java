@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.semi.hitinerary.comment.controller.CommentController;
+import com.semi.hitinerary.comment.domain.Comment;
 import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.freeboard.domain.PageInfo;
 import com.semi.hitinerary.freeboard.domain.Search;
@@ -28,6 +30,9 @@ public class FreeboardController {
 
 	@Autowired
 	private FreeboardService fService;
+	
+	@Autowired
+	CommentController cController;
 
 	//날짜 바꾸기
 	public String timeFormatted(Timestamp timestamp) {
@@ -83,8 +88,12 @@ public class FreeboardController {
 			Freeboard freeboard = fService.selectOneById(boardNo);
 			System.out.println(freeboard);
 			freeboard.setUserNickname(fService.selectNickname(boardNo));
+			//댓글 리스트 가져오기
+			List<Comment> cList = cController.ListFreeboardComment(boardNo);
 			model.addAttribute("freeboard",freeboard);
+			model.addAttribute("cList",cList);
 			return "freeboard/detail";
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", e.getMessage());

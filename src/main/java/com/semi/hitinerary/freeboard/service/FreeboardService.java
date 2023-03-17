@@ -74,9 +74,12 @@ public interface FreeboardService {
 	 * @return int
 	 */
 	public int getSequence();
-
-
-
 	
+	/**
+	 * 질문글 답변 채택 Service
+	 * @param freeBoardNo
+	 * @return
+	 */
+	public int updateFreeBoardCheck(int freeBoardNo);
 
 }

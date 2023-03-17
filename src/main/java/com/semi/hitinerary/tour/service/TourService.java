@@ -2,6 +2,8 @@ package com.semi.hitinerary.tour.service;
 
 import java.util.List;
 
+import com.semi.hitinerary.comment.domain.Comment;
+import com.semi.hitinerary.tour.domain.PageInfo;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
 import com.semi.hitinerary.user.domain.User;
@@ -17,9 +19,10 @@ public interface TourService {
 
 	/**
 	 * 투어게시판 게시물 리스트 보이기 Service
+	 * @param pi 
 	 * @return List<Tour>
 	 */
-	public List<Tour> selectTourList();
+	public List<Tour> selectTourList(PageInfo pi);
 
 	/**
 	 * 투어게시판 게시물 상세 조회 Service
@@ -69,5 +72,32 @@ public interface TourService {
 	 * @return List
 	 */
 	public List<Tour> selectTourListByUserNo(int userNo);
+
+	/**
+	 * 시퀀스 넘버 조회 service
+	 * @return int
+	 */
+	public int getSequence();
+
+	/**
+	 * 댓글 쓰기 service
+	 * @param comment
+	 * @return int
+	 */
+	public int commentUp(Comment comment);
+
+	/**
+	 * 댓글들 불러오기 service
+	 * @param tourNo
+	 * @return List<Comment>
+	 */
+	public List<Comment> selectAllComments(int tourNo);
+
+	/**
+	 * 대댓글 쓰기 service
+	 * @param reReply
+	 * @return int
+	 */
+	public int reReplyUp(Comment reReply);
 
 }

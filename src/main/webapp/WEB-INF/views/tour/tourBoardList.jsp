@@ -22,8 +22,8 @@
 	                </div>                  
 	                
 	                <div id="tourList">
-		                <c:forEach items="${tList}" var="tour" varStatus="status">
-		                	<div class="frameDiv" ${status.index < 9 ? '' : 'style="display: none;"'}>
+ 		                <c:forEach items="${tList}" var="tour" varStatus="status">
+		                	<div class="frameDiv" ${status.index < 12 ? '' : 'style="display: none;"'}>
 		                        <img class="frame" src="../../../resources/images/ticketframe1.png">
 		                        <a href="/tour/tourBoardDetail?tourNo=${tour.tourNo }">
 		                            <img class="inframe" src="${tour.thumbnail != null ? tour.thumbnail.replace('C:\\Users\\user1\\git\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : '/resources/images/noThumbnail.png'}">
@@ -32,8 +32,34 @@
 		                        <p class="tourTitle">${tour.tourTitle }</p>
 		                        <p class="tourContent">${tour.tourContent }<p>
 		                    </div>
-		                    <button id="loadMore">더보기</button>
-		                </c:forEach>
+		                </c:forEach> 
+		                
+<!--					    <c:forEach items="${tList}" var="tour">
+					        <div class="frameDiv">
+					            <img class="frame" src="../../../resources/images/ticketframe1.png">
+					            <a href="/tour/tourBoardDetail?tourNo=${tour.tourNo}">
+					                <img class="inframe" src="${tour.thumbnail != null ? tour.thumbnail.replace('C:\\Users\\user1\\git\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : '/resources/images/noThumbnail.png'}">
+					            </a>
+					            <p class="startDate"><fmt:formatDate pattern="MM월dd일 출발" value="${tour.startDate}"/></p>
+					            <p class="tourTitle">${tour.tourTitle}</p>
+					            <p class="tourContent">${tour.tourContent}<p>
+					        </div>
+					    </c:forEach>
+						<button id="loadMore">더보기</button>-->
+						
+						
+						<input type="hidden" id="page" value="${pi.currentPage }">
+						<input type="hidden" id="perPage" value="${pi.postingLimit }">
+						<input type="hidden" id="totalPage" value="${pi.lastPage }">
+					
+ 						<c:forEach begin="${pi.startNavi }" end="${pi.endNavi }" var="p">
+							
+							<c:url var="pageUrl" value="/tour/tourBoardList">
+								<c:param name="page" value="${p}"></c:param>
+							</c:url>
+							<a href="${pageUrl }">${p }</a> 
+							
+						</c:forEach> 
 	                </div>
 	                
 	                
@@ -76,32 +102,43 @@
 		            });
 	        
             
-		            //더보기 클릭하면 다음 9개 div 보여주기
-		            window.addEventListener('DOMContentLoaded', function() {
-		                var page = 1;
-		                var perPage = 9;
-		                var totalPage = Math.ceil(${tList.size()} / perPage);
-
-		                var loadMoreBtn = document.getElementById('loadMore');
-		                loadMoreBtn.addEventListener('click', function() {
-		                    page++;
-
-		                    if (page > totalPage) {
-		                        return;
-		                    }
-
-		                    var start = (page - 1) * perPage;
-		                    var end = start + perPage;
-
-		                    var tourList = document.getElementById('tourList');
-		                    var frameDivs = tourList.querySelectorAll('.frameDiv');
-		                    for (var i = start; i < end; i++) {
-		                        if (frameDivs[i]) {
-		                            frameDivs[i].style.display = 'block';
-		                        }
-		                    }
-		                });
-		            });
+		            
+		            //더보기 클릭하면 다음 12개 div 보여주기
+		            document.addEventListener("DOMContentLoaded", function() {
+				    var loadMoreBtn = document.getElementById("loadMore");
+				    var currentPage = parseInt(document.getElementById("currentPage").value); // 현재 페이지 번호
+				    var postingLimit = parseInt(document.getElementById("postingLimit").value); // 한 페이지당 보여줄 게시물의 수
+				    var lastPage = parseInt(document.getElementById("lastPage").value); // 마지막 페이지 번호
+				    
+				    loadMoreBtn.addEventListener("click", function() {
+				        if (currentPage >= lastPage) {
+				            return; // 모든 데이터를 가져왔으면 함수 종료
+				        }
+				        
+				        var xhr = new XMLHttpRequest();
+				        xhr.onreadystatechange = function() {
+				            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+				                var response = xhr.responseText;
+				                // 가져온 데이터를 페이지에 추가
+				                var div = document.createElement("div");
+				                div.innerHTML = response.trim();
+				                var tList = div.querySelectorAll(".frameDiv");
+				                var len = tList.length;
+				                for (var i = 0; i < len; i++) {
+				                    document.getElementById("tList").appendChild(tList[i]);
+				                }
+				                // 페이지 번호, loadMore 버튼의 상태 갱신
+				                currentPage += 1;
+				                document.getElementById("currentPage").value = currentPage;
+				                if (currentPage >= lastPage) {
+				                    loadMoreBtn.style.display = "none";
+				                }
+				            }
+				        };
+				        xhr.open("GET", "/tour/tourBoardList?page=" + (currentPage + 1));
+				        xhr.send();
+				    });
+				});
 		            
 		            
             	</script>

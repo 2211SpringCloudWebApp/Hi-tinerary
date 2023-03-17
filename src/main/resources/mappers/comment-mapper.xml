@@ -8,7 +8,7 @@
 		<result property="writeDate" column="WRITE_DATE"/>
 		<result property="updateDate" column="UPDATE_DATE"/>
 		<result property="depth" column="DEPTH"/>
-		<result property="packageNo" column="TOUR_NO"/>
+		<result property="tourNo" column="TOUR_NO"/>
 		<result property="withBoardNo" column="WITH_BOARD_NO"/>
 		<result property="freeBoardNo" column="FREE_BOARD_NO"/>
 		<result property="groupBoardNo" column="GROUP_BOARD_NO"/>
@@ -53,6 +53,10 @@
 		FROM COMMENT_TBL C
 		JOIN USER_TBL U ON C.USER_NO = U.USER_NO WHERE FREE_BOARD_NO = #{freeBoardNo}
 	</select>
+	<!-- 투어게시판 댓글 리스트 불러오기 -->
+	<select id="selectAllTour" resultMap="commentResultMapper">
+		SELECT A.*, B.USER_NICKNAME FROM COMMENT_TBL A JOIN USER_TBL B ON A.USER_NO = B.USER_NO WHERE TOUR_NO = #{tourNo} START WITH DEPTH = 0 CONNECT BY REF_COMMENT_NO = PRIOR COMMENT_NO
+	</select>
 	
 	<!-- 자유게시판 댓글 등록하기 -->
 	<insert id="insertFreeboardComment">
@@ -71,5 +75,13 @@
 	<delete id="deleteFreeBoardComment">
 		DELETE FROM COMMENT_TBL WHERE COMMENT_NO = #{commentNo}
 	</delete>
+	<!-- 투어게시판 댓글 등록하기 -->
+	<insert id="insertTour">
+		INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL, #{content}, DEFAULT, DEFAULT, 0, #{tourNo}, NULL, NULL, NULL, NULL, NULL, #{userNo})
+	</insert>
+	<!-- 투어게시판 대댓글 등록하기 -->
+	<insert id="insertReReply">
+		INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL, #{content}, DEFAULT, DEFAULT, 1, #{tourNo}, NULL, NULL, NULL, NULL, #{refCommentNo}, #{userNo})
+	</insert>
 			
 </mapper>

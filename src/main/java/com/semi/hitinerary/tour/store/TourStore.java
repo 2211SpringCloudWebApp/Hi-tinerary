@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.semi.hitinerary.comment.domain.Comment;
+import com.semi.hitinerary.tour.domain.PageInfo;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
 import com.semi.hitinerary.user.domain.User;
@@ -21,9 +23,10 @@ public interface TourStore {
 	/**
 	 * 패키지게시판 투어상품 리스트 불러오기 Store
 	 * @param session
+	 * @param pi 
 	 * @return List<Tour>
 	 */
-	public List<Tour> selectTourList(SqlSession session);
+	public List<Tour> selectTourList(SqlSession session, PageInfo pi);
 
 	/**
 	 * 패키지게시판 게시물 상세조회 Store
@@ -79,5 +82,36 @@ public interface TourStore {
 	 * @return
 	 */
 	public List<Tour> selectTourListByUserNo(SqlSession session, int userNo);
+
+	/**
+	 * 시퀀스 넘버 조회 Store
+	 * @param session
+	 * @return int
+	 */
+	public int getSequence(SqlSession session);
+
+	/**
+	 * 댓글 쓰기 Store
+	 * @param session
+	 * @param comment
+	 * @return int
+	 */
+	public int insertComment(SqlSession session, Comment comment);
+
+	/**
+	 * 댓글 리스트 불러오기 Store
+	 * @param session
+	 * @param tourNo
+	 * @return List<Comment>
+	 */
+	public List<Comment> selectAllComments(SqlSession session, int tourNo);
+
+	/**
+	 * 대댓글 쓰기 Store
+	 * @param session
+	 * @param reReply
+	 * @return int 
+	 */
+	public int insertRereply(SqlSession session, Comment reReply);
 
 }

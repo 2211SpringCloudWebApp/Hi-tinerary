@@ -132,3 +132,97 @@
   #tourContent img{
   	width: 1100px;
   }
+  
+  
+  
+  
+/*  <!--여기서부터 댓글영역-->  */
+  
+  
+  #replyDiv{
+    width: 100%;
+}
+
+.printReply{
+    width: 100%;
+    --height: 80px;
+    display: flex;
+    float: left;
+    padding: 5px;
+    border:1px solid #c9c9c9;
+    align-items: center;
+    border-radius: 10px 10px;
+    margin-top: 20px;
+  }
+  .printReReply{
+    width: 100%;
+    --height: 80px;
+    display: flex;
+    float: left;
+    padding: 5px;
+    border:1px solid #c9c9c9;
+    align-items: center;
+    border-radius: 10px 10px;
+    margin-top: 20px;
+    margin-left: 40px;
+  }
+
+.commentedDiv{
+    width: 750px;
+    background-color: antiquewhite;
+    flex-wrap: wrap;
+	word-wrap: break-word;
+}
+
+
+.writerRe {
+    width: 150px;
+    font-size: 20px;
+    padding-left: 20px;
+}
+
+  .writeReply{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    float: left;
+    padding: 5px;
+    border:1px solid #c9c9c9;
+    align-items: center;
+    border-radius: 10px 10px;
+    margin-top: 20px;
+  }
+  .commentDiv{
+      width: 900px;
+      background-color: antiquewhite;
+
+  }
+.commentDiv input{
+    border-left: 1px solid #0F8D80;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    padding-left: 10px;
+    width: 900px;
+    font-size: 20px;
+}
+
+input:focus, #textarea:focus {outline:none;}
+
+
+/* <!--대댓글쓰기--> */
+
+.writeReReply{
+    width: 100%;
+    height: 80px;
+    display: none;
+    float: left;
+    padding: 5px;
+    border:1px solid #c9c9c9;
+    align-items: center;
+    border-radius: 10px 10px;
+    margin-top: 20px;
+    margin-left: 40px;
+  }
+
+

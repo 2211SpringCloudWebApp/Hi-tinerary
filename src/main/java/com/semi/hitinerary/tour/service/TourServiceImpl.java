@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.semi.hitinerary.comment.domain.Comment;
+import com.semi.hitinerary.tour.domain.PageInfo;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
 import com.semi.hitinerary.tour.store.TourStore;
@@ -21,8 +23,8 @@ public class TourServiceImpl implements TourService {
 	private SqlSession session;
 	
 	@Override
-	public List<Tour> selectTourList() {
-		List<Tour> tList = tStore.selectTourList(session);
+	public List<Tour> selectTourList(PageInfo pi) {
+		List<Tour> tList = tStore.selectTourList(session, pi);
 		return tList;
 	}
 
@@ -67,6 +69,32 @@ public class TourServiceImpl implements TourService {
 		int totalCount = tStore.selectTotalCount(session);
 		return totalCount;
 	}
+
+	@Override
+	public int getSequence() {
+		
+		return tStore.getSequence(session);
+	}
+
+	@Override
+	public int commentUp(Comment comment) {
+		int result = tStore.insertComment(session, comment);
+		return result;
+	}
+
+	@Override
+	public List<Comment> selectAllComments(int tourNo) {
+		List<Comment> comments = tStore.selectAllComments(session, tourNo);
+		return comments;
+	}
+
+	@Override
+	public int reReplyUp(Comment reReply) {
+		int result = tStore.insertRereply(session, reReply);
+		return result;
+	}
+
+	
 
 	
 }

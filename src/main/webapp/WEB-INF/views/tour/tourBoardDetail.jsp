@@ -29,8 +29,10 @@
                     <div id="writerDiv">
                         <div>한투어</div>
                         <div>
-                        	<a href="/tour/tourBoardModifyView?tourNo=${tour.tourNo }">수정</a> | 
-                        	<a href="javascript:void(0);" onclick="removeCheck(${tour.tourNo});">삭제</a>
+                        	<c:if test="${sessionScope.loginUser.userNo == tour.userNo}">
+	                        	<a href="/tour/tourBoardModifyView?tourNo=${tour.tourNo }">수정</a> | 
+	                        	<a href="javascript:void(0);" onclick="removeCheck(${tour.tourNo});">삭제</a>
+	                        </c:if>	
                         </div>
                     </div>
                     <div id="titleDiv">
@@ -72,6 +74,7 @@
                     </div>    
                 </div>    
             </div>
+            <!-- 상세일정content, tourImg 보이는 영역 -->
             <div id="partition1">
                 상세일정 안내
             </div>
@@ -79,9 +82,77 @@
                  ${tour.tourContent } <br>
                   <img src="${tour.tourImage != null ? tour.tourImage.replace('C:\\Users\\user1\\git\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : ' '}">
             </div>
+            
+            <!-- 댓글영역 -->
             <div id="replyDiv">
-               댓글영역 ~두둥~ 댓글영역
-            </div>
+                <!-- 올라온댓글보기영역 -->
+                 <c:forEach items="${comments}" var="comment" >
+                 	
+                 	<c:if test="${comment.depth==0 }">
+		                <div class="printReply"> 	                
+		                    <div class="writerRe">${comment.userNickname }</div>
+		                    <div class="commentedDiv">${comment.content }</div>
+		                    <div class="commentedTimeDiv">${comment.writeDate }</div>
+		                    <c:if test="${loginUser.userNo == comment.userNo}"> 
+		                    	<div class="modifyDeleteDiv">수정 삭제</div>   
+		                    </c:if>	
+		                    <c:if test="${loginUser.userNo != comment.userNo}"> 
+		                    	<div class="modifyDeleteDiv">
+		                    		<button class="reReplyBtn" onclick="writeReply(this)">대댓글쓰기</button> 
+		                    		신고
+		                    	</div>   
+		                    </c:if>	  
+		                </div>              
+              		</c:if>
+              		<c:if test="${comment.depth==1 }">
+              	<!-- 대댓글보기 -->
+            			<div class="printReReply"> 	                
+		                    <div class="writerRe">${comment.userNickname }</div>
+		                    <div class="commentedDiv">${comment.content }</div>
+		                    <div class="commentedTimeDiv">${comment.writeDate }</div>
+		                    <c:if test="${loginUser.userNo == comment.userNo}"> 
+		                    	<div class="modifyDeleteDiv">수정 삭제</div>   
+		                    </c:if>	
+		                    <c:if test="${loginUser.userNo != comment.userNo}"> 
+		                    	<div class="modifyDeleteDiv">
+		                    		신고
+		                    	</div>   
+		                    </c:if>	  
+		                </div>    
+              		</c:if>
+             		 
+                </c:forEach>
+              <!-- 대댓글쓰기영역 -->
+                <div class="writeReReply"> 
+               		<form action="/tour/reReplyUp" method="post" class="reReplyForm">
+               			<input type="hidden" name="userNo" value="${loginUser.userNo }">
+                    	<input type="hidden" name="tourNo" value="${tour.tourNo }">
+                    	<input type="hidden" name="userNickname" value="${loginUser.userNickname }">
+                    	<input type="hidden" name="refCommentNo" value="${comment.commentNo }">
+                        <div class="writerRe">${loginUser.userNickname}</div>
+                        <div class="commentDiv"><input type="text"  name="content"></div>
+                        <div class="writeButton">
+                            <button>댓글쓰기</button>
+                        </div>
+                	</form>
+               </div>	
+                
+                
+          <!--로그인유저의 최초 댓글영역-->
+                <div class="writeReply"> 
+                	<form action="/tour/replyUp" method="post">
+                    	<input type="hidden" name="userNo" value="${loginUser.userNo }">
+                    	<input type="hidden" name="tourNo" value="${tour.tourNo }">
+                    	<input type="hidden" name="userNickname" value="${loginUser.userNickname }">
+                    	
+                        <div class="writerRe">${loginUser.userNickname}</div>
+                        <div class="commentDiv"><input type="text" name="content"></div>
+                        <div class="writeButton">
+                            <button>댓글쓰기</button>
+                        </div>
+                    </form>
+                </div>	
+            </div>	
         </main>    
                 
         
@@ -97,13 +168,34 @@
         }
         
         
-        //삭제하기 버튼 눌렀을때
+        //삭제하기 버튼 눌렀을때 확인 거치기
         	function removeCheck(tourNo){
         		if(confirm("정말 삭제하시겠어요?")){
         			location.href="/tour/deletePosting?tourNo="+tourNo;
         		}
         	}
+        
+        
+        	//대댓글 온클릭!
+			function writeReply(writeArea){
+				var replyDiv = writeArea.parentNode.parentNode;
+				var reReplyDiv = document.querySelector(".writeReReply");
+				var reReplyDivSibling = replyDiv.nextSibling;
+	
+				if(reReplyDivSibling == reReplyDiv){
+					reReplyDiv.style.display="none";
+					replyDiv.before(reReplyDiv);
+				}else{
+					replyDiv.after(reReplyDiv);
+					reReplyDiv.style.display="flex";
+				}
+				
+			}
+	        
         </script>
+        
+        
+        
         
             
 	    <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>  

@@ -8,7 +8,7 @@ public class Comment {
 	private Timestamp writeDate;
 	private Timestamp updateDate;
 	private int depth;
-	private int packageNo;
+	private int tourNo;
 	private int withBoardNo;
 	private int freeBoardNo;
 	private int groupBoardNo;
@@ -19,9 +19,24 @@ public class Comment {
 	
 	public Comment() {}
 	
+	
+	//투어보드에서 쓸 생성자 묶음!
+	public Comment(String content, int tourNo, int userNo, String userNickname) {
+		super();
+		this.content = content;
+		this.tourNo = tourNo;
+		this.userNo = userNo;
+		this.userNickname = userNickname;
+		
+	}
+	
+	
+	
 	public int getCommentNo() {
 		return commentNo;
 	}
+
+
 	public void setCommentNo(int commentNo) {
 		this.commentNo = commentNo;
 	}
@@ -49,11 +64,11 @@ public class Comment {
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
-	public int getPackageNo() {
-		return packageNo;
+	public int getTourNo() {
+		return tourNo;
 	}
-	public void setPackageNo(int packageNo) {
-		this.packageNo = packageNo;
+	public void setTourNo(int tourNo) {
+		this.tourNo = tourNo;
 	}
 	public int getWithBoardNo() {
 		return withBoardNo;
@@ -103,7 +118,7 @@ public class Comment {
 	@Override
 	public String toString() {
 		return "Comment [commentNo=" + commentNo + ", content=" + content + ", writeDate=" + writeDate + ", updateDate="
-				+ updateDate + ", depth=" + depth + ", packageNo=" + packageNo + ", withBoardNo=" + withBoardNo
+				+ updateDate + ", depth=" + depth + ", tourNo=" + tourNo + ", withBoardNo=" + withBoardNo
 				+ ", freeBoardNo=" + freeBoardNo + ", groupBoardNo=" + groupBoardNo + ", status=" + status
 				+ ", refCommentNo=" + refCommentNo + ", userNo=" + userNo + "]";
 	}

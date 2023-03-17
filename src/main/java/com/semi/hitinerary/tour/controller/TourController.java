@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.semi.hitinerary.comment.domain.Comment;
 import com.semi.hitinerary.tour.domain.PageInfo;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
@@ -32,19 +34,18 @@ public class TourController {
 	
 	// 패키지게시판 리스트 보기
 	@RequestMapping(value = "/tour/tourBoardList", method = RequestMethod.GET)
-	public String TourBoardListView(Model model
-			, @RequestParam(defaultValue="1") int page
-			/*, @RequestParam(defaultValue="9") int perPage*/) {
-			int numPerPage = 9;
-		
-		
+	public ModelAndView TourBoardListView(ModelAndView mv
+			, @RequestParam(defaultValue="1") int page) {
+			
 		
 		int totalCount = tService.getListCount(); //게시물 개수 받아옴!
-		//int currentPage = 받아올 것.
+		//int currentPage = 받아올 것?
 		PageInfo pi = this.getPageInfo(page, totalCount);
-		List<Tour> tList = tService.selectTourList();
-		model.addAttribute("tList", tList);
-		return "tour/tourBoardList";
+		
+		List<Tour> tList = tService.selectTourList(pi);
+		mv.addObject("pi", pi).addObject("tList", tList).setViewName("tour/tourBoardList");
+		//model.addAttribute("tList", tList);
+		return mv; 
 	}
 
 	// 패키지게시판 글쓰기페이지 보기
@@ -53,16 +54,22 @@ public class TourController {
 		return "tour/tourBoardWrite";
 	}
 
-	// 패키지게시판 글 상세 보기
+	// 패키지게시판 글 상세 보기 + 댓글보기
 	@RequestMapping(value = "/tour/tourBoardDetail", method = RequestMethod.GET)
 	public String TourBoardDetailView(@RequestParam("tourNo") int tourNo, Model model) {
 
 		Tour tour = tService.selectOneByNo(tourNo);
+		List<Comment> comments = tService.selectAllComments(tourNo);
+		
+		
 		
 		model.addAttribute("tour", tour);
+		model.addAttribute("comments", comments);
+		
 		return "tour/tourBoardDetail";
 	}
 	
+
 	// 패키지게시물 결제페이지 보기
 		@RequestMapping(value = "/tour/tourBoardPayView", method = RequestMethod.GET)
 		public String TourBoardPayView(@RequestParam("tourNo") int tourNo, Model model, HttpServletRequest request) {
@@ -116,7 +123,6 @@ public class TourController {
 			@RequestParam(value = "tourImage", required = false) MultipartFile tourImage) throws ParseException {
 
 		Tour tour = null;
-
 		String startDateStr = request.getParameter("startDate");
 		String endDateStr = request.getParameter("endDate");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
@@ -143,26 +149,58 @@ public class TourController {
 		String userNickname = request.getParameter("userNickname");
 
 		tour = new Tour(tourTitle, tourContent, startDate, endDate, price, deadline, maxPeople, minPeople, userNo, userGrade, userNickname);
+		tour.setTourNo(tService.getSequence());
 		if (thumbnail != null && !thumbnail.isEmpty() && !thumbnail.getOriginalFilename().equals("")) {
-			String tourImagePath = savetourImage(tourImage, request);
+			String tourImagePath = savetourImage(tourImage, request, tour.getTourNo(), tour.getUserNo());
 			tour.setTourImage(tourImagePath);
 
 		}
 		if (tourImage != null && !tourImage.isEmpty() && !tourImage.getOriginalFilename().equals("")) {
-			String thumbnailPath = saveThumbnail(thumbnail, request);
+			String thumbnailPath = saveThumbnail(thumbnail, request, tour.getTourNo(), tour.getUserNo());
 			tour.setThumbnail(thumbnailPath);
 
 		}
 
 		int result = tService.insertPosting(tour);
 		if (result > 0) {
-			return "redirect:/tour/tourBoardList"; //고치기: 글번호detail로 
+			return "redirect:/tour/tourBoardDetail?tourNo="+tour.getTourNo();  
 		} else {
 			// model.addAttribute("msg", "등록 안됐음");
 			return "common/error";
 		}
 
 	}
+	
+	//디테일페이지에서 댓글 쓰기
+	@RequestMapping(value = "tour/replyUp", method = RequestMethod.POST)
+	public String TourReplyUp(HttpServletRequest request, Model model) {
+		String userNickname = request.getParameter("userNickname");
+		int tourNo = Integer.parseInt(request.getParameter("tourNo"));
+		int userNo = Integer.parseInt(request.getParameter("userNo"));
+		String content = request.getParameter("content");
+		
+		Comment comment = new Comment(content, tourNo, userNo, userNickname);
+		int result = tService.commentUp(comment);
+		
+		return "redirect:/tour/tourBoardDetail?tourNo="+tourNo; 
+	}
+	//디테일페이지에서 대댓글 쓰기
+	@RequestMapping(value = "tour/reReplyUp", method = RequestMethod.POST)
+	public String TourReReplyUp(HttpServletRequest request, Model model) {
+		String userNickname = request.getParameter("userNickname");
+		int tourNo = Integer.parseInt(request.getParameter("tourNo"));
+		int userNo = Integer.parseInt(request.getParameter("userNo"));
+		int refCommentNo = Integer.parseInt(request.getParameter("refCommentNo"));
+		String content = request.getParameter("content");
+		
+		Comment reReply = new Comment(content, tourNo, userNo, userNickname);
+		reReply.setRefCommentNo(refCommentNo);
+		
+		int reslut = tService.reReplyUp(reReply);
+		
+		return "redirect:/tour/tourBoardDetail?tourNo="+tourNo; 
+	}
+	
 	
 	
 	//패키지 상품 결제하기(tour-pay테이블 insert)
@@ -209,11 +247,11 @@ public class TourController {
 		int minPeople = Integer.parseInt(request.getParameter("minPeople"));
 
 		if (thumbnail != null && !thumbnail.isEmpty() && !thumbnail.getOriginalFilename().equals("")) {
-			String tourImagePath = savetourImage(tourImage, request);
+			String tourImagePath = savetourImage(tourImage, request, tour.getUserNo(), tour.getTourNo());
 			tour.setTourImage(tourImagePath);
 		}
 		if (tourImage != null && !tourImage.isEmpty() && !tourImage.getOriginalFilename().equals("")) {
-			String thumbnailPath = saveThumbnail(thumbnail, request);
+			String thumbnailPath = saveThumbnail(thumbnail, request, tour.getTourNo(), tour.getUserNo());
 			tour.setThumbnail(thumbnailPath);
 		}
 		
@@ -261,16 +299,16 @@ public class TourController {
 	
 	
 	// 지정 경로로 본문이미지 복사(업로드)
-	private String savetourImage(MultipartFile tourImage, HttpServletRequest request) {
+	private String savetourImage(MultipartFile tourImage, HttpServletRequest request, int userNo, int tourNo) {
 		try {
 			String root = request.getSession().getServletContext().getRealPath("resources");
-			int userNo = 1;
+			//int userNo = 1;
 			String savePath = root + "\\tuploadImgs\\" + userNo + "tourBoard";
 			File folder = new File(savePath);
 			if (!folder.exists()) {
 				folder.mkdirs();
 			}
-			String filePath = savePath + "\\" + tourImage.getOriginalFilename();
+			String filePath = savePath + "\\" + tourNo+ tourImage.getOriginalFilename();
 			File file = new File(filePath);
 			tourImage.transferTo(file);
 			return filePath;
@@ -281,16 +319,16 @@ public class TourController {
 	}
 
 	// 지정 경로로 썸넹리 복사(업로드)
-	private String saveThumbnail(MultipartFile thumbnail, HttpServletRequest request) {
+	private String saveThumbnail(MultipartFile thumbnail, HttpServletRequest request, int userNo, int tourNo) {
 		try {
 			String root = request.getSession().getServletContext().getRealPath("resources");
-			int userNo = 1;
+			//int userNo = 1;
 			String savePath = root + "\\tuploadImgs\\" + userNo + "tourBoard";
 			File folder = new File(savePath);
 			if (!folder.exists()) {
 				folder.mkdirs();
 			}
-			String filePath = savePath + "\\" + thumbnail.getOriginalFilename();
+			String filePath = savePath + "\\" +tourNo+ thumbnail.getOriginalFilename();
 			File file = new File(filePath);
 			thumbnail.transferTo(file);
 			return filePath;

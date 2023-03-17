@@ -26,12 +26,15 @@
 	<select id="selectOne" resultMap="tourResultMap">
 		SELECT * FROM TOUR_TBL JOIN USER_TBL USING(USER_NO) WHERE TOUR_NO = #{tourNo}
 	</select>
+	<select id="getSequence" resultType="_int">
+		SELECT SEQ_TOUR_NO.NEXTVAL FROM DUAL
+	</select>
 	<select id="getTotalCount" resultType="_int">
 		SELECT COUNT(*) FROM TOUR_TBL
 	</select>
 	
 	<insert id="insertTour">
-		INSERT INTO TOUR_TBL VALUES(SEQ_TOUR_NO.NEXTVAL, #{tourTitle}, #{tourContent}, #{startDate}, #{endDate}, #{price}, #{deadline}, '0', #{maxPeople}, #{minPeople}, #{tourImage}, #{thumbnail}, DEFAULT, #{userNo})
+		INSERT INTO TOUR_TBL VALUES(#{tourNo}, #{tourTitle}, #{tourContent}, #{startDate}, #{endDate}, #{price}, #{deadline}, '0', #{maxPeople}, #{minPeople}, #{tourImage}, #{thumbnail}, DEFAULT, #{userNo})
 	</insert>
 	
 	<delete id="deleteTour">

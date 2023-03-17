@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.semi.hitinerary.user.domain.TourBuyUser;
 import com.semi.hitinerary.user.domain.User;
 
 @Repository
@@ -38,6 +39,12 @@ public class UserStoreLogic implements UserStore{
 	public List<User> selectByGroupNo(SqlSession session, int groupNo) {
 		List<User> uList = session.selectList("UserMapper.selectByGroupNo", groupNo);
 		return uList;
+	}
+
+	@Override
+	public int deleteBuyUser(SqlSession session, TourBuyUser tBUser) {
+		int result = session.delete("UserMapper.deleteBuyUser", tBUser);
+		return result;
 	}
 
 }

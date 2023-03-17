@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.semi.hitinerary.user.domain.TourBuyUser;
 import com.semi.hitinerary.user.domain.User;
 import com.semi.hitinerary.user.store.UserStore;
 
@@ -46,6 +47,12 @@ public class UserServiceImpl implements UserService {
 	public List<User> selectByGroupNo(int groupNo) {
 		List<User> uList = uStore.selectByGroupNo(session, groupNo);
 		return uList;
+	}
+
+	@Override
+	public int deleteBuyUser(TourBuyUser tBUser) {
+		int result = uStore.deleteBuyUser(session, tBUser);
+		return result;
 	}
 	
 	

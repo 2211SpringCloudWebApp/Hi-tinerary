@@ -62,5 +62,12 @@ public interface TourService {
 	 * @return int
 	 */
 	public int getListCount();
+	
+	/**
+	 * 유저정보로 구매내역 불러오기 Service
+	 * @param userNo
+	 * @return List
+	 */
+	public List<Tour> selectTourListByUserNo(int userNo);
 
 }

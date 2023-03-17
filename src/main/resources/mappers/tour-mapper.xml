@@ -18,7 +18,8 @@
 		<result property="writeDate" column="WRITE_DATE" />
 		<result property="userNo" column="USER_NO" />	
 		<result property="userNickname" column="USER_NICKNAME" />	
-		<result property="userGrade" column="USER_GRADE" />	
+		<result property="userGrade" column="USER_GRADE" />
+		<result property="payDate" column="PAY_DATE"/>
 	</resultMap>
 	<select id="selectTourList" resultMap="tourResultMap">
 		SELECT * FROM TOUR_TBL JOIN USER_TBL USING(USER_NO) ORDER BY WRITE_DATE DESC
@@ -28,6 +29,10 @@
 	</select>
 	<select id="getTotalCount" resultType="_int">
 		SELECT COUNT(*) FROM TOUR_TBL
+	</select>
+	
+	<select id="selectTourListByUserNo" resultMap="tourResultMap">
+		SELECT C.* , B.PAY_DATE FROM USER_TBL A JOIN TOUR_BUY_USER_TBL B ON A.USER_NO = B.USER_NO JOIN TOUR_TBL C ON B.TOUR_NO = C.TOUR_NO WHERE A.USER_NO = #{userNo}
 	</select>
 	
 	<insert id="insertTour">

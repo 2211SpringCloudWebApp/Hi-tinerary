@@ -51,7 +51,6 @@ public class CommentController {
 			,int commentNo
 			,int groupBoardNo
 			,Model model) {
-		System.out.println(groupIndex);
 		int result = cService.deleteGroupBoardComment(commentNo);
 		return "redirect:/group/board/detail?groupBoardNo=" + groupBoardNo + "&groupIndex=" + groupIndex;
 	}

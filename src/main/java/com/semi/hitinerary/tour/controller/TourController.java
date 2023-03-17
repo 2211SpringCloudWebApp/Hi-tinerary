@@ -255,8 +255,6 @@ public class TourController {
 			return "common/error";
 		}
 	}
-
-	
 	
 	
 	

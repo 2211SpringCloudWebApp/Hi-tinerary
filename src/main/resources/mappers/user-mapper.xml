@@ -21,6 +21,11 @@
 	<insert id="insertCoUser" parameterType="User">
 		INSERT INTO USER_TBL VALUES(USER_SEQUENCE.NEXTVAL, #{userId}, #{userPw}, #{userName}, #{userNickname}, #{userEmail}, #{userPhone}, #{userBirthDate}, NULL, #{companyRegiNo}, #{userGrade})
 	</insert>
+	
+	<delete id="deleteBuyUser" parameterType="TourBuyUser">
+		DELETE FROM TOUR_BUY_USER_TBL WHERE PAY_DATE = #{payDate} AND USER_NO = #{userNo} AND TOUR_NO = #{tourNo}
+	</delete>
+	
 	<select id="Login" resultMap="userResultMap">
 		SELECT USER_NO, USER_NICKNAME, USER_GRADE FROM USER_TBL WHERE USER_ID = #{userId} AND USER_PW = #{userPw}
 	</select>
@@ -28,7 +33,7 @@
 		SELECT * FROM USER_TBL WHERE USER_NO = #{userNo}
 	</select>	
 	<select id="selectByGroupNo" resultMap="userResultMap">
-		SELECT E.USER_NO, E.USER_NICKNAME, E.USER_EMAIL, FLOOR((SYSDATE - TO_DATE(E.USER_BIRTH_DATE, 'YY-MM-DD')) / 365) USER_BIRTH_DATE, USER_GENDER
+		SELECT E.USER_NO, E.USER_NICKNAME, E.USER_EMAIL, FLOOR((SYSDATE - TO_DATE(E.USER_BIRTH_DATE, 'RR-MM-DD')) / 365) USER_BIRTH_DATE, USER_GENDER
 		FROM GROUP_USERS_TBL F JOIN USER_TBL E ON E.USER_NO = F.USER_NO 
 		WHERE GROUP_NO = #{groupNo}
 	</select>

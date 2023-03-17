@@ -23,6 +23,7 @@ public class Tour {
 	private int userNo; //user_table에서 갖고오기
 	private String userNickname;//user_table에서 갖고오기
 	private int userGrade;//user_table에서 갖고오기
+	private Timestamp payDate; // 구매내역 삭제할때 가져와야함
 	
 	public Tour() {
 		super();
@@ -180,14 +181,24 @@ public class Tour {
 		this.userGrade = userGrade;
 	}
 
+	public Timestamp getPayDate() {
+		return payDate;
+	}
+
+	public void setPayDate(Timestamp payDate) {
+		this.payDate = payDate;
+	}
+
 	@Override
 	public String toString() {
 		return "Tour [tourNo=" + tourNo + ", tourTitle=" + tourTitle + ", tourContent=" + tourContent + ", startDate="
 				+ startDate + ", endDate=" + endDate + ", price=" + price + ", deadline=" + deadline
 				+ ", currentPeople=" + currentPeople + ", maxPeople=" + maxPeople + ", minPeople=" + minPeople
 				+ ", tourImage=" + tourImage + ", thumbnail=" + thumbnail + ", writeDate=" + writeDate + ", userNo="
-				+ userNo + ", userNickname=" + userNickname + ", userGrade=" + userGrade + "]";
+				+ userNo + ", userNickname=" + userNickname + ", userGrade=" + userGrade + ", payDate=" + payDate + "]";
 	}
+
+	
 
 	
 	

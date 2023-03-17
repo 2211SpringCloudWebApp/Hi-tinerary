@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.semi.hitinerary.user.domain.TourBuyUser;
 import com.semi.hitinerary.user.domain.User;
 
 public interface UserStore {
@@ -35,5 +36,12 @@ public interface UserStore {
 	public User selectOneByNo(SqlSession session, int userNo);
 
 	public List<User> selectByGroupNo(SqlSession session, int groupNo);
+	
+	/**
+	 * 구매취소 Store
+	 * @param tBUser
+	 * @return int
+	 */
+	public int deleteBuyUser(SqlSession session, TourBuyUser tBUser);
 
 }

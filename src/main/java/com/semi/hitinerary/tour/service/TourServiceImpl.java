@@ -68,5 +68,11 @@ public class TourServiceImpl implements TourService {
 		return totalCount;
 	}
 
+	@Override
+	public List<Tour> selectTourListByUserNo(int userNo) {
+		List<Tour> tList = tStore.selectTourListByUserNo(session, userNo);
+		return tList;
+	}
+
 	
 }

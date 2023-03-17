@@ -15,6 +15,7 @@
 		<typeAlias alias="groupBoard" type="com.semi.hitinerary.groupboard.domain.Groupboard"/>
 		<typeAlias alias="Comment" type="com.semi.hitinerary.comment.domain.Comment"/>
 		<typeAlias alias="Report" type="com.semi.hitinerary.report.domain.Report"/>
+		<typeAlias alias="TourBuyUser" type="com.semi.hitinerary.user.domain.TourBuyUser"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>

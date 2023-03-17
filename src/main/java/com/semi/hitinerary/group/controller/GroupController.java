@@ -93,15 +93,15 @@ public class GroupController {
 			,@RequestParam(value="startTime", required = false, defaultValue= "00:00") String startTime
 			,@RequestParam(value="endTime", required = false, defaultValue = "00:00") String endTime
 			){
-//		int userNo = (Integer)session.getAttribute("userNo");	
-		int userNo = 3;
+		User user = (User)session.getAttribute("loginUser");
+		int userNo = user.getUserNo();	
 		startDate = startDate + " " + startTime + ":00";
 		endDate =  endDate + " " + endTime + ":00";
 		Group group = new Group(Timestamp.valueOf(startDate), Timestamp.valueOf(endDate), Integer.parseInt(maxPeople), groupName, userNo);
 		int result = gService.createGroup(group);
 		if(result > 0) {
 			group = gService.SelectOneByGroupNo(result);
-			User user = uService.selectOneByNo(userNo);
+			user = uService.selectOneByNo(userNo);
 			Timecapsule timecapsule = new Timecapsule(group.getGroupNo(), user.getUserNo(), user.getUserEmail());
 			timecapsule.createIden();
 			tService.registGroup(timecapsule);

@@ -2,6 +2,7 @@ package com.semi.hitinerary.user.service;
 
 import java.util.List;
 
+import com.semi.hitinerary.user.domain.TourBuyUser;
 import com.semi.hitinerary.user.domain.User;
 
 public interface UserService {
@@ -30,5 +31,12 @@ public interface UserService {
 	public User selectOneByNo(int userNo);
 
 	public List<User> selectByGroupNo(int groupNo);
+	
+	/**
+	 * 패키지 구매 제거
+	 * @param tBUser
+	 * @return int
+	 */
+	public int deleteBuyUser(TourBuyUser tBUser);
 	
 }

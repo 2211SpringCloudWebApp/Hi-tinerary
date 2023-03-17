@@ -60,4 +60,10 @@ public class TourStoreLogic implements TourStore {
 		return totalCount;
 	}
 
+	@Override
+	public List<Tour> selectTourListByUserNo(SqlSession session, int userNo) {
+		List<Tour> tList = session.selectList("TourMapper.selectTourListByUserNo", userNo);
+		return tList;
+	}
+
 }

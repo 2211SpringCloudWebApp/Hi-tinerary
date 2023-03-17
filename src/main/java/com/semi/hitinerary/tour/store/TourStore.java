@@ -71,5 +71,13 @@ public interface TourStore {
 	 * @return int
 	 */
 	public int selectTotalCount(SqlSession session);
+	
+	/**
+	 * 유저정보로 구매내역 불러오기 Store
+	 * @param session
+	 * @param userNo
+	 * @return
+	 */
+	public List<Tour> selectTourListByUserNo(SqlSession session, int userNo);
 
 }

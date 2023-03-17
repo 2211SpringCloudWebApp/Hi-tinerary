@@ -1,5 +1,7 @@
 package com.semi.hitinerary.user.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.semi.hitinerary.tour.domain.Tour;
+import com.semi.hitinerary.tour.service.TourService;
+import com.semi.hitinerary.user.domain.TourBuyUser;
 import com.semi.hitinerary.user.domain.User;
 import com.semi.hitinerary.user.service.UserService;
 
@@ -19,6 +24,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService uService;
+	
+	@Autowired
+	private TourService tService;
 	
 	// 회원가입 분류창
 	@RequestMapping(value="/user/registerType", method = RequestMethod.GET)
@@ -122,5 +130,29 @@ public class UserController {
 	@RequestMapping(value = "/manager/mypage", method=RequestMethod.GET)
 	public String writeView() {
 		return "manager/mypage";
+	}
+	
+	// 일반회원 마이페이지 조회
+	@RequestMapping(value="/user/mypage", method=RequestMethod.GET)
+	public String UserMyPageView() {
+		return "user/mypage";
+	}
+	// 일반회원 구매내역 조회 화면 접속
+	@RequestMapping(value= "/user/buylist", method=RequestMethod.GET)
+	public String userBuyList(
+			HttpSession session
+			,Model model) {
+		User user = (User)session.getAttribute("loginUser");
+		List<Tour> tList = tService.selectTourListByUserNo(user.getUserNo());
+		model.addAttribute("tList", tList);
+		return "user/buylist";
+	}
+	
+	//패키지 구매 취소
+	@RequestMapping(value="/user/cancelbuy", method=RequestMethod.POST)
+	private String tourBuyCancel(
+			@ModelAttribute TourBuyUser tBUser) { 
+		int result = uService.deleteBuyUser(tBUser);
+		return "redirect:/user/buylist";
 	}
 }

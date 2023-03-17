@@ -263,6 +263,7 @@
 										<tr>
 											<td colspan="5" id="board-navi">
 												<c:if test="${pi.currentPage ne '1' }">
+													<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${1}">&lt;&lt;</a>&nbsp;
 													<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${pi.currentPage - 1}">&lt;</a>&nbsp;
 												</c:if>
 												<c:forEach begin="${pi.startNavi }" end="${pi.endNavi }" var="p">
@@ -270,6 +271,7 @@
 												</c:forEach>
 												<c:if test="${pi.currentPage ne pi.maxNavi }">
 													<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${pi.currentPage + 1}">&gt;</a>&nbsp;
+													<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${pi.maxNavi}">&gt;&gt;</a>&nbsp;
 												</c:if>
 											</td>
 										</tr>
@@ -302,7 +304,12 @@
 					            		<tr>
 					            			<td>${User.userNickname }</td>
 					            			<td>${User.userEmail }</td>
-					            			<td>${User.userBirthDate }</td>
+					            			<c:if test="${User.userBirthDate > 0}">
+					            				<td>${User.userBirthDate }</td>
+					            			</c:if>
+					            			<c:if test="${User.userBirthDate < 0}">
+					            				<td>${100 + User.userBirthDate }</td>
+					            			</c:if>
 					            			<td>${User.userGender }</td>
 					  	                    <td>
 					  	                    	<c:if test="${group.leaderUserNo ne User.userNo}">

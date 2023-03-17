@@ -1,10 +1,6 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    width: 1200px;
+main {
+	width: 1200px;
+    height: 840px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,48 +9,65 @@ body {
 #register-area {
     padding: 20px;
     margin: 20px;
-    width: 350px;
-    height: 600px;
-    border: 3px solid;
+    width: 400px;
+    height: 680px;
+    border: 1px solid;
     border-radius: 20px;
     border-color: #F38981;
 }
+	h2 {
+	text-align: center;
+	}
     #input-area {
-        top: 50%;
-        left: 50%;
+    padding-left:20px;
     }
-
-    #btn-area {
-        margin: 5px;
-        color: #0F8D80;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-    }
+.btn-area {
+	padding: 8px;
+    align-items: center;
+    color: #0F8D80;
+}
 input{
-    width: 330px;
+    width: 315px;
     background:white;
     border:none;
-    border-bottom: solid 1px black;
+    border-bottom: solid 1px #FBD188;
     padding:10px 5px 5px 5px;
 }
-        input[type=submit]{
-            width: 300px;
-            height: 50px;
-            font-weight: bold;
-            color: white;
-            background-color: #0F8D80;
-            border: 1px solid #0F8D80;
-            border-radius: 5px;
-            text-align: center;
-        }
-        .err{
-            font-size: 1px;
-            color: red;
-        }
-        .mail-input {
-            width: 100px;
-        }
-        input[type=radio]{
-            width: 20px;
-        }
+input:focus{
+	background:white;
+    outline:none;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 50px white inset !important;
+}
+    input[type=submit]{
+        width: 300px;
+        height: 50px;
+        font-weight: bold;
+        color: white;
+        background-color: #0F8D80;
+        border: 1px solid #0F8D80;
+        border-radius: 5px;
+        text-align: center;
+    }
+    .err{
+    	padding-left:10px;
+        font-size: 1px;
+        color: red;
+    }
+    .mail-input {
+        width: 100px;
+    }
+    select {
+    	width: 90px;
+    	height: 25px;
+       	border: none;
+    }
+    input[type=radio]{
+        width: 10px;
+        margin-top: 15px;
+        accent-color: #0F8D80;
+    }

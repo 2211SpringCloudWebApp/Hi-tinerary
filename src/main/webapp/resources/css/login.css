@@ -18,7 +18,7 @@ h2{
 .input-area > input{
     background:transparent;
     border:none;
-    border-bottom: solid 1px black;
+    border-bottom: solid 1px #FBD188;
     padding:20px 0px 5px 0px;
     text-align: center;
 }
@@ -38,6 +38,12 @@ input:focus + label, label{
 }
 input:focus, input:not(:placeholder-shown){
     outline:none;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 50px white inset !important;
 }
 
 #btn-area {

@@ -23,6 +23,7 @@
 		<input type="hidden" value="${loginUser.userGender}" name="userGender">
 		<input type="hidden" value="${loginUser.userBirthDate }" name="usesrBirthDate"> 
             <div class="">
+            <input name="userNo" type="text" value="${loginUser.userNo }" style="display:none">
                 <label>모집인원</label> 
 				<input type="range" min="1" max="10" value="1" class="slider" id="myRange" name="maxPeople"> 
 				<span id="value"></span>명<br>

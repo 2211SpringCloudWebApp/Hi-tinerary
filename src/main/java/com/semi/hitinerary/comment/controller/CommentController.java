@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.semi.hitinerary.comment.domain.Comment;
 import com.semi.hitinerary.comment.domain.CommentInfo;
@@ -111,5 +112,38 @@ public class CommentController {
 			) {
 		int freeBoardNo = 1;
 		List<Comment> cList = cService.ListFreeboardComment(freeBoardNo);
+	}
+	
+	/**
+	 * 동행찾기 게시판 댓글 쓰기
+	 */
+	@RequestMapping(value="/withboard/board/comment/write", method=RequestMethod.POST)
+	public String writeComment(@RequestParam("CommentBoardNo") int boardNo
+			, @RequestParam("CommentUserNo") int userNo
+			, @RequestParam("Commentcontent") String Commentcontent) {
+		Comment comment = new Comment(); 
+		comment.setContent(Commentcontent);
+		comment.setUserNo(userNo);
+		comment.setWithBoardNo(boardNo);
+		int result = cService.insertWithBoardComment(comment);
+		return "redirect:/withboard/withBoardDetail?boardNo=" + boardNo;
+	}
+	
+	/**
+	 * 동행찾기 게시판 댓글 목록 조회
+	 * 
+	 */
+	public List<Comment> listComment(int boardNo) {
+		List<Comment> cList = cService.selectListWithComment(boardNo);
+		return cList;
+	}
+	
+	/**
+	 * 동행찾기 게시판 댓글 삭제하기
+	 */
+	@RequestMapping(value="/withboard/board/comment/delete", method=RequestMethod.POST)
+	public String deleteWithComment(int boardNo, int commentNo) {
+		int result = cService.deleteGroupBoardComment(commentNo);
+		return "redirect:/withboard/withBoardDetail?boardNo=" + boardNo;
 	}
 }

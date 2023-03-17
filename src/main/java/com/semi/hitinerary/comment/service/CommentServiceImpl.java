@@ -51,4 +51,22 @@ public class CommentServiceImpl implements CommentService {
 		return cStore.insertFreeboardComment(session, comment);
 	}
 
+	/**
+	 * 동행 찾기 게시판 댓글 작성 ServiceImpl
+	 */
+	@Override
+	public int insertWithBoardComment(Comment comment) {
+		int result = cStore.insertWithBoardComment(session, comment);
+		return result;
+	}
+
+	/**
+	 * 동행찾기 게시판 댓글 목록 조회 ServiceImpl
+	 */
+	@Override
+	public List<Comment> selectListWithComment(int boardNo) {
+		List<Comment> cList = cStore.selectListWithComment(session, boardNo);
+		return cList;
+	}
+
 }

@@ -10,12 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.semi.hitinerary.comment.controller.CommentController;
+import com.semi.hitinerary.comment.domain.Comment;
+import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.withboard.domain.With;
 import com.semi.hitinerary.withboard.service.WithService;
 
@@ -24,6 +28,9 @@ public class WithController {
 	
 	@Autowired
 	private WithService wService;
+	
+	@Autowired
+	private CommentController cController;
 	
 	@RequestMapping(value="/withboard/withWriteView", method=RequestMethod.GET)
 	public String withWriteView(Model model) {
@@ -45,10 +52,11 @@ public class WithController {
 			, HttpServletRequest request
 			, Model model) {
 		try {
+			with.setBoardNo(wService.getSequence());
 			//파일이 있을 경우
 			if(!uploadFile.getOriginalFilename().equals("")) {
 				// 파일 복사(지정한 경로 업로드)
-				String filePath = saveFile(uploadFile, request);
+				String filePath = saveFile(uploadFile, request, with.getBoardNo(), with.getUserNo());
 				// 파일 복사가 성공했으면?
 				if(filePath != null) {
 					with.setBoardImage(uploadFile.getOriginalFilename());
@@ -76,11 +84,10 @@ public class WithController {
 	}
 	
 	//지정 경로로 파일 복사(파일 업로드)
-	private String saveFile(MultipartFile uploadFile, HttpServletRequest request) {
+	private String saveFile(MultipartFile uploadFile, HttpServletRequest request, int boardNo,int userNo) {
 		try {
 			//내가 원하는 경로 : 프로젝트 경로
 			String root = request.getSession().getServletContext().getRealPath("resources");
-			int userNo = 1;
 			String savePath = root + "\\wuploadFiles\\" + userNo + "withBoard";
 			//폴더가 없을 경우 자동으로 만들어주기 위한 코드(폴더가 있는 경우 동작 안함)
 			File folder = new File(savePath);
@@ -88,7 +95,7 @@ public class WithController {
 				folder.mkdirs();
 			}
 			//실제 파일 저장
-			String filePath = savePath + "\\" + uploadFile.getOriginalFilename();
+			String filePath = savePath + "\\" + boardNo + uploadFile.getOriginalFilename();
 			File file = new File(filePath);
 			uploadFile.transferTo(file);
 			return filePath;
@@ -99,13 +106,15 @@ public class WithController {
 	}
 	
 	
-	
 	// 동행게시판 목록 보여주기
 	@RequestMapping(value="/withboard/withBoardList", method=RequestMethod.GET)
-	public String showWithBoard(Model model) {
+	public String showWithBoard(Model model, @RequestParam(value="page", required = false, defaultValue = "1") String sCurrentPage) {
 		try {
-			List<With> wList = wService.selectWithBoardList();
+			int totalCount = wService.selectWithBoardCount();
+			Pagination pi = new Pagination(Integer.parseInt(sCurrentPage), 9, 5, totalCount);
+			List<With> wList = wService.selectWithBoardList(pi);
 			if(!wList.isEmpty()) {
+				model.addAttribute("pi", pi);
 				model.addAttribute("wList", wList);
 				return "/withboard/withBoardList";
 			} else {
@@ -122,7 +131,10 @@ public class WithController {
 	@RequestMapping(value="/withboard/withBoardDetail", method=RequestMethod.GET)
 	public String withBoardDetailView(@RequestParam("boardNo") int boardNo, Model model) {
 		try {
+			List<Comment> cList = cController.listComment(boardNo);
 			With with = wService.selectOneByNo(boardNo);
+			
+			model.addAttribute("cList", cList);
 			model.addAttribute("withBoard", with);
 			return "withboard/withBoardDetail";
 		} catch (Exception e) {
@@ -167,7 +179,7 @@ public class WithController {
 					this.deleteFile(with.getBoardImage(), request);
 				}
 				//새로 업로드 된 파일 복사(지정된 경로 업로드)
-				String modifyPath = this.saveFile(reloadFile, request);
+				String modifyPath = this.saveFile(reloadFile, request, with.getBoardNo(), with.getUserNo());
 				if(modifyPath != null) {
 					//with에 새로운 파일 이름, 파일 경로 set
 					with.setBoardImage(reloadFile.getOriginalFilename());

@@ -2,6 +2,7 @@ package com.semi.hitinerary.withboard.service;
 
 import java.util.List;
 
+import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.withboard.domain.With;
 
 public interface WithService {
@@ -15,9 +16,10 @@ public interface WithService {
 
 	/**
 	 * 동행찾기 목록 조회 Service
+	 * @param pi 
 	 * @return List<With>
 	 */
-	public List<With> selectWithBoardList();
+	public List<With> selectWithBoardList(Pagination pi);
 
 	/**
 	 * 동행찾기 상세 조회 Service
@@ -39,4 +41,16 @@ public interface WithService {
 	 * @return int
 	 */
 	public int deleteWithBoard(int boardNo);
+
+	/**
+	 * 시퀀스 넘버 조회 Service
+	 * @return int
+	 */
+	public int getSequence();
+
+	/**
+	 * 동행찾기 게시물 개수 조회 Service
+	 * @return
+	 */
+	public int selectWithBoardCount();
 }

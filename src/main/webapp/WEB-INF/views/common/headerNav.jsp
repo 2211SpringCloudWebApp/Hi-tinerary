@@ -39,8 +39,16 @@
 							<input type="hidden" value="${sessionScope.loginUser.userGrade }">
 							<input type="hidden" name=userNo value="${sessionScope.loginUser.userNo }">	
 						</p>
-	                    <ul>             
-	                        <li>|&nbsp;&nbsp; <a href="/user/">마이페이지</a>&nbsp;&nbsp; |</li>
+	                    <ul>
+	                    	<c:if test="${loginUser.userGrade == 0 }">
+		                        <li>|&nbsp;&nbsp; <a href="/user/mypageUser">마이페이지</a>&nbsp;&nbsp; |</li>
+	                    	</c:if>             
+	                    	<c:if test="${loginUser.userGrade == 1 || loginUser.userGrade == 2}">
+		                        <li>|&nbsp;&nbsp; <a href="/user/mypageCompany">마이페이지</a>&nbsp;&nbsp; |</li>
+	                    	</c:if>    
+	                    	<c:if test="${loginUser.userGrade == 4}">
+		                        <li>|&nbsp;&nbsp; <a href="/manager/mypage">마이페이지</a>&nbsp;&nbsp; |</li>
+	                    	</c:if>            
 	                        <li>&nbsp;&nbsp; <a href="/user/logout">로그아웃</a> &nbsp;&nbsp;|</li>
 	                    </ul>
 	                </div>

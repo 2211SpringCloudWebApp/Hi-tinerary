@@ -11,64 +11,72 @@
         <link rel="stylesheet" href="${path }../../../resources/css/register.css"/>
     </head>
     <body>
-        <main>
-            <div id="register-area">
-                <h2>일반회원</h2><br><br>
-                <form action="/user/registerUser" method="post">
-                    <div id="input-area">
-                        <div class="info">
-                            <label>아이디</label><span id=id-err class="err"></span><br>
-                            <input type="text" id="userId" name="userId" required>
-                        </div>
-                        <div class="info">
-                            <label>비밀번호</label><span id=pw-err class="err"></span><br>
-                            <input type="password" id="userPw" name="userPw" required>
-                        </div>
-                        <div class="info">
-                            <label>이름</label><span id=name-err class="err"></span><br>
-                            <input type="text" id="userName" name="userName" required>
-                        </div>
-                        <div class="info">
-                            <label>닉네임</label><span id=nick-err class="err"></span><br>
-                            <input type="text" id="userNickname" name="userNickname" required>
-                        </div>
-                        <div class="info">
-                            <label>이메일</label><span id=email-err class="err"></span><br>
-                            <input type="text" id="userEmail" name="userEmail" class="mail-input" required>
-                            <span> @ </span>
-                            <input type="text" id="domain-input" name="domain-input" class="mail-input" value="" required>
-                                <select id="domain-select">
-                                    <option value="">직접입력</option>
-                                    <option value="naver.com">naver.com</option>
-                                    <option value="gmail.com">gmail.com</option>
-                                    <option value="daum.net">daum.net</option>
-                                    <option value="nate.com">nate.com</option>
-                                </select>
-                        </div>
-                        <div class="info">
-                            <label>휴대폰번호</label><span id=phone-err class="err"></span><br>
-                            <input type="text" id="userPhone" name="userPhone" placeholder="'-'없이 숫자만 입력" required onkeyup="addHyphenToPhoneNum(this)">
-                        </div>
-                        <div class="info">
-                            <label>생년월일</label><span id=birth-err class="err"></span><br>
-                            <input type="text" id="userBirthDate" name="userBirthDate" placeholder="주민등록번호 앞 6자리" required>
-                        </div>
-                        <div class="info">
-                            <label>성별　</label><span id=gender-err class="err"></span><br>
-                            남<input type="radio" id="userGender" name="userGender" value="남">
-                            여<input type="radio" id="userGender" name="userGender" value="여">    
-                        </div>
-                        <div class="info">
-                            <input type="hidden" name="userGrade" value="0">
-                        </div>
-                        <br><br>
-                        <div class="btn-area">
-                            <input type="submit" value="회원가입" onclick="return Valid();">
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </main>
+    	<div id="container">
+        	<header>
+				<jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
+			</header>
+	        <main>
+	            <div id="register-area">
+	                <h2>일반회원</h2><br><br>
+	                <form action="/user/registerUser" method="post">
+	                    <div id="input-area">
+	                        <div class="info">
+	                            <label>아이디</label><span id=id-err class="err"></span><br>
+	                            <input type="text" id="userId" name="userId" required>
+	                        </div>
+	                        <div class="info">
+	                            <label>비밀번호</label><span id=pw-err class="err"></span><br>
+	                            <input type="password" id="userPw" name="userPw" required>
+	                        </div>
+	                        <div class="info">
+	                            <label>이름</label><span id=name-err class="err"></span><br>
+	                            <input type="text" id="userName" name="userName" required>
+	                        </div>
+	                        <div class="info">
+	                            <label>닉네임</label><span id=nick-err class="err"></span><br>
+	                            <input type="text" id="userNickname" name="userNickname" required>
+	                        </div>
+	                        <div class="info">
+	                            <label>이메일</label><span id=email-err class="err"></span><br>
+	                            <input type="text" id="userEmail" name="userEmail" class="mail-input" required>
+	                            <span> @ </span>
+	                            <input type="text" id="domain-input" name="domain-input" class="mail-input" value="" required>
+	                                <select id="domain-select">
+	                                    <option value="">직접입력</option>
+	                                    <option value="naver.com">naver.com</option>
+	                                    <option value="gmail.com">gmail.com</option>
+	                                    <option value="daum.net">daum.net</option>
+	                                    <option value="nate.com">nate.com</option>
+	                                </select>
+	                        </div>
+	                        <div class="info">
+	                            <label>휴대폰번호</label><span id=phone-err class="err"></span><br>
+	                            <input type="text" id="userPhone" name="userPhone" placeholder="'-' 없이 숫자만 입력" required onkeyup="addHyphenToPhoneNum(this)">
+	                        </div>
+	                        <div class="info">
+	                            <label>생년월일</label><span id=birth-err class="err"></span><br>
+	                            <input type="text" id="userBirthDate" name="userBirthDate" placeholder="주민등록번호 앞 6자리" required>
+	                        </div>
+	                        <div class="info">
+	                            <label>성별　</label><span id=gender-err class="err"></span><br>
+	                            남<input type="radio" id="userGender" name="userGender" value="남">
+	                            여<input type="radio" id="userGender" name="userGender" value="여">    
+	                        </div>
+	                        <div class="info">
+	                            <input type="hidden" name="userGrade" value="0">
+	                        </div>
+	                        <br><br>
+	                        <div class="btn-area">
+	                            <input type="submit" value="회원가입" onclick="return Valid();">
+	                        </div>
+	                    </div>
+	                </form>
+	            </div>
+	        </main>
+	        <footer>
+				<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+			</footer>
+		</div>
         <script>
             // select 요소와 input 요소 가져오기
             var domainSelect = document.getElementById("domain-select");

@@ -1,0 +1,76 @@
+* {
+	box-sizing: border-box;
+	font-family: 'Pretendard-Regular';
+}
+
+#container {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.user-table {
+	margin-top: 30px;
+	margin-bottom: 100px;
+	border-radius: 10px;
+	border: 2px solid #0F8D80;
+	float: left;
+}
+
+#side-nav {
+	padding-top: 50px;
+	height: 500px;
+	width: 200px;
+	padding-bottom: 50px;
+}
+
+#side-nav td {
+	width: 100px;
+	text-align: center;
+}
+
+#side-nav td:nth-child(1) {
+	font-size: 25px;
+	width: 150px;
+	height: 50px;
+}
+
+#side-nav button {
+	font-size: 16px;
+	border: 0;
+	border-radius: 10px;
+	background-color: rgb(238, 238, 238);
+	width: 150px;
+	height: 50px;
+}
+
+#side-nav button:hover {
+	background-color: #F38981;
+}
+
+#main-area {
+	margin-left: 20px;
+	width: 980px;
+	height: 700px;
+}
+
+#tbl-top {
+	padding-top: 50px;
+	width: 100%;
+	height: 15%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 35px;
+}
+
+#tbl-top div {
+	border-bottom: 3px solid rgb(91, 91, 91);
+	text-align: left;
+	width: 90%;
+}
+
+#tbl-bottom {
+	width: 100%;
+	height: 85%;
+	background-color: #ccc;
+}

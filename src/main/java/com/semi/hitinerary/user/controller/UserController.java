@@ -118,6 +118,12 @@ public class UserController {
 		}
 	}
 	
+	// 일반회원 마이페이지
+	@RequestMapping(value = "/user/mypageUser", method= {RequestMethod.GET, RequestMethod.POST})
+	public String showUserMypage() {
+		return "/user/mypageUser";
+	}
+	
 	// 관리자 마이페이지 화면 접속
 	@RequestMapping(value = "/manager/mypage", method=RequestMethod.GET)
 	public String writeView() {

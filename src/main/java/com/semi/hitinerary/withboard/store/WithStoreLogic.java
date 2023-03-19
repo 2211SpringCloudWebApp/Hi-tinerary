@@ -74,4 +74,19 @@ public class WithStoreLogic implements WithStore{
 		return totalCount;
 	}
 
+	@Override
+	public int selectCountByUserNo(SqlSession session, int userNo) {
+		int totalCount = session.selectOne("WithBoardMapper.selectCountByUserNo", userNo);
+		return totalCount;
+	}
+
+	@Override
+	public List<With> selectByUserNo(SqlSession session, int userNo, Pagination pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		List<With> wList = session.selectList("WithBoardMapper.selectByUserNo", userNo, rowbounds);
+		return wList;
+	}
+
 }

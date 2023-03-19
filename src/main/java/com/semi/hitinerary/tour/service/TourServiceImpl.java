@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.semi.hitinerary.comment.domain.Comment;
+import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.tour.domain.PageInfo;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
@@ -71,8 +72,8 @@ public class TourServiceImpl implements TourService {
 	}
 
 	@Override
-	public List<Tour> selectTourListByUserNo(int userNo) {
-		List<Tour> tList = tStore.selectTourListByUserNo(session, userNo);
+	public List<Tour> selectTourListByUserNo(int userNo, Pagination pi) {
+		List<Tour> tList = tStore.selectTourListByUserNo(session, userNo, pi);
 		return tList;
 	}
 	public int getSequence() {
@@ -96,6 +97,12 @@ public class TourServiceImpl implements TourService {
 	public int reReplyUp(Comment reReply) {
 		int result = tStore.insertRereply(session, reReply);
 		return result;
+	}
+
+	@Override
+	public int selectGetTotalCountByUserNo(int userNo) {
+		int totalCount = tStore.selectGetTotalCountByUserNo(session, userNo);
+		return totalCount;
 	}
 
 	

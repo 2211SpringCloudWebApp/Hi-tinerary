@@ -3,6 +3,7 @@ package com.semi.hitinerary.tour.service;
 import java.util.List;
 
 import com.semi.hitinerary.comment.domain.Comment;
+import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.tour.domain.PageInfo;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
@@ -69,9 +70,10 @@ public interface TourService {
 	/**
 	 * 유저정보로 구매내역 불러오기 Service
 	 * @param userNo
+	 * @param pi 
 	 * @return List
 	 */
-	public List<Tour> selectTourListByUserNo(int userNo);
+	public List<Tour> selectTourListByUserNo(int userNo, Pagination pi);
 
 	/**
 	 * 시퀀스 넘버 조회 service
@@ -99,5 +101,12 @@ public interface TourService {
 	 * @return int
 	 */
 	public int reReplyUp(Comment reReply);
+	
+	/**
+	 * 구매한 패키지 개수 불러오기
+	 * @param userNo
+	 * @return
+	 */
+	public int selectGetTotalCountByUserNo(int userNo);
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.freeboard.domain.PageInfo;
 import com.semi.hitinerary.freeboard.domain.Search;
@@ -94,6 +95,23 @@ public interface FreeboardStore {
 	 * @return
 	 */
 	public int updateFreeBoardCheck(SqlSession session, int freeBoardNo);
+	
+	/**
+	 * 유저번호로 자유게시판 개수 찾기
+	 * @param session
+	 * @param userNo
+	 * @return
+	 */
+	public int selectCountByUserNo(SqlSession session, int userNo);
+	
+	/**
+	 * 유저번호로 자유게시판 찾기
+	 * @param session
+	 * @param userNo
+	 * @param pi
+	 * @return
+	 */
+	public List<Freeboard> selectListByuserNo(SqlSession session, int userNo, Pagination pi);
 
 
 	

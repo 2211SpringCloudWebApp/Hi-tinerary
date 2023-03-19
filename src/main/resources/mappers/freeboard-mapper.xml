@@ -101,6 +101,13 @@
 		DELETE FROM FREE_BOARD_TBL WHERE BOARD_NO = #{boardNo}
 	</delete>
 	
+	<select id="selectCountByUserNo" resultType="_int">
+		SELECT COUNT(*) FROM FREE_BOARD_TBL WHERE USER_NO = #{userNo}
+	</select>
+	
+	<select id="selectListByuserNo" resultMap="freeboardResultMapper">
+		SELECT * FROM FREE_BOARD_TBL WHERE USER_NO = #{userNo}
+	</select>
 
 
 </mapper>

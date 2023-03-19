@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.freeboard.domain.PageInfo;
 import com.semi.hitinerary.freeboard.domain.Search;
@@ -77,6 +78,18 @@ public class FreeboardServiceImpl implements FreeboardService{
 	@Override
 	public int updateFreeBoardCheck(int freeBoardNo) {
 		return fStore.updateFreeBoardCheck(session, freeBoardNo);
+	}
+
+	@Override
+	public int selectCountByUserNo(int userNo) {
+		int totalCount = fStore.selectCountByUserNo(session, userNo);
+		return totalCount;
+	}
+
+	@Override
+	public List<Freeboard> selectListByuserNo(int userNo, Pagination pi) {
+		List<Freeboard> fList = fStore.selectListByuserNo(session, userNo, pi);
+		return fList;
 	}
 
 

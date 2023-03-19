@@ -1,0 +1,179 @@
+.likeblock {
+  height: 1px;
+}
+
+.mypage-container {
+  width: 1200px;
+  margin : 0px auto;
+  display: flex;
+}
+
+.mypage-navbox {
+  width: 280px;
+  height: 550px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 3px solid #0F8D80;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.mypage-navbox {
+  font-size: 25px;
+}
+
+.nav-content {
+  width: 250px;
+  display: block;
+  margin: 15px auto;
+  text-align: center;
+}
+
+.nav-btn {
+  width: 198px;
+  display: block;
+  margin: 15px auto;
+  text-align: center;
+  border-radius: 10px;
+  background-color: darkgray;
+  padding: 15px 10px;
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.nownav {
+  background-color: #F39081;
+  color: black;
+}
+
+.nav-btn:hover {
+  background-color: #0F8D80;
+  border: none;
+}
+
+.nownav:hover {
+  background-color: #F39081;
+}
+
+.mypage-contentbox {
+  width: 860px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 3px solid #0F8D80;
+  border-radius: 5px;
+}
+
+.mypage-title {
+  width: 820px;
+  border-bottom: 2px solid black;
+  box-sizing: border-box;
+  margin: 25px auto;
+}
+
+.mypage-title p {
+  display: block;
+  margin-left: 25px;
+  margin-bottom: 30px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.package-box {
+  display: flex;
+  width: 740px;
+  margin: 30px auto;
+}
+
+.thumbnail {
+  width: 200px;
+  height: 200px;
+}
+
+.thumbnail img {
+  width: 200px;
+  height: 200px;
+}
+
+.package-content {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin-left: 20px;
+}
+
+.corporation {
+  border-bottom: 1px solid aqua;
+}
+
+.corporation p {
+  margin: 0px;
+  font-size: 15px;
+}
+
+.package-info {
+  border-bottom: 1px solid aqua;
+  height: 180px;
+  box-sizing: border-box;
+}
+
+.package-info p {
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.package-btn-box {
+  margin-left: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.package-btn-box .detail-btn {
+  display: block;
+  width: 170px;
+  height: 40px;
+  text-align: center;
+  background-color: #0F8D80;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.package-btn-box .cancel-btn {
+  display: block;
+  width: 170px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #F39081;
+  font-weight: bold;
+  font-size: 15px;
+  color: white;
+  cursor: pointer;
+}
+
+.package-nav {
+  display : flex;
+  width: 200px;
+  margin: 70px auto;
+  justify-content : center;
+}
+
+.package-nav a {
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+}
+
+a.pagenav {
+  color: #FBD188;
+  font-weight: bold;
+}/*# sourceMappingURL=buylist.css.map */

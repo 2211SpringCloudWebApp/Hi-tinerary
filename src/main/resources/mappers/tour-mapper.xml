@@ -38,8 +38,12 @@
 		SELECT C.* , B.PAY_DATE FROM USER_TBL A JOIN TOUR_BUY_USER_TBL B ON A.USER_NO = B.USER_NO JOIN TOUR_TBL C ON B.TOUR_NO = C.TOUR_NO WHERE A.USER_NO = #{userNo}
 	</select>
 	
+	<select id="selectGetTotalCountByUserNo" resultType="_int">
+		SELECT COUNT(*) FROM TOUR_BUY_USER_TBL WHERE USER_NO = #{userNO}
+	</select>
+	
 	<insert id="insertTour">
-		INSERT INTO TOUR_TBL VALUES(#{tourNo}, #{tourTitle}, #{tourContent}, #{startDate}, #{endDate}, #{price}, #{deadline}, '0', #{maxPeople}, #{minPeople}, #{tourImage}, #{thumbnail}, DEFAULT, #{userNo})
+		SELECT A.*, B.USER_NICKNAME FROM (SELECT C.* , B.PAY_DATE FROM USER_TBL A JOIN TOUR_BUY_USER_TBL B ON A.USER_NO = B.USER_NO JOIN TOUR_TBL C ON B.TOUR_NO = C.TOUR_NO WHERE A.USER_NO = #{userNo} A JOIN USER_TBL B ON A.USER_NO = B.USER_NO
 	</insert>
 	
 	<delete id="deleteTour">

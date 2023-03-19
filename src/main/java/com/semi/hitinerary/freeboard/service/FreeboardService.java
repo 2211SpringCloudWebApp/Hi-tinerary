@@ -2,6 +2,7 @@ package com.semi.hitinerary.freeboard.service;
 
 import java.util.List;
 
+import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.freeboard.domain.PageInfo;
 import com.semi.hitinerary.freeboard.domain.Search;
@@ -81,5 +82,20 @@ public interface FreeboardService {
 	 * @return
 	 */
 	public int updateFreeBoardCheck(int freeBoardNo);
+	
+	/**
+	 * 자유게시판 유저 번호로 게시글 개수 찾기 
+	 * @param userNo
+	 * @return
+	 */
+	public int selectCountByUserNo(int userNo);
+	
+	/**
+	 * 유저 번호로 자유게시판 찾기
+	 * @param userNo
+	 * @param pi
+	 * @return
+	 */
+	public List<Freeboard> selectListByuserNo(int userNo, Pagination pi);
 
 }

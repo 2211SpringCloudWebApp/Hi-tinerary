@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.semi.hitinerary.comment.domain.Comment;
+import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.tour.domain.PageInfo;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
@@ -93,9 +94,18 @@ public class TourStoreLogic implements TourStore {
 	}
 
 	@Override
-	public List<Tour> selectTourListByUserNo(SqlSession session, int userNo) {
-		List<Tour> tList = session.selectList("TourMapper.selectTourListByUserNo", userNo);
+	public List<Tour> selectTourListByUserNo(SqlSession session, int userNo, Pagination pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		List<Tour> tList = session.selectList("TourMapper.selectTourListByUserNo", userNo, rowbounds);
 		return tList;
+	}
+
+	@Override
+	public int selectGetTotalCountByUserNo(SqlSession session, int userNo) {
+		int totalCount = session.selectOne("TourMapper.selectGetTotalCountByUserNo", userNo);
+		return totalCount;
 	}
 
 }

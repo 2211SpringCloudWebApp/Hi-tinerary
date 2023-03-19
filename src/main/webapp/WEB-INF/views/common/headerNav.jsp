@@ -41,7 +41,7 @@
 						</p>
 	                    <ul>
 	                    	<c:if test="${loginUser.userGrade == 0 }">
-		                        <li>|&nbsp;&nbsp; <a href="/user/mypageUser">마이페이지</a>&nbsp;&nbsp; |</li>
+		                        <li>|&nbsp;&nbsp; <a href="/user/mypage">마이페이지</a>&nbsp;&nbsp; |</li>
 	                    	</c:if>             
 	                    	<c:if test="${loginUser.userGrade == 1 || loginUser.userGrade == 2}">
 		                        <li>|&nbsp;&nbsp; <a href="/user/mypageCompany">마이페이지</a>&nbsp;&nbsp; |</li>

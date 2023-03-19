@@ -53,4 +53,19 @@ public interface WithService {
 	 * @return
 	 */
 	public int selectWithBoardCount();
+	
+	/**
+	 * 특정유저가 쓴 동행찾기 게시물 개수 조회
+	 * @param userNo
+	 * @return
+	 */
+	public int selectCountByUserNo(int userNo);
+	
+	/**
+	 * 특정유저가 쓴 동행찾기 게시물 조회
+	 * @param userNo
+	 * @param pi
+	 * @return
+	 */
+	public List<With> selectByUserNo(int userNo, Pagination pi);
 }

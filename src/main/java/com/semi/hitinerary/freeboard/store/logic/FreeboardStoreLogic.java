@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.freeboard.domain.PageInfo;
 import com.semi.hitinerary.freeboard.domain.Search;
@@ -80,6 +81,21 @@ public class FreeboardStoreLogic implements FreeboardStore{
 	@Override
 	public int updateFreeBoardCheck(SqlSession session, int freeBoardNo) {
 		return session.update("freeboardMapper.updateFreeBoardCheck", freeBoardNo);
+	}
+
+	@Override
+	public int selectCountByUserNo(SqlSession session, int userNo) {
+		int totalCount = session.selectOne("freeboardMapper.selectCountByUserNo", userNo);
+		return totalCount;
+	}
+
+	@Override
+	public List<Freeboard> selectListByuserNo(SqlSession session, int userNo, Pagination pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		List<Freeboard> fList = session.selectList("freeboardMapper.selectListByuserNo", userNo, rowbounds);
+		return fList;
 	}
 
 

@@ -75,4 +75,16 @@ public class WithServiceImpl implements WithService{
 		int totalCount = wStore.selectWithBoardCount(session);
 		return totalCount;
 	}
+
+	@Override
+	public int selectCountByUserNo(int userNo) {
+		int totalCount = wStore.selectCountByUserNo(session, userNo);
+		return totalCount;
+	}
+
+	@Override
+	public List<With> selectByUserNo(int userNo, Pagination pi) {
+		List<With> wList = wStore.selectByUserNo(session, userNo, pi);
+		return wList;
+	}
 }

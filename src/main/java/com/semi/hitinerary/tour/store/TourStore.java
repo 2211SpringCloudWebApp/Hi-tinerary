@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.semi.hitinerary.comment.domain.Comment;
+import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.tour.domain.PageInfo;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
@@ -79,9 +80,10 @@ public interface TourStore {
 	 * 유저정보로 구매내역 불러오기 Store
 	 * @param session
 	 * @param userNo
+	 * @param pi 
 	 * @return
 	 */
-	public List<Tour> selectTourListByUserNo(SqlSession session, int userNo);
+	public List<Tour> selectTourListByUserNo(SqlSession session, int userNo, Pagination pi);
 
 	/**
 	 * 시퀀스 넘버 조회 Store
@@ -113,5 +115,13 @@ public interface TourStore {
 	 * @return int 
 	 */
 	public int insertRereply(SqlSession session, Comment reReply);
+	
+	/**
+	 * 결제한 패키지 개수 Store
+	 * @param session
+	 * @param userNo
+	 * @return
+	 */
+	public int selectGetTotalCountByUserNo(SqlSession session, int userNo);
 
 }

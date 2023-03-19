@@ -63,6 +63,23 @@ public interface WithStore {
 	 * @return
 	 */
 	public int selectWithBoardCount(SqlSession session);
+	
+	/**
+	 * 특정유저가 쓴 동행찾기 게시물 개수 조회
+	 * @param session
+	 * @param userNo
+	 * @return
+	 */
+	public int selectCountByUserNo(SqlSession session, int userNo);
+	
+	/**
+	 * 특정유저가 쓴 동행찾기 게시물 개수 조회
+	 * @param session
+	 * @param userNo
+	 * @param pi
+	 * @return
+	 */
+	public List<With> selectByUserNo(SqlSession session, int userNo, Pagination pi);
 
 
 }

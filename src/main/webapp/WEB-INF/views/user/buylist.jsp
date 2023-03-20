@@ -17,11 +17,11 @@
 		<div class="mypage-container">
 	        <div class="mypage-navbox">
 	            <p class="nav-content">${loginUser.userNickname} 님</p>
-	            <a href="" class="nav-btn">내 정보 조회</a>
-	            <a href="" class="nav-btn nownav">상품 구매내역 조회</a>
-	            <a href="" class="nav-btn">작성 글 조회</a>
-	            <a href="" class="nav-btn">작성 댓글 조회</a>
-	            <a href="" class="nav-btn">그룹 페이지</a>
+		        <a href="/user/mypage" class="nav-btn">내 정보 조회</a>
+		        <a href="/user/mypage/buylist" class="nav-btn nownav">상품 구매내역 조회</a>
+		        <a href="/user/mypage/write/withboard" class="nav-btn">작성 글 조회</a>
+		        <a href="/user/mypage/write/comment" class="nav-btn">작성 댓글 조회</a>
+		        <a href="/group/groupinfopage" class="nav-btn">그룹 페이지</a>
 	        </div>
 	        <div class="mypage-contentbox">
 	            <div class="mypage-title">

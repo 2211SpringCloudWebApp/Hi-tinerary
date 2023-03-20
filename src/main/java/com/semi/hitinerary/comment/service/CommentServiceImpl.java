@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.semi.hitinerary.comment.domain.Comment;
+import com.semi.hitinerary.comment.domain.SearchComment;
 import com.semi.hitinerary.comment.store.CommentStore;
+import com.semi.hitinerary.common.Pagination;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -79,6 +81,18 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public int deleteFreeBoardComment(int commentNo) {
 		return cStore.deleteFreeBoardComment(session, commentNo);
+	}
+
+	@Override
+	public int selectCountByUserNo(SearchComment sComment) {
+		int totalCount = cStore.selectCountByUserNo(session, sComment);
+		return totalCount;
+	}
+
+	@Override
+	public List<Comment> selectListByUserNo(SearchComment sComment, Pagination pi) {
+		List<Comment> cList = cStore.selectListByUserNo(session, sComment, pi);
+		return cList;
 	}
 
 }

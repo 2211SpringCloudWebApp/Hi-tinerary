@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.semi.hitinerary.comment.domain.Comment;
+import com.semi.hitinerary.comment.domain.SearchComment;
+import com.semi.hitinerary.common.Pagination;
 
 public interface CommentStore {
 
@@ -61,6 +63,23 @@ public interface CommentStore {
 	 * @return int
 	 */
 	public int deleteFreeBoardComment(SqlSession session, int commentNo);
+	
+	/**
+	 * 유저 마이페이지 댓글 개수 조회
+	 * @param session 
+	 * @param sComment
+	 * @return
+	 */
+	public int selectCountByUserNo(SqlSession session, SearchComment sComment);
+	
+	/**
+	 * 유저 마이페이지 댓글 조회
+	 * @param session
+	 * @param sComment
+	 * @param pi
+	 * @return
+	 */
+	public List<Comment> selectListByUserNo(SqlSession session, SearchComment sComment, Pagination pi);
 
 
 }

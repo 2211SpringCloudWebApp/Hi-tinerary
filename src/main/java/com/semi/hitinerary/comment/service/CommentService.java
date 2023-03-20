@@ -3,6 +3,8 @@ package com.semi.hitinerary.comment.service;
 import java.util.List;
 
 import com.semi.hitinerary.comment.domain.Comment;
+import com.semi.hitinerary.comment.domain.SearchComment;
+import com.semi.hitinerary.common.Pagination;
 
 public interface CommentService {
 
@@ -54,5 +56,20 @@ public interface CommentService {
 	 * @return
 	 */
 	public List<Comment> selectListWithComment(int boardNo);
+	
+	/**
+	 * 유저 마이페이지 댓글 개수 조회 Service
+	 * @param sComment
+	 * @return
+	 */
+	public int selectCountByUserNo(SearchComment sComment);
+	
+	/**
+	 * 유저 마이페이지 댓글 개수 조회 Service
+	 * @param sComment
+	 * @param pi
+	 * @return
+	 */
+	public List<Comment> selectListByUserNo(SearchComment sComment, Pagination pi);
 
 }

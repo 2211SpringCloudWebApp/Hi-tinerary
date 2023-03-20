@@ -83,5 +83,25 @@
 	<insert id="insertReReply">
 		INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL, #{content}, DEFAULT, DEFAULT, 1, #{tourNo}, NULL, NULL, NULL, NULL, #{refCommentNo}, #{userNo})
 	</insert>
+<!-- 	마이페이지 댓글 개수조회 -->
+	<select id="selectCountByUserNo" resultType="_int">
+		SELECT COUNT(*) FROM COMMENT_TBL
+		<if test="category == 'with'">
+			WHERE WITH_BOARD_NO IS NOT NULL
+		</if>
+		<if test="category == 'free'">
+			WHERE FREE_BOARD_NO IS NOT NULL
+		</if>
+	</select>
+	
+	<select id="selectListByUserNo" resultMap="commentResultMapper">
+		SELECT * FROM COMMENT_TBL
+		<if test="category == 'with'">
+			WHERE WITH_BOARD_NO IS NOT NULL
+		</if>
+		<if test="category == 'free'">
+			WHERE FREE_BOARD_NO IS NOT NULL
+		</if>
+	</select>
 			
 </mapper>

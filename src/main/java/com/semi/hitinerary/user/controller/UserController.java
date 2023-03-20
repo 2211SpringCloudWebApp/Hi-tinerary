@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.semi.hitinerary.comment.domain.Comment;
+import com.semi.hitinerary.comment.domain.SearchComment;
+import com.semi.hitinerary.comment.service.CommentService;
 import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.freeboard.service.FreeboardService;
@@ -40,6 +43,9 @@ public class UserController {
 	
 	@Autowired
 	private FreeboardService fService;
+	
+	@Autowired
+	private CommentService cService;
 	
 	// 회원가입 분류창
 	@RequestMapping(value="/user/registerType", method = RequestMethod.GET)
@@ -203,7 +209,19 @@ public class UserController {
 	
 	// 일반회원 댓글 조회
 	@RequestMapping(value="/user/mypage/write/comment",method=RequestMethod.GET)
-	public String userWriteComment() {
+	public String userWriteComment(
+			@RequestParam(value="page", required=false, defaultValue = "1") String currentPage
+			,@RequestParam(value="category", required = false, defaultValue="with") String category
+			,HttpSession session
+			,Model model) {
+		User user = (User)session.getAttribute("loginUser");
+		SearchComment sComment = new SearchComment(category, user.getUserNo());
+		int totalCount = cService.selectCountByUserNo(sComment);
+		Pagination pi = new Pagination(Integer.parseInt(currentPage), 10, 5, totalCount);
+		List<Comment> cList = cService.selectListByUserNo(sComment, pi);
+		model.addAttribute("pi", pi);
+		model.addAttribute("cList", cList);
+		model.addAttribute("category", category);
 		return "/user/commentsearch";
 	}
 	

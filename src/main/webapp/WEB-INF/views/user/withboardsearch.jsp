@@ -17,11 +17,11 @@
 	    <div class="mypage-container">
 	        <div class="mypage-navbox">
 	            <p class="nav-content">${loginUser.userNickname } 님</p>
-	            <a href="" class="nav-btn">내 정보 조회</a>
-	            <a href="" class="nav-btn nownav">상품 구매내역 조회</a>
-	            <a href="" class="nav-btn">작성 글 조회</a>
-	            <a href="" class="nav-btn">작성 댓글 조회</a>
-	            <a href="" class="nav-btn">그룹 페이지</a>
+			    <a href="/user/mypage" class="nav-btn">내 정보 조회</a>
+		        <a href="/user/mypage/buylist" class="nav-btn">상품 구매내역 조회</a>
+		        <a href="/user/mypage/write/withboard" class="nav-btn nownav">작성 글 조회</a>
+		        <a href="/user/mypage/write/comment" class="nav-btn">작성 댓글 조회</a>
+		        <a href="/group/groupinfopage" class="nav-btn">그룹 페이지</a>
 	        </div>
 	        <div class="mypage-contentbox">
 	            <div class="mypage-title">
@@ -29,8 +29,8 @@
 	            </div>
 	            <div class="mypage-content">
 	                <div class="selectboard">
-	                    <a href="" class="selectboard-btn selectedboard-btn">동행구하기</a>
-	                    <a href="" class="selectboard-btn">자유게시판</a>
+	                    <a href="/user/mypage/write/withboard" class="selectboard-btn selectedboard-btn">동행구하기</a>
+	                    <a href="/user/mypage/write/freeboard" class="selectboard-btn">자유게시판</a>
 	                </div>
 	                <div class="boardlist-box">
 	                    <div class="boardlist">
@@ -43,7 +43,7 @@
 			                                </div>
 			                                <div class="withboard-info">
 			                                    <p class="withboard-title">${withBoard.boardTitle }</p>
-			                                    <p class="withboard-day">시작날짜 : <fmt:formatDate value="${withBoard.startDate }" pattern="yyyy-MM-dd ahh:mm"/> <br> 끝날짜 : <fmt:formatDate value="${withBoard.endDate }" pattern="yyyy-MM-dd ahh:mm"/></p>
+			                                    <p class="withboard-day">시작날짜 : <fmt:formatDate value="${withBoard.startDate }" pattern="yyyy-MM-dd"/> <br> 끝날짜 : <fmt:formatDate value="${withBoard.endDate }" pattern="yyyy-MM-dd"/></p>
 			                                    <p class="withboard-NOP">${withBoard.currentPeople } / ${withBoard.maxPeople }</p>
 	                                		</div>
 	                            		</div>

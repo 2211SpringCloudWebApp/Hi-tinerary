@@ -2,10 +2,13 @@ package com.semi.hitinerary.comment.store;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.semi.hitinerary.comment.domain.Comment;
+import com.semi.hitinerary.comment.domain.SearchComment;
+import com.semi.hitinerary.common.Pagination;
 
 @Repository
 public class CommentStoreLogic implements CommentStore{
@@ -72,6 +75,21 @@ public class CommentStoreLogic implements CommentStore{
 	@Override
 	public int deleteFreeBoardComment(SqlSession session, int commentNo) {
 		return session.delete("commentMapper.deleteFreeBoardComment", commentNo);
+	}
+
+	@Override
+	public int selectCountByUserNo(SqlSession session, SearchComment sComment) {
+		int totalCount = session.selectOne("commentMapper.selectCountByUserNo", sComment);
+		return totalCount;
+	}
+
+	@Override
+	public List<Comment> selectListByUserNo(SqlSession session, SearchComment sComment, Pagination pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		List<Comment> cList = session.selectList("commentMapper.selectListByUserNo", sComment, rowbounds);
+		return cList;
 	}
 
 }

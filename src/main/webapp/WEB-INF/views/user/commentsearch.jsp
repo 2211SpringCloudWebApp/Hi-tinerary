@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -14,12 +16,12 @@
 		<main>
 		   <div class="mypage-container">
 		        <div class="mypage-navbox">
-		            <p class="nav-content">닉네임 님</p>
-		            <a href="" class="nav-btn">내 정보 조회</a>
-		            <a href="" class="nav-btn nownav">상품 구매내역 조회</a>
-		            <a href="" class="nav-btn">작성 글 조회</a>
-		            <a href="" class="nav-btn">작성 댓글 조회</a>
-		            <a href="" class="nav-btn">그룹 페이지</a>
+		            <p class="nav-content">${loginUser.userNickname} 님</p>
+		            <a href="/user/mypage" class="nav-btn">내 정보 조회</a>
+		            <a href="/user/mypage/buylist" class="nav-btn">상품 구매내역 조회</a>
+		            <a href="/user/mypage/write/withboard" class="nav-btn">작성 글 조회</a>
+		            <a href="/user/mypage/write/comment" class="nav-btn nownav">작성 댓글 조회</a>
+		            <a href="/group/groupinfopage" class="nav-btn">그룹 페이지</a>
 		        </div>
 		        <div class="mypage-contentbox">
 		            <div class="mypage-title">
@@ -27,8 +29,8 @@
 		            </div>
 		            <div class="mypage-content">
 		                <div class="selectboard">
-		                    <a href="" class="selectboard-btn">동행구하기</a>
-		                    <a href="" class="selectboard-btn selectedboard-btn">자유게시판</a>
+		                    <a href="/user/mypage/write/comment?category=with" class="selectboard-btn <c:if test="${category == 'with' }">selectedboard-btn</c:if>">동행구하기</a>
+		                    <a href="/user/mypage/write/comment?category=free" class="selectboard-btn <c:if test="${category == 'free' }">selectedboard-btn</c:if>">자유게시판</a>
 		                </div>
 		                <div class="boardlist-box">
 		                    <div class="boardlist">
@@ -42,29 +44,52 @@
 		                                    </tr>
 		                                </thead>
 		                                <tbody>
-		                                    <tr>
-		                                        <td><a href="">글제목글제목글제목ㅇㄴㅁㅇㄴㅁㅇㅁㄴㄴㅇㅁㄴㅇㄴㅁ</a></td>
-		                                        <td>2020/12/12</td>
-		                                        <td><a href="#" class="detail-btn">원문보기</a></td>
-		                                    </tr>
-		                                    <tr>
-		                                        <td><a href="">글제목글제목글제목ㅇㄴㅁㅇㄴㄴㅇㅁㄴㅇㄴㅁ</a></td>
-		                                        <td>1</td>
-		                                        <td><a href="#" class="detail-btn">원문보기</a></td>
-		                                    </tr>
+		                                	<c:forEach items="${cList }" var="comment">
+		                                		<c:if test="${comment.freeBoardNo ne 0 }">
+			                                    <tr>
+			                                        <td>${comment.content }</td>
+			                                        <td><fmt:formatDate value="${comment.writeDate }" pattern="yyyy-MM-dd ahh:mm"/></td>
+			                                        <td><a href="/freeboard/detail?boardNo=${comment.freeBoardNo }" class="detail-btn">원문보기</a></td>
+			                                    </tr>		                                		
+		                                		</c:if>
+		                                		<c:if test="${comment.withBoardNo ne 0 }">
+			                                    <tr>
+				                                    <td>${comment.content }</td>
+			                                        <td><fmt:formatDate value="${comment.writeDate }" pattern="yyyy-MM-dd ahh:mm"/></td>
+			                                        <td><a href="/withboard/withBoardDetail?boardNo=${comment.freeBoardNo }" class="detail-btn">원문보기</a></td>
+			                                    </tr>		                                		
+		                                		</c:if>
+		                                	</c:forEach>
 		                                </tbody>
 		                                <tfoot>
 		                                    <tr>
 		                                        <td colspan="3">
-		                                            <a href="#" class="pagenav">&#60;&#60;</a>
-		                                            <a href="#" class="pagenav">&#60;</a>
-		                                            <a href="#">1</a>
-		                                            <a href="#">2</a>
-		                                            <a href="#">3</a>
-		                                            <a href="#">4</a>
-		                                            <a href="#">5</a>
-		                                            <a href="#" class="pagenav">&#62;</a>
-		                                            <a href="#" class="pagenav">&#62;&#62;</a>
+		                                        <c:if test="${category == 'with' }">
+		                                        	<c:if test="${pi.currentPage > 1 }">
+		                                            <a href="/user/mypage/write/comment?category=with&page=1" class="pagenav">&#60;&#60;&nbsp;</a>
+		                                            <a href="/user/mypage/write/comment?category=with&page=${pi.currentPage - 1 }" class="pagenav">&#60;&nbsp;</a>
+		                                            </c:if>
+													<c:forEach begin="${pi.startNavi }" end="${pi.endNavi }" var="p">
+														<a href="/user/mypage/write/comment?category=with&page=${p }">${p }&nbsp;</a>
+													</c:forEach>
+													<c:if test="${pi.currentPage < pi.endNavi }">
+		                                            <a href="/user/mypage/write/comment?category=with&page=${pi.currentPage + 1 }" class="pagenav">&#62;&nbsp;</a>
+		                                            <a href="/user/mypage/write/comment?category=with&page=${pi.endNavi }" class="pagenav">&#62;&#62;&nbsp;</a>
+		                                            </c:if>
+		                                        </c:if>
+		                                        <c:if test="${category == 'free' }">
+		                                        	<c:if test="${pi.currentPage > 1 }">
+		                                            <a href="/user/mypage/write/comment?category=free&page=1" class="pagenav">&#60;&#60;&nbsp;</a>
+		                                            <a href="/user/mypage/write/comment?category=free&page=${pi.currentPage - 1 }" class="pagenav">&#60;&nbsp;</a>
+		                                            </c:if>
+													<c:forEach begin="${pi.startNavi }" end="${pi.endNavi }" var="p">
+														<a href="/user/mypage/write/comment?category=free&page=${p }">${p }&nbsp;</a>
+													</c:forEach>
+													<c:if test="${pi.currentPage < pi.endNavi }">
+		                                            <a href="/user/mypage/write/comment?category=free&page=${pi.currentPage + 1 }" class="pagenav">&#62;&nbsp;</a>
+		                                            <a href="/user/mypage/write/comment?category=free&page=${pi.endNavi }" class="pagenav">&#62;&#62;&nbsp;</a>
+		                                            </c:if>
+		                                        </c:if>		                                        
 		                                        </td>
 		                                    </tr>
 		                                </tfoot>

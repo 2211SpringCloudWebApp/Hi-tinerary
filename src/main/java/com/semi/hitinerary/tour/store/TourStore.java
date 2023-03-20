@@ -124,4 +124,12 @@ public interface TourStore {
 	 */
 	public int selectGetTotalCountByUserNo(SqlSession session, int userNo);
 
+	/**
+	 * currentPeople 수 가져오기 Store
+	 * @param session
+	 * @param tourNo
+	 * @return int 
+	 */
+	public int selectCurrCount(SqlSession session, int tourNo);
+
 }

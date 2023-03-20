@@ -109,4 +109,11 @@ public interface TourService {
 	 */
 	public int selectGetTotalCountByUserNo(int userNo);
 
+	/**
+	 * currentPeople 수 가져오기
+	 * @param tourNo
+	 * @return int
+	 */
+	public int selectCurrCount(int tourNo);
+
 }

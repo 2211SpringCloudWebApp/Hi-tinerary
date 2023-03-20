@@ -107,5 +107,9 @@ public class TourStoreLogic implements TourStore {
 		int totalCount = session.selectOne("TourMapper.selectGetTotalCountByUserNo", userNo);
 		return totalCount;
 	}
+	
+	public int selectCurrCount(SqlSession session, int tourNo) {
+		return session.selectOne("TourMapper.selectCurrentCount", tourNo);
+	}
 
 }

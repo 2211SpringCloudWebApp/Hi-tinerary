@@ -1,19 +1,6 @@
-@font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-}
 
-*{
-    box-sizing: border-box;
-    font-family: 'Pretendard-Regular';
-}
-#container{
-    background-color: bisque;
-    width : 1200px;
-    margin: 0 auto;
-}
+
+
 
 #tourBoardDetail{
     width: 1200px;
@@ -48,12 +35,13 @@
 
 #thumbnailAndInfos{
     width: inherit;
-     height: 580px;
+     height: 600px;
      border-bottom: 1px dashed #0F8D80;
      display: flex;
      justify-content: space-evenly;
 }
 #thumbnail{
+    margin-top: 45px;
     width: 520px;
     height: 520px;
 }
@@ -64,9 +52,18 @@
   max-height: 520px;
 }
 
+
+.infos {
+    width: 140px;
+    font-size: 20px;
+    padding-left: 20px;
+    margin-right: 10px;
+    border-right: 1px solid #0F8D80;
+  }
+
 #tourInfos{
     width: 520px;
-    height: 520px;
+    --height: 520px;
     --border: 1px solid black;
     border-bottom: 1px dashed #0F8D80;
     position: relative;
@@ -76,7 +73,6 @@
     height: 40px;
     width: inherit;
     display: flex;
-    justify-content: space-between;
 }
 #writerDiv>div:first-child {
     margin-top: 5px;
@@ -146,9 +142,7 @@
     font-size: 16px;
   }
   
-  #tourContent img{
-  	width: 1100px;
-  }
+
   
   .oneHundred{
     width: 100%;
@@ -162,7 +156,7 @@
     border:1px solid #0F8D80;
     align-items: center;
     border-radius: 10px 10px;
-    margin-top: 20px;
+    margin-top: 15px;
   }
 
   .double-half{
@@ -174,15 +168,13 @@
   
   
   input{
-    border-left: 1px solid #0F8D80;
-    border-top: none;
-    border-right: none;
-    border-bottom: none;
-    padding-left: 10px;
+    
+    border: none;
+   
 }
 
 #up{   
-    
+    margin-top: 15px;
     --margin-right: 30px;
     --position: relative;
     border: 0;
@@ -195,7 +187,7 @@
 }
 
 #back{   
-    
+    margin-top: 15px;
     margin-right: 30px;
     --position: relative;
     border: 0;
@@ -210,7 +202,7 @@
 
 #half-button1, #half-button2{
     width: 50%;
-    margin-top: 20px;
+    --margin-top: 20px;
     --height: 50px;
     display: flex;
     float: left;

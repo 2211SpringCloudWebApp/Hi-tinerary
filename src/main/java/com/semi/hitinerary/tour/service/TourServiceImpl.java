@@ -104,6 +104,11 @@ public class TourServiceImpl implements TourService {
 		int totalCount = tStore.selectGetTotalCountByUserNo(session, userNo);
 		return totalCount;
 	}
+	
+	
+	public int selectCurrCount(int tourNo) {	
+		return tStore.selectCurrCount(session, tourNo);
+	}
 
 	
 

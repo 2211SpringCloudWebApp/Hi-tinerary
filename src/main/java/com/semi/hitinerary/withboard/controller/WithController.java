@@ -97,6 +97,7 @@ public class WithController {
 			//실제 파일 저장
 			String filePath = savePath + "\\" + boardNo + uploadFile.getOriginalFilename();
 			File file = new File(filePath);
+			filePath = "resources\\wuploadFiles\\" + userNo + "withBoard\\" + boardNo + uploadFile.getOriginalFilename();
 			uploadFile.transferTo(file);
 			return filePath;
 		} catch (Exception e) {
@@ -127,7 +128,7 @@ public class WithController {
 		}
 	}
 	
-	//동행게시판 상세페이지
+	//동행게시판 상세페이지 + 댓글 보여주기
 	@RequestMapping(value="/withboard/withBoardDetail", method=RequestMethod.GET)
 	public String withBoardDetailView(@RequestParam("boardNo") int boardNo, Model model) {
 		try {

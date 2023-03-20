@@ -13,16 +13,6 @@
 
 <body>
 	<jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
-	<%-- <h1>커뮤니티/동행찾기</h1>
-               <img src="${withBoard.boardImage != null ? withBoard.boardImage.replace('C:\\Users\\samsung\\eclipse-workspace\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : '/resources/images/noboardImage.png'}"><br>
-                제목 : ${withBoard.boardTitle }<br>
-                <fmt:formatDate value="${withBoard.startDate }" pattern="yyyy-MM-dd" /> ~
-                <fmt:formatDate value="${withBoard.endDate }" pattern="yyyy-MM-dd" /><br>
-                현재인원수 / 최대 인원수: ${withBoard.currentPeople } / ${withBoard.maxPeople }<br>
-                작성자 : ${withBoard.userNo }<br>
-                작성날짜 : ${withBoard.writeDate }<br>
-                내용 : ${withBoard.boardContent } <br> --%>
-                
 	<main id="withBoardDetail">
 		<div id="withTitle">
 			<div id="bar_title"></div>
@@ -39,89 +29,130 @@
 			</c:if>
 		</div>
 
+		<!-- 썸네일 이미지 -->
 		<div id="thumbnailAndInfos">
 			<div id="thumbnail">
-				<img src="${withBoard.boardImage != null ? withBoard.boardImage.replace('C:\\Users\\samsung\\eclipse-workspace\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : '/resources/images/noboardImage.png'}">
+				<div id="thumbnailImage">
+					<img src="../../../${withBoard.boardImage }">
+					<div id="title">${withBoard.boardTitle }</div>
+					<div id="date">
+						<fmt:formatDate value="${withBoard.startDate }"
+							pattern="yyyy-MM-dd" />
+						~
+						<fmt:formatDate value="${withBoard.endDate }" pattern="yyyy-MM-dd" />
+					</div>
+					<div id="People">${withBoard.currentPeople } /
+						${withBoard.maxPeople }</div>
+				</div>
 			</div>
-			제목 : ${withBoard.boardTitle }<br>
-			 <fmt:formatDate value="${withBoard.startDate }" pattern="yyyy-MM-dd" /> ~
-                <fmt:formatDate value="${withBoard.endDate }" pattern="yyyy-MM-dd" /><br>
-                현재인원수 / 최대 인원수: ${withBoard.currentPeople } / ${withBoard.maxPeople }<br>
-                작성자 : ${withBoard.userNickname }(${withBoard.userGender } / 
-                <c:if test="${withBoard.userBirthDate < 0 }">
-    			${100 + withBoard.userBirthDate }
-    			</c:if>
-    			 <c:if test="${withBoard.userBirthDate > 0 }">
-    			${withBoard.userBirthDate }
-    			</c:if>
-                )<br>
-                작성날짜 : ${withBoard.writeDate }<br>
-			<div id="content">
+
+			<div id="mainContent">
+				<div id="nickname">
+					${withBoard.userNickname }(${withBoard.userGender } /
+					<c:if test="${withBoard.userBirthDate < 0 }">
+									${100 + withBoard.userBirthDate }
+								</c:if>
+					<c:if test="${withBoard.userBirthDate > 0 }">
+									${withBoard.userBirthDate }
+								</c:if>
+					)
+					<fmt:formatDate value="${withBoard.writeDate }" pattern="yyyy-MM-dd ahh:mm" />
+				</div>
 				<div id="writeContent">${withBoard.boardContent }</div>
+				<c:if test="${loginUser.userNo == withBoard.userNo}">
+					<div id="modifyBtn">
+						<button class="modify" onclick="location.href='/withboard/withModifyView?boardNo=${withBoard.boardNo }'">수정하기</button>
+						<button class="delete" onclick="removeCheck(${withBoard.boardNo });">삭제하기</button>
+						<!-- <button id="list" onclick="location.href='/withboard/withBoardList'">목록으로</button> -->
+					</div>
+				</c:if>
 			</div>
 		</div>
-		<c:if test="${loginUser.userNo == withBoard.userNo}">
-			<a href="/withboard/withModifyView?boardNo=${withBoard.boardNo }">수정</a>
-			<a href="javascript:void(0);" onclick="removeCheck(${withBoard.boardNo });">삭제</a> 
-		</c:if>
-		<a href="/withboard/withBoardList">목록</a>
-		<hr>
-		
-		<c:if test="${loginUser ne null }">
-		<div id="comment_container">
-			<form action="/withboard/board/comment/write" method="POST">
-				<input type="hidden" name="CommentBoardNo" value="${withBoard.boardNo }">
-				<table id="comment_table">
-					<tr>
-						<td id="comment_td1"><input type="hidden" name="CommentUserNo" value="${loginUser.userNo }">${loginUser.userNickname }</td>
-						<td id="comment_td2"><input id="comment_input" name="Commentcontent" type="text" placeholder="여기에 댓글을 작성해 주세요."></td>
-						<td id="comment_td3"><button id="comment_button">댓글달기</button></td>
-					</tr>
-				</table>
-			</form>
-		</div>
-			</c:if>
-			
-			<div id="reply_container">
-			<form action="/withboard/board/comment/write" method="POST">
-				<input type="hidden" name="CommentBoardNo" value="${withBoard.boardNo }">
-				<table id="comment_table">
-					<tr>
-						<td id="comment_td1"><input type="hidden" name="CommentUserNo" value="${loginUser.userNo }">${loginUser.userNickname }</td>
-						<td id="comment_td2"><input id="comment_input" name="Commentcontent" type="text" placeholder="여기에 댓글을 작성해 주세요."></td>
-						<td id="comment_td3"><button id="comment_button">댓글달기</button></td>
-					</tr>
-				</table>
-			</form>
-		</div>
-		
-		<div id="lcomment_container">
-                <table id="lcomment_table">
-                <c:forEach items="${ cList}" var="comment">
-                    <tr>
-                        <td class="lcomment_td1">${comment.userNo }</td>
-                        <td class="lcomment_td2"><input class="lcomment_input" type="text" readonly value="${comment.content }"></td>
-                        <td class="lcomment_td3">[${comment.writeDate }]</td>
-                        <td class="lcomment_td4">
-                        <c:if test="${comment.status == 0 && loginUser.userNo != comment.userNo && withBoard.userNo == loginUser.userNo }">
-                        <button class="lcomment_button2">초대</button>
-                        </c:if>
-                        </td>
-                        <td class="lcomment_td5">
-                            <a href="#">댓글달기</a>
-                            <c:if test="${loginUser.userNo == comment.userNo || loginUser.userGrade == 4}">
-                            <form action="/withboard/board/comment/delete" method="POST">
-                            <input type="hidden" value="${withBoard.boardNo }" name="boardNo">
-                            <input type="hidden" value="${comment.commentNo }" name="commentNo">
-                            | <input type="submit" value="삭제">
-                            </form>
-                            </c:if>
-                            | <a href="#">신고</a>
-                        </td>
-                    </tr>
-                    </c:forEach>
-                </table>
-            </div>
+
+<!-- 댓글영역 -->
+<!-- 댓글이 출력되는 영역  -->
+<div id="lcomment_container">
+<table id="lcomment_table">
+<c:forEach items="${ cList}" var="comment">
+<tr>
+<td class="lcomment_td1">${comment.userNo }</td>
+<td class="lcomment_td2">
+<input class="lcomment_input" type="text" readonly value="${comment.content }">
+</td>
+<td class="lcomment_td3">
+[<fmt:formatDate value="${withBoard.writeDate }" pattern="yyyy-MM-dd ahh:mm" />]
+</td>
+<td class="lcomment_td4">
+<form action="" method="">
+<%-- <c:if test="${comment.status == 0 && loginUser.userNo != comment.userNo && withBoard.userNo == loginUser.userNo }"> --%>
+<button class="lcomment_button2">초대</button>
+<%-- </c:if> --%>
+</form>
+</td>
+<td class="lcomment_td5">
+<c:if test="${loginUser.userNo == comment.userNo || loginUser.userGrade == 4}">
+<form action="/withboard/board/comment/delete" method="POST">
+<input type="hidden" value="${withBoard.boardNo }" name="boardNo">
+<input type="hidden" value="${comment.commentNo }" name="commentNo">
+<a href="#">대댓글</a>
+| <a href="#">신고</a>
+| <input type="submit" value="삭제">
+</form>
+</c:if>
+</td>
+</tr>
+</c:forEach>
+</table>
+</div>
+
+
+
+
+
+            
+<!-- 댓글을 달고 대댓글을 눌렀을 때 뜨는 것 -->
+<div id="reply_container">
+<form action="/withboard/board/comment/write" method="POST">
+<input type="hidden" name="CommentBoardNo" value="${withBoard.boardNo }">
+<table id="replycomment_table">
+<tr>
+<td id="replycomment_td1">
+<input type="hidden" name="CommentUserNo" value="${loginUser.userNo }">
+${loginUser.userNickname }
+</td>
+<td id="replycomment_td2">
+<input id="replycomment_input" name="Commentcontent" type="text" placeholder="여기에 댓글을 작성해 주세요.">
+</td>
+<td id="replycomment_td3">
+<button id="replycomment_button">댓글달기</button>
+</td>
+</tr>
+</table>
+</form>
+</div>
+
+<!-- 처음 댓글 작성하는 영역 -->
+<c:if test="${loginUser ne null }">
+<div id="comment_container">
+<form action="/withboard/board/comment/write" method="POST">
+<input type="hidden" name="CommentBoardNo" value="${withBoard.boardNo }">
+<table id="withcomment_table">
+<tr>
+<td id="withcomment_td1">
+<input type="hidden" name="CommentUserNo" value="${loginUser.userNo }">
+${loginUser.userNickname }
+</td>
+<td id="withcomment_td2">
+<input id="withcomment_input" name="Commentcontent" type="text" placeholder="여기에 댓글을 작성해 주세요.">
+</td>
+<td id="withcomment_td3">
+<button id="withcomment_button">댓글달기</button>
+</td>
+</tr>
+</table>
+</form>
+</div>
+</c:if>
            
 	</main>
 
@@ -159,6 +190,7 @@
 		
 	});
 	</script>
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 </body>
 
 </html>

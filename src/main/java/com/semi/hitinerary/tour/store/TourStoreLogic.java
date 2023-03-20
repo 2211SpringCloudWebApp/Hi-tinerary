@@ -98,4 +98,10 @@ public class TourStoreLogic implements TourStore {
 		return tList;
 	}
 
+	@Override
+	public int selectCurrCount(SqlSession session, int tourNo) {
+		
+		return session.selectOne("TourMapper.selectCurrentCount", tourNo);
+	}
+
 }

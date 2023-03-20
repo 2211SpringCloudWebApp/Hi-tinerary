@@ -100,4 +100,11 @@ public interface TourService {
 	 */
 	public int reReplyUp(Comment reReply);
 
+	/**
+	 * currentPeople 수 가져오기
+	 * @param tourNo
+	 * @return int
+	 */
+	public int selectCurrCount(int tourNo);
+
 }

@@ -54,6 +54,7 @@ public class TourController {
 		return "tour/tourBoardWrite";
 	}
 
+	
 	// 패키지게시판 글 상세 보기 + 댓글보기
 	@RequestMapping(value = "/tour/tourBoardDetail", method = RequestMethod.GET)
 	public String TourBoardDetailView(@RequestParam("tourNo") int tourNo, Model model) {
@@ -61,8 +62,8 @@ public class TourController {
 		Tour tour = tService.selectOneByNo(tourNo);
 		List<Comment> comments = tService.selectAllComments(tourNo);
 		
-		
-		
+		int currentPeople = tService.selectCurrCount(tourNo);
+		tour.setCurrentPeople(currentPeople);
 		model.addAttribute("tour", tour);
 		model.addAttribute("comments", comments);
 		
@@ -150,22 +151,29 @@ public class TourController {
 
 		tour = new Tour(tourTitle, tourContent, startDate, endDate, price, deadline, maxPeople, minPeople, userNo, userGrade, userNickname);
 		tour.setTourNo(tService.getSequence());
-		if (thumbnail != null && !thumbnail.isEmpty() && !thumbnail.getOriginalFilename().equals("")) {
-			String tourImagePath = savetourImage(tourImage, request, tour.getTourNo(), tour.getUserNo());
-			tour.setTourImage(tourImagePath);
-
+		
+		try {
+			if (thumbnail != null && !thumbnail.isEmpty() && !thumbnail.getOriginalFilename().equals("")) {
+				String tourImagePath = savetourImage(tourImage, request, tour.getTourNo(), tour.getUserNo());
+				tour.setTourImage(tourImagePath);
+				
+			}
+			if (tourImage != null && !tourImage.isEmpty() && !tourImage.getOriginalFilename().equals("")) {
+				String thumbnailPath = saveThumbnail(thumbnail, request, tour.getTourNo(), tour.getUserNo());
+				tour.setThumbnail(thumbnailPath);
+				
+			}
+			
+		} catch (Exception e) {
+			return "common/error";
 		}
-		if (tourImage != null && !tourImage.isEmpty() && !tourImage.getOriginalFilename().equals("")) {
-			String thumbnailPath = saveThumbnail(thumbnail, request, tour.getTourNo(), tour.getUserNo());
-			tour.setThumbnail(thumbnailPath);
-
-		}
+		
 
 		int result = tService.insertPosting(tour);
 		if (result > 0) {
 			return "redirect:/tour/tourBoardDetail?tourNo="+tour.getTourNo();  
 		} else {
-			// model.addAttribute("msg", "등록 안됐음");
+			model.addAttribute("msg", "등록 안됐음");
 			return "common/error";
 		}
 
@@ -300,14 +308,17 @@ public class TourController {
 	private String savetourImage(MultipartFile tourImage, HttpServletRequest request, int userNo, int tourNo) {
 		try {
 			String root = request.getSession().getServletContext().getRealPath("resources");
-			//int userNo = 1;
+			
 			String savePath = root + "\\tuploadImgs\\" + userNo + "tourBoard";
 			File folder = new File(savePath);
 			if (!folder.exists()) {
 				folder.mkdirs();
 			}
 			String filePath = savePath + "\\" + tourNo+ tourImage.getOriginalFilename();
+			
 			File file = new File(filePath);
+			filePath = "resources\\tuploadImgs\\" + userNo + "tourBoard\\"+tourNo + tourImage.getOriginalFilename();
+			//디비 저장 경로를 resources부터로 바꿈
 			tourImage.transferTo(file);
 			return filePath;
 		} catch (Exception e) {
@@ -320,7 +331,7 @@ public class TourController {
 	private String saveThumbnail(MultipartFile thumbnail, HttpServletRequest request, int userNo, int tourNo) {
 		try {
 			String root = request.getSession().getServletContext().getRealPath("resources");
-			//int userNo = 1;
+			
 			String savePath = root + "\\tuploadImgs\\" + userNo + "tourBoard";
 			File folder = new File(savePath);
 			if (!folder.exists()) {
@@ -328,6 +339,7 @@ public class TourController {
 			}
 			String filePath = savePath + "\\" +tourNo+ thumbnail.getOriginalFilename();
 			File file = new File(filePath);
+			filePath = "resources\\tuploadImgs\\" + userNo + "tourBoard\\"+tourNo + thumbnail.getOriginalFilename();
 			thumbnail.transferTo(file);
 			return filePath;
 		} catch (Exception e) {

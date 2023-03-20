@@ -22,30 +22,22 @@
 	                </div>                  
 	                
 	                <div id="tourList">
- 		                <c:forEach items="${tList}" var="tour" varStatus="status">
-		                	<div class="frameDiv" ${status.index < 12 ? '' : 'style="display: none;"'}>
-		                        <img class="frame" src="../../../resources/images/ticketframe1.png">
-		                        <a href="/tour/tourBoardDetail?tourNo=${tour.tourNo }">
-		                            <img class="inframe" src="${tour.thumbnail != null ? tour.thumbnail.replace('C:\\Users\\user1\\git\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : '/resources/images/noThumbnail.png'}">
-		                        </a>
-		                        <p class="startDate"><fmt:formatDate pattern="MM월dd일 출발" value="${tour.startDate }"/></p>
-		                        <p class="tourTitle">${tour.tourTitle }</p>
-		                        <p class="tourContent">${tour.tourContent }<p>
-		                    </div>
-		                </c:forEach> 
-		                
-<!--					    <c:forEach items="${tList}" var="tour">
-					        <div class="frameDiv">
-					            <img class="frame" src="../../../resources/images/ticketframe1.png">
-					            <a href="/tour/tourBoardDetail?tourNo=${tour.tourNo}">
-					                <img class="inframe" src="${tour.thumbnail != null ? tour.thumbnail.replace('C:\\Users\\user1\\git\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : '/resources/images/noThumbnail.png'}">
-					            </a>
-					            <p class="startDate"><fmt:formatDate pattern="MM월dd일 출발" value="${tour.startDate}"/></p>
-					            <p class="tourTitle">${tour.tourTitle}</p>
-					            <p class="tourContent">${tour.tourContent}<p>
-					        </div>
-					    </c:forEach>
-						<button id="loadMore">더보기</button>-->
+ 		                <c:forEach items="${tList}" var="tour">
+		                    <a href="/tour/tourBoardDetail?tourNo=${tour.tourNo }">
+			                	<div class="frameDiv">
+			                        <img class="frame" src="../../../resources/images/ticketframe1.png">
+			                        <div class="thumbnailDiv">
+		                            	<img class="inframe" src="../../../../${tour.thumbnail}">
+			                        </div>
+			                        <div class="startDateDiv">
+			                        	<p class="startDate"><fmt:formatDate pattern="MM월dd일 출발" value="${tour.startDate }"/></p>
+			                        </div>
+			                        <div class="tourTitle">${tour.tourTitle }</div>
+			                        <div class="tourContent">${tour.tourContent}</div>
+			                    </div>
+		                    </a>
+		                </c:forEach> 		                
+	                </div>
 						
 						
 						<input type="hidden" id="page" value="${pi.currentPage }">
@@ -60,86 +52,54 @@
 							<a href="${pageUrl }">${p }</a> 
 							
 						</c:forEach> 
-	                </div>
 	                
 	                
-	               
+	                
+	              
 	                
 	            </main>
 	            
 	            
 	            <script>
-	         
-		            // 제목 글자수 제한
-		            const maxChars = 13;
-	
-		            // 본문 글자수 제한
-		            const maxChars1 = 43;
-	
-		            // Iterate over each .frameDiv element
-		            const frameDivs = document.querySelectorAll('.frameDiv');
-		            frameDivs.forEach(frameDiv => {
-		                const tourTitle = frameDiv.querySelector('.tourTitle');
-		                const tourContent = frameDiv.querySelector('.tourContent');
-	
-		                // 글자 수 확인
-		                const titleText = tourTitle.textContent;
-		                const titleChars = titleText.length;
-	
-		                const contentText = tourContent.textContent;
-		                const contentChars = contentText.length;
-	
-		                // 글자 수가 최대 글자 수보다 큰 경우, 생략 부호로 대체
-		                if (titleChars > maxChars) {
-		                    const newTitle = titleText.substr(0, maxChars) + '...';
-		                    tourTitle.textContent = newTitle;
-		                }
-	
-		                if (contentChars > maxChars1) {
-		                    const newContent = contentText.substr(0, maxChars1) + '...';
-		                    tourContent.textContent = newContent;
-		                }
-		            });
-	        
+	            window.onload = function() {
+	                // 제목 글자수 제한
+	                const maxChars = 13;
+
+	                // 본문 글자수 제한
+	                const maxChars1 = 43;
+
+	                // Iterate over each .frameDiv element
+	                const frameDivs = document.querySelectorAll('.frameDiv');
+	                frameDivs.forEach(frameDiv => {
+	                    const tourTitle = frameDiv.querySelector('.tourTitle');
+	                    const tourContent = frameDiv.querySelector('.tourContent');
+
+	                    // 글자 수 확인
+	                    const titleText = tourTitle.textContent;
+	                    const titleChars = titleText.length;
+
+	                    const contentText = tourContent.innerHTML; // 수정
+	                    const contentChars = contentText.length;
+
+	                    // 글자 수가 최대 글자 수보다 큰 경우, 생략 부호로 대체
+	                    if (titleChars > maxChars) {
+	                        const newTitle = titleText.substr(0, maxChars) + '...';
+	                        tourTitle.textContent = newTitle;
+	                    }
+
+	                    if (contentChars > maxChars1) {
+	                        const newContent = contentText.substr(0, maxChars1) + '...';
+	                        tourContent.innerHTML = newContent; // 수정
+	                    }
+	                });
+	            }
             
-		            
-		            //더보기 클릭하면 다음 12개 div 보여주기
-		            document.addEventListener("DOMContentLoaded", function() {
-				    var loadMoreBtn = document.getElementById("loadMore");
-				    var currentPage = parseInt(document.getElementById("currentPage").value); // 현재 페이지 번호
-				    var postingLimit = parseInt(document.getElementById("postingLimit").value); // 한 페이지당 보여줄 게시물의 수
-				    var lastPage = parseInt(document.getElementById("lastPage").value); // 마지막 페이지 번호
-				    
-				    loadMoreBtn.addEventListener("click", function() {
-				        if (currentPage >= lastPage) {
-				            return; // 모든 데이터를 가져왔으면 함수 종료
-				        }
-				        
-				        var xhr = new XMLHttpRequest();
-				        xhr.onreadystatechange = function() {
-				            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-				                var response = xhr.responseText;
-				                // 가져온 데이터를 페이지에 추가
-				                var div = document.createElement("div");
-				                div.innerHTML = response.trim();
-				                var tList = div.querySelectorAll(".frameDiv");
-				                var len = tList.length;
-				                for (var i = 0; i < len; i++) {
-				                    document.getElementById("tList").appendChild(tList[i]);
-				                }
-				                // 페이지 번호, loadMore 버튼의 상태 갱신
-				                currentPage += 1;
-				                document.getElementById("currentPage").value = currentPage;
-				                if (currentPage >= lastPage) {
-				                    loadMoreBtn.style.display = "none";
-				                }
-				            }
-				        };
-				        xhr.open("GET", "/tour/tourBoardList?page=" + (currentPage + 1));
-				        xhr.send();
-				    });
-				});
-		            
+	            //날짜 지난거 투명도 처리
+
+	            
+	            
+</script>
+		              
 		            
             	</script>
 	            

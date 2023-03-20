@@ -98,6 +98,12 @@ public class TourServiceImpl implements TourService {
 		return result;
 	}
 
+	@Override
+	public int selectCurrCount(int tourNo) {
+		
+		return tStore.selectCurrCount(session, tourNo);
+	}
+
 	
 
 	

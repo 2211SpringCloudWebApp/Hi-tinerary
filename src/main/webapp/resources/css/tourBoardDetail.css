@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+     position: relative;
 }
 
 #boardTitle{
@@ -35,7 +36,9 @@
      border-bottom: 1px dashed #0F8D80;
      display: flex;
      justify-content: space-evenly;
+    z-index: 0;    
 }
+
 #thumbnail{
     width: 520px;
     height: 520px;
@@ -133,8 +136,24 @@
   	width: 1100px;
   }
   
-  
-  
+/*상세내용*/  
+#partition {
+  position: absolute;
+  top: 650px;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}  
+#partition p{
+	background-color: white;
+	z-index: 1;	
+	font-size: 10px;
+}  
+#tourContent{
+	padding-top: 30px;
+} 
   
 /*  <!--여기서부터 댓글영역-->  */
   
@@ -145,7 +164,6 @@
 
 .printReply{
     width: 100%;
-    --height: 80px;
     display: flex;
     float: left;
     padding: 5px;
@@ -153,10 +171,11 @@
     align-items: center;
     border-radius: 10px 10px;
     margin-top: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
   }
-  .printReReply{
-    width: 100%;
-    --height: 80px;
+.printReReply{
+   width: 100%;
     display: flex;
     float: left;
     padding: 5px;
@@ -164,51 +183,76 @@
     align-items: center;
     border-radius: 10px 10px;
     margin-top: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     margin-left: 40px;
   }
+  /* 대댓글 오른쪽 끝 정렬용 */
+.printReReplyRight {
+	width: 100%;
+	display: flex;
+	float: left;
+	border:none;
+	align-items: center;
+	justify-content: flex-end; 
+}
 
 .commentedDiv{
-    width: 750px;
-    background-color: antiquewhite;
+    width: 760px;
     flex-wrap: wrap;
 	word-wrap: break-word;
 }
 
 
+
+.writeReply{
+    width: 100%;
+    display: flex;
+    float: left;
+    padding: 5px;
+    border:1px solid #0F8D80;
+    align-items: center;
+    --justify-content: space-evenly;
+    border-radius: 10px 10px;
+    margin-top: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
 .writerRe {
     width: 150px;
     font-size: 20px;
     padding-left: 20px;
 }
-
-  .writeReply{
-    width: 100%;
-    height: 80px;
-    display: flex;
-    float: left;
-    padding: 5px;
-    border:1px solid #c9c9c9;
-    align-items: center;
-    border-radius: 10px 10px;
-    margin-top: 20px;
-  }
   .commentDiv{
       width: 900px;
-      background-color: antiquewhite;
-
+     
   }
 .commentDiv input{
-    border-left: 1px solid #0F8D80;
-    border-top: none;
-    border-right: none;
-    border-bottom: none;
+    border: none;
+    
     padding-left: 10px;
-    width: 900px;
+    width: 100%;
     font-size: 20px;
 }
 
 input:focus, #textarea:focus {outline:none;}
 
+.replyBtn, .reReplyBtn{   
+    margin-left: 15px;
+    border: 0;
+    border-radius: 5px;
+    padding: 12px 0;
+    text-align: center;
+    color: white;
+    background-color: #FBD188 ;
+    width: 85px;
+    font-size: 12px;
+}
+
+.modifyDeleteDiv{
+	--margin-left: 10px;
+	
+}
 
 /* <!--대댓글쓰기--> */
 
@@ -218,7 +262,7 @@ input:focus, #textarea:focus {outline:none;}
     display: none;
     float: left;
     padding: 5px;
-    border:1px solid #c9c9c9;
+    border:1px solid #0F8D80;
     align-items: center;
     border-radius: 10px 10px;
     margin-top: 20px;

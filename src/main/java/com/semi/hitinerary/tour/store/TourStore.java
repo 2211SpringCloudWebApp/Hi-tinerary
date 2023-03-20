@@ -114,4 +114,12 @@ public interface TourStore {
 	 */
 	public int insertRereply(SqlSession session, Comment reReply);
 
+	/**
+	 * currentPeople 수 가져오기 Store
+	 * @param session
+	 * @param tourNo
+	 * @return int 
+	 */
+	public int selectCurrCount(SqlSession session, int tourNo);
+
 }

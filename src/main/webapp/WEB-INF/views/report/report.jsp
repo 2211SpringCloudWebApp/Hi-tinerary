@@ -77,12 +77,20 @@
                 <table id="reportButtonTable">
                     <tr>
                         <td>
-                            <button id="reportButton">
-                                신고하기
-                            </button>
-                            <button id="gobackButton">
-                                뒤로가기
-                            </button>
+                        	<form id="reportForm" action="/clickReport" method="GET">
+                        		<input type="hidden" name="boardType" value="free">
+								<input type="hidden" name="boardNo" value="${boardNo}">
+                            	<button type="submit" id="reportButton">
+                                	신고하기
+                            	</button>
+                            </form>
+                            <form action="/rollbackView" method="GET">
+                            	<input type="hidden" name="boardType" value="free">
+								<input type="hidden" name="boardNo" value="${boardNo}">
+                            	<button type="submit" id="gobackButton">
+                                	뒤로가기
+                            	</button>
+                            </form>
                         </td>
                     </tr>
                 </table>
@@ -136,6 +144,29 @@
                             }
                         });
                     });
+                    
+					// form 데이터에 선택된 옵션의 값을 추가하여 전송하는 함수
+	                function submitForm() {
+	                	var form = document.getElementById("reportForm");
+	                	var selectBox = document.getElementById("reportSelect");
+	                	var selectedOption = selectBox.options[selectBox.selectedIndex];
+	                	var reportReason = selectedOption.value;
+
+	
+	                	// form 데이터에 reportReason 추가
+	                	var reportReasonInput = document.createElement("input");
+	                	reportReasonInput.setAttribute("type", "hidden");
+	                	reportReasonInput.setAttribute("name", "reportReason");
+	                	reportReasonInput.setAttribute("value", reportReason);
+	                	form.appendChild(reportReasonInput);
+	
+	                    // form 전송
+	                	form.submit();
+	                }
+	
+	                // 버튼 클릭 시 submitForm 함수 호출
+	                var reportButton = document.getElementById("reportButton");
+					reportButton.addEventListener("click", submitForm);	
                 </script>
             </main>
             <footer>

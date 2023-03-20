@@ -53,28 +53,37 @@
     <li class="${withBoard.endDate.getTime() < now.getTime() ? 'expired' : ''}">
         <div class="img">
             <a href="/withboard/withBoardDetail?boardNo=${withBoard.boardNo }">
-                <img src="${withBoard.boardImage != null ? withBoard.boardImage.replace('C:\\Users\\samsung\\eclipse-workspace\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : '/resources/images/noboardImage.png'}">
+                <img src="../../../${withBoard.boardImage }">
             </a>
-        </div> 
-        <strong class="tit">${withBoard.boardTitle }</strong> 
+        </div>
+        <strong class="tit">${withBoard.boardTitle }</strong>
+        <div class="withDate"> 
         <span class="date"> 
             <fmt:formatDate value="${withBoard.startDate }" pattern="yyyy-MM-dd" /> ~ 
             <fmt:formatDate value="${withBoard.endDate }" pattern="yyyy-MM-dd" />
-        </span> 
+        </span>
+        </div>
+        
+        <div class="withWrite">
         <span class="writer">${withBoard.userNickname}</span> 
+        </div>
+        <div class="withPeople">
         <span class="people">${withBoard.currentPeople } / ${withBoard.maxPeople }</span>
+        </div>
     </li>
 </c:forEach>
 </ul>
 </div>
+
 	<table id="pagefooter">
 		<tr>
 			<td colspan="5" id="board-navi">
+			<input id="page" type="hidden" value="${pi.currentPage }">
 				<c:if test="${pi.currentPage ne '1' }">
 					<a href="/withboard/withBoardList?page=${pi.currentPage - 1}">&lt;</a>&nbsp;
 				</c:if> 
 				<c:forEach begin="${pi.startNavi }" end="${pi.endNavi }" var="p">
-					<a href="/withboard/withBoardList?page=${p}">${p}</a>&nbsp;
+					<a href="/withboard/withBoardList?page=${p}" class="pageNavi">${p}</a>&nbsp;
 				</c:forEach> 
 				<c:if test="${pi.currentPage ne pi.maxNavi }">
 					<a href="/withboard/withBoardList?page=${pi.currentPage + 1}">&gt;</a>&nbsp;
@@ -91,6 +100,17 @@
 				location.href = "/user/login";
 			}
 		}
+		
+		// 페이징 디자인
+		var page = document.querySelector("#page").value
+            var pageNavi = document.querySelectorAll(".pageNavi")
+            
+            for(let i = 0; i < pageNavi.length; i++) {
+                if (pageNavi[i].innerHTML == page) {
+                	pageNavi[i].style.fontSize = '40px';
+                	pageNavi[i].style.color = '#0F8D80';
+                }
+            }
 	</script>
-</body>
-</html>
+	</body>
+	</html>

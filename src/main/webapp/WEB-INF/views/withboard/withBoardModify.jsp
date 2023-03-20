@@ -11,40 +11,68 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
-	<h1>커뮤니티/동행찾기 수정하기</h1>
+	 <main id="withBoardModify">
+        <div id="withTitle">
+            <div id="bar_title"></div>
+            <p>커뮤니티</p>
+        </div>
+		<div id="withSubTitle">
+			<div id="bar_subtitle"></div>
+			<p>동행찾기 수정하기</p>
+			<c:if test="${loginUser eq null }">
+				<button onclick="noWrite()">글쓰기</button>
+			</c:if>
+			<c:if test="${loginUser ne null }">
+				<button onclick="location.href='/withboard/withWriteView'">글쓰기</button>
+			</c:if>
+		</div>
+		<div class="modifyFrame">
 	<form action="/withboard/withBoardModify" method="post" enctype="multipart/form-data">
 		<input type="hidden" value="${withBoard.boardNo }" name="boardNo">
 		<input type="hidden" value="${withBoard.boardImage }" name="boardImage">
+		
+		<div class="withTitle">
+			<input type="text" name="boardTitle" value="${withBoard.boardTitle }">
+		</div>
+		
+		<div class="mainImage">
 		<div id="Container" contentEditable="true">
 			<img src="${withBoard.boardImage != null ? withBoard.boardImage.replace('C:\\Users\\samsung\\eclipse-workspace\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : '/resources/images/noboardImage.png'}">
 		</div>
 		<div class="oneHundred">
-			<div class="infos">본문이미지첨부</div>
 			<div class="filebox">
-				<label for="withImage">파일찾기</label> 
-				<input class="upload-name" id="upload-img" placeholder="jpg, png 파일만 선택해 주세요"> 
+				<!-- <input class="upload-name" id="upload-img" placeholder="jpg, png 파일만 선택해 주세요">  -->
 				<input type="file" name ="reloadFile" id="withImage">
 			</div>
 		</div>
-		<br> 
-	<input type="text" name="boardTitle" value="${withBoard.boardTitle }">
-	<br>
+		</div>
     
-	<input type="date" name="start-Date" value="<fmt:formatDate value="${withBoard.startDate }" pattern="yyyy-MM-dd" />"> - 
-	<input type="date" name="end-Date" value="<fmt:formatDate value="${withBoard.endDate }" pattern="yyyy-MM-dd" />"><br>
+    <div class="date">
+    <p>날짜 선택</p>
+    <div>
+	<input type="date" name="start-Date" value="<fmt:formatDate value="${withBoard.startDate }" pattern="yyyy-MM-dd" />" onchange="startDecide()" min="${now }" required>
+	<span class="divider"> ~ &nbsp;</span>
+	<input type="date" name="end-Date" value="<fmt:formatDate value="${withBoard.endDate }" pattern="yyyy-MM-dd" />" onchange="endDecide()" min="${now }" required><br>
+	</div>
+	</div>
 	
-	<br>
-	<input type="range" min="1" max="10" value="${withBoard.maxPeople}" class="slider" id="myRange" name="maxPeople"> <br>
-	현재인원수 / 최대 인원수: ${withBoard.currentPeople } / <span id="value">value="${withBoard.maxPeople}"</span><br>
-	작성자 : ${withBoard.userNo } <br>
-	<%-- 작성날짜 : ${withBoard.writeDate } <br> --%>
-	<textarea rows="10" cols="30" name="boardContent">${withBoard.boardContent }</textarea>
-	<br>
-	<input type="submit" value="수정하기">
+	<div class="maxPeople">
+	<label>모집인원</label>
+	<input type="range" min="1" max="100" value="${withBoard.maxPeople}" class="slider" id="myRange" name="maxPeople">
+	<strong>${withBoard.currentPeople}</strong> / <span id="value">value="${withBoard.maxPeople}"</span>
+	</div>
+	
+	<div class="withContent">
+	<textarea rows="25" cols="136" name="boardContent" id="withContent" required>${withBoard.boardContent }</textarea>
+	</div>
+	<div class="modifyButton">
+	<button type="submit" id="submit">수정하기</button>
+	<button onclick="location.href='/withboard/withBoardList';">목록으로</button>
+	</div>
 	</form>
-	<a href="">삭제하기</a>
-	<a href="/withboard/withBoardList">목록으로</a>
-	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+	</div>
+	</main>
+	
 	
 	<script>
 		/* range bar */
@@ -86,6 +114,24 @@
 			}
 		});
 
+		//유효성 체크 부분
+        function startDecide(){
+        	var startDate = document.querySelector("[name=start-Date]");
+        	var endDate = document.querySelector("[name=end-Date]");
+        	if(startDate.value > endDate.value){
+        		endDate.value = startDate.value;
+        	}
+        }
+        
+        function endDecide(){
+			var startDate = document.querySelector("[name=start-Date]")
+			var endDate = document.querySelector("[name=end-Date]")
+			if(startDate.value > endDate.value){
+				alert("종료날짜가 시작날짜보다 이릅니다.")
+				endDate.value = startDate.value;
+			}
+		}
 	</script>
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -56,7 +56,13 @@
 	    	                    	<a href="/freeboard/remove?boardNo=${freeboard.boardNo }" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
 	                        	</c:if>
 	                        	<c:if test="${freeboard.userNo != loginUser.userNo && loginUser.userGrade != 4}">
-		                        	 | <a id="accusation" href="/report">신고</a>
+		                        	<form action="/report" method="POST">
+									    <input type="hidden" name="userNo" value="${loginUser.userNo}">
+									    <input type="hidden" name="boardNo" value="${freeboard.boardNo}">
+									    <input type="hidden" name="commentNo" value="null">
+									    <input type="hidden" name="boardType" value="free">
+									    <a href="#" onclick="event.preventDefault(); document.querySelector('form').submit();">신고</a>
+									</form>
 	                        	</c:if>
                         	</c:if>
                         </td>
@@ -67,7 +73,7 @@
                     <tr>
                     	<td>
                     		<c:if test="${freeboard.boardImage != null}">
-                    			<img src="${freeboard.boardImage != null ? freeboard.boardImage.replace('C:\\Users\\user1\\git\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : '/resources/images/noboardImage.png'}">
+                    			<img src="../../../../${freeboard.boardImage }">
                     		</c:if>
                     	</td>
                     </tr>
@@ -116,7 +122,13 @@
 				                    		</c:if>
 			                    		</c:if>
 			                    		<c:if test="${loginUser.userNo != null && comment.userNo != loginUser.userNo && loginUser.userGrade != 4}">
-			                    			 | <a href="#">신고</a>
+			                    			 <form action="/report" method="POST">
+											    <input type="hidden" name="userNo" value="${loginUser.userNo}">
+											    <input type="hidden" name="boardNo" value="${freeboard.boardNo}">
+											    <input type="hidden" name="commentNo" value="null">
+											    <input type="hidden" name="boardType" value="free">
+											    <a href="#" onclick="event.preventDefault(); document.querySelector('form').submit();">신고</a>
+											</form>
 			                    		</c:if>
 			                    	</c:if>
 			                    </td>

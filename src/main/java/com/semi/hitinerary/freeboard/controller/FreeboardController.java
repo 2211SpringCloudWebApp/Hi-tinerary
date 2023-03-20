@@ -223,7 +223,7 @@ public class FreeboardController {
 		try {
 			//내가 원하는 경로 : 프로젝트 경로
 			String root = request.getSession().getServletContext().getRealPath("resources");
-			String savePath = root + "\\wuploadFiles\\" + userNo + "freeBoard";
+			String savePath = root + "\\fuploadFiles\\" + userNo + "freeBoard";
 			//폴더가 없을 경우 자동으로 만들어주기 위한 코드(폴더가 있는 경우 동작 안함)
 			File folder = new File(savePath);
 			
@@ -235,6 +235,7 @@ public class FreeboardController {
 			String filePath = savePath + "\\" + boardNo + uploadFile.getOriginalFilename();
 			File file = new File(filePath);
 			uploadFile.transferTo(file);
+			filePath = "resources\\fuploadFiles\\" + userNo + "freeBoard\\" + boardNo + uploadFile.getOriginalFilename();
 			return filePath;
 		} catch (Exception e) {
 			e.printStackTrace();

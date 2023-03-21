@@ -20,6 +20,22 @@
 		</repository>
 	</repositories>
 	<dependencies>
+		<dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+            <version>1.5.5</version>
+        </dependency>
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.7</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
 	<!-- 마이바티스 라이브러리 -->
 	<!-- ojbc6.jar, mybatis, spring-mybatis, spring-jdbc, common-dbcp -->
 		<!-- ojbc6.jar -->

@@ -75,4 +75,13 @@ public class WithServiceImpl implements WithService{
 		int totalCount = wStore.selectWithBoardCount(session);
 		return totalCount;
 	}
+
+	/**
+	 * 동행찾기 게시판 현재 인원수 플러스
+	 */
+	@Override
+	public int plusCommentPeople(int userNo) {
+		int result = wStore.plusCommentPeople(session, userNo);
+		return result;
+	}
 }

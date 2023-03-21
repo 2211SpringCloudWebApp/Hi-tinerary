@@ -50,4 +50,8 @@ DELETE FROM WITH_BOARD_TBL WHERE BOARD_NO = #{boardNo}
 <select id="getSequence" resultType="_int">
 SELECT SEQ_WITH_BOARD.NEXTVAL FROM DUAL
 </select>
+
+<update id="plusCommentPeople">
+UPDATE WITH_BOARD_TBL SET CURRENT_PEOPLE = CURRENT_PEOPLE + 1 WHERE BOARD_NO = #{boardNo}
+</update>
 </mapper>

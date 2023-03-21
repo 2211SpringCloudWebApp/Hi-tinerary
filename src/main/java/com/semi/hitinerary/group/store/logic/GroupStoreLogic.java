@@ -40,5 +40,23 @@ public class GroupStoreLogic implements GroupStore {
 		return result;
 	}
 
+	/**
+	 * 동행게시판 초대 버튼 눌렀을 때 그룹 리스트 GroupStoreLogic
+	 */
+	@Override
+	public List<Group> selectlistGroup(SqlSession session, int userNo) {
+		List<Group> gList = session.selectList("groupMapper.selectlistGroup",userNo);
+		return gList;
+	}
+
+	/**
+	 * 동행게시판 그룹 인원 추가 GroupStoreLogic
+	 */
+	@Override
+	public int plusCommentPeople(SqlSession session, int groupNo) {
+		int result = session.update("groupMapper.plusCommentPeople", groupNo);
+		return result;
+	}
+
 
 }

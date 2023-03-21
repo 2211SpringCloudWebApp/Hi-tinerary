@@ -37,7 +37,7 @@
 		
 		<div class="mainImage">
 		<div id="Container" contentEditable="true">
-			<img src="${withBoard.boardImage != null ? withBoard.boardImage.replace('C:\\Users\\samsung\\eclipse-workspace\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : '/resources/images/noboardImage.png'}">
+			<img src="../../../${withBoard.boardImage }">
 		</div>
 		<div class="oneHundred">
 			<div class="filebox">
@@ -58,7 +58,7 @@
 	
 	<div class="maxPeople">
 	<label>모집인원</label>
-	<input type="range" min="1" max="100" value="${withBoard.maxPeople}" class="slider" id="myRange" name="maxPeople">
+	<input type="range" min="1" max="15" value="${withBoard.maxPeople}" class="slider" id="myRange" name="maxPeople">
 	<strong>${withBoard.currentPeople}</strong> / <span id="value">value="${withBoard.maxPeople}"</span>
 	</div>
 	
@@ -101,6 +101,9 @@
 					// 이미지 파일을 삽입
 					const img = document.createElement("img");
 					img.src = reader.result;
+					// 이미지 요소에 스타일을 적용하여 크기 조절
+	                img.style.width = "950px";
+	                img.style.height = "492px";
 					if (imgElement) {
 						// 기존에 삽입된 이미지가 있다면 삭제
 						container.removeChild(imgElement);

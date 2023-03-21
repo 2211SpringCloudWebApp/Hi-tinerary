@@ -53,4 +53,11 @@ public interface WithService {
 	 * @return
 	 */
 	public int selectWithBoardCount();
+
+	/**
+	 * 동행찾기 현재 인원수 플러스 
+	 * @param userNo
+	 * @return int
+	 */
+	public int plusCommentPeople(int userNo);
 }

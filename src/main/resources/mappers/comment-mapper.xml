@@ -69,7 +69,7 @@
 	</insert>
 	
 	<select id="selectListWithComment" resultMap="commentResultMapper">
-	SELECT * FROM COMMENT_TBL WHERE WITH_BOARD_NO = #{boardNo} START WITH DEPTH = 0 CONNECT BY REF_COMMENT_NO = PRIOR COMMENT_NO
+	SELECT A.*, B.USER_NICKNAME FROM COMMENT_TBL A JOIN USER_TBL B ON A.USER_NO = B.USER_NO WHERE WITH_BOARD_NO = #{boardNo} START WITH DEPTH = 0 CONNECT BY REF_COMMENT_NO = PRIOR COMMENT_NO
 	</select>
 	<!-- 자유게시판 댓글 삭제 -->
 	<delete id="deleteFreeBoardComment">

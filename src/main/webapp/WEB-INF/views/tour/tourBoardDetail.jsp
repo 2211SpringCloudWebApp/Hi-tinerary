@@ -23,7 +23,14 @@
             <div id="thumbnailAndInfos">
                 <div id="thumbnail">
 <!--                     520px x 520px <br> thumbnail -->
-					<img src="../../../../${tour.thumbnail}">
+					<c:choose>
+					  <c:when test="${empty tour.thumbnail}">
+					    <img src="/resources/images/noThumbnail.png" alt="No Thumbnail">
+					  </c:when>
+					  <c:otherwise>
+					    <img src="../../../../${tour.thumbnail}" alt="Tour Thumbnail">
+					  </c:otherwise>
+					</c:choose>
                 </div>
                 <div id="tourInfos">
                     <div id="writerDiv">
@@ -53,9 +60,9 @@
                     <div id="buyDiv">
                         <div>
 	                        <c:if test= "${sessionScope.loginUser.userNickname ne null}"> 
+	                        	<form action="/tour/tourBoardPayView" method="GET">
 							    <input type="hidden" name="payUserNo" value="${sessionScope.loginUser.userNo}">
 							    <input type="hidden" name="tourNo" value="${tour.tourNo}">
-	                        	<form action="/tour/tourBoardPayView" method="GET">
 		                        	<c:choose>
 									  <c:when test="${tour.currentPeople ne tour.maxPeople}">
 									    <button id="pay">결제하기</button>
@@ -70,7 +77,7 @@
 	                        	<button id="pay" onclick="payButtonClicked()">결제하기</button>                       
 	                        </c:if>
                         </div>
-                        <div>신고하기</div>
+                        <div><a href="/report/report?tourNo=${tour.tourNo }">신고하기</div>
                     </div>
                     <div id="currentDiv">
                         <p>
@@ -87,76 +94,83 @@
             </div>
             <div id="tourContent">
                  ${tour.tourContent } <br>
-                  <img src="../../../../${tour.tourImage }">
+				    <c:if test="${tour.tourImage ne null }">
+				        <img src="../../../../${tour.tourImage}" alt="TourImage">
+				    </c:if>
+					
             </div>
             
             <!-- 댓글영역 -->
             <div id="replyDiv">
                 <!-- 올라온댓글보기영역 -->
                  <c:forEach items="${comments}" var="comment" >
-                 	
                  	<c:if test="${comment.depth==0 }">
-		                <div class="printReply"> 	
-		                	
-<!-- 		                	${comment.commentNo }                 -->
+		                <div class="printReply"> 	                
+							<div style="display:none;">${comment.commentNo }</div>
 		                    <div class="writerRe">${comment.userNickname }</div>
 		                    <div class="commentedDiv">${comment.content }</div>
 		                    <div class="commentedTimeDiv"><fmt:formatDate pattern="yy.MM.dd hh:MM" value="${comment.writeDate }"/></div>
 		                    <c:if test="${loginUser.userNo == comment.userNo}"> 
-		                    	<div class="modifyDeleteDiv">수정 삭제</div>   
-		                    </c:if>	
-		                    <c:if test="${loginUser.userNo != comment.userNo}"> 
 		                    	<div class="modifyDeleteDiv">
-			                    	<c:if test="${loginUser ne null }">
-			                    		<button class="reReplyBtn" onclick="writeReply(this)">대댓글쓰기</button> 
-			                    		&nbsp;신고
-			                    	</c:if>	
-		                    	</div>  
-		                    	<!-- 대댓글쓰기영역 -->
-				               		<form action="/tour/reReplyUp" method="post" class="reReplyForm">
-				                <div class="writeReReply"> 
-				               			<input type="hidden" name="userNo" value="${loginUser.userNo }">
-				                    	<input type="hidden" name="tourNo" value="${tour.tourNo }">
-				                    	<input type="hidden" name="userNickname" value="${loginUser.userNickname }">
-				                    	<input type="hidden" name="refCommentNo" value="${comment.commentNo }">
-				                        <div class="writerRe">${loginUser.userNickname}</div>
-				                        <div class="commentDiv"><input type="text"  name="content"></div>
-				                        <div class="writeButton">
-				                            <button class="replyBtn" onclick="uploadReReply(this)">대댓글올리기</button>
-				                	</form>
-				                        </div>
-				               </div> 
+		                    		<a href="javascript:void(0);" onclick="removeCheck(${comment.commentNo });">
+		                    		&nbsp;&nbsp;&nbsp;&nbsp; 삭제
+		                    		</a>
+		                    	</div>   
+		                    </c:if>	
+		                    <c:if test="${loginUser.userNo != comment.userNo && loginUser ne null}"> 
+		                    	<div class="modifyDeleteDiv">
+		                    		<button class="reReplyBtn" onclick="writeReply(this)">대댓글쓰기</button> 
+		                    		&nbsp;&nbsp;&nbsp;신고
+		                    	</div>   
 		                    </c:if>	  
 		                </div>              
+              	</c:if>
+              	<c:if test="${comment.depth==1 }">
               	<!-- 대댓글보기 -->
-	            		<c:forEach items="${comments }" var="reReply">	
-		              		<c:if test="${reReply.depth==1 && reReply.refCommentNo == comment.commentNo}">
-			            		<div class="printReReplyRight">	
-			            			<div class="printReReply"> 	                
-					                    <div class="writerRe">${reReply.userNickname }</div>
-					                    <div class="commentedDiv">${reReply.content }</div>
-					                    <div class="commentedTimeDiv"><fmt:formatDate pattern="yy.MM.dd hh:MM" value="${reReply.writeDate }"/></div>
-					                    <c:if test="${loginUser.userNo == reReply.userNo}"> 
-					                    	<div class="modifyDeleteDiv">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;수정 삭제</div>   
-					                    </c:if>	
-					                    <c:if test="${loginUser.userNo != reReply.userNo}"> 
-					                    	<div class="modifyDeleteDiv">
-					                    		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;신고
-					                    	</div>   
-					                    </c:if>	  
-					                </div>   
-					            </div>     
-		              		</c:if>
-             		 	</c:forEach>
+              		<div class="printReReplyRight"><!-- 오른쪽 끝정렬용 -->
+            			<div class="printReReply"> 	                
+		                    <div class="writerRe">${comment.userNickname }</div>
+			                    <div class="commentedDiv">${comment.content }</div>
+			                    <div class="commentedTimeDiv"><fmt:formatDate pattern="yy.MM.dd hh:MM" value="${comment.writeDate }"/></div>
+			                    <c:if test="${loginUser.userNo == comment.userNo}"> 
+			                    	<div class="modifyDeleteDiv">
+			                    		<a href="javascript:void(0);" onclick="removeCheck(${comment.commentNo });">
+			                    			&nbsp;&nbsp;&nbsp;&nbsp; 삭제
+			                    		</a>
+			                    	</div>	 
+			                    </c:if>	
+			                    <c:if test="${loginUser.userNo != comment.userNo}"> 
+			                    	<div class="modifyDeleteDiv">
+			                    		&nbsp;&nbsp;&nbsp;&nbsp;신고
+			                    	</div>   
+			                    </c:if>	  
+			                </div>   
+		                </div> 
               		</c:if>
+             		 
                 </c:forEach>
-              	
+              <!-- 대댓글쓰기영역 -->
+                 
+                <div class="writeReReply">
+                	
+               		<form action="/tour/reReplyUp" method="post" class="reReplyForm">
+               			<input type="hidden" name="userNo" value="${loginUser.userNo }">
+                    	<input type="hidden" name="tourNo" value="${tour.tourNo }">
+                    	<input type="hidden" name="userNickname" value="${loginUser.userNickname }">
+                    	<input type="hidden" name="refCommentNo" value="${comment.commentNo }">
+                        <div class="writerRe">${loginUser.userNickname}</div>
+                        <div class="commentDiv"><input type="text" name="content"></div>
+                        <div class="writeButton">
+                            <button class="reReplyBtn">댓글쓰기</button>
+                        </div>
+                	</form>
+               </div>	
                 
                 
-          <!--로그인유저의 최초 댓글달 영역-->
+          <!--로그인유저의 최초 댓글영역-->
 	            <c:if test="${loginUser ne null }">
-	          		<form action="/tour/replyUp" method="post" id="replyUp">
-	                	<div class="writeReply"> 
+                	<div class="writeReply"> 
+	                	<form action="/tour/replyUp" method="post">
 	                    	<input type="hidden" name="userNo" value="${loginUser.userNo }">
 	                    	<input type="hidden" name="tourNo" value="${tour.tourNo }">
 	                    	<input type="hidden" name="userNickname" value="${loginUser.userNickname }">
@@ -164,11 +178,11 @@
 	                        <div class="writerRe">${loginUser.userNickname}</div>
 	                        <div class="commentDiv"><input type="text" name="content"></div>
 	                        <div class="writeButton">
-	                            <button class="replyBtn">댓글쓰기</button>
+	                            <button class="reReplyBtn">댓글쓰기</button>
 	                        </div>
-	                	</div>
-	            	</form>
-	            </c:if>	
+	                    </form>
+                    </div>	
+                </c:if>
             </div>	
         </main>    
                 
@@ -196,20 +210,28 @@
         	//대댓글 온클릭!
 			function writeReply(writeArea){
 				var replyDiv = writeArea.parentNode.parentNode;
+				
 				var reReplyDiv = document.querySelector(".writeReReply");
 				var reReplyDivSibling = replyDiv.nextSibling;
-	
+
 				if(reReplyDivSibling == reReplyDiv){
 					reReplyDiv.style.display="none";
 					replyDiv.before(reReplyDiv);
 				}else{
 					replyDiv.after(reReplyDiv);
 					reReplyDiv.style.display="flex";
+					document.querySelector("[name=refCommentNo]").value = replyDiv.firstElementChild.innerHTML;
+					
 				}
 				
 			}
         	
-        	//대댓글 보이기
+        	//댓글 삭제 확인
+        	function removeCheck(commentNo){
+				if(confirm("정말 삭제 하시겠어요?")){
+				location.href="/tour/commentRemove?commentNo="+commentNo;
+				}
+			}
         	
 	        
         </script>

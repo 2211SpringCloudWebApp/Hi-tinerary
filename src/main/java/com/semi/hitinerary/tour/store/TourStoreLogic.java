@@ -17,9 +17,9 @@ import com.semi.hitinerary.user.domain.User;
 public class TourStoreLogic implements TourStore {
 
 	@Override
-	public List<Tour> selectTourList(SqlSession session, PageInfo pi) {
+	public List<Tour> selectTourList(SqlSession session, Pagination pi) {
 		
-		int limit = pi.getPostingLimit();
+		int limit = pi.getBoardLimit();
 		int currentPage = pi.getCurrentPage();
 		int offset = (currentPage -1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
@@ -110,6 +110,12 @@ public class TourStoreLogic implements TourStore {
 	
 	public int selectCurrCount(SqlSession session, int tourNo) {
 		return session.selectOne("TourMapper.selectCurrentCount", tourNo);
+	}
+
+	@Override
+	public int deleteComment(SqlSession session, int commentNo) {
+		int result = session.delete("commentMapper.deleteTourComment", commentNo);
+		return result;
 	}
 
 }

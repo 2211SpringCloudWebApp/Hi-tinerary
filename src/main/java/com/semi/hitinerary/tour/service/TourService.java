@@ -23,7 +23,7 @@ public interface TourService {
 	 * @param pi 
 	 * @return List<Tour>
 	 */
-	public List<Tour> selectTourList(PageInfo pi);
+	public List<Tour> selectTourList(Pagination pi);
 
 	/**
 	 * 투어게시판 게시물 상세 조회 Service
@@ -105,7 +105,7 @@ public interface TourService {
 	/**
 	 * 구매한 패키지 개수 불러오기
 	 * @param userNo
-	 * @return
+	 * @return int
 	 */
 	public int selectGetTotalCountByUserNo(int userNo);
 
@@ -115,5 +115,12 @@ public interface TourService {
 	 * @return int
 	 */
 	public int selectCurrCount(int tourNo);
+
+	/**
+	 * 코멘트 삭제
+	 * @param commentNo
+	 * @return int
+	 */
+	public int deleteComment(int commentNo);
 
 }

@@ -23,38 +23,55 @@
 	                
 	                <div id="tourList">
  		                <c:forEach items="${tList}" var="tour">
-		                    <a href="/tour/tourBoardDetail?tourNo=${tour.tourNo }">
-			                	<div class="frameDiv">
+ 		                <c:set var="now" value="<%= new java.util.Date() %>" />
+		                	<div class="frameDiv" data-deadline="${tour.deadline}">
+			                	<div class="${tour.deadline.getTime() < now.getTime() ? 'expired' : ''}">
 			                        <img class="frame" src="../../../resources/images/ticketframe1.png">
+<!-- 			                        <img class="framePassedAway" src="/resources/images/passedAwayFrame.png"> -->
 			                        <div class="thumbnailDiv">
-		                            	<img class="inframe" src="../../../../${tour.thumbnail}">
-			                        </div>
+	
+			                    		<a href="/tour/tourBoardDetail?tourNo=${tour.tourNo }">
+			                    		
+			                            	<c:choose>
+											    <c:when test="${empty tour.thumbnail}">
+											        <img class="inframe" src="/resources/images/noThumbnail.png" alt="No Thumbnail">
+											    </c:when>
+											    <c:otherwise>
+											        <img class="inframe" src="../../../../${tour.thumbnail}" alt="Tour Thumbnail">
+											    </c:otherwise>
+											</c:choose>
+				                    </div>
 			                        <div class="startDateDiv">
 			                        	<p class="startDate"><fmt:formatDate pattern="MM월dd일 출발" value="${tour.startDate }"/></p>
 			                        </div>
 			                        <div class="tourTitle">${tour.tourTitle }</div>
 			                        <div class="tourContent">${tour.tourContent}</div>
-			                    </div>
-		                    </a>
+			                    		</a>
+				            	</div>            
+			                </div>
 		                </c:forEach> 		                
 	                </div>
 						
 						
-						<input type="hidden" id="page" value="${pi.currentPage }">
-						<input type="hidden" id="perPage" value="${pi.postingLimit }">
-						<input type="hidden" id="totalPage" value="${pi.lastPage }">
-					
- 						<c:forEach begin="${pi.startNavi }" end="${pi.endNavi }" var="p">
-							
-							<c:url var="pageUrl" value="/tour/tourBoardList">
-								<c:param name="page" value="${p}"></c:param>
-							</c:url>
-							<a href="${pageUrl }">${p }</a> 
-							
-						</c:forEach> 
-	                
-	                
-	                
+
+ 					
+	                <!-- 페이징 -->
+	               <table id="pagefooter">
+						<tr>
+							<td colspan="5" id="board-navi">
+							<input id="page" type="hidden" value="${pi.currentPage }">
+								<c:if test="${pi.currentPage ne '1' }">
+									<a href="/tour/tourBoardList?page=${pi.currentPage - 1}">&lt;</a>&nbsp;
+								</c:if> 
+								<c:forEach begin="${pi.startNavi }" end="${pi.endNavi }" var="p">
+									<a href="/tour/tourBoardList?page=${p}" class="pageNavi">${p}</a>&nbsp;
+								</c:forEach> 
+								<c:if test="${pi.currentPage ne pi.maxNavi }">
+									<a href="/tour/tourBoardList?page=${pi.currentPage + 1}">&gt;</a>&nbsp;
+								</c:if> 
+							</td>
+						</tr>
+					</table>
 	              
 	                
 	            </main>
@@ -94,12 +111,32 @@
 	                });
 	            }
             
-	            //날짜 지난거 투명도 처리
+	            //날짜 지난거 투명도 처리... 동작  안함 살려줘
+// 					const frameImgs = document.querySelectorAll('.frameDiv');
+// 					const currentTime = new Date().getTime();
+// 					frameImgs.forEach(function(frameImg) {
+// 					  const deadline = new Date.getTime();
+// 					  if (currentTime > deadline) {
+// 					    frameImg.style.opacity = '0.1';
+// 					    frameImg.style.display = 'block';
+// 					  }
+// 					});
+// 				    console.log(currentTime);
+// 				    console.log("${tour.deadline}")->못불러옴
+// 				    Fri Mar 03 00:00:00 KST 2023 아 뭔데
 
-	            
-	            
-</script>
-		              
+		         
+
+// 페이징 디자인
+		var page = document.querySelector("#page").value
+            var pageNavi = document.querySelectorAll(".pageNavi")
+            
+            for(let i = 0; i < pageNavi.length; i++) {
+                if (pageNavi[i].innerHTML == page) {
+                	pageNavi[i].style.fontSize = '40px';
+                	pageNavi[i].style.color = '#0F8D80';
+                }
+            }    
 		            
             	</script>
 	            

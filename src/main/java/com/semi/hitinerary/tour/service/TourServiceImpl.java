@@ -24,7 +24,7 @@ public class TourServiceImpl implements TourService {
 	private SqlSession session;
 	
 	@Override
-	public List<Tour> selectTourList(PageInfo pi) {
+	public List<Tour> selectTourList(Pagination pi) {
 		List<Tour> tList = tStore.selectTourList(session, pi);
 		return tList;
 	}
@@ -108,6 +108,12 @@ public class TourServiceImpl implements TourService {
 	
 	public int selectCurrCount(int tourNo) {	
 		return tStore.selectCurrCount(session, tourNo);
+	}
+
+	@Override
+	public int deleteComment(int commentNo) {
+		int result = tStore.deleteComment(session, commentNo);
+		return result;
 	}
 
 	

@@ -5,7 +5,7 @@
 	<resultMap type="User" id="userResultMap">
 		<id property="userNo" column="USER_NO"/>
 		<result property="userId" column="USER_ID"/>
-		<result property="userPw" column="UESR_PW"/>
+		<result property="userPw" column="USER_PW"/>
 		<result property="userName" column="USER_NAME"/>
 		<result property="userNickname" column="USER_NICKNAME"/>
 		<result property="userEmail" column="USER_EMAIL"/>
@@ -15,6 +15,7 @@
 		<result property="companyRegiNo" column="COMPANY_REGI_NO"/>
 		<result property="userGrade" column="USER_GRADE"/>
 	</resultMap>
+	
 	<insert id="insertUser" parameterType="User">
 		INSERT INTO USER_TBL VALUES(USER_SEQUENCE.NEXTVAL, #{userId}, #{userPw}, #{userName}, #{userNickname}, #{userEmail}, #{userPhone}, #{userBirthDate}, #{userGender}, NULL, #{userGrade})
 	</insert>
@@ -31,7 +32,8 @@
 	</select>
 	<select id="selectUserById" resultMap="userResultMap" parameterType="_int">
 		SELECT * FROM USER_TBL WHERE USER_NO = #{userNo}
-	</select>	
+	</select>
+	
 	<select id="selectByGroupNo" resultMap="userResultMap">
 		SELECT E.USER_NO, E.USER_NICKNAME, E.USER_EMAIL, FLOOR((SYSDATE - TO_DATE(E.USER_BIRTH_DATE, 'RR-MM-DD')) / 365) USER_BIRTH_DATE, USER_GENDER
 		FROM GROUP_USERS_TBL F JOIN USER_TBL E ON E.USER_NO = F.USER_NO 
@@ -45,4 +47,29 @@
 	<select id="updateUserByNo">
 		UPDATE USER_TBL SET USER_PW = #{userPw}, USER_NICKNAME = #{userNickname}, USER_EMAIL = #{userEmail}, USER_PHONE = #{userPhone} WHERE USER_NO = #{userNo}
 	</select>
+	
+	<!-- 일반회원 전체 목록 조회 -->
+	<select id="selectAllUser" resultMap="userResultMap">
+		SELECT * FROM USER_TBL WHERE USER_GRADE = 0 ORDER BY USER_NO
+	</select>
+	
+	<!-- 기업회원 전체 목록 조회 -->
+	<select id="selectSellerUser" resultMap="userResultMap">
+		SELECT * FROM USER_TBL WHERE USER_GRADE BETWEEN 1 AND 3 ORDER BY USER_NO
+	</select>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="deleteUser">
+		DELETE FROM USER_TBL WHERE USER_NO = #{userNo}
+	</delete>
+	
+	<!-- 기업회원 권한부여 -->
+	<update id="updateSellerGarde">
+		<if test="userGrade == 1">
+			UPDATE USER_TBL SET USER_GRADE = 2 WHERE USER_NO = #{userNo}
+		</if>
+		<if test="userGrade == 2">
+			UPDATE USER_TBL SET USER_GRADE = 1 WHERE USER_NO = #{userNo}
+		</if>
+	</update>
 </mapper>

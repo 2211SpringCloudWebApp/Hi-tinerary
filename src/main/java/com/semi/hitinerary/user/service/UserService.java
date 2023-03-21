@@ -2,6 +2,7 @@ package com.semi.hitinerary.user.service;
 
 import java.util.List;
 
+import com.semi.hitinerary.report.domain.boardReport;
 import com.semi.hitinerary.user.domain.TourBuyUser;
 import com.semi.hitinerary.user.domain.User;
 
@@ -45,5 +46,32 @@ public interface UserService {
 	 * @return 
 	 */
 	public int updateUserByNo(User user);
+	
+	/**
+	 * 일반회원 목록 조회
+	 * @return
+	 */
+	public List<User> selectAllUser();
+	
+	/**
+	 * 기업회원 목록 조회
+	 * @return
+	 */
+	public List<User> selectSellerUser();
+
+	/**
+	 * 회원탈퇴 Service
+	 * @param userNo
+	 * @return int
+	 */
+	public int deleteUser(int userNo);
+
+	/**
+	 * 기업회원 권한부여 Service
+	 * @param userNo
+	 * @return
+	 */
+	public int updateSellerGarde(User user);
+
 	
 }

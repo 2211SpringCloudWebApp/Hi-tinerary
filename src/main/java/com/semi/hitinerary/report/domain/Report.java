@@ -11,6 +11,8 @@ public class Report {
 	private int TourNo;				// 투어게시판 고유값
 	private int commentNo;			// 댓글 고유값
 	
+	public Report() {}
+
 	public Report(int reportNo, Timestamp reportDate, String reportReason, int userNo, int withBoardNo, int freeBoardNo,
 			int tourNo, int commentNo) {
 		super();
@@ -20,7 +22,7 @@ public class Report {
 		this.userNo = userNo;
 		this.withBoardNo = withBoardNo;
 		this.freeBoardNo = freeBoardNo;
-		this.TourNo = tourNo;
+		TourNo = tourNo;
 		this.commentNo = commentNo;
 	}
 
@@ -94,6 +96,5 @@ public class Report {
 				+ ", userNo=" + userNo + ", withBoardNo=" + withBoardNo + ", freeBoardNo=" + freeBoardNo + ", TourNo="
 				+ TourNo + ", commentNo=" + commentNo + "]";
 	}
-	
 	
 }

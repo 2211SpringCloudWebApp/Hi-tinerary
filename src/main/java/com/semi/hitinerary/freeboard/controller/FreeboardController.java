@@ -51,7 +51,9 @@ public class FreeboardController {
 			, @RequestParam(value="page", required = false, defaultValue = "1") Integer currentPage 
 			, @RequestParam(value="searchCondition", required = false, defaultValue = "all") String searchCondition 
 			,Model model) {
+		
 		search.setSearchCondition(searchCondition);
+		
 		try {
 			// search값을 스트링 값으로 화면이 출력해봄
 			//System.out.println("freeboardSearchView함수 search.toString()값은 : " + search.toString());

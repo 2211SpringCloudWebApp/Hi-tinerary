@@ -83,3 +83,46 @@
 	height: 85%;
 	background-color: aquamarine;
 }
+
+.headTr td {
+	border-left: 1px solid black;
+}
+
+#userTd {
+	text-align: center;
+}
+
+.managerShowTable {
+	width: 95%;
+	font-size: 17px;
+	margin-left: 20px;
+}
+
+.managerBtn {
+	width: 60px;
+	height: 30px;
+	border-radius: 20px;
+	border: 0;
+	font-weight: 600;
+	color: white;
+}
+
+#userTablebutton{
+	background-color: red;
+}
+
+#sellerTd {
+	text-align: center;
+}
+
+#sellerBtn1 {
+	background-color: #FBD188;
+}
+
+#sellerBtn2 {
+	background-color: red;
+}
+
+#sellerBtn3 {
+	background-color: #0F8D80;
+}

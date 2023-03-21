@@ -12,5 +12,41 @@
 		<result property="commentNo" column="COMMENT_NO"/>
 	</resultMap>
 	
+	<!-- 신고 리스트 조회를 위한.. -->
+	<resultMap type="boardReport" id="boardReportMap">
+		<result property="whthBoardNo" column="WITH_BOARD_NO"/>
+		<result property="freeBoardNo" column="FREE_BOARD_NO"/>
+		<result property="tourNo" column="TOUR_NO"/>
+		<result property="boardTitle" column="BOARD_TITLE"/>
+		<result property="reportDate" column="REPORT_DATE"/>
+		<result property="reporterNickname" column="REPORTER_NICKNAME"/>
+		<result property="reportReason" column="REPORT_REASON"/>
+		<result property="boardWriterNo" column="BOARD_WRITER_NO"/>
+		<result property="boardWriterNickname" column="BOARD_WRITER_NICKNAME"/>
+		<result property="reportUserNo" column="REPORTED_USER_NO"/>
+		<result property="reportedUserNickname" column="REPORTED_USER_NICKNAME"/>
+	</resultMap>
 	
+	<!-- 신고등록 -->
+	<insert id="insertReport">
+		INSERT INTO REPORT_BOARD_TBL VALUES(SEQ_REPORT.NEXTVAL, DEFAULT, #{reportReason }, #{userNo }, #{withBoardNo}, #{freeBoardNo}, #{TourNo}, #{commentNo})
+	</insert>
+	
+	<!-- 신고 리스트 조회 -->
+	<select id="selectboardReportList" resultMap="boardReportMap">
+		SELECT 
+	    r.WITH_BOARD_NO, r.FREE_BOARD_NO, r.TOUR_NO,
+	    f.BOARD_TITLE, r.REPORT_DATE,
+	    u1.USER_NICKNAME AS REPORTER_NICKNAME,
+	    r.REPORT_REASON,
+	    f.USER_NO AS BOARD_WRITER_NO,
+	    u2.USER_NICKNAME AS BOARD_WRITER_NICKNAME,
+	    r.USER_NO AS REPORTED_USER_NO,
+	    u3.USER_NICKNAME AS REPORTED_USER_NICKNAME
+		FROM REPORT_BOARD_TBL r
+		LEFT JOIN FREE_BOARD_TBL f ON r.FREE_BOARD_NO = f.BOARD_NO
+		LEFT JOIN USER_TBL u1 ON r.USER_NO = u1.USER_NO
+		LEFT JOIN USER_TBL u2 ON f.USER_NO = u2.USER_NO
+		LEFT JOIN USER_TBL u3 ON r.USER_NO = u3.USER_NO
+	</select>
 </mapper>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.semi.hitinerary.report.domain.boardReport;
 import com.semi.hitinerary.user.domain.TourBuyUser;
 import com.semi.hitinerary.user.domain.User;
 
@@ -47,10 +48,33 @@ public class UserStoreLogic implements UserStore{
 		return result;
 	}
 
+
 	@Override
 	public int updateUserByNo(SqlSession session, User user) {
 		int result = session.update("UserMapper.updateUserByNo", user);
 		return result;
+	}
+	
+	// 전체회원 목록 조회
+	@Override
+	public List<User> selectAllUser(SqlSession session) {
+		return session.selectList("UserMapper.selectAllUser");
+	}
+
+	// 기업회원 목록 조회
+	@Override
+	public List<User> selectSellerUser(SqlSession session) {
+		return session.selectList("UserMapper.selectSellerUser");
+	}
+
+	@Override
+	public int deleteUser(SqlSession session, int userNo) {
+		return session.delete("UserMapper.deleteUser", userNo);
+	}
+
+	@Override
+	public int updateSellerGarde(SqlSession session, User user) {
+		return session.delete("UserMapper.updateSellerGarde", user);
 	}
 
 }

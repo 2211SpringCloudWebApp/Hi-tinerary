@@ -20,6 +20,8 @@ import com.semi.hitinerary.comment.service.CommentService;
 import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.freeboard.service.FreeboardService;
+import com.semi.hitinerary.report.domain.boardReport;
+import com.semi.hitinerary.report.service.ReportService;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.service.TourService;
 import com.semi.hitinerary.user.domain.TourBuyUser;
@@ -46,6 +48,9 @@ public class UserController {
 	
 	@Autowired
 	private CommentService cService;
+	
+	@Autowired
+	private ReportService rService;
 	
 	// 회원가입 분류창
 	@RequestMapping(value="/user/registerType", method = RequestMethod.GET)
@@ -103,6 +108,8 @@ public class UserController {
 		}
 	}
 	
+
+	
 	// 로그인창
 	@RequestMapping(value="/user/login", method = RequestMethod.GET)
 	public String Login() {
@@ -132,6 +139,7 @@ public class UserController {
 		}
 	}
 	
+	
 	// 로그아웃
 	@RequestMapping(value="/user/logout", method=RequestMethod.GET)
 	public String Logout(HttpSession session, Model model) {
@@ -152,8 +160,44 @@ public class UserController {
 	
 	// 관리자 마이페이지 화면 접속
 	@RequestMapping(value = "/manager/mypage", method=RequestMethod.GET)
-	public String writeView() {
+	public String writeView(
+			Model model) {
+		System.out.println("마이페이지접속");
+		//일반회원 목록 조회
+		List<User> userList = uService.selectAllUser();
+		//기업회원 목록 조회
+		List<User> sellerList = uService.selectSellerUser();
+		//신고 게시글 목록 조회
+		List<boardReport> bReportList = rService.selectboardReportList();
+		
+		System.out.println(bReportList);
+		
+		model.addAttribute("uList", userList);
+		model.addAttribute("sList", sellerList);
+		model.addAttribute("brList", bReportList);
+		
 		return "manager/mypage";
+	}
+	
+	// 기업회원 등업
+	@RequestMapping(value="/manager/sellerGarde", method = RequestMethod.POST)
+	public String updateSellerGarde(
+			@RequestParam("userNo") int userNo
+			,@RequestParam("userGrade") int userGrade
+			) {
+		User user = new User();
+		user.setUserNo(userNo);
+		user.setUserGrade(userGrade);
+		
+		int result = uService.updateSellerGarde(user);
+		return "redirect:/manager/mypage";
+	}
+	
+	// 유저 탈퇴
+	@RequestMapping(value="/manager/deleteUser", method = RequestMethod.POST)
+	public String deleteUser(@RequestParam("userNo") int userNo) {
+		int result = uService.deleteUser(userNo);
+		return "redirect:/manager/mypage";
 	}
 	
 	// 일반회원 마이페이지 조회

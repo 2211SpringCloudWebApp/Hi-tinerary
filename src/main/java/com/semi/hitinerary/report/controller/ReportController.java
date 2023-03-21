@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.semi.hitinerary.report.domain.Report;
 import com.semi.hitinerary.report.service.ReportService;
 
 @Controller
@@ -20,17 +21,16 @@ public class ReportController {
 	public String reportView(
 			@RequestParam("userNo") int userNo
 			,@RequestParam("boardNo") int boardNo
-			,@RequestParam("commentNo") String commentNo
+			,@RequestParam("commentNo") int commentNo
+			,@RequestParam("boardTitle") String boardTitle
+			,@RequestParam("userNickname") String userNickname
 			,@RequestParam("boardType") String boardType
 			, Model model) {
 		
-		System.out.println(userNo);
-		System.out.println(boardNo);
-		System.out.println(commentNo);
-		System.out.println(boardType);
-		
 		model.addAttribute("userNo",userNo);
 		model.addAttribute("boardNo",boardNo);
+		model.addAttribute("boardTitle",boardTitle);
+		model.addAttribute("userNickname",userNickname);
 		model.addAttribute("commentNo",commentNo);
 		model.addAttribute("boardType",boardType);
 		
@@ -41,13 +41,33 @@ public class ReportController {
 	@RequestMapping(value = "/clickReport", method = RequestMethod.GET)
 	public String clickReport(
 			@RequestParam("boardNo") int boardNo
+			,@RequestParam("commentNo") int commentNo
+			,@RequestParam("userNo") int userNo
 			,@RequestParam("boardType") String boardType
 			,@RequestParam("reportReason") String reportReason
 			) {
-			System.out.println(boardNo);
-			System.out.println(boardType);
-			System.out.println(reportReason);
-			
+		System.out.println(boardNo);
+		System.out.println(boardType);
+		System.out.println(reportReason);
+		
+		Report report = new Report();
+		report.setReportReason(reportReason);	// 신고사유
+		report.setCommentNo(commentNo);			// 댓글번호
+		report.setUserNo(userNo);				// 유저번호
+		
+		//게시판별로 게시판 번호 부여함.
+		if(boardType.equals("free")) {
+			report.setFreeBoardNo(boardNo);
+		}else if(boardType.equals("with")) {
+			report.setWithBoardNo(boardNo);
+		}else if(boardType.equals("tour")) {
+			report.setTourNo(boardNo);
+		}
+
+		// 신고넣기
+		int result = rService.insertReport(report);
+
+		// 게시판으로 돌아가기
 		if(boardType.equals("free")) {
 			return "redirect:/freeboard/detail?boardNo=" + boardNo;
 		}else if(boardType.equals("with")) {

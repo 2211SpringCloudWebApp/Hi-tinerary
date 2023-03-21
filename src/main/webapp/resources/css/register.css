@@ -66,6 +66,9 @@ input:-webkit-autofill:active  {
     	height: 25px;
        	border: none;
     }
+    select:focus{
+	    outline:none;
+	}
     input[type=radio]{
         width: 10px;
         margin-top: 15px;

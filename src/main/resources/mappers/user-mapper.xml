@@ -30,7 +30,7 @@
 	<select id="Login" resultMap="userResultMap">
 		SELECT USER_NO, USER_NICKNAME, USER_GRADE FROM USER_TBL WHERE USER_ID = #{userId} AND USER_PW = #{userPw}
 	</select>
-	<select id="selectUserById" resultMap="userResultMap" parameterType="_int">
+	<select id="selectUserByNo" resultMap="userResultMap" parameterType="_int">
 		SELECT * FROM USER_TBL WHERE USER_NO = #{userNo}
 	</select>
 	

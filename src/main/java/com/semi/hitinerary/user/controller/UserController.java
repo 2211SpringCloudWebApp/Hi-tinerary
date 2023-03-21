@@ -33,49 +33,52 @@ import com.semi.hitinerary.withboard.service.WithService;
 
 @Controller
 public class UserController {
-	
+
 	@Autowired
 	private UserService uService;
-	
+
 	@Autowired
 	private TourService tService;
-	
+
 	@Autowired
 	private WithService wService;
-	
+
 	@Autowired
 	private FreeboardService fService;
-	
+
 	@Autowired
 	private CommentService cService;
 	
 	@Autowired
 	private ReportService rService;
 	
+
+
 	// 회원가입 분류창
-	@RequestMapping(value="/user/registerType", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/registerType", method = RequestMethod.GET)
 	public String registerType() {
 		return "user/registerType";
 	}
-	
-	@RequestMapping(value="/user/registerUser", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/user/registerUser", method = RequestMethod.GET)
 	public String registerTypeUser() {
 		return "/user/registerUser";
 	}
-	
-	@RequestMapping(value="/user/registerCompany", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/user/registerCompany", method = RequestMethod.GET)
 	public String registerTypeCo() {
 		return "/user/registerCompany";
 	}
-		
+
 	// 일반회원가입
-	@RequestMapping(value="/user/registerUser", method=RequestMethod.POST)
-	public String userRegister(HttpServletRequest request, @ModelAttribute User user, Model model, @RequestParam("domain-input") String domainInput) {
+	@RequestMapping(value = "/user/registerUser", method = RequestMethod.POST)
+	public String userRegister(HttpServletRequest request, @ModelAttribute User user, Model model,
+			@RequestParam("domain-input") String domainInput) {
 		try {
 			String email = user.getUserEmail() + "@" + domainInput;
 			user.setUserEmail(email);
-			int result = uService.insertUser(user); 
-			if(result > 0) {
+			int result = uService.insertUser(user);
+			if (result > 0) {
 				return "redirect:/index.jsp";
 			} else {
 				model.addAttribute("msg", "회원가입 실패");
@@ -87,15 +90,16 @@ public class UserController {
 			return "common/error";
 		}
 	}
-	
+
 	// 기업회원가입
-	@RequestMapping(value="/user/registerCompany", method=RequestMethod.POST)
-	public String companyRegister(HttpServletRequest request, @ModelAttribute User user, Model model, @RequestParam("domain-input") String domainInput) {
+	@RequestMapping(value = "/user/registerCompany", method = RequestMethod.POST)
+	public String companyRegister(HttpServletRequest request, @ModelAttribute User user, Model model,
+			@RequestParam("domain-input") String domainInput) {
 		try {
 			String email = user.getUserEmail() + "@" + domainInput;
 			user.setUserEmail(email);
-			int result = uService.insertCoUser(user); 
-			if(result > 0) {
+			int result = uService.insertCoUser(user);
+			if (result > 0) {
 				return "redirect:/index.jsp";
 			} else {
 				model.addAttribute("msg", "회원가입 실패");
@@ -110,18 +114,19 @@ public class UserController {
 	
 
 	
+
 	// 로그인창
-	@RequestMapping(value="/user/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/login", method = RequestMethod.GET)
 	public String Login() {
 		return "user/login";
 	}
-	
+
 	// 로그인
-	@RequestMapping(value="/user/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	public String Login(HttpServletRequest request, @ModelAttribute User user, String userId, Model model) {
 		try {
 			User result = uService.Login(user);
-			if(result != null) {
+			if (result != null) {
 				HttpSession session = request.getSession();
 				session.setAttribute("loginUser", result);
 				model.addAttribute("name", user.getUserNickname());
@@ -140,8 +145,9 @@ public class UserController {
 	}
 	
 	
+
 	// 로그아웃
-	@RequestMapping(value="/user/logout", method=RequestMethod.GET)
+	@RequestMapping(value = "/user/logout", method = RequestMethod.GET)
 	public String Logout(HttpSession session, Model model) {
 		if (session != null) {
 			session.invalidate();
@@ -151,13 +157,7 @@ public class UserController {
 			return "common/error";
 		}
 	}
-	
-	// 일반회원 마이페이지
-	@RequestMapping(value = "/user/mypageUser", method= {RequestMethod.GET, RequestMethod.POST})
-	public String showUserMypage() {
-		return "/user/mypageUser";
-	}
-	
+
 	// 관리자 마이페이지 화면 접속
 	@RequestMapping(value = "/manager/mypage", method=RequestMethod.GET)
 	public String writeView(
@@ -200,6 +200,7 @@ public class UserController {
 		return "redirect:/manager/mypage";
 	}
 	
+
 	// 일반회원 마이페이지 조회
 	@RequestMapping(value="/user/mypage", method=RequestMethod.GET)
 	public String userMyPageView(
@@ -215,13 +216,18 @@ public class UserController {
 		model.addAttribute("user", user);
 		return "user/mypage";
 	}
+
+	 // 기업회원 마이페이지 조회
+	 @RequestMapping(value="/user/mypageCompany", method=RequestMethod.GET)
+	 public String companyMypageView() {
+		 return "user/mypageCompany";
+	 }
+
 	// 일반회원 구매내역 조회 화면 접속
-	@RequestMapping(value= "/user/mypage/buylist", method=RequestMethod.GET)
-	public String userBuyList(
-			HttpSession session
-			,@RequestParam(value="page", required=false, defaultValue = "1") String currentPage
-			,Model model) {
-		User user = (User)session.getAttribute("loginUser");
+	@RequestMapping(value = "/user/mypage/buylist", method = RequestMethod.GET)
+	public String userBuyList(HttpSession session,
+			@RequestParam(value = "page", required = false, defaultValue = "1") String currentPage, Model model) {
+		User user = (User) session.getAttribute("loginUser");
 		int totalCount = tService.selectGetTotalCountByUserNo(user.getUserNo());
 		Pagination pi = new Pagination(Integer.parseInt(currentPage), 3, 5, totalCount);
 		List<Tour> tList = tService.selectTourListByUserNo(user.getUserNo(), pi);
@@ -229,14 +235,13 @@ public class UserController {
 		model.addAttribute("tList", tList);
 		return "user/buylist";
 	}
-	
+
 	// 일반회원 자유게시판 작성글 조회
-	@RequestMapping(value="/user/mypage/write/freeboard",method=RequestMethod.GET)
+	@RequestMapping(value = "/user/mypage/write/freeboard", method = RequestMethod.GET)
 	public String userWriteFreeBoardView(
-			@RequestParam(value="page", required = false, defaultValue = "1") String currentPage
-			,HttpSession session
-			,Model model) {
-		User user = (User)session.getAttribute("loginUser");
+			@RequestParam(value = "page", required = false, defaultValue = "1") String currentPage, HttpSession session,
+			Model model) {
+		User user = (User) session.getAttribute("loginUser");
 		int totalCount = fService.selectCountByUserNo(user.getUserNo());
 		Pagination pi = new Pagination(Integer.parseInt(currentPage), 10, 5, totalCount);
 		List<Freeboard> fList = fService.selectListByuserNo(user.getUserNo(), pi);
@@ -244,14 +249,13 @@ public class UserController {
 		model.addAttribute("fList", fList);
 		return "user/freeboardsearch";
 	}
-	
+
 	// 일반회원 동행게시판 작성글 조회
-	@RequestMapping(value="/user/mypage/write/withboard",method=RequestMethod.GET)
+	@RequestMapping(value = "/user/mypage/write/withboard", method = RequestMethod.GET)
 	public String userWriteWithBoard(
-			@RequestParam(value="page", required=false, defaultValue = "1") String currentPage
-			,HttpSession session
-			,Model model) {
-		User user = (User)session.getAttribute("loginUser");
+			@RequestParam(value = "page", required = false, defaultValue = "1") String currentPage, HttpSession session,
+			Model model) {
+		User user = (User) session.getAttribute("loginUser");
 		int totalCount = wService.selectCountByUserNo(user.getUserNo());
 		Pagination pi = new Pagination(Integer.parseInt(currentPage), 9, 5, totalCount);
 		List<With> wList = wService.selectByUserNo(user.getUserNo(), pi);
@@ -259,15 +263,14 @@ public class UserController {
 		model.addAttribute("pi", pi);
 		return "/user/withboardsearch";
 	}
-	
+
 	// 일반회원 댓글 조회
-	@RequestMapping(value="/user/mypage/write/comment",method=RequestMethod.GET)
+	@RequestMapping(value = "/user/mypage/write/comment", method = RequestMethod.GET)
 	public String userWriteComment(
-			@RequestParam(value="page", required=false, defaultValue = "1") String currentPage
-			,@RequestParam(value="category", required = false, defaultValue="with") String category
-			,HttpSession session
-			,Model model) {
-		User user = (User)session.getAttribute("loginUser");
+			@RequestParam(value = "page", required = false, defaultValue = "1") String currentPage,
+			@RequestParam(value = "category", required = false, defaultValue = "with") String category,
+			HttpSession session, Model model) {
+		User user = (User) session.getAttribute("loginUser");
 		SearchComment sComment = new SearchComment(category, user.getUserNo());
 		int totalCount = cService.selectCountByUserNo(sComment);
 		Pagination pi = new Pagination(Integer.parseInt(currentPage), 10, 5, totalCount);
@@ -278,10 +281,10 @@ public class UserController {
 		return "/user/commentsearch";
 	}
 	
-	//패키지 구매 취소
-	@RequestMapping(value="/user/cancelbuy", method=RequestMethod.POST)
-	public String tourBuyCancel(
-			@ModelAttribute TourBuyUser tBUser) { 
+
+	// 패키지 구매 취소
+	@RequestMapping(value = "/user/cancelbuy", method = RequestMethod.POST)
+	private String tourBuyCancel(@ModelAttribute TourBuyUser tBUser) {
 		int result = uService.deleteBuyUser(tBUser);
 		return "redirect:/user/mypage/buylist";
 	}

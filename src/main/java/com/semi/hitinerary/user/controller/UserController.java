@@ -299,4 +299,11 @@ public class UserController {
 		int result = uService.updateUserByNo(user);
 		return "redirect:/user/mypage";
 	}
+	
+	@RequestMapping(value="/user/delete", method=RequestMethod.POST)
+	public String deleteNormalUser(int userNo) {
+		int result = uService.deleteUser(userNo);
+		return "redirect:/user/logout";
+	}
+	
 }

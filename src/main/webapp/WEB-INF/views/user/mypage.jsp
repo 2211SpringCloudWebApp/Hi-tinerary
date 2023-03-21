@@ -60,8 +60,8 @@
 		                    </div>
 		                    <input type="submit" class="form-btn" value="수정하기">
 		                </form>
-		                <form action="/user/delete">
-		                    <input type="hidden" value="${loginUser.userNo }">
+		                <form action="/user/delete" method="post">
+		                    <input type="hidden" name="userNo" value="${loginUser.userNo }">
 		                    <input type="submit" class="form-btn withdraw" value="탈퇴하기">
 		                </form>
 		            </div>

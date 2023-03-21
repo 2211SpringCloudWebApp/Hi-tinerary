@@ -41,6 +41,11 @@
 	SELECT COUNT(*) FROM TOUR_TBL JOIN TOUR_BUY_USER_TBL USING(TOUR_NO) WHERE TOUR_NO=#{tourNo}
 	</select>
 	
+	<select id="selectGetTotalCountByUserNo" resultType="_int">
+		SELECT COUNT(*) FROM TOUR_BUY_USER_TBL WHERE USER_NO = #{userNO}
+	</select>
+		
+	
 	<insert id="insertTour">
 		INSERT INTO TOUR_TBL VALUES(#{tourNo}, #{tourTitle}, #{tourContent}, #{startDate}, #{endDate}, #{price}, #{deadline}, '0', #{maxPeople}, #{minPeople}, #{tourImage}, #{thumbnail}, DEFAULT, #{userNo})
 	</insert>

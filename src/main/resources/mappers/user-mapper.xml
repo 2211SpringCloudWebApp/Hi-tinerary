@@ -44,9 +44,9 @@
 		SELECT * FROM USER_TBL WHERE USER_NO=#{payUserNo} 
 	</select>
 	
-	<select id="updateUserByNo">
-		UPDATE USER_TBL SET USER_PW = #{userPw}, USER_NICKNAME = #{userNickname}, USER_EMAIL = #{userEmail}, USER_PHONE = #{userPhone} WHERE USER_NO = #{userNo}
-	</select>
+	<update id="updateUserByNo">
+		UPDATE USER_TBL SET USER_NICKNAME = #{userNickname}, USER_EMAIL = #{userEmail}, USER_PHONE = #{userPhone} WHERE USER_NO = #{userNo}
+	</update>
 	
 	<!-- 일반회원 전체 목록 조회 -->
 	<select id="selectAllUser" resultMap="userResultMap">

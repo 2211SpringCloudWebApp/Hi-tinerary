@@ -47,4 +47,10 @@ public class UserStoreLogic implements UserStore{
 		return result;
 	}
 
+	@Override
+	public int updateUserByNo(SqlSession session, User user) {
+		int result = session.update("UserMapper.updateUserByNo", user);
+		return result;
+	}
+
 }

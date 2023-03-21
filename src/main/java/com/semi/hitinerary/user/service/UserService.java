@@ -39,4 +39,11 @@ public interface UserService {
 	 */
 	public int deleteBuyUser(TourBuyUser tBUser);
 	
+	/**
+	 * 유저 정보 수정
+	 * @param user
+	 * @return 
+	 */
+	public int updateUserByNo(User user);
+	
 }

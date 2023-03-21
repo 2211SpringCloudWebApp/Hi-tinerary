@@ -43,5 +43,13 @@ public interface UserStore {
 	 * @return int
 	 */
 	public int deleteBuyUser(SqlSession session, TourBuyUser tBUser);
+	
+	/**
+	 * 유저 정보 변경
+	 * @param session
+	 * @param user
+	 * @return
+	 */
+	public int updateUserByNo(SqlSession session, User user);
 
 }

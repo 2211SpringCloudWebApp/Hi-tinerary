@@ -41,4 +41,8 @@
 	<select id="selectPayUserbyNo" resultMap="userResultMap">
 		SELECT * FROM USER_TBL WHERE USER_NO=#{payUserNo} 
 	</select>
+	
+	<select id="updateUserByNo">
+		UPDATE USER_TBL SET USER_PW = #{userPw}, USER_NICKNAME = #{userNickname}, USER_EMAIL = #{userEmail}, USER_PHONE = #{userPhone} WHERE USER_NO = #{userNo}
+	</select>
 </mapper>

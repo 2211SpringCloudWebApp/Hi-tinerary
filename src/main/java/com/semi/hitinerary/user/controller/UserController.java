@@ -77,7 +77,6 @@ public class UserController {
 				return "common/error";
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			model.addAttribute("msg", e.getMessage());
 			return "common/error";
@@ -159,7 +158,17 @@ public class UserController {
 	
 	// 일반회원 마이페이지 조회
 	@RequestMapping(value="/user/mypage", method=RequestMethod.GET)
-	public String userMyPageView() {
+	public String userMyPageView(
+			HttpSession session
+			,Model model) {
+		User uParam = (User)session.getAttribute("loginUser");
+		User user = uService.selectOneByNo(uParam.getUserNo());
+		String email = user.getUserEmail();
+		String[] emailarray = email.split("@");
+		user.setUserEmail(emailarray[0]);
+		String domain = emailarray[1];
+		model.addAttribute("domain", domain);
+		model.addAttribute("user", user);
 		return "user/mypage";
 	}
 	// 일반회원 구매내역 조회 화면 접속
@@ -227,9 +236,20 @@ public class UserController {
 	
 	//패키지 구매 취소
 	@RequestMapping(value="/user/cancelbuy", method=RequestMethod.POST)
-	private String tourBuyCancel(
+	public String tourBuyCancel(
 			@ModelAttribute TourBuyUser tBUser) { 
 		int result = uService.deleteBuyUser(tBUser);
 		return "redirect:/user/mypage/buylist";
+	}
+	
+	//유저 정보수정
+	@RequestMapping(value="/user/modify", method =RequestMethod.POST)
+	public String modifyUser(
+			@ModelAttribute User user
+			,String mailId
+			,String mailDomain) {
+		user.setUserEmail(mailId + "@" + mailDomain);
+		int result = uService.updateUserByNo(user);
+		return "redirect:/user/mypage";
 	}
 }

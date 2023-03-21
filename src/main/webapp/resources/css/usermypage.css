@@ -103,7 +103,27 @@
   width: 300px;
   margin: 0 auto;
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #FBD188;
+}
+
+.form-mailid {
+  width: 100px;
+  margin: 0 auto;
+  border: none;
+  border-bottom: 1px solid #FBD188;
+}
+.form-domain {
+  width: 90px;
+  margin: 0 auto;
+  border: none;
+  border-bottom: 1px solid #FBD188;
+}
+.form-damain-select{
+	width: 90px;
+	margin: 0 auto;
+}
+.email-box{
+	margin : 0 auto;
 }
 
 .mypage-content form label {

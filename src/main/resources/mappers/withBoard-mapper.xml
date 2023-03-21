@@ -51,6 +51,7 @@ DELETE FROM WITH_BOARD_TBL WHERE BOARD_NO = #{boardNo}
 SELECT SEQ_WITH_BOARD.NEXTVAL FROM DUAL
 </select>
 
+
 	<select id="selectCountByUserNo" resultType="_int">
 		SELECT COUNT(*) FROM WITH_BOARD_TBL WHERE USER_NO = #{userNo}
 	</select>
@@ -58,4 +59,8 @@ SELECT SEQ_WITH_BOARD.NEXTVAL FROM DUAL
 	<select id="selectByUserNo" resultMap="withBoardResultMap">
 		SELECT * FROM WITH_BOARD_TBL WHERE USER_NO = #{userNo}
 	</select>
+
+<update id="plusCommentPeople">
+UPDATE WITH_BOARD_TBL SET CURRENT_PEOPLE = CURRENT_PEOPLE + 1 WHERE BOARD_NO = #{boardNo}
+</update>
 </mapper>

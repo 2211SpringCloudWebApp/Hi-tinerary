@@ -27,25 +27,7 @@
 				<button onclick="location.href='/withboard/withWriteView'">글쓰기</button>
 			</c:if>
 		</div>
-
-		<%-- <div class="list_wrapper">
-		<ul>
-			<c:forEach items="${wList }" var="withBoard">
-				<li>
-					<div class="img">
-						<a href="/withboard/withBoardDetail?boardNo=${withBoard.boardNo }">
-						<img src="${withBoard.boardImage != null ? withBoard.boardImage.replace('C:\\Users\\samsung\\eclipse-workspace\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : '/resources/images/noboardImage.png'}">
-						</a>
-					</div> 
-					<strong class="tit">${withBoard.boardTitle }</strong> 
-					<span class="date"> <fmt:formatDate value="${withBoard.startDate }" pattern="yyyy-MM-dd" /> ~ 
-					<fmt:formatDate value="${withBoard.endDate }" pattern="yyyy-MM-dd" /></span> 
-					<span class="writer">${withBoard.userNickname}</span> 
-					<span class="people">${withBoard.currentPeople } / ${withBoard.maxPeople }</span>
-				</li>
-			</c:forEach>
-		</ul>
-	</div> --%>
+		
 	<div class="list_wrapper">
 	<ul>
 	<c:forEach items="${wList }" var="withBoard">

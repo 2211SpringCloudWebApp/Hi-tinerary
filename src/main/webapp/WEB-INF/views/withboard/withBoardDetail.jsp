@@ -69,94 +69,82 @@
 			</div>
 		</div>
 
-<!-- 댓글영역 -->
-<!-- 댓글이 출력되는 영역  -->
-<div id="lcomment_container">
-<table id="lcomment_table">
-<c:forEach items="${ cList}" var="comment">
-<tr>
-<td class="lcomment_td1">${comment.userNo }</td>
-<td class="lcomment_td2">
-<input class="lcomment_input" type="text" readonly value="${comment.content }">
-</td>
-<td class="lcomment_td3">
-[<fmt:formatDate value="${withBoard.writeDate }" pattern="yyyy-MM-dd ahh:mm" />]
-</td>
-<td class="lcomment_td4">
-<form action="" method="">
-<%-- <c:if test="${comment.status == 0 && loginUser.userNo != comment.userNo && withBoard.userNo == loginUser.userNo }"> --%>
-<button class="lcomment_button2">초대</button>
-<%-- </c:if> --%>
-</form>
-</td>
-<td class="lcomment_td5">
-<c:if test="${loginUser.userNo == comment.userNo || loginUser.userGrade == 4}">
-<form action="/withboard/board/comment/delete" method="POST">
-<input type="hidden" value="${withBoard.boardNo }" name="boardNo">
-<input type="hidden" value="${comment.commentNo }" name="commentNo">
-<a href="#">대댓글</a>
-| <a href="#">신고</a>
-| <input type="submit" value="삭제">
-</form>
-</c:if>
-</td>
-</tr>
-</c:forEach>
-</table>
-</div>
+	<!-- 댓글영역 -->
+	<!-- 댓글 리스트 나오는 영역 -->
+	<div class="comment-container"> 
+		<div class="comment-listbox">
+		<c:forEach items="${cList }" var="comment">
+			<c:if test="${comment.depth == 0 }">
+			<div class="commentbox">
+				<p class="comment-nickname">${comment.userNickname }</p>
+				<p class="comment-content">${comment.content }</p>
+				<p class="comment-date"><fmt:formatDate value="${comment.writeDate }" pattern="yyyy-MM-dd ahh:mm" /></p>
+				<button class="comment_button" id="popup_open_btn" onclick="inviteBtn()">초대</button>
+				<div class="comment-others">
+					<a href="" id="replycommentBtn" onclick="replywriteform(this)">댓글달기</a>
+					<a href="">신고</a>
+					<a href="">삭제</a>
+				</div>
+			</div>
+			</c:if>
+			<!-- 대댓글이 나오는 영역 -->
+			<c:if test="${comment.depth == 1 }">
+			<div class="replybox">
+				<p class="reply-nickname">${comment.userNickname }</p>
+				<p class="reply-content">${comment.content }</p>
+				<p class="reply-date"><fmt:formatDate value="${comment.writeDate }" pattern="yyyy-MM-dd ahh:mm" /></p>
+				<a href="">삭제</a>
+			</div>
+			</c:if>
+		</c:forEach>
+			<!-- 대댓글을 눌렀을 때 나오는 폼 -->
+			<div class="replywritebox" id="replywrite">
+				<p class="replywrite-nickname">고영고영</p>
+				<form action="">
+					<input type="text" class="replywrite-content">
+					<button class="replywritebtn">대댓글쓰기</button>
+				</form>
+			</div>
+		</div>
+		
+		<!-- 댓글 처음 작성하는 부분 -->
+		<c:if test="${loginUser ne null }">
+		<div class="comment-writebox">
+			<p class="commentwrite-nickname">${loginUser.userNickname }</p>
+				<form action="">
+					<input type="text" class="commentwrite-content">
+					<button class="commentwritebtn">댓글쓰기</button>
+				</form>
+		</div>
+		</c:if>
+	</div>
+	<!-- 초대 버튼 눌렀을 때 모달창 띄우기 -->
+	<div id="modal" class="modal">
+	  <div class="modal-content">
+	    <span class="close">&times;</span>
+	    <p>초대할 그룹을 선택하세요</p>
+	    <form action="/group/invite" method="POST">
+	    	<input type="hidden" name="userNo" value="${comment.userNo }">
+	    	<input type="hidden" name="boardNo" value="${withBoard.boardNo }">
+	    	<select name="groupNo">
+	    	<c:forEach items="${gList }" var="group">
+	    	<option value="${group.groupNo }">${group.groupName }</option>
+	    	</c:forEach>
+	    	</select>
+	    	<input type="submit" value="초대하기">
+	    </form>
+	  </div>
+	</div>
 
-
-
-
-
-            
-<!-- 댓글을 달고 대댓글을 눌렀을 때 뜨는 것 -->
-<div id="reply_container">
-<form action="/withboard/board/comment/write" method="POST">
-<input type="hidden" name="CommentBoardNo" value="${withBoard.boardNo }">
-<table id="replycomment_table">
-<tr>
-<td id="replycomment_td1">
-<input type="hidden" name="CommentUserNo" value="${loginUser.userNo }">
-${loginUser.userNickname }
-</td>
-<td id="replycomment_td2">
-<input id="replycomment_input" name="Commentcontent" type="text" placeholder="여기에 댓글을 작성해 주세요.">
-</td>
-<td id="replycomment_td3">
-<button id="replycomment_button">댓글달기</button>
-</td>
-</tr>
-</table>
-</form>
-</div>
-
-<!-- 처음 댓글 작성하는 영역 -->
-<c:if test="${loginUser ne null }">
-<div id="comment_container">
-<form action="/withboard/board/comment/write" method="POST">
-<input type="hidden" name="CommentBoardNo" value="${withBoard.boardNo }">
-<table id="withcomment_table">
-<tr>
-<td id="withcomment_td1">
-<input type="hidden" name="CommentUserNo" value="${loginUser.userNo }">
-${loginUser.userNickname }
-</td>
-<td id="withcomment_td2">
-<input id="withcomment_input" name="Commentcontent" type="text" placeholder="여기에 댓글을 작성해 주세요.">
-</td>
-<td id="withcomment_td3">
-<button id="withcomment_button">댓글달기</button>
-</td>
-</tr>
-</table>
-</form>
-</div>
-</c:if>
-           
+	<c:if test="${comment.status == 0 && loginUser.userNo != comment.userNo && withBoard.userNo == loginUser.userNo }">
+		<button class="lcomment_button2" id="popup_open_btn" onclick="inviteBtn()">초대</button>
+	</c:if>
 	</main>
 
+	<!-- footer -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+	
+	
 	<script>
 	//로그인이 안된채로 글 등록을 하려고 할 때 로그인 페이지로 이동
 	function noWrite(){
@@ -174,9 +162,10 @@ ${loginUser.userNickname }
 	
 	// 대댓글 달기 버튼 눌렀을 때
 	var btn = document.querySelector(".lcomment_td5 a:nth-of-type(1)");
+	if(btn != null){
 	btn.addEventListener('click', function(e){
 		e.preventDefault();
-		var mainComment = this.parentNode.parentNode;
+		var mainComment = this.parentNode.parentNode.parentNode;
 		console.log(mainComment);
 		var nextNode = mainComment.nextSibling; 
 		var replyInput = document.querySelector("#reply_container");
@@ -189,8 +178,57 @@ ${loginUser.userNickname }
 		}
 		
 	});
+		
+	}
+	
+	
+	// 모달 창을 나타내는 함수
+	function showModal() {
+	  var modal = document.getElementById("modal");
+	  modal.style.display = "block";
+	}
+
+	// 모달 창을 닫는 함수
+	function hideModal() {
+	  var modal = document.getElementById("modal");
+	  modal.style.display = "none";
+	}
+
+	// 초대 버튼 클릭 시 모달 창 나타내기
+	function inviteBtn() {
+	  showModal();
+	}
+
+	// 모달 창 외의 영역 클릭 시 모달 창 닫기
+	var modal = document.getElementById("modal");
+	window.onclick = function(event) {
+	  if (event.target == modal) {
+	    hideModal();
+	  }
+	}
+
+	// 모달 창 닫기 버튼 클릭 시 모달 창 닫기
+	var closeBtn = document.getElementsByClassName("close")[0];
+	closeBtn.onclick = function() {
+	  hideModal();
+	}
+	
+	// 대댓글 나오게 하는 스크립트
+	 function replywriteform(writeBtn){
+		var e = window.event;
+		e.preventDefault();
+		var replywritebox = document.querySelector("#replywrite")
+		var commentbox = writeBtn.parentNode.parentNode;
+		if(commentbox.nextSibling == replywritebox){
+			replywritebox.style.display = "none";
+			commentbox.before(replywritebox);
+		} else{
+			replywritebox.style.display = "flex";
+			commentbox.after(replywritebox);
+		}
+	}
+
 	</script>
-	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 </body>
 
 </html>

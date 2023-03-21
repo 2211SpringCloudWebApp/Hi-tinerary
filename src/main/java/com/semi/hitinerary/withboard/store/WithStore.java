@@ -81,5 +81,13 @@ public interface WithStore {
 	 */
 	public List<With> selectByUserNo(SqlSession session, int userNo, Pagination pi);
 
+	/**
+	 * 동행찾기 게시판 현재 인원수 플러스 Store
+	 * @param session
+	 * @param userNo
+	 * @return int
+	 */
+	public int plusCommentPeople(SqlSession session, int userNo);
+
 
 }

@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.semi.hitinerary.comment.controller.CommentController;
 import com.semi.hitinerary.comment.domain.Comment;
 import com.semi.hitinerary.common.Pagination;
+import com.semi.hitinerary.group.domain.Group;
+import com.semi.hitinerary.group.service.GroupService;
+import com.semi.hitinerary.user.domain.User;
 import com.semi.hitinerary.withboard.domain.With;
 import com.semi.hitinerary.withboard.service.WithService;
 
@@ -31,6 +35,9 @@ public class WithController {
 	
 	@Autowired
 	private CommentController cController;
+	
+	@Autowired
+	private GroupService gService;
 	
 	@RequestMapping(value="/withboard/withWriteView", method=RequestMethod.GET)
 	public String withWriteView(Model model) {
@@ -130,8 +137,16 @@ public class WithController {
 	
 	//동행게시판 상세페이지 + 댓글 보여주기
 	@RequestMapping(value="/withboard/withBoardDetail", method=RequestMethod.GET)
-	public String withBoardDetailView(@RequestParam("boardNo") int boardNo, Model model) {
+	public String withBoardDetailView(@RequestParam("boardNo") int boardNo, 
+			HttpSession session,
+			Model model) {
 		try {
+			User user = (User) session.getAttribute("loginUser");
+			if(user != null) {
+				int userNo = user.getUserNo();
+				List<Group> gList = gService.listGroup(userNo);
+				model.addAttribute("gList", gList);
+			}
 			List<Comment> cList = cController.listComment(boardNo);
 			With with = wService.selectOneByNo(boardNo);
 			
@@ -235,4 +250,5 @@ public class WithController {
 			return "common/error";
 		}
 	}
+	
 }

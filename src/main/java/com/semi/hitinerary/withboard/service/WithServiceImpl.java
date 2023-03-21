@@ -76,6 +76,7 @@ public class WithServiceImpl implements WithService{
 		return totalCount;
 	}
 
+
 	@Override
 	public int selectCountByUserNo(int userNo) {
 		int totalCount = wStore.selectCountByUserNo(session, userNo);
@@ -86,5 +87,14 @@ public class WithServiceImpl implements WithService{
 	public List<With> selectByUserNo(int userNo, Pagination pi) {
 		List<With> wList = wStore.selectByUserNo(session, userNo, pi);
 		return wList;
+	}
+
+	/**
+	 * 동행찾기 게시판 현재 인원수 플러스
+	 */
+	@Override
+	public int plusCommentPeople(int userNo) {
+		int result = wStore.plusCommentPeople(session, userNo);
+		return result;
 	}
 }

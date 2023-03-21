@@ -39,7 +39,8 @@
 		</div>
 		
 		<div class="mainImage">
-			<div id="Container" contentEditable="true"></div>
+			<div id="Container" contentEditable="true">
+			</div>
 			<div class="oneHundred">
 				<div class="filebox">
 					<!-- <label for="withImage">파일찾기</label>  -->
@@ -60,12 +61,12 @@
 		
 		<div class="maxPeople">
 			<label>모집인원</label>
-			<input type="range" min="1" max="100" value="1" class="slider" id="myRange" name="maxPeople"> 
+			<input type="range" min="1" max="15" value="1" class="slider" id="myRange" name="maxPeople"> 
 			<span id="value"></span>
 		</div>
 		
 		<div class="withConetnt">
-			<textarea name="boardContent" id="withContent" cols="136" rows="25" required></textarea> 
+			<textarea name="boardContent" id="withContent" cols="136" rows="25" placeholder="내용을 입력해주세요" required></textarea> 
 		</div>
 		
 		<div class="writeButton">
@@ -102,6 +103,9 @@
                   // 이미지 파일을 삽입
                   const img = document.createElement("img");
                   img.src = reader.result;
+                  // 이미지 요소에 스타일을 적용하여 크기 조절
+                  img.style.width = "950px";
+                  img.style.height = "492px";
                   if (imgElement) {
                     // 기존에 삽입된 이미지가 있다면 삭제
                     container.removeChild(imgElement);

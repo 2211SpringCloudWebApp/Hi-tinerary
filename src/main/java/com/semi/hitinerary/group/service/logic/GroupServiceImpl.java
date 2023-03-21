@@ -44,6 +44,24 @@ public class GroupServiceImpl implements GroupService{
 		int result = gStore.minusCurrentPeople(session, groupNo);
 		return result;
 	}
+
+	/**
+	 * 동행게시판 초대 버튼 눌렀을 때 그룹 리스트 GroupServiceImpl
+	 */
+	@Override
+	public List<Group> listGroup(int userNo) {
+		List<Group> gList = gStore.selectlistGroup(session, userNo);
+		return gList;
+	}
+
+	/**
+	 * 동행게시판 그룹 인원 추가 GroupServiceImpl
+	 */
+	@Override
+	public int plusCommentPeople(int groupNo) {
+		int result = gStore.plusCommentPeople(session, groupNo);
+		return result;
+	}
 	
 
 }

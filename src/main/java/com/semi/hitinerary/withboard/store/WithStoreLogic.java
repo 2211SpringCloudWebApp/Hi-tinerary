@@ -74,6 +74,7 @@ public class WithStoreLogic implements WithStore{
 		return totalCount;
 	}
 
+
 	@Override
 	public int selectCountByUserNo(SqlSession session, int userNo) {
 		int totalCount = session.selectOne("WithBoardMapper.selectCountByUserNo", userNo);
@@ -87,6 +88,15 @@ public class WithStoreLogic implements WithStore{
 		RowBounds rowbounds = new RowBounds(offset, limit);
 		List<With> wList = session.selectList("WithBoardMapper.selectByUserNo", userNo, rowbounds);
 		return wList;
+	}
+
+	/**
+	 * 동행게시판 현재 인원수 플러스 WithStoreLogic
+	 */
+	@Override
+	public int plusCommentPeople(SqlSession session, int userNo) {
+		int result = session.update("WithBoardMapper.plusCommentPeople", userNo);
+		return result;
 	}
 
 }

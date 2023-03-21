@@ -200,194 +200,207 @@
 	background-color:#FBD188;
 	color: white;
 }
+
 /* 여기서부터 댓글 영역 입니다. */
-/* 댓글이 출력되는 영역 */
-#lcomment_container {
-	border: 1px solid rgb(107, 106, 106);
-	width: 100%;
-	height: 70px;
-	margin: 0 auto;
-	margin-top: 10px;
-	text-align: center;
-	border-radius: 10px;
-	display: flex;
-	align-items: center;
-	font-size: 20px;
-	margin-bottom: 10px;
-}
 
-#lcomment_table {
-	width: 100%;
-	height: 80%;
-}
-.lcomment_td1 {
-	width: 10%;
-	height: 100%;
-	color: #FBD188;
-}
-
-.lcomment_td2 {
-	width: 50%;
-	height: 100%;
-}
-
-.lcomment_input {
-	width: 100%;
-	height: 100%;
-	font-size: 15px;
-	border: 0;
-}
-
-.lcomment_td3 {
-	width: 15%;
-	height: 100%;
-	font-size: 15px;
-}
-
-.lcomment_td4 {
-	width: 10%;
-	height: 100%;
-}
-
-#lcomment_container button{
-	width:90px;
-	height: 35px;
-	font-size: 15px;
-	color: white;
-	border: 0;
-	border-radius: 10px;
-	background-color: #0F8D80;
-}
-
-.lcomment_button3{
-	font-size: 20px;
-	color: white;
-	width: 140px;
-	height: 50px;
-	border: 0;
-	border-radius: 10px;
-	background-color: #FBD188;
-}
-
-.lcomment_td5 {
-	width: 15%;
-	height: 100%;
-	font-size: 15px;
-}
-
-.lcomment_td5 a {
-	text-decoration: none;
-	color: black;
-}
-
-/* 댓글 달고 대댓글을 눌렀을 때 뜨는 것*/
-#reply_container {
-	border: 1px solid rgb(107, 106, 106);
+/* 댓글 리스트 나오는 영역 */
+.comment_container{
+	border: 1px solid black;
 	width: 1200px;
-	height: 70px;
-	margin: 0 auto;
-	margin-top: 50px;
-	text-align: center;
-	border-radius: 10px;
-	display: none;
-	align-items: center;
-	font-size: 20px;
-	margin-bottom: 50px;
 }
 
-#reply_container form {
-	width: 100%;
+.commentbox{
+	display: flex;
+	border: 1px solid darkgrey;
+	border-radius: 5px;
+	margin: 10px 0px;
 }
-
-#replycomment_table {
-	width: 100%;
-	height: 80%;
-}
-
-#replycomment_td1 {
-	width: 10%;
-	height: 100%;
-	color: #FBD188;
-}
-
-#replycomment_td2 {
-	width: 75%;
-	height: 100%;
-}
-
-#replycomment_input {
-	width: 100%;
-	height: 60px;
-	font-size: 15px;
-	border: 0;
-}
-
-#replycomment_td3 {
-	width: 15%;
-	height: 100%;
-}
-
-	#reply_container button {
+	.comment-nickname{
+		width: 200px;
 		font-size: 20px;
-		color: white;
-		width: 140px;
-		height: 50px;
-		border: 0;
-		border-radius: 10px;
-		background-color: #F39081;
+		color: #FBD188;
+		text-align: center;
 	}
-/* 처음 댓글 작성하는 것 */
-#comment_container {
-	border: 1px solid rgb(107, 106, 106);
-	width: 1200px;
-	height: 70px;
-	margin: 0 auto;
-	margin-top: 50px;
-	text-align: center;
-	border-radius: 10px;
-	display: flex;
-	align-items: center;
-	font-size: 20px;
-	margin-bottom: 50px;
-}
-
-#comment_container form {
-	width: 100%;
-}
-#withcomment_table {
-	width: 100%;
-	height: 80%;
-}
-
-#withcomment_td1 {
-	width: 15%;
-	height: 100%;
-	color: #FBD188;
-}
-
-#withcomment_td2 {
-	width: 70%;
-	height: 100%;
-}
-
-#withcomment_input {
-	width: 100%;
-	height: 60px;
-	font-size: 15px;
-	border: 0;
-}
-
-#withcomment_td3 {
-	width: 15%;
-	height: 100%;
-}
-
-#comment_container button{
-	font-size: 20px;
+	.comment-content{
+		width: 550px;
+		font-size: 20px;
+	}
+	.comment-date{
+		width: 160px;
+		font-size: 13px;
+		margin-top: 25px;
+	}
+	.comment_button{
+		width: 50px;
+		height: 30px;
+		margin: auto;
+		margin-right: 35px;
+		margin-left: 20px;
+		background-color: #0F8D80;
+		border: none;
 		color: white;
-		width: 140px;
-		height: 50px;
-		border: 0;
-		border-radius: 10px;
-		background-color: #F39081;
+		border-radius: 5px;
+	}
+	.comment-others{
+		width: 180px;
+		display: flex;
+		align-items: center;
+	}
+	.comment-others a{
+		width: 60px;
+		display: block;
+		text-align: center;
+	}
+
+/* 대댓글이 나오는 영역 */
+.replybox{
+	width: 1150px;
+	display: flex;
+	border: 1px solid darkgrey;
+	border-radius: 5px;
+	margin: 10px 0px;
+	margin-left: 50px;
+}
+
+.reply-nickname {
+	width: 200px;
+	font-size: 20px;
+	color: #FBD188;
+	text-align: center;
+}
+
+.reply-content {
+	width: 700px;
+	font-size: 20px;
+}
+
+.reply-date {
+	width: 160px;
+	font-size: 13px;
+	margin-top: 25px;
+}
+.replybox a{
+	display: block;
+	margin: auto;
+}
+
+/* 대댓글을 눌렀을 때 나오는 폼 */
+.replywritebox{
+	width: 1150px;
+	display: none;
+	border: 1px solid darkgrey;
+	border-radius: 5px;
+	margin: 10px 0px;
+	margin-left: 50px;
+}
+
+.replywrite-nickname {
+	width: 200px;
+	font-size: 20px;
+	color: #FBD188;
+	text-align: center;
+	border-right: 1px solid black;
+}
+.replywritebox form{
+	margin: auto 0;
+	margin-left: 25px;
+}
+
+.replywrite-content{
+	width: 750px;
+	font-size: 20px;
+	border: none;
+}
+.replywrite-content:focus{
+	outline: none;
+}
+
+.replywritebtn{
+	margin-left: 50px;
+	border: none;
+	border-radius:5px;
+	padding: 10px;
+	background-color: #F39081;
+	color: white;
+}
+
+
+/* 댓글 처음 작성하는 부분 */
+.comment-writebox{
+	display: flex;
+	border: 1px solid darkgrey;
+	border-radius: 5px;
+	margin: 10px 0px;
+}
+	.commentwrite-nickname{
+		width: 200px;
+		font-size: 20px;
+		color: #FBD188;
+		text-align: center;
+		border-right: 1px solid black;
+	}
+
+.comment-writebox form{
+	margin: auto 0;
+	margin-left: 25px;
+}
+
+.commentwrite-content{
+	width: 750px;
+	font-size: 20px;
+	border: none;
+}
+.commentwrite-content:focus{
+	outline: none;
+}
+
+.commentwritebtn{
+	margin-left: 100px;
+	border: none;
+	border-radius:5px;
+	padding: 10px;
+	background-color: #F39081;
+	color: white;
+}
+
+
+
+
+
+
+
+
+/* 초대 버튼 눌렀을 때 모달 창 띄우기 */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }

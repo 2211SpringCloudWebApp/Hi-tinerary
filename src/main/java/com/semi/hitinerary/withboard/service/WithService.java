@@ -53,6 +53,7 @@ public interface WithService {
 	 * @return
 	 */
 	public int selectWithBoardCount();
+
 	
 	/**
 	 * 특정유저가 쓴 동행찾기 게시물 개수 조회
@@ -68,4 +69,12 @@ public interface WithService {
 	 * @return
 	 */
 	public List<With> selectByUserNo(int userNo, Pagination pi);
+
+
+	/**
+	 * 동행찾기 현재 인원수 플러스 
+	 * @param userNo
+	 * @return int
+	 */
+	public int plusCommentPeople(int userNo);
 }

@@ -27,7 +27,7 @@ public interface TourStore {
 	 * @param pi 
 	 * @return List<Tour>
 	 */
-	public List<Tour> selectTourList(SqlSession session, PageInfo pi);
+	public List<Tour> selectTourList(SqlSession session, Pagination pi);
 
 	/**
 	 * 패키지게시판 게시물 상세조회 Store
@@ -131,5 +131,13 @@ public interface TourStore {
 	 * @return int 
 	 */
 	public int selectCurrCount(SqlSession session, int tourNo);
+
+	/**
+	 * 투어게시물 댓글 삭제  Store
+	 * @param session
+	 * @param commentNo
+	 * @return int
+	 */
+	public int deleteComment(SqlSession session, int commentNo);
 
 }

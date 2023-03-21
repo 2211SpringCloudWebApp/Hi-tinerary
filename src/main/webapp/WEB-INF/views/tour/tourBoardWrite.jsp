@@ -33,19 +33,19 @@
                             <div class="double-half">
                                 <div class="half"> 
                                     <div class="infos">가격</div>
-                                    <div><input type="text" name="price"></div>
+                                    <div><input type="text" name="price" placeholder="숫자만 기입해 주세요"></div>
                                 </div>
                                 <div class="half"> 
                                     <div class="infos">여행기간</div>
-                                    <div><input type="text" name="startDate" placeholder="시작일시(yyyymmddhh)"></div>
+                                    <div><input type="text" name="startDate" placeholder="시작일시(yyyyMMddHH)"></div>
                                     ~&nbsp;
-                                    <div><input type="text" name="endDate" placeholder="종료일시(yyyymmddhh)"></div>
+                                    <div><input type="text" name="endDate" placeholder="종료일시(yyyyMMddHH)"></div>
                                 </div>	
                             </div>
                             <div class="double-half">
                                 <div class="half"> 
                                     <div class="infos">모집기간</div>
-                                    <div><input type="text" name="deadline"></div>
+                                    <div><input type="text" name="deadline" placeholder="yyyyMMdd(숫자8자리)"></div>
                                 </div>
                                 <div class="half"> 
                                 	<div class="infos1">최소인원</div>

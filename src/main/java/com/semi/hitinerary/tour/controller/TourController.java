@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.semi.hitinerary.comment.domain.Comment;
+import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.tour.domain.PageInfo;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
@@ -35,12 +36,15 @@ public class TourController {
 	// 패키지게시판 리스트 보기
 	@RequestMapping(value = "/tour/tourBoardList", method = RequestMethod.GET)
 	public ModelAndView TourBoardListView(ModelAndView mv
-			, @RequestParam(defaultValue="1") int page) {
+			//, @RequestParam(defaultValue="1") int page
+			, @RequestParam(value="page", required=false, defaultValue = "1") String sCurrentPage) {
 			
 		
 		int totalCount = tService.getListCount(); //게시물 개수 받아옴!
 		//int currentPage = 받아올 것?
-		PageInfo pi = this.getPageInfo(page, totalCount);
+		//PageInfo pi = this.getPageInfo(page, totalCount);
+		Pagination pi = new Pagination(Integer.parseInt(sCurrentPage), 12, 5, totalCount);
+		
 		
 		List<Tour> tList = tService.selectTourList(pi);
 		mv.addObject("pi", pi).addObject("tList", tList).setViewName("tour/tourBoardList");
@@ -154,13 +158,13 @@ public class TourController {
 		
 		try {
 			if (thumbnail != null && !thumbnail.isEmpty() && !thumbnail.getOriginalFilename().equals("")) {
-				String tourImagePath = savetourImage(tourImage, request, tour.getTourNo(), tour.getUserNo());
-				tour.setTourImage(tourImagePath);
+				String thumbnailPath = saveThumbnail(thumbnail, request, tour.getTourNo(), tour.getUserNo());
+				tour.setThumbnail(thumbnailPath);
 				
 			}
 			if (tourImage != null && !tourImage.isEmpty() && !tourImage.getOriginalFilename().equals("")) {
-				String thumbnailPath = saveThumbnail(thumbnail, request, tour.getTourNo(), tour.getUserNo());
-				tour.setThumbnail(thumbnailPath);
+				String tourImagePath = savetourImage(tourImage, request, tour.getTourNo(), tour.getUserNo());
+				tour.setTourImage(tourImagePath);
 				
 			}
 			
@@ -178,6 +182,18 @@ public class TourController {
 		}
 
 	}
+	
+	//디테일페이지에서 신고페이지 보기
+	@RequestMapping(value="/report/report", method = RequestMethod.GET)
+	public String tourReport(@RequestParam(value="tourNo") int tourNo, Model model) {
+		Tour tour = tService.selectOneByNo(tourNo);
+		model.addAttribute("tour", tour);
+		return "report/report";
+	}
+	
+	//신고페이지
+	
+	
 	
 	//디테일페이지에서 댓글 쓰기
 	@RequestMapping(value = "tour/replyUp", method = RequestMethod.POST)
@@ -204,7 +220,7 @@ public class TourController {
 		Comment reReply = new Comment(content, tourNo, userNo, userNickname);
 		reReply.setRefCommentNo(refCommentNo);
 		
-		int reslut = tService.reReplyUp(reReply);
+		int result = tService.reReplyUp(reReply);
 		
 		return "redirect:/tour/tourBoardDetail?tourNo="+tourNo; 
 	}
@@ -302,7 +318,18 @@ public class TourController {
 		}
 	}
 	
-	
+	//댓글, 대댓글 삭제
+	@RequestMapping(value="/tour/commentRemove", method=RequestMethod.GET)
+	public String deleteComment(@RequestParam("commentNo") int commentNo, Model model) {
+		int result = tService.deleteComment(commentNo);
+		if(result>0) {
+			return"redirect: /tour/tourBoardList"; //어우 고쳐야해. tourNo 어디서 받냐 또			
+		}else {
+			model.addAttribute("msg", "댓글 삭제 실패");
+			return "common/error";
+		}
+		
+	}
 	
 	// 지정 경로로 본문이미지 복사(업로드)
 	private String savetourImage(MultipartFile tourImage, HttpServletRequest request, int userNo, int tourNo) {
@@ -349,23 +376,7 @@ public class TourController {
 	}
 
 	
-	//paging
-	private PageInfo getPageInfo(int currentPage, int totalCount) {
-		int postingLimit = 12;
-		int naviLimit =5;
-		int maxPage;
-		int startNavi;
-		int endNavi;
-		
-		maxPage = (int)((double)totalCount / postingLimit + 0.9);
-		startNavi =((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
-		endNavi = startNavi + naviLimit -1;
-		if(endNavi > maxPage) {
-			endNavi = maxPage;
-		}
-		PageInfo pi = new PageInfo(currentPage, postingLimit, totalCount, currentPage, startNavi, naviLimit, endNavi);
-		return pi;
-	}
+	
 }
 
 

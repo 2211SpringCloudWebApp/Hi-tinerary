@@ -29,6 +29,9 @@
 	<delete id="deleteGroupBoardComment">
 		DELETE FROM COMMENT_TBL WHERE COMMENT_NO = #{commentNo}
 	</delete>
+	<delete id ="deleteTourComment">
+		DELETE FROM COMMENT_TBL WHERE COMMENT_NO = #{commentNo}
+	</delete>
 	
 	<update id="updateGroupBoardComment">
 		UPDATE COMMENT_TBL SET CONTENT = #{content} WHERE COMMENT_NO = #{commentNo} 

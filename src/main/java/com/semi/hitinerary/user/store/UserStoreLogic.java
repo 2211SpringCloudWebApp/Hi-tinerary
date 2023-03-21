@@ -31,7 +31,7 @@ public class UserStoreLogic implements UserStore{
 
 	@Override
 	public User selectOneByNo(SqlSession session, int userNo) {
-		User user = session.selectOne("UserMapper.selectUserById", userNo);
+		User user = session.selectOne("UserMapper.selectUserByNo", userNo);
 		return user;
 	}
 

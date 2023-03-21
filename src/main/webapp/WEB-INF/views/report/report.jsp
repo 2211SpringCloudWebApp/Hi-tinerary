@@ -30,10 +30,10 @@
                             </select>
                         </td>
                         <td id="titleTd">
-                            [글제목가져오기]
+                            ${boardTitle }
                         </td>
                         <td id="nicknameTd">
-                            [닉네임]
+                            ${userNickname }
                         </td>
                     </tr>
                     <tr>
@@ -79,7 +79,9 @@
                         <td>
                         	<form id="reportForm" action="/clickReport" method="GET">
                         		<input type="hidden" name="boardType" value="free">
+								<input type="hidden" name="userNo" value="${userNo}">
 								<input type="hidden" name="boardNo" value="${boardNo}">
+								<input type="hidden" name="commentNo" value="${commentNo}">
                             	<button type="submit" id="reportButton">
                                 	신고하기
                             	</button>
@@ -150,7 +152,7 @@
 	                	var form = document.getElementById("reportForm");
 	                	var selectBox = document.getElementById("reportSelect");
 	                	var selectedOption = selectBox.options[selectBox.selectedIndex];
-	                	var reportReason = selectedOption.value;
+	                	var reportReason = selectedOption.text;
 
 	
 	                	// form 데이터에 reportReason 추가

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.semi.hitinerary.report.domain.boardReport;
 import com.semi.hitinerary.user.domain.TourBuyUser;
 import com.semi.hitinerary.user.domain.User;
 
@@ -43,5 +44,38 @@ public interface UserStore {
 	 * @return int
 	 */
 	public int deleteBuyUser(SqlSession session, TourBuyUser tBUser);
+
+	/**
+	 * 일반회원 목록 조회 Store
+	 * @param session
+	 * @return
+	 */
+	public List<User> selectAllUser(SqlSession session);
+	
+	/**
+	 * 기업회원 목록 조회 Store
+	 * @param session
+	 * @return
+	 */
+	public List<User> selectSellerUser(SqlSession session);
+
+	/**
+	 * 유저 탈퇴 Store
+	 * @param session
+	 * @param userNo
+	 * @return int
+	 */
+	public int deleteUser(SqlSession session, int userNo);
+
+	/**
+	 * 기업회원 권한부여 Store
+	 * @param session
+	 * @param userNo
+	 * @return ints
+	 */
+	public int updateSellerGarde(SqlSession session, User user);
+
+	
+
 
 }

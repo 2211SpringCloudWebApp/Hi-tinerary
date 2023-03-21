@@ -59,7 +59,9 @@
 		                        	<form action="/report" method="POST">
 									    <input type="hidden" name="userNo" value="${loginUser.userNo}">
 									    <input type="hidden" name="boardNo" value="${freeboard.boardNo}">
-									    <input type="hidden" name="commentNo" value="null">
+									    <input type="hidden" name="boardTitle" value="${freeboard.boardTitle}">
+									    <input type="hidden" name="userNickname" value="${freeboard.userNickname}">
+									    <input type="hidden" name="commentNo" value=0>
 									    <input type="hidden" name="boardType" value="free">
 									    <a href="#" onclick="event.preventDefault(); document.querySelector('form').submit();">신고</a>
 									</form>

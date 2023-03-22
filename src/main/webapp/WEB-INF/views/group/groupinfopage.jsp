@@ -7,183 +7,19 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>그룹 페이지</title>
-		<style>
-        html, body{
-            width: 1200px;
-            margin : 0 auto;
-        }
-        #group-container{
-         	overflow:hidden;
-        	height:auto;
-       	} 
-        .title-area{
-            border-bottom: 1px solid black;
-            width: 820px;
-            margin : 20px auto; 
-            display : flex;
-        }
-        .title{
-            margin-top : 5px;
-            margin-bottom: 0px;
-            margin-left : 30px;
-            margin-right : 0px;
-            width : 500px
-        }
-        .title-area input{
-        	text-align : center;
-        	color : black;
-        	height : 20px;
-        	width : 70px;
-        	margin-top : 20px;
-        	margin-left : 200px;
-        	background-color : green;
-        	border : 1px solid green;
-        	border-radius : 5px;
-        }
-        #group-nav{
-            float: left;
-            width: 280px;
-            border: 1px solid green;
-            margin-left : 10px;
-        }
-            #group-nav p{
-                margin: 5px 0px;
-                font-size: 25px;
-                text-align: center;
-            }
-            #group-nav a{
-            	text-decoration : none;
-            	color : black;
-            	margin : 20px auto;
-            	text-align : center;
-                background-color: darkgray;
-                border: 1px solid darkgray;
-                border-radius: 15px;
-                padding: 10px 0px;
-                display : block;
-                width : 200px;
-            }
-                #group-nav a:nth-of-type(${groupIndex+2}){
- 				color : white;
-                background-color: pink;
-                border: 1px solid pink;
-
-            }
-        #group-area{
-            float: left;
-            width:860px;
-            border: 1px solid green;
-            margin : 0 15px;
-        }
-        #info-area{
-            height: 100px;
-        }
-        #area1{
-            float: left;
-            font-weight: bold;
-            font-size : 20px
-        }
-            #area1 p:first-of-type{
-                margin : 5px 0px;
-                margin-left: 140px;                
-            }
-            #second-p{
-                margin : 5px 0px;
-                margin-left: 20px; 
-            }
-        #area2{
-            float: right;
-            margin-right: 30px;
-        }
-            #area2 p{
-                margin-top : 5px;
-                font-weight: bold;
-                font-size: 20px;
-            }
-            #area2 a{
-                text-decoration: none;
-                color : black;
-                background-color: green;
-                padding : 5px 20px;
-                margin : 5px;
-            }
-            #area3{
-                margin-left: 20px;
-            }
-                #area3 button{
-                    text-decoration: none;
-                    color: black;
-                    background-color: pink;
-                    padding : 10px 40px;
-                    border: 1px solid pink;
-                    border-radius: 15px;
-                }
-                #area3 p{
-                    margin-left: 20pxpx;
-                }
-            table{
-            	margin : 0px auto;
-            }
-            th{
-            	font-size : 25px;
-            }
-            th, td{
-                text-align: center;
-                padding :5px;
-            }
-            td{
-            	border-bottom : 1px dashed black;
-            }
-            #groupList-tbl input{
-	        	text-align : center;
-	        	color : black;
-	        	background-color : green;
-	        	border : 1px solid green;
-	        	border-radius : 5px;
-            }
-            #writeBoard{
-            	text-decoration: none;
-            	font-size : 15px;
-                color : white;
-                background-color: green;
-            	float : right;
-            	margin-right : 30px;
-            	margin-bottom : 30px;
-            	margin-top : 20px;
-            	border : 1px solid green;
-            	border-radius : 5px;
-            }
-            #board-navi a{
-            	text-decoration : none;
-            	color : black;
-            }
-            #groupBoardList-tbl td:nth-of-type(4) input{
-            	text-align : center;
-	        	color : white;
-	        	background-color : #F39081;
-	        	border : 1px solid #F39081;
-	        	border-radius : 5px;
-            }
-            #groupBoardList-tbl td:nth-of-type(5) input{
-            	text-align : center;
-	        	color : white;
-	        	background-color : #FBD188;
-	        	border : 1px solid #FBD188;
-	        	border-radius : 5px;
-            }
-    	</style>
+    	<link rel="stylesheet" href="../../../../resources/css/groupinfo.css">
 	</head>
 	<body>
 		<jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
-		<div id="group-container">
-			<div id="group-nav">
-	            <p>123</p>
-	            <a href="/group/groupinfopage?groupIndex=-1">그룹만들기</a>
+		<div class="group-container">
+			<div class="group-nav">
+	            <p>${loginUser.userNickname }</p>
+	            <a class="nav-btn now-nav" href="/group/groupinfopage?groupIndex=-1">그룹만들기</a>
 	            <c:forEach items="${gList}" var="group" varStatus="status">
-	            	<a href="/group/groupinfopage?groupIndex=${status.index }">${group.groupName }</a>
+	            	<a class="nav-btn" href="/group/groupinfopage?groupIndex=${status.index }">${group.groupName }</a>
 	            </c:forEach>
 	        </div>
-			<div id="group-area">
+			<div class="group-area">
 				<c:if test="${groupIndex eq -1}">
 					<form action="/group/register.do" method="post">
 					그룹명 : <input type="text" name="groupName">

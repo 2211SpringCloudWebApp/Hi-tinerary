@@ -1,0 +1,40 @@
+@charset "UTF-8";
+.group-container{
+	display : flex;
+	width: 1200px;
+	margin : 0px auto;
+}
+.group-nav{
+	width: 290px;
+	border: 3px solid #0F8D80;
+	margin-left : 10px;
+	border-radius: 10px;
+}
+.group-nav p{
+	margin: 5px 0px;
+	font-size: 25px;
+	text-align: center;
+}
+.nav-btn{
+	text-decoration : none;
+	color : black;
+	margin : 20px auto;
+	text-align : center;
+	background-color: darkgray;
+	border: none;
+	border-radius: 15px;
+	padding: 10px 0px;
+	display : block;
+	width : 200px;
+}
+
+.now-nav{
+	background-color : #F39081;
+}
+
+.group-area{
+	width: 890px;
+	border: 3px solid #0F8D80;
+	margin-left : 20px;
+	border-radius: 10px;
+}

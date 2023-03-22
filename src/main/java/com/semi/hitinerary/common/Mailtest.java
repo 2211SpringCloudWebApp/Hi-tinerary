@@ -28,7 +28,7 @@ public class Mailtest {
         
         String subject = "test 메일입니다";
         // 메일제목
-        String content = "메일 테스트 내용 <br> 테스트테스트 <img src='cid:logo'/>";
+        String content = "메일 테스트 내용 <br> 테스트테스트 <img src='cid:logo'/>  <img src='cid:logoos'/>";
         // 메일 내용 + src는 아래 이미지 출력
         String from = "truewater98@gmail.com";
         // 보내는 사람 메일
@@ -60,6 +60,8 @@ public class Mailtest {
             filename = path + "\\images\\noThumbnail.png";
             // resources위치 아래 경로 선택해주기
             mailHelper.addInline("logo", new FileDataSource(filename));
+            filename = path + "\\images\\icon.png";
+            mailHelper.addInline("logoos", new FileDataSource(filename));
             // 경로 선택한 파일 메일 안으로 보내주기            
             mailSender.send(mail);
             // 메일 발송
@@ -69,13 +71,5 @@ public class Mailtest {
         }
         return "redirect:/";
     }
-	@RequestMapping(value = "/pathtest", method = RequestMethod.GET)
-	public String Pathtest(HttpServletRequest request,Model model) {
-		String path = request.getSession().getServletContext().getRealPath("resources");
-		path += "\\images\\noThumbnail.png";
-        System.out.println("현재 작업 경로: " + path);
-		model.addAttribute("path", path);
-		return "test";
-	}
 
 }

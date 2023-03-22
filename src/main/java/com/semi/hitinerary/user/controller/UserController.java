@@ -300,6 +300,7 @@ public class UserController {
 		return "redirect:/user/mypage";
 	}
 	
+	// 일반유저 회원탈퇴
 	@RequestMapping(value="/user/delete", method=RequestMethod.POST)
 	public String deleteNormalUser(int userNo) {
 		int result = uService.deleteUser(userNo);

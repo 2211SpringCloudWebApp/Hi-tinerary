@@ -140,4 +140,13 @@ public interface TourStore {
 	 */
 	public int deleteComment(SqlSession session, int commentNo);
 
+	/**
+	 * 유저번호로 투어상품 게시글 찾기
+	 * @param session
+	 * @param userNo
+	 * @param pi
+	 * @return
+	 */
+	public List<Tour> selectListByuserNo(SqlSession session, int userNo, Pagination pi);
+
 }

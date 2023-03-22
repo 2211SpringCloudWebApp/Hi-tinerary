@@ -73,5 +73,19 @@ public interface UserService {
 	 */
 	public int updateSellerGarde(User user);
 
+	/**
+	 * 기업회원 정보수정 Service
+	 * @param user
+	 * @return int
+	 */
+	public int updateCoUserByNo(User user);
+
+	/**
+	 * 기업회원 탈퇴신청 Service
+	 * @param userNo
+	 * @return int
+	 */
+	public int deleteApplyUser(int userNo);
+
 	
 }

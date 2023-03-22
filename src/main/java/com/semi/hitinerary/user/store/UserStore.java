@@ -83,6 +83,20 @@ public interface UserStore {
 	 */
 	public int updateSellerGarde(SqlSession session, User user);
 
+	/**
+	 * 기업회원 정보수정 Store
+	 * @param user
+	 * @return int
+	 */
+	public int updateCoUserByNo(SqlSession session, User user);
+
+	/**
+	 * 기업회원 탈퇴신청 Store
+	 * @param userNo
+	 * @return int
+	 */
+	public int deleteApplyUser(SqlSession session, int userNo);
+
 	
 
 

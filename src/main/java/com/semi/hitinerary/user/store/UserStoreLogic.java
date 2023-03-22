@@ -77,4 +77,16 @@ public class UserStoreLogic implements UserStore{
 		return session.delete("UserMapper.updateSellerGarde", user);
 	}
 
+	@Override
+	public int updateCoUserByNo(SqlSession session, User user) {
+		int result = session.update("UserMapper.updateCoUserByNo", user);
+		return result;
+	}
+
+	@Override
+	public int deleteApplyUser(SqlSession session, int userNo) {
+		int result = session.update("UserMapper.deleteApplyUser", userNo);
+		return result;
+	}
+
 }

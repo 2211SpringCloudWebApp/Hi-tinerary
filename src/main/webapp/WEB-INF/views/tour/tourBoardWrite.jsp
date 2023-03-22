@@ -134,6 +134,49 @@
             tourContentInput1.value = tourContentDiv1.innerHTML;
         });
         
+        
+        
+     // 가격 필드 유효성 검사
+        const priceInput = document.querySelector('input[name="price"]');
+        const priceRegex = /^[0-9]+$/; // 숫자만 입력 가능한 정규표현식
+        priceInput.addEventListener('input', function() {
+          if (!priceRegex.test(this.value)) {
+            this.setCustomValidity('숫자만 입력 가능합니다.');
+          } else {
+            this.setCustomValidity('');
+          }
+        });
+
+        // 여행기간 필드 유효성 검사
+        const startDateInput = document.querySelector('input[name="startDate"]');
+        const endDateInput = document.querySelector('input[name="endDate"]');
+        const dateRegex = /^[0-9]{10}$/; // yyyyMMddHH 형식의 정규표현식
+        startDateInput.addEventListener('input', function() {
+          if (!dateRegex.test(this.value)) {
+            this.setCustomValidity('yyyyMMddHH 형식으로 입력해주세요.');
+          } else {
+            this.setCustomValidity('');
+          }
+        });
+        endDateInput.addEventListener('input', function() {
+          if (!dateRegex.test(this.value)) {
+            this.setCustomValidity('yyyyMMddHH 형식으로 입력해주세요.');
+          } else {
+            this.setCustomValidity('');
+          }
+        });
+
+        // 모집기간 필드 유효성 검사
+        const deadlineInput = document.querySelector('input[name="deadline"]');
+        const deadlineRegex = /^[0-9]{8}$/; // yyyyMMdd 형식의 정규표현식
+        deadlineInput.addEventListener('input', function() {
+          if (!deadlineRegex.test(this.value)) {
+            this.setCustomValidity('yyyyMMdd 형식으로 입력해주세요.');
+          } else {
+            this.setCustomValidity('');
+          }
+        });
+        
 	    </script>
 	</body>
 </html>

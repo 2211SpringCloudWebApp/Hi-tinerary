@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.semi.hitinerary.comment.domain.Comment;
 import com.semi.hitinerary.common.Pagination;
-import com.semi.hitinerary.tour.domain.PageInfo;
+
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
 import com.semi.hitinerary.tour.service.TourService;

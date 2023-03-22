@@ -26,6 +26,11 @@
 		INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL, #{content}, DEFAULT, DEFAULT, 1, NULL, NULL, NULL, #{groupBoardNo}, NULL, #{refCommentNo}, #{userNo})
 	</insert>	
 	
+	<!-- 자유게시판 댓글 등록하기 -->
+	<insert id="insertFreeboardComment">
+		INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL, #{content}, DEFAULT, DEFAULT, #{depth}, null,null,#{freeBoardNo},null,DEFAULT,#{refCommentNo},#{userNo})
+	</insert>
+	
 	<delete id="deleteGroupBoardComment">
 		DELETE FROM COMMENT_TBL WHERE COMMENT_NO = #{commentNo}
 	</delete>
@@ -56,20 +61,15 @@
 	
 	<!-- 자유게시판 댓글 리스트 불러오기 -->
 	<select id="ListFreeboardComment" resultMap="commentResultMapper">
-		SELECT C.COMMENT_NO, C.CONTENT, C.WRITE_DATE, C.UPDATE_DATE, C.DEPTH, C.TOUR_NO, C.WITH_BOARD_NO, C.FREE_BOARD_NO, 
-		C.GROUP_BOARD_NO, C.STATUS, C.REF_COMMENT_NO, C.USER_NO, U.USER_NICKNAME
-		FROM COMMENT_TBL C
-		JOIN USER_TBL U ON C.USER_NO = U.USER_NO WHERE FREE_BOARD_NO = #{freeBoardNo}
+		SELECT A.*, B.USER_NICKNAME FROM COMMENT_TBL A JOIN USER_TBL B ON A.USER_NO = B.USER_NO WHERE FREE_BOARD_NO = #{freeBoardNo} START WITH DEPTH = 0 CONNECT BY REF_COMMENT_NO = PRIOR COMMENT_NO
 	</select>
+	
 	<!-- 투어게시판 댓글 리스트 불러오기 -->
 	<select id="selectAllTour" resultMap="commentResultMapper">
 		SELECT A.*, B.USER_NICKNAME FROM COMMENT_TBL A JOIN USER_TBL B ON A.USER_NO = B.USER_NO WHERE TOUR_NO = #{tourNo} START WITH DEPTH = 0 CONNECT BY REF_COMMENT_NO = PRIOR COMMENT_NO
 	</select>
 	
-	<!-- 자유게시판 댓글 등록하기 -->
-	<insert id="insertFreeboardComment">
-		INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL, #{content}, DEFAULT, DEFAULT, #{depth}, null,null,#{freeBoardNo},null,DEFAULT,#{refCommentNo},#{userNo})
-	</insert>
+
 	
 	<!-- 동행게시판 댓글 등록하기 -->
 	<insert id="insertWithBoardComment">

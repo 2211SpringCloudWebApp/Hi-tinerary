@@ -91,6 +91,7 @@
                			<div id="lcomment_container">
 				            <table id="lcomment_table">
 				                <tr>
+				                	<div style="display:none;">${comment.commentNo }</div>
 				                    <td id="lcomment_td1">${comment.userNickname}</td>
 				                    <td id="lcomment_td2"><input id="lcomment_input" type="text" readonly value="${comment.content}"></td>
 				                    <td id="lcomment_td3"><fmt:formatDate value="${comment.updateDate }" pattern="yyyy-MM-dd ahh:mm" /></td>
@@ -110,20 +111,20 @@
 					                    	<button type="submit" id="lcomment_button3" >채택댓글</</button>
 					                    </td>
 				                    </c:if>
-				                    <td id="lcomment_td5">
-				                    	<c:if test="${loginUser.userNo != null }">
-				                    		<a href="#"  onclick="showCommentInput(this)">댓글달기</a>
-				                    		<c:if test="${comment.status == 0 }">
-					                    		<c:if test="${comment.userNo == loginUser.userNo || loginUser.userGrade == 4}">
-					                    			<form action="/freeboard/comment/delete" method="post">
+				                    <c:if test="${loginUser.userNo != null }">
+					                	<td id="lcomment_td5">
+					               	    	<a href="#"  onclick="showCommentInput(this)">댓글달기</a>
+						                   	<c:if test="${comment.status == 0 }">
+							                   	<c:if test="${comment.userNo == loginUser.userNo || loginUser.userGrade == 4}">
+							                   		<form action="/freeboard/comment/delete" method="post">
+														<input type="hidden" name="boardNo" value="${freeboard.boardNo}">
 														<input type="hidden" name="commentNo" value="${comment.commentNo}">
 														| <a href="#" onclick="if (confirm('정말 삭제하시겠습니까?')) {this.parentNode.submit()}">삭제</a>
-					                    			</form>
-					                    		</c:if>
-				                    		</c:if>
-				                    		<c:if test="${loginUser.userNo != null && comment.userNo != loginUser.userNo && loginUser.userGrade != 4}">
-				                    			<form action="/report" method="POST">
-				                    			 	${comment.commentNo}
+							                   		</form>
+							                   	</c:if>
+						                   	</c:if>
+						                   	<c:if test="${loginUser.userNo != null && comment.userNo != loginUser.userNo && loginUser.userGrade != 4}">
+						                   		<form action="/report" method="POST">
 												    <input type="hidden" name="userNo" value="${loginUser.userNo}">
 													<input type="hidden" name="boardNo" value="${freeboard.boardNo}">
 													<input type="hidden" name="commentNo" value="${comment.commentNo}">
@@ -132,9 +133,9 @@
 													<input type="hidden" name="boardType" value="free">
 													<a href="#" onclick="this.parentNode.submit(); return false;">신고</a>
 												</form>
-				                    		</c:if>
-				                    	</c:if>
-				                    </td>
+					                   		</c:if>
+					            		</td>
+				               		</c:if>
 				                </tr>
 				            </table>
 			        	</div>
@@ -153,6 +154,7 @@
 				                    		<c:if test="${comment.status == 0 }">
 					                    		<c:if test="${comment.userNo == loginUser.userNo || loginUser.userGrade == 4}">
 					                    			<form action="/freeboard/comment/delete" method="post">
+					                    				<input type="hidden" name="boardNo" value="${freeboard.boardNo}">
 														<input type="hidden" name="commentNo" value="${comment.commentNo}">
 														| <a href="#" onclick="if (confirm('정말 삭제하시겠습니까?')) {this.parentNode.submit()}">삭제</a>
 					                    			</form>
@@ -184,12 +186,13 @@
 			            <table id="comment_table">
 			                <tr>
 			                	<form action="/freeboard/comment/write" method="POST" enctype="multipart/form-data">
-			                		<input type="hidden" name="boardNo" value="${freeboard.boardNo }">
+			                		<input type="hidden" name="freeBoardNo" value="${freeboard.boardNo }">
 			                		<input type="hidden" name="userNo" value="${loginUser.userNo }">
 				                    <input type="hidden" name="depth" value = 0>
 				                    <td id="comment_td1" name ="userNickname">${loginUser.userNickname}</td>
 				                    <td id="comment_td2"><input name="content" id="comment_input" type="text" placeholder="여기에 댓글을 작성해 주세요."></td>
 				                    <td id="comment_td3">
+				                    
 				                    	<button type="submit" id="comment_button">댓글달기</button>
 				                    </td>
 			                	</form>
@@ -203,8 +206,9 @@
 				    	<div id="comment_container">
 				        	<table id="comment_table">
 				            	<tr>
-				            		<form action="/freeboard/comment/write" method="POST" enctype="multipart/form-data">
-				             			<input type="hidden" name="boardNo" value="${freeboard.boardNo }">
+				            		<form action="/freeboard/reply/write" method="POST" enctype="multipart/form-data">
+				             			<input type="hidden" name="freeBoardNo" value="${freeboard.boardNo }">
+				             			<input type="hidden" name="refCommentNo" value="${comment.commentNo }">
 			                			<input type="hidden" name="userNo" value="${loginUser.userNo }">
 			                			<input type="hidden" name="depth" value = 1>
 				                  		<td id="comment_td1" name ="userNickname">${loginUser.userNickname}</td>
@@ -237,7 +241,7 @@
 				}else{
 				commentBox.after(writeBox);
 				writeBox.style.display = "block";
-					
+				document.querySelector("[name=refCommentNo]").value = commentBox.firstElementChild.innerHTML;
 				}
 			}
         </script>

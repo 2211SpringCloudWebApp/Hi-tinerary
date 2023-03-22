@@ -88,27 +88,7 @@ public class CommentController {
 		return null;
 	}
 	
-	// 자유게시판 댓글 리스트 출력
-	public List<Comment> ListFreeboardComment(int boardNo) {
-		System.out.println("댓글 진입");
-		List<Comment> cList = cService.ListFreeboardComment(boardNo);
-		System.out.println(cList);
-		return cList;
-	}
-	
-	// 자유게시판 댓글쓰기
-	@RequestMapping(value="/freeboard/comment/write", method=RequestMethod.POST)
-	public String insertFreeBoardComment(
-			@RequestParam("boardNo") int freeBoardNo
-			,@ModelAttribute Comment comment
-			,Model model) {
-		
-		comment.setFreeBoardNo(freeBoardNo);
-		
-		int result = cService.insertFreeBoardComment(comment);
-		
-		return "redirect:/freeboard/detail?boardNo=" + freeBoardNo;
-	}
+
 	
 	/**
 	 * 동행찾기 게시판 댓글 쓰기
@@ -171,6 +151,28 @@ public class CommentController {
 		
 		return "redirect:/freeboard/detail?boardNo=" + freeBoardNo;
 	}
+	
+	// 자유게시판 댓글쓰기
+	@RequestMapping(value="/freeboard/comment/write", method=RequestMethod.POST)
+	public String insertFreeBoardComment(
+			@ModelAttribute Comment comment
+			,Model model) {
+		
+		int result = cService.insertFreeBoardComment(comment);
+		return "redirect:/freeboard/detail?boardNo=" + comment.getFreeBoardNo();
+	}
+	
+	// 자유게시판 대댓글쓰기
+	@RequestMapping(value="/freeboard/reply/write", method=RequestMethod.POST)
+	public String insertFreeBoardReply(
+			@RequestParam("refCommentNo") String refCommentNo
+			,@ModelAttribute Comment comment
+			,Model model) {
+		comment.setRefCommentNo(Integer.parseInt(refCommentNo));
+		int result = cService.insertFreeBoardComment(comment);
+		return "redirect:/freeboard/detail?boardNo="+ comment.getFreeBoardNo();
+	}
+	
 	// 자유게시판 댓글 삭제
 	@RequestMapping(value="/freeboard/comment/delete",method=RequestMethod.POST)
 	public String deleteFreeboardComment(
@@ -180,19 +182,4 @@ public class CommentController {
 		int result = cService.deleteFreeBoardComment(commentNo);
 		return "redirect:/freeboard/detail?boardNo=" + boardNo;
 	}
-	
-	// 자유게시판 대댓글쓰기
-	@RequestMapping(value="/freeboard/reply/write", method=RequestMethod.POST)
-	public String insertFreeBoardReply(
-			int BoardNo
-			,@ModelAttribute Comment comment
-			,Model model) {
-		
-		//int result = cService.insertFreeBoardReply(comment);
-		int groupBoardNo = comment.getGroupBoardNo();
-		return "redirect:/freeboard/detail?boardNo="+ BoardNo;
-	}
-	
-
-
 }

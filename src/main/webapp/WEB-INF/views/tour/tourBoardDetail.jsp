@@ -220,19 +220,19 @@
         	}
         
         
-        	//대댓글 온클릭!
+        	//대댓글쓰기 온클릭!
 			function writeReply(writeArea){
-				var replyDiv = writeArea.parentNode.parentNode;
+				var replyDiv = writeArea.parentNode.parentNode; //첫댓글영역
+				var reReplyDiv = document.querySelector(".writeReReply"); //대댓글쓰기div 가져옴
+				var reReplyDivSibling = replyDiv.nextSibling; // 선택한 댓글 아래에 있는 대댓글 쓰기 영역
 				
-				var reReplyDiv = document.querySelector(".writeReReply");
-				var reReplyDivSibling = replyDiv.nextSibling;
-
-				if(reReplyDivSibling == reReplyDiv){
-					reReplyDiv.style.display="none";
+				
+				if(reReplyDivSibling == reReplyDiv){ //대댓글쓰기 == 대댓글쓰기
+					reReplyDiv.style.display="none"; // 화면에 안보여줌
 					replyDiv.before(reReplyDiv);
 				}else{
 					replyDiv.after(reReplyDiv);
-					reReplyDiv.style.display="flex";
+					reReplyDiv.style.display="flex"; // 화면에 보여줌
 					document.querySelector("[name=refCommentNo]").value = replyDiv.firstElementChild.innerHTML;
 					
 				}

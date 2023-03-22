@@ -44,18 +44,6 @@
 		</if>
 	</select>
 	
-	<!-- 게시글 리스트 보여주기. -->
-	<select id="selectFreeboardList" resultMap="freeboardResultMapper">
-		SELECT * FROM FREE_BOARD_TBL
-		<if test="searchCondition == 'free'">
-			WHERE BOARD_HEAD = #{searchCondition }
-		</if>
-		<if test="searchCondition == 'question'">
-			WHERE BOARD_HEAD = #{searchCondition }
-		</if>
-		ORDER BY BOARD_NO DESC
-	</select>
-	
 	<!-- 검색 목록 개수 가져오기 -->
 	<select id="getSearchListCount" resultType="_int">
 		SELECT COUNT(*) FROM FREE_BOARD_TBL
@@ -70,7 +58,7 @@
 	</select>
 	
 	<!-- 검색 목록 불러오기 -->
-	<select id="selectListByKeyword" resultMap="freeboardResultMapper">
+	<select id="selectFreeboardList" resultMap="freeboardResultMapper">
 		SELECT FT.*, UT.USER_NICKNAME
 		FROM FREE_BOARD_TBL FT
 		LEFT JOIN USER_TBL UT

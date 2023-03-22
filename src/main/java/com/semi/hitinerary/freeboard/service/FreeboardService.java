@@ -15,24 +15,19 @@ public interface FreeboardService {
 	 * @return int
 	 */
 	public int insertFreeboard(Freeboard freeboard);
+	
 	/**
 	 * 게시글 수정 Service
 	 * @param freeboard
 	 * @return int
 	 */
 	public int modifyFreeboard(Freeboard freeboard);
+	
 	/**
 	 * 게시글 전체 개수 Service
 	 * @return int
 	 */
 	public int getListCount(Search search);
-
-	/**
-	 * 게시글 리스트 조회 Service
-	 * @param pi
-	 * @return List<Freeboard>
-	 */
-	public List<Freeboard> selectFreeboardList(PageInfo pi, Search search);
 
 	/**
 	 * 게시글 상세조회 Service
@@ -61,7 +56,7 @@ public interface FreeboardService {
 	 * @param search
 	 * @return List<Freeboard>
 	 */
-	public List<Freeboard> selectListByKeyword(PageInfo pi, Search search);
+	public List<Freeboard> selectFreeboardList(PageInfo pi, Search search);
 
 	/**
 	 * 닉네임 조회 Service

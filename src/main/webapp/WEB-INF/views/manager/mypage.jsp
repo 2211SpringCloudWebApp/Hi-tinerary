@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -158,7 +159,9 @@
 							        		<a href="/tour/tourBoardDetail?tourNo=${bReportList.tourNo }">${bReportList.boardTitle }</a>
 							        	</c:if>
 							        </td>
-							        <td>${bReportList.reportDate}</td>
+							        <td>
+							        	${fn:substring(bReportList.reportDate, 0, 10)} 오전 ${fn:substring(bReportList.reportDate, 11, 13)}시
+							  		</td>
 							        <td>${bReportList.reporterNickname}</td>
 							        <td>${bReportList.reportReason}</td>
 							        <td>${bReportList.boardWriterNickname}</td>
@@ -191,7 +194,7 @@
 							        <td>${cReportList.boardWriterNickname}</td>
 							        <td>${cReportList.reporterNickname}</td>
 							        <td>${cReportList.reportReason}</td>
-							        <td>${cReportList.reportDate}</td>
+							        <td>${fn:substring(cReportList.reportDate, 0, 10)} 오전 ${fn:substring(cReportList.reportDate, 11, 13)}시</td>
 							    </tr>
 							</c:forEach>
                         </table>

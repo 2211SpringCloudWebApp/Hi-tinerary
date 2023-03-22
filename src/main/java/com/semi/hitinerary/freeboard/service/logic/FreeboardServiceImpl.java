@@ -37,11 +37,6 @@ public class FreeboardServiceImpl implements FreeboardService{
 		return fStore.getListCount(session, search);
 	}
 
-	@Override
-	public List<Freeboard> selectFreeboardList(PageInfo pi, Search search) {
-		return fStore.selectFreeboardList(session, pi, search);
-	}
-
 
 	@Override
 	public Freeboard selectOneById(int boardNo) {
@@ -66,8 +61,8 @@ public class FreeboardServiceImpl implements FreeboardService{
 
 
 	@Override
-	public List<Freeboard> selectListByKeyword(PageInfo pi, Search search) {
-		return fStore.selectListByKeyword(session, pi, search);
+	public List<Freeboard> selectFreeboardList(PageInfo pi, Search search) {
+		return fStore.selectFreeboardList(session, pi, search);
 	}
 
 	@Override

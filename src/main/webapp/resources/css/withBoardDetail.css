@@ -95,7 +95,6 @@
 #thumbnail {
 	width: 560px;
 	height: 610px;
-    /* border: 2px solid yellow; */
 	margin-right: 50px;
 	margin-left: 50px;
 }
@@ -132,7 +131,7 @@
 
 #mainContent {
 	width: 500px;
-	height: 540px;
+	height: 500px;
 	border: 2px solid #0F8D80;
 	border-radius: 10px;
 	display: flex;
@@ -197,6 +196,8 @@
 	height: 45px;
 	border:none;
 	padding: 10px 0px;
+	font-size: 15px;
+	font-weight: bolder;
 }
 
 .modify{
@@ -209,6 +210,41 @@
 	background-color:#FBD188;
 	color: white;
 }
+
+#report{
+	height: 50px;
+	display: flex;
+	justify-content: center; /* 가로 방향 가운데 정렬 */
+  	align-items: center; /* 세로 방향 가운데 정렬 */
+	margin-top:33px;
+}
+
+#report button{
+	border-radius: 5px;
+	font-size: 15px;
+	color: white;
+	font-weight: bolder;
+}
+#listBtn{
+	width: 130px;
+	height: 45px;
+	border: none;
+	padding: 10px 0px;
+	background-color: #0F8D80;
+}
+
+#singo{
+	width: 130px;
+	height: 45px;
+	margin-left: 10px;
+	border: none;
+	padding: 10px 0px;
+	background-color: #F39081;
+}
+
+
+
+
 
 /* 여기서부터 댓글 영역 입니다. */
 

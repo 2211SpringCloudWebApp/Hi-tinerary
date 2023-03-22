@@ -12,6 +12,7 @@ import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.tour.domain.PageInfo;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
+import com.semi.hitinerary.tour.domain.TourSell;
 import com.semi.hitinerary.user.domain.User;
 
 @Repository
@@ -120,12 +121,24 @@ public class TourStoreLogic implements TourStore {
 	}
 
 	@Override
+	public int selectCountByUserNo(SqlSession session, int userNo) {
+		int totalCount = session.selectOne("TourMapper.selectCountByUserNo", userNo);
+		return totalCount;
+	}
+
+	@Override
 	public List<Tour> selectListByuserNo(SqlSession session, int userNo, Pagination pi) {
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowbounds = new RowBounds(offset, limit);
 		List<Tour> tList = session.selectList("TourMapper.selectListByuserNo", userNo, rowbounds);
 		return tList;
+	}
+
+	@Override
+	public List<TourSell> selectTourSellList(SqlSession session, int userNo) {
+		List<TourSell> tsList = session.selectList("TourSellMapper.selectTourSellList", userNo);
+		return tsList;
 	}
 
 }

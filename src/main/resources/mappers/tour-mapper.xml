@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="TourMapper">
-
 	<resultMap type="Tour" id="tourResultMap">
 		<id property="tourNo" column="TOUR_NO" />
 		<result property="tourTitle" column="TOUR_TITLE" />
@@ -17,7 +16,7 @@
 		<result property="thumbnail" column="TOUR_THUMBNAIL" />
 		<result property="writeDate" column="WRITE_DATE" />
 		<result property="userNo" column="USER_NO" />	
-		<result property="userNickname" column="USER_NICKNAME" />	
+		<result property="userNickname" column="USER_NICKNAME" />
 		<result property="userGrade" column="USER_GRADE" />
 		<result property="payDate" column="PAY_DATE"/>
 	</resultMap>
@@ -33,6 +32,9 @@
 	<select id="getTotalCount" resultType="_int">
 		SELECT COUNT(*) FROM TOUR_TBL
 	</select>
+	<select id="selectCountByUserNo" resultType="_int">
+		SELECT COUNT(*) FROM FREE_BOARD_TBL WHERE USER_NO = #{userNo}
+	</select>
 	<select id="selectListByuserNo" resultMap="tourResultMap">
 		SELECT * FROM TOUR_TBL WHERE USER_NO = #{userNo}
 	</select>
@@ -42,12 +44,9 @@
 	<select id="selectCurrentCount" resultType="_int">
 	SELECT COUNT(*) FROM TOUR_TBL JOIN TOUR_BUY_USER_TBL USING(TOUR_NO) WHERE TOUR_NO=#{tourNo}
 	</select>
-	
 	<select id="selectGetTotalCountByUserNo" resultType="_int">
 		SELECT COUNT(*) FROM TOUR_BUY_USER_TBL WHERE USER_NO = #{userNO}
 	</select>
-		
-	
 	<insert id="insertTour">
 		INSERT INTO TOUR_TBL VALUES(#{tourNo}, #{tourTitle}, #{tourContent}, #{startDate}, #{endDate}, #{price}, #{deadline}, '0', #{maxPeople}, #{minPeople}, #{tourImage}, #{thumbnail}, DEFAULT, #{userNo})
 	</insert>

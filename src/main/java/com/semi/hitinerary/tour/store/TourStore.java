@@ -9,6 +9,7 @@ import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.tour.domain.PageInfo;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
+import com.semi.hitinerary.tour.domain.TourSell;
 import com.semi.hitinerary.user.domain.User;
 
 public interface TourStore {
@@ -141,6 +142,14 @@ public interface TourStore {
 	public int deleteComment(SqlSession session, int commentNo);
 
 	/**
+	 * 유저번호로 투어상품 게시글 개수 찾기
+	 * @param session
+	 * @param userNo
+	 * @return
+	 */
+	public int selectCountByUserNo(SqlSession session, int userNo);
+
+	/**
 	 * 유저번호로 투어상품 게시글 찾기
 	 * @param session
 	 * @param userNo
@@ -148,5 +157,11 @@ public interface TourStore {
 	 * @return
 	 */
 	public List<Tour> selectListByuserNo(SqlSession session, int userNo, Pagination pi);
+
+	/**
+	 * 판매내역 리스트 불러오기 Store
+	 * @return List<TourSell>
+	 */
+	public List<TourSell> selectTourSellList(SqlSession session, int userNo);
 
 }

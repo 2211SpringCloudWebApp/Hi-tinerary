@@ -43,12 +43,12 @@
 		                                    </tr>
 		                                </thead>
 		                                <tbody>
-		                                	<c:forEach items="${tList }" var="tourboard" varStatus="i">
+		                                	<c:forEach items="${tList }" var="tour" varStatus="i">
 			                                    <tr>
 			                                    	<td>${i.count }</td>
-			                                        <td>${tourboard.tourTitle }</td>
-			                                        <td><fmt:formatDate value="${tourboard.writeDate }" pattern="yyyy-MM-dd ahh:mm"/></td>
-			                                        <td><a href="/tourboard/detail?boardNo=${tourboard.tourNo }" class="detail-btn">원문보기</a></td>
+			                                        <td>${tour.tourTitle }</td>
+			                                        <td><fmt:formatDate value="${tour.writeDate }" pattern="yyyy-MM-dd ahh:mm"/></td>
+			                                        <td><a href="/tour/tourBoardDetail?tourNo=${tour.tourNo }" class="detail-btn">원문보기</a></td>
 			                                    </tr>
 		                                	</c:forEach>
 		                                </tbody>
@@ -56,15 +56,15 @@
 		                                    <tr>
 		                                        <td colspan="4">
 		                                        	<c:if test="${pi.currentPage > 1 }">
-		                                            <a href="/company/mypage/write/comment?category=tour&page=1" class="pagenav">&#60;&#60;&nbsp;</a>
-		                                            <a href="/company/mypage/write/comment?category=tour&page=${pi.currentPage - 1 }" class="pagenav">&#60;&nbsp;</a>
+		                                            <a href="/company/mypage/write/post?&page=1" class="pagenav">&#60;&#60;&nbsp;</a>
+		                                            <a href="/company/mypage/write/post?&page=${pi.currentPage - 1 }" class="pagenav">&#60;&nbsp;</a>
 		                                            </c:if>
 													<c:forEach begin="${pi.startNavi }" end="${pi.endNavi }" var="p">
-														<a href="/company/mypage/write/comment?category=tour&page=${p }">${p }&nbsp;</a>
+														<a href="/company/mypage/write/post?&page=${p }">${p }&nbsp;</a>
 													</c:forEach>
 													<c:if test="${pi.currentPage < pi.endNavi }">
-		                                            <a href="/company/mypage/write/comment?category=tour&page=${pi.currentPage + 1 }" class="pagenav">&#62;&nbsp;</a>
-		                                            <a href="/company/mypage/write/comment?category=tour&page=${pi.endNavi }" class="pagenav">&#62;&#62;&nbsp;</a>
+		                                            <a href="/company/mypage/write/post?&page=${pi.currentPage + 1 }" class="pagenav">&#62;&nbsp;</a>
+		                                            <a href="/company/mypage/write/post?&page=${pi.endNavi }" class="pagenav">&#62;&#62;&nbsp;</a>
 		                                            </c:if>                         
 		                                        </td>
 		                                    </tr>

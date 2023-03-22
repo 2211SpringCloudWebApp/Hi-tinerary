@@ -13,6 +13,7 @@ import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.tour.domain.PageInfo;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
+import com.semi.hitinerary.tour.domain.TourSell;
 import com.semi.hitinerary.tour.store.TourStore;
 import com.semi.hitinerary.user.domain.User;
 
@@ -118,9 +119,21 @@ public class TourServiceImpl implements TourService {
 	}
 
 	@Override
+	public int selectCountByUserNo(int userNo) {
+		int totalCount = tStore.selectCountByUserNo(session, userNo);
+		return totalCount;
+	}
+
+	@Override
 	public List<Tour> selectListByuserNo(int userNo, Pagination pi) {
 		List<Tour> tList = tStore.selectListByuserNo(session, userNo, pi);
 		return tList;
+	}
+
+	@Override
+	public List<TourSell> selectTourSellList(int userNo) {
+		List<TourSell> tsList = tStore.selectTourSellList(session, userNo);
+		return tsList;
 	}
 
 	

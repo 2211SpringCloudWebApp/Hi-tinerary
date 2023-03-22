@@ -17,7 +17,6 @@
 		<header>
             <jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
         </header>
-        
         <!-- 메인 -->
         <main>
             <div id="detail-content">
@@ -56,14 +55,14 @@
 	    	                    	<a href="/freeboard/remove?boardNo=${freeboard.boardNo }" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
 	                        	</c:if>
 	                        	<c:if test="${freeboard.userNo != loginUser.userNo && loginUser.userGrade != 4}">
-		                        	<form action="/report" method="POST">
+		                        	<form action="/report" method="POST" >
 									    <input type="hidden" name="userNo" value="${loginUser.userNo}">
-									    <input type="hidden" name="boardNo" value="${freeboard.boardNo}">
-									    <input type="hidden" name="boardTitle" value="${freeboard.boardTitle}">
-									    <input type="hidden" name="userNickname" value="${freeboard.userNickname}">
-									    <input type="hidden" name="commentNo" value=0>
-									    <input type="hidden" name="boardType" value="free">
-									    <a href="#" onclick="event.preventDefault(); document.querySelector('form').submit();">신고</a>
+										<input type="hidden" name="boardNo" value="${freeboard.boardNo}">
+										<input type="hidden" name="boardTitle" value="${freeboard.boardTitle}">
+										<input type="hidden" name="userNickname" value="${freeboard.userNickname}">
+										<input type="hidden" name="commentNo" value= 0 >
+										<input type="hidden" name="boardType" value="free">
+										<a href="#" onclick="this.parentNode.submit(); return false;">신고</a>
 									</form>
 	                        	</c:if>
                         	</c:if>
@@ -80,82 +79,103 @@
                     	</td>
                     </tr>
                     <tr>
-                    	<td style="font-size: 20px;">
+                    	<td style="font-size: 20px; height: 50px;">
                     		${freeboard.boardSubject }
                     	</td>
                     </tr>
                 </table>
                 <!-- 댓글이 출력되는 영역 -->
                	<c:forEach items="${cList }" var="comment" varStatus="i">
-	                <div id="lcomment_container">
-			            <table id="lcomment_table">
-			                <tr>
-			                    <td id="lcomment_td1">${comment.userNickname}</td>
-			                    <td id="lcomment_td2"><input id="lcomment_input" type="text" readonly value="${comment.content}"></td>
-			                    <td id="lcomment_td3"><fmt:formatDate value="${comment.updateDate }" pattern="yyyy-MM-dd ahh:mm" /></td>
-			                    <c:if test="${comment.depth == 0 && loginUser.userNo != comment.userNo && loginUser.userNo == freeboard.userNo && freeboard.boardHead == 'question' && freeboard.boardCheck == 0}">
-				                    <td id="lcomment_td4">
-				                    	<form action="/freeboard/comment/status" method="POST">
+               		<!-- 댓글 리스트 -->
+               		<c:if test="${comment.depth == 0 }">
+               			<div id="lcomment_container">
+				            <table id="lcomment_table">
+				                <tr>
+				                    <td id="lcomment_td1">${comment.userNickname}</td>
+				                    <td id="lcomment_td2"><input id="lcomment_input" type="text" readonly value="${comment.content}"></td>
+				                    <td id="lcomment_td3"><fmt:formatDate value="${comment.updateDate }" pattern="yyyy-MM-dd ahh:mm" /></td>
+				                    <c:if test="${loginUser.userNo != comment.userNo && loginUser.userNo == freeboard.userNo && freeboard.boardHead == 'question' && freeboard.boardCheck == 0}">
+					                    <td id="lcomment_td4">
+					                    	<form action="/freeboard/comment/status" method="POST">
+					                    		<input name="boardNo" type="text" value="${freeboard.boardNo }" style="display:none">
+					                    		<input name="commentNo" type="text" value="${comment.commentNo }" style="display:none">
+						                    	<button type="submit" id="lcomment_button2">채택하기</</button>
+					                    	</form>
+					                    </td>
+				                    </c:if>
+				                    <c:if test="${freeboard.boardCheck == 1 && comment.status == 1}">
+					                    <td id="lcomment_td4">
 				                    		<input name="boardNo" type="text" value="${freeboard.boardNo }" style="display:none">
 				                    		<input name="commentNo" type="text" value="${comment.commentNo }" style="display:none">
-					                    	<button type="submit" id="lcomment_button2">채택하기</</button>
-				                    	</form>
-				                    </td>
-			                    </c:if>
-			                    <c:if test="${freeboard.boardCheck == 1 && comment.status == 1}">
-				                    <td id="lcomment_td4">
-			                    		<input name="boardNo" type="text" value="${freeboard.boardNo }" style="display:none">
-			                    		<input name="commentNo" type="text" value="${comment.commentNo }" style="display:none">
-				                    	<button type="submit" id="lcomment_button3" >채택댓글</</button>
-				                    </td>
-			                    </c:if>
-			                    <td id="lcomment_td5">
-			                    	<c:if test="${loginUser.userNo != null }">
-			                    		<c:if test="${comment.depth==0}">
-			                    			<a href="#"  onclick="showCommentInput(${comment.commentNo})">댓글달기</a>
-			                    		</c:if>
-			                    		<c:if test="${comment.status == 0 }">
-				                    		<c:if test="${comment.userNo == loginUser.userNo || loginUser.userGrade == 4}">
-				                    			<form action="/freeboard/comment/delete" method="post">
-				                    				<input type="hidden" name="boardNo" value="${freeboard.boardNo}">
-													<input type="hidden" name="commentNo" value="${comment.commentNo}">
-													| <a href="#" onclick="if (confirm('정말 삭제하시겠습니까?')) {this.parentNode.submit()}">삭제</a>
-				                    			</form>
+					                    	<button type="submit" id="lcomment_button3" >채택댓글</</button>
+					                    </td>
+				                    </c:if>
+				                    <td id="lcomment_td5">
+				                    	<c:if test="${loginUser.userNo != null }">
+				                    		<a href="#"  onclick="showCommentInput(this)">댓글달기</a>
+				                    		<c:if test="${comment.status == 0 }">
+					                    		<c:if test="${comment.userNo == loginUser.userNo || loginUser.userGrade == 4}">
+					                    			<form action="/freeboard/comment/delete" method="post">
+														<input type="hidden" name="commentNo" value="${comment.commentNo}">
+														| <a href="#" onclick="if (confirm('정말 삭제하시겠습니까?')) {this.parentNode.submit()}">삭제</a>
+					                    			</form>
+					                    		</c:if>
 				                    		</c:if>
-			                    		</c:if>
-			                    		<c:if test="${loginUser.userNo != null && comment.userNo != loginUser.userNo && loginUser.userGrade != 4}">
-			                    			 <form action="/report" method="POST">
-											    <input type="hidden" name="userNo" value="${loginUser.userNo}">
-											    <input type="hidden" name="boardNo" value="${freeboard.boardNo}">
-											    <input type="hidden" name="commentNo" value="null">
-											    <input type="hidden" name="boardType" value="free">
-											    <a href="#" onclick="event.preventDefault(); document.querySelector('form').submit();">신고</a>
-											</form>
-			                    		</c:if>
-			                    	</c:if>
-			                    </td>
-			                </tr>
-			            </table>
-			        </div>
-			        <c:if test="${loginUser.userNo != null }">
-				        <div id="comment_container2_${comment.commentNo}" style="display: none; border: 1px solid rgb(107, 106, 106); width: 1200px; height: 70px; margin: 0 auto; margin-top: 10px; text-align: center; border-radius: 10px; display: flex; align-items: center; font-size: 20px; margin-bottom: 10px;">
-							<form action="/freeboard/comment/write" method="POST" enctype="multipart/form-data">
-								<input name="boardNo" type="text" value="${freeboard.boardNo }" style="display:none">
-								<input name="userNo" type="text" value="${loginUser.userNo }" style="display:none">
-						        <table id="comment_table">
-						        	<tr>
-						            	<td id="comment_td1">${loginUser.userNickname}</td>
-						            	<td id="comment_td2">
-						              		<input name="content" id="comment_input_${comment.commentNo}" type="text" placeholder="여기에 댓글을 작성해 주세요.">
-						            	</td>
-						            	<td id="comment_td3">
-						              		<button type="submit" id="comment_button">댓글달기</button>
-						            	</td>
-						          	</tr>
-						        </table>
-					      	</form>
-					    </div>
-			        </c:if>
+				                    		<c:if test="${loginUser.userNo != null && comment.userNo != loginUser.userNo && loginUser.userGrade != 4}">
+				                    			<form action="/report" method="POST">
+				                    			 	${comment.commentNo}
+												    <input type="hidden" name="userNo" value="${loginUser.userNo}">
+													<input type="hidden" name="boardNo" value="${freeboard.boardNo}">
+													<input type="hidden" name="commentNo" value="${comment.commentNo}">
+													<input type="hidden" name="boardTitle" value="${freeboard.boardTitle}">
+													<input type="hidden" name="userNickname" value="${freeboard.userNickname}">
+													<input type="hidden" name="boardType" value="free">
+													<a href="#" onclick="this.parentNode.submit(); return false;">신고</a>
+												</form>
+				                    		</c:if>
+				                    	</c:if>
+				                    </td>
+				                </tr>
+				            </table>
+			        	</div>
+               		</c:if>
+               		<!-- 대댓글 리스트 -->
+               		<c:if test="${comment.depth == 1 }">
+               			<div class="rerere">
+							<div id="lcomment_container">
+								<table id="lcomment_table">
+									<tr>
+										<td id="lcomment_td1">${comment.userNickname}</td>
+										<td id="lcomment_td2"><input id="lcomment_input" type="text" readonly value="${comment.content}"></td></td>
+										<td id="lcomment_td3"><fmt:formatDate value="${comment.updateDate }" pattern="yyyy-MM-dd ahh:mm" /></td>
+										<td id="lcomment_td5">
+											<c:if test="${loginUser.userNo != null }">
+				                    		<c:if test="${comment.status == 0 }">
+					                    		<c:if test="${comment.userNo == loginUser.userNo || loginUser.userGrade == 4}">
+					                    			<form action="/freeboard/comment/delete" method="post">
+														<input type="hidden" name="commentNo" value="${comment.commentNo}">
+														| <a href="#" onclick="if (confirm('정말 삭제하시겠습니까?')) {this.parentNode.submit()}">삭제</a>
+					                    			</form>
+					                    		</c:if>
+				                    		</c:if>
+				                    		<c:if test="${loginUser.userNo != null && comment.userNo != loginUser.userNo && loginUser.userGrade != 4}">
+				                    			<form action="/report" method="POST">
+												    <input type="hidden" name="userNo" value="${loginUser.userNo}">
+													<input type="hidden" name="boardNo" value="${freeboard.boardNo}">
+													<input type="hidden" name="commentNo" value="${comment.commentNo}">
+													<input type="hidden" name="boardTitle" value="${freeboard.boardTitle}">
+													<input type="hidden" name="userNickname" value="${freeboard.userNickname}">
+													<input type="hidden" name="boardType" value="free">
+													<a href="#" onclick="this.parentNode.submit(); return false;">신고</a>
+												</form>
+				                    		</c:if>
+				                    	</c:if>
+										</td>
+									</tr>
+								</table>
+							 </div>
+						</div>
+               		</c:if>
                	</c:forEach>
                	
                 <!-- 댓글 작성 하는 영역 -->
@@ -164,8 +184,9 @@
 			            <table id="comment_table">
 			                <tr>
 			                	<form action="/freeboard/comment/write" method="POST" enctype="multipart/form-data">
-			                		<input name="boardNo" type="text" value="${freeboard.boardNo }" style="display:none">
-				                    <input name="userNo" type="text" value="${loginUser.userNo }" style="display:none">
+			                		<input type="hidden" name="boardNo" value="${freeboard.boardNo }">
+			                		<input type="hidden" name="userNo" value="${loginUser.userNo }">
+				                    <input type="hidden" name="depth" value = 0>
 				                    <td id="comment_td1" name ="userNickname">${loginUser.userNickname}</td>
 				                    <td id="comment_td2"><input name="content" id="comment_input" type="text" placeholder="여기에 댓글을 작성해 주세요."></td>
 				                    <td id="comment_td3">
@@ -176,28 +197,49 @@
 			            </table>
 			        </div>
 			    </c:if>
+			    <!-- 대댓글 작성 영역 -->
+			    <c:if test="${loginUser.userNo != null }">
+			    	<div class="rerere writeReReply" id="writeReReply">
+				    	<div id="comment_container">
+				        	<table id="comment_table">
+				            	<tr>
+				            		<form action="/freeboard/comment/write" method="POST" enctype="multipart/form-data">
+				             			<input type="hidden" name="boardNo" value="${freeboard.boardNo }">
+			                			<input type="hidden" name="userNo" value="${loginUser.userNo }">
+			                			<input type="hidden" name="depth" value = 1>
+				                  		<td id="comment_td1" name ="userNickname">${loginUser.userNickname}</td>
+				                  		<td id="comment_td2"><input name="content" id="comment_input" type="text" placeholder="여기에 댓글을 작성해 주세요."></td>
+				                  		<td id="comment_td3">
+				                  			<button type="submit" id="comment_button">댓글달기</button>
+				                  		</td>
+				             		</form>
+				             	</tr>
+				         	</table>
+				    	</div>
+			    	</div>
+			    </c:if>
             </div>
         </main>
         <footer>
             <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
         </footer>
         <script>
-        	// 대댓글 쓰는곳을 보여주는 함수
-        	function showCommentInput(commentNo) {
-				// 해당 댓글의 입력 폼 보이기
-				var commentInput = document.getElementById("comment_container2_" + commentNo);
-				commentInput.style.display = "block";
+			function showCommentInput(btn){
+				var a = window.event;
+				a.preventDefault();
 				
-				// 다른 댓글 입력 폼 숨기기
-				var allCommentInputs = document.querySelectorAll("[id^='comment_container2_']");
-				for (var i = 0; i < allCommentInputs.length; i++) {
-					if (allCommentInputs[i].id !== "comment_container2_" + commentNo) {
-				    	allCommentInputs[i].style.display = "none";
-				    }
+				var commentBox = btn.parentNode.parentNode.parentNode.parentNode.parentNode;
+				var writeBox = document.querySelector("#writeReReply");
+				
+				if(commentBox.nextElementSibling == writeBox){
+					writeBox.style.display = "none";
+					commentBox.before(writeBox);
+				}else{
+				commentBox.after(writeBox);
+				writeBox.style.display = "block";
+					
 				}
 			}
-        	
-        	
         </script>
 	</body>
 </html>

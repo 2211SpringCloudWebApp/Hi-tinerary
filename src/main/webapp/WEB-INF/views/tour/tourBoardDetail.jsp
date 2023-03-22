@@ -152,7 +152,6 @@
               <!-- 대댓글쓰기영역 -->
                  
                 <div class="writeReReply">
-                	
                		<form action="/tour/reReplyUp" method="post" class="reReplyForm">
                			<input type="hidden" name="userNo" value="${loginUser.userNo }">
                     	<input type="hidden" name="tourNo" value="${tour.tourNo }">

@@ -147,16 +147,15 @@
 							        		투어
 							        	</c:if>
 							        </td>
-							        <a href="/freeboard/detail?boardNo=${freeboard.boardNo }">${freeboard.boardTitle }</a>
 							        <td>
 							        	<c:if test="${bReportList.whthBoardNo != 0}">
-							        		<a href="/withboard/withBoardDetail?boardNo=${bReportList.freeBoardNo }">${bReportList.boardTitle }</a>
+							        		<a href="/withboard/withBoardDetail?boardNo=${bReportList.whthBoardNo }">${bReportList.boardTitle }</a>
 							        	</c:if>
 							        	<c:if test="${bReportList.freeBoardNo != 0}">
 							        		<a href="/freeboard/detail?boardNo=${bReportList.freeBoardNo }">${bReportList.boardTitle }</a>
 							        	</c:if>
 							        	<c:if test="${bReportList.tourNo != 0}">
-							        		<a href="/tour/tourBoardDetail?tourNo=${bReportList.freeBoardNo }">${bReportList.boardTitle }</a>
+							        		<a href="/tour/tourBoardDetail?tourNo=${bReportList.tourNo }">${bReportList.boardTitle }</a>
 							        	</c:if>
 							        </td>
 							        <td>${bReportList.reportDate}</td>
@@ -176,13 +175,25 @@
                                 <td>신고사유</td>
                                 <td>신고일</td>
                             </tr>
-                            <tr>
-                                <td>오늘은 날씨가 좋아서 이렇게 글을 남깁니다</td>
-                                <td>관리자</td>
-                                <td>일용자</td>
-                                <td>물을흐림</td>
-                                <td>20230320</td>
-                            </tr>
+                            <c:forEach items="${crList}" var="cReportList">
+							    <tr>
+							        <td>
+							        	<c:if test="${cReportList.whthBoardNo != 0}">
+							        		<a href="/withboard/withBoardDetail?boardNo=${cReportList.whthBoardNo }">${cReportList.boardTitle }</a>
+							        	</c:if>
+							        	<c:if test="${cReportList.freeBoardNo != 0}">
+							        		<a href="/freeboard/detail?boardNo=${cReportList.freeBoardNo }">${cReportList.boardTitle }</a>
+							        	</c:if>
+							        	<c:if test="${cReportList.tourNo != 0}">
+							        		<a href="/tour/tourBoardDetail?tourNo=${cReportList.tourNo }">${cReportList.boardTitle }</a>
+							        	</c:if>
+							        </td>
+							        <td>${cReportList.boardWriterNickname}</td>
+							        <td>${cReportList.reporterNickname}</td>
+							        <td>${cReportList.reportReason}</td>
+							        <td>${cReportList.reportDate}</td>
+							    </tr>
+							</c:forEach>
                         </table>
                     </td>
                 </tr>

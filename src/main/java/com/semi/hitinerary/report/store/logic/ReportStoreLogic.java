@@ -21,5 +21,10 @@ public class ReportStoreLogic implements ReportStore{
 	public List<boardReport> selectboardReportList(SqlSession session) {
 		return session.selectList("reportMapper.selectboardReportList");
 	}
+
+	@Override
+	public List<boardReport> selectcommentReportList(SqlSession session) {
+		return session.selectList("reportMapper.selectcommentReportList");
+	}
 	
 }

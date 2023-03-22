@@ -76,9 +76,9 @@
                 </table>
                 <table id="reportButtonTable">
                     <tr>
-                        <td>
-                        	<form id="reportForm" action="/clickReport" method="GET">
-                        		<input type="hidden" name="boardType" value="free">
+                        <td style="text-align: right;">
+                            <form id="reportForm" action="/clickReport" method="GET">
+                        		<input type="hidden" name="boardType" value="${boardType}">
 								<input type="hidden" name="userNo" value="${userNo}">
 								<input type="hidden" name="boardNo" value="${boardNo}">
 								<input type="hidden" name="commentNo" value="${commentNo}">
@@ -86,6 +86,8 @@
                                 	신고하기
                             	</button>
                             </form>
+                        </td>
+                        <td style="text-align: left;">
                             <form action="/rollbackView" method="GET">
                             	<input type="hidden" name="boardType" value="free">
 								<input type="hidden" name="boardNo" value="${boardNo}">

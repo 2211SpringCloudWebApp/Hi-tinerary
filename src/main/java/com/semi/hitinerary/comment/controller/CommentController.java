@@ -102,10 +102,11 @@ public class CommentController {
 			@RequestParam("boardNo") int freeBoardNo
 			,@ModelAttribute Comment comment
 			,Model model) {
-		System.out.println("댓글진입 프리보드 : " + freeBoardNo);
+		
 		comment.setFreeBoardNo(freeBoardNo);
-		System.out.println("댓글진입 커맨트 : " + comment);
+		
 		int result = cService.insertFreeBoardComment(comment);
+		
 		return "redirect:/freeboard/detail?boardNo=" + freeBoardNo;
 	}
 	

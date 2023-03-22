@@ -23,4 +23,11 @@ public interface ReportStore {
 	 * @return List<boardReport>
 	 */
 	public List<boardReport> selectboardReportList(SqlSession session);
+
+	/**
+	 * 신고 댓글 목록 조회 Store
+	 * @param session
+	 * @return List<boardReport>
+	 */
+	List<boardReport> selectcommentReportList(SqlSession session);
 }

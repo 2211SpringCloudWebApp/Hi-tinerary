@@ -27,7 +27,7 @@
 		                	<div class="frameDiv" data-deadline="${tour.deadline}">
 			                	<div class="${tour.deadline.getTime() < now.getTime() ? 'expired' : ''}">
 			                        <img class="frame" src="../../../resources/images/ticketframe1.png">
-<!-- 			                        <img class="framePassedAway" src="/resources/images/passedAwayFrame.png"> -->
+
 			                        <div class="thumbnailDiv">
 	
 			                    		<a href="/tour/tourBoardDetail?tourNo=${tour.tourNo }">

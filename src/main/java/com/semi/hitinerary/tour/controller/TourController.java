@@ -183,15 +183,7 @@ public class TourController {
 
 	}
 	
-	//디테일페이지에서 신고페이지 보기
-	@RequestMapping(value="/report/report", method = RequestMethod.GET)
-	public String tourReport(@RequestParam(value="tourNo") int tourNo, Model model) {
-		Tour tour = tService.selectOneByNo(tourNo);
-		model.addAttribute("tour", tour);
-		return "report/report";
-	}
 	
-	//신고페이지
 	
 	
 	

@@ -1,0 +1,360 @@
+
+
+main{
+	width: 1200px;
+	margin: 0 auto;
+	height: 1400px;
+	--border: 1px solid black;
+	display: flex;
+	flex-direction: column;
+}
+.circleNav{
+	display: flex;
+  --flex-direction: row;
+  --justify-content: center;
+}
+.circleGreen {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #0F8D80;
+  float: left;
+}
+.circleYellow {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #FBD188;
+  float: left;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+
+/*---------------투어------------------*/
+#tourBoardList{
+	width: 1200px;
+	height: 410px;
+	--border-bottom: 1px solid black;
+	
+
+}
+
+
+
+
+#boardTitle{
+	height: 90px;
+}
+
+#bar{
+    width: 7px;
+    height: 35px;
+    background-color: #F39081;
+    float: left;
+    margin-top: 39px;
+    margin-left: 50px;
+    margin-right: 10px;
+}
+
+#tourBoardList #boardTitle p{
+    font-size: 35px;
+    float: left;
+    margin-top: 35px;
+    margin-bottom: 0px;
+}
+
+
+
+
+
+#tourList {
+    width: 1200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin: 0 auto;  
+    padding-top: 0;  
+}
+    
+.frameDiv {
+    width: 400px;
+    --display: inline-block;
+    margin: 0 0;
+    position: relative;   
+    
+}
+
+.frame {
+    width: 400px;
+    height: 300px;
+    position: relative;
+    z-index: 0;
+}
+
+.expired{
+	opacity: 50%;
+}
+
+
+.inframe {
+    width: 130px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+}
+
+.startDate{
+    z-index: 1;
+    font-size: 30px !important;
+    font-weight: bold;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-20%, -80%);  
+    text-shadow: 1.5px 1.5px 0 #ffffff, -1.5px -1.5px 0 #ffffff, 1.5px -1.5px 0 #ffffff, -1.5px 1.5px 0 #ffffff;  
+}
+
+.tourTitle{
+    font-size: 13px !important;
+    font-weight: bold;
+    
+    position: absolute;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, 140%);
+    
+}
+
+.tourContent{
+    font-size: 10px !important;
+    font-weight: bold; 
+    position: absolute;
+    top: 68%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+
+
+
+
+
+
+
+
+
+/*------------동행 타이틀-----------*/
+#withBoardList{
+	width: 1200px;
+	height: 500px;
+	--border-bottom: 1px solid black;
+	display: flex;
+	flex-direction: column;
+	
+}
+#boardTitle1 p{
+    font-size: 35px;
+    float: left;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+#bar1{
+    width: 7px;
+    height: 35px;
+    background-color: #F39081;
+    float: left;
+    margin-top: 23px;
+    margin-left: 50px;
+    margin-right: 10px;
+}
+
+#boardSubTitle1 p{
+    font-size: 28px;
+    float: left;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+#subBar1{
+    width: 5px;
+    height: 27px;
+    background-color: #FBD188 ;
+    float: left;
+    margin-top: 23px;
+    margin-left: 80px;
+    margin-right: 10px;
+}
+/*------동행 리스트-----*/
+
+.list_wrapper{
+    width: 1200px;
+    margin: 0 auto;
+     --text-align: center;
+}
+.list_wrapper ul{
+    width: 100%;
+    display: flex;
+    padding-left: 100px;
+}
+.list_wrapper li {
+     display: inline-block;
+    vertical-align: top;
+    margin: 30px;
+    width: 270px;
+}
+
+.list_wrapper li:hover {
+     transform: scale(1.1);
+}
+
+.list_wrapper .img{
+    width: 270px;
+    height: 200px;
+}
+.list_wrapper .img img{
+    width: 270px;
+    height: 200px;
+    border-radius:10px;
+}
+
+.list_wrapper .tit{
+	text-align: center;
+    font-size: 15.5px;
+    display: block;
+}
+
+.list_wrapper .withDate{
+	text-align:right;
+	font-size: 13px;	
+}
+
+.list_wrapper .date{
+    display: block;
+}
+
+.list_wrapper .writer{
+    float: left;
+    font-size:13px;
+}
+.list_wrapper .people{
+    color: #0F8D80;
+    float: right;
+    font-size: 25px;
+    font-weight: bolder;
+}
+.expired {
+   opacity: 0.5;
+}
+
+
+
+
+
+
+/*---------------자게타이틀------------------*/
+
+#freeBoardList{
+	width: 1200px;
+	height: 500px;
+	--border-bottom: 1px solid black;
+}
+#bar2{
+    width: 7px;
+    height: 35px;
+    background-color: #F39081;
+    float: left;
+    margin-top: 23px;
+    margin-left: 50px;
+    margin-right: 10px;
+}
+
+#boardSubTitle2 p{
+    font-size: 28px;
+    float: left;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+#subBar2{
+    width: 5px;
+    height: 27px;
+    background-color: #FBD188 ;
+    float: left;
+    margin-top: 23px;
+    margin-left: 80px;
+    margin-right: 10px;
+}
+
+
+
+/*---------------자게리스트------------------*/
+
+#free-container{
+	margin-top: 80px;
+	display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.freespan{
+	width: 100px;
+	height: 35px;
+	line-height: 35px;
+	border-radius: 5px;
+	font-size: 15px;
+	vertical-align: middle;
+	color: white;
+}
+
+#freespan1{
+	background-color: #F39081;
+}
+#freespan2{
+	background-color: #0F8D80;
+}
+
+#listTable{
+	
+	border-top: solid 1px #FBD188;
+	width: 90%;
+	font-size: 20px;
+	height: 30px;
+	line-height: 50px;
+	vertical-align: middle;
+}
+#listTable td:nth-child(1){
+	width: 5%;
+	text-align: center;
+}
+#listTable td:nth-child(2){
+	width: 5%;
+	text-align: center;
+}
+#listTable td:nth-child(3){
+	width: 60%;
+}
+#listTable td:nth-child(4){
+	width: 20%;
+}
+#listTable td:nth-child(5){
+	width: 10%;
+	text-align: center;
+}
+
+#listfooter{
+	font-size: 20px;
+	margin: 0 auto;
+	padding-bottom: 50px;
+}
+
+#listfooter td{
+	text-align: center;
+}
+
+a.selected {
+  color: #0F8D80;
+  font-weight: bold;
+}

@@ -169,12 +169,15 @@ public class UserController {
 		List<User> sellerList = uService.selectSellerUser();
 		//신고 게시글 목록 조회
 		List<boardReport> bReportList = rService.selectboardReportList();
+		//신고 댓글 목록 조회
+		List<boardReport> cReportList = rService.selectcommentReportList();
 		
-		System.out.println(bReportList);
+		System.out.println(cReportList);
 		
 		model.addAttribute("uList", userList);
 		model.addAttribute("sList", sellerList);
 		model.addAttribute("brList", bReportList);
+		model.addAttribute("crList", cReportList);
 		
 		return "manager/mypage";
 	}

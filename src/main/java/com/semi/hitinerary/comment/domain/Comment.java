@@ -19,7 +19,6 @@ public class Comment {
 	
 	public Comment() {}
 	
-	
 	//투어보드에서 쓸 생성자 묶음!
 	public Comment(String content, int tourNo, int userNo, String userNickname) {
 		super();
@@ -30,13 +29,9 @@ public class Comment {
 		
 	}
 	
-	
-	
 	public int getCommentNo() {
 		return commentNo;
 	}
-
-
 	public void setCommentNo(int commentNo) {
 		this.commentNo = commentNo;
 	}
@@ -110,11 +105,9 @@ public class Comment {
 	public String getUserNickname() {
 		return userNickname;
 	}
-
 	public void setUserNickname(String userNickname) {
 		this.userNickname = userNickname;
 	}
-
 	@Override
 	public String toString() {
 		return "Comment [commentNo=" + commentNo + ", content=" + content + ", writeDate=" + writeDate + ", updateDate="

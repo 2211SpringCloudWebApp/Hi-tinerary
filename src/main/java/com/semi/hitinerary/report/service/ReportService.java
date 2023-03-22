@@ -19,4 +19,10 @@ public interface ReportService {
 	 * @return
 	 */
 	public List<boardReport> selectboardReportList();
+
+	/**
+	 * 신고 댓글 목록 조회 Service
+	 * @return
+	 */
+	List<boardReport> selectcommentReportList();
 }

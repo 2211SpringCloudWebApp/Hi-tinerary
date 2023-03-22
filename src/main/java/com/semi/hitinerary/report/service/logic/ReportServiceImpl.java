@@ -29,4 +29,9 @@ public class ReportServiceImpl implements ReportService{
 	public List<boardReport> selectboardReportList() {
 		return rStore.selectboardReportList(session);
 	}
+
+	@Override
+	public List<boardReport> selectcommentReportList() {
+		return rStore.selectcommentReportList(session);
+	}
 }

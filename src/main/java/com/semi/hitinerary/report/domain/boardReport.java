@@ -6,6 +6,7 @@ public class boardReport {
 	private int whthBoardNo;			// 동행게시판 번호
 	private int freeBoardNo;			// 자유게시판 번호
 	private int tourNo;					// 투어게시판 번호
+	private int commentNo;				// 댓글 번호
 	
 	private String boardTitle;			// 제목 or 내용
 	private Timestamp reportDate;		// 신고날짜
@@ -17,14 +18,15 @@ public class boardReport {
 	private String reportedUserNickname;// 글쓴이 닉네임.
 	
 	public boardReport() {}
-	
-	public boardReport(int whthBoardNo, int freeBoardNo, int tourNo, String boardTitle, Timestamp reportDate,
-			String reporterNickname, String reportReason, String boardWriterNo, String boardWriterNickname,
-			int reportUserNo, String reportedUserNickname) {
+
+	public boardReport(int whthBoardNo, int freeBoardNo, int tourNo, int commentNo, String boardTitle,
+			Timestamp reportDate, String reporterNickname, String reportReason, String boardWriterNo,
+			String boardWriterNickname, int reportUserNo, String reportedUserNickname) {
 		super();
 		this.whthBoardNo = whthBoardNo;
 		this.freeBoardNo = freeBoardNo;
 		this.tourNo = tourNo;
+		this.commentNo = commentNo;
 		this.boardTitle = boardTitle;
 		this.reportDate = reportDate;
 		this.reporterNickname = reporterNickname;
@@ -57,6 +59,14 @@ public class boardReport {
 
 	public void setTourNo(int tourNo) {
 		this.tourNo = tourNo;
+	}
+
+	public int getCommentNo() {
+		return commentNo;
+	}
+
+	public void setCommentNo(int commentNo) {
+		this.commentNo = commentNo;
 	}
 
 	public String getBoardTitle() {
@@ -126,13 +136,10 @@ public class boardReport {
 	@Override
 	public String toString() {
 		return "boardReport [whthBoardNo=" + whthBoardNo + ", freeBoardNo=" + freeBoardNo + ", tourNo=" + tourNo
-				+ ", boardTitle=" + boardTitle + ", reportDate=" + reportDate + ", reporterNickname=" + reporterNickname
-				+ ", reportReason=" + reportReason + ", boardWriterNo=" + boardWriterNo + ", boardWriterNickname="
-				+ boardWriterNickname + ", reportUserNo=" + reportUserNo + ", reportedUserNickname="
-				+ reportedUserNickname + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+				+ ", commentNo=" + commentNo + ", boardTitle=" + boardTitle + ", reportDate=" + reportDate
+				+ ", reporterNickname=" + reporterNickname + ", reportReason=" + reportReason + ", boardWriterNo="
+				+ boardWriterNo + ", boardWriterNickname=" + boardWriterNickname + ", reportUserNo=" + reportUserNo
+				+ ", reportedUserNickname=" + reportedUserNickname + "]";
 	}
-	
-	
-	
+		
 }

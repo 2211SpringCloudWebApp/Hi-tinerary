@@ -45,7 +45,7 @@
 		
 		<div class="writeButton">
 			<button type="submit" id="submit">글 등록</button>
-			<button id="list" onclick="location.href='/withboard/withBoardList'">목록으로</button>
+			<button id="list" onclick="location.href='/group/groupinfopage'">그룹페이지로</button>
 		</div>
     </form>
     </div>

@@ -16,9 +16,9 @@
 					<input type="hidden" name="groupNo" value="${groupNo }">
 					<input type="hidden" name="groupIndex" value="${groupIndex }">
 					<label class="title-area">
-					<p class="title-plain">제목 : </p><input type="text" name="groupTitle" class="board-title">
+					<p class="title-plain">제목 : </p><input type="text" name="groupTitle" class="board-title" required>
 					</label>
-					<textarea name="groupSubject" rows="40" cols="150"></textarea>
+					<textarea name="groupSubject" rows="40" cols="150" required></textarea>
 					<div class="btn-box">
 						<input type="submit" value="글쓰기" class="write-btn">
 						<a class="cancel-btn" href="/group/groupinfopage?groupIndex=${groupIndex}">취소</a>

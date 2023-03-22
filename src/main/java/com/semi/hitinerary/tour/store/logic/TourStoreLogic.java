@@ -16,7 +16,7 @@ import com.semi.hitinerary.tour.domain.TourSell;
 import com.semi.hitinerary.tour.store.TourStore;
 import com.semi.hitinerary.user.domain.User;
 
-@Repository
+//@Repository
 public class TourStoreLogic implements TourStore {
 
 	@Override

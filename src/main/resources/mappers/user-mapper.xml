@@ -45,7 +45,7 @@
 	</select>
 	
 	<update id="updateUserByNo">
-		UPDATE USER_TBL SET USER_NICKNAME = #{userNickname}, USER_EMAIL = #{userEmail}, USER_PHONE = #{userPhone} WHERE USER_NO = #{userNo}
+		UPDATE USER_TBL SET USER_PW = #{userPw}, USER_NICKNAME = #{userNickname}, USER_EMAIL = #{userEmail}, USER_PHONE = #{userPhone} WHERE USER_NO = #{userNo}
 	</update>
 	
 	<update id="updateCoUserByNo">

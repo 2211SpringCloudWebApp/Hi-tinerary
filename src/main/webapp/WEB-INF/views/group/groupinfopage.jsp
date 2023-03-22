@@ -30,7 +30,7 @@
 			<div class="group-area">
 				<c:if test="${groupIndex eq -1}">
 					<form action="/group/register.do" method="post">
-					그룹명 : <input type="text" name="groupName">
+					그룹명 : <input type="text" name="groupName" required>
 					<div>
 					시작날짜 : <input min="${now }" type="date" name="startDate" onchange="startDecide()" required>
 					종료날짜 : <input min="${now }" type="date" name="endDate" onchange="endDecide()">
@@ -39,7 +39,7 @@
 					시간추가 : on <input type="radio" name="addtime" onclick="addTime();"> 
 							   off <input type="radio" name="addtime" onclick="removeTime();" checked>
 					</div>
-					최대인원 : <input type="text" name="maxPeople">
+					최대인원 : <input type="number" min="2" max="5" name="maxPeople">
 					<div>
 					<input type="submit"> <a href="#">321</a>
 					</div>
@@ -304,5 +304,6 @@
 			function capsulesend(){
 				return confirm("해당 그룹에 캡슐을 보내시겠습니까?");
 			}
+			document.querySelector(".group-nav a:nth-of-type(${groupIndex + 2})").style.backgroundColor = "#0F8D80";
 		</script>
 </html>

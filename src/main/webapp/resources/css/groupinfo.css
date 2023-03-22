@@ -41,6 +41,9 @@
 .now-nav:hover {
 	background-color: #F39081;
 }
+.capsule-form{
+	margin-top : 20px;
+}
 
 .capsule-submit-btn{
 	display : block;
@@ -140,6 +143,7 @@
 	padding : 10px;
 	border-radius: 5px;
 	color : white;	
+	cursor: pointer
 }
 .empty-board{
 	margin-top : 50px;
@@ -156,6 +160,7 @@
 	color : white;
 	border-radius: 5px;
 	padding: 5px 10px;
+	cursor: pointer;
 }
 
 .groupBoardList-tbl{

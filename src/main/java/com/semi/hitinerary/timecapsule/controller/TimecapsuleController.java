@@ -119,7 +119,7 @@ public class TimecapsuleController {
 			//실제 파일 저장
 			String filePath = savePath + "\\[" + groupNo +"]"+ uploadFile.getOriginalFilename();
 			File file = new File(filePath);
-			filePath = "resources\\cuploadFiles\\[" + userNo + "]capsule\\[" + groupNo +"]"+ uploadFile.getOriginalFilename();
+			filePath = "\\cuploadFiles\\[" + userNo + "]capsule\\[" + groupNo +"]"+ uploadFile.getOriginalFilename();
 			uploadFile.transferTo(file);
 			return filePath;
 		} catch (Exception e) {

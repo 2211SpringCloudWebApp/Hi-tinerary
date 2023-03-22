@@ -6,7 +6,7 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>내가 쓴 댓글 조회</title>
 	<link rel="stylesheet" href="../../../../resources/css/usermypagewritereplylist.css">
 	</head>
 	<body>
@@ -56,7 +56,7 @@
 			                                    <tr>
 				                                    <td>${comment.content }</td>
 			                                        <td><fmt:formatDate value="${comment.writeDate }" pattern="yyyy-MM-dd ahh:mm"/></td>
-			                                        <td><a href="/withboard/withBoardDetail?boardNo=${comment.freeBoardNo }" class="detail-btn">원문보기</a></td>
+			                                        <td><a href="/withboard/withBoardDetail?boardNo=${comment.withBoardNo }" class="detail-btn">원문보기</a></td>
 			                                    </tr>		                                		
 		                                		</c:if>
 		                                	</c:forEach>

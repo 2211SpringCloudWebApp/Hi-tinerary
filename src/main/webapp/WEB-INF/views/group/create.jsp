@@ -16,7 +16,7 @@
 				시작날짜 : <input type="date" name="startDate">
 				종료날짜 : <input type="date" name="endDate">
 				</div>
-				최대인원 : <input type="text" name="maxPeople">
+				최대인원 : <input type="number" min="1" max="5" name="maxPeople">
 				<div>
 				<input type="submit"> <a href="#">321</a>
 				</div>

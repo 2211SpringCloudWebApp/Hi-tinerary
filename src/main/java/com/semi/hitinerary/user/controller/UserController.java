@@ -268,6 +268,9 @@ public class UserController {
 	public String userMyPageView(
 			HttpSession session
 			,Model model) {
+		if(session.getAttribute("loginUser") == null) {
+			return "redirect:/user/login";
+		}
 		User uParam = (User)session.getAttribute("loginUser");
 		User user = uService.selectOneByNo(uParam.getUserNo());
 		String email = user.getUserEmail();
@@ -284,6 +287,9 @@ public class UserController {
 	@RequestMapping(value = "/user/mypage/buylist", method = RequestMethod.GET)
 	public String userBuyList(HttpSession session,
 			@RequestParam(value = "page", required = false, defaultValue = "1") String currentPage, Model model) {
+		if(session.getAttribute("loginUser") == null) {
+			return "redirect:/user/login";
+		}
 		User user = (User) session.getAttribute("loginUser");
 		int totalCount = tService.selectGetTotalCountByUserNo(user.getUserNo());
 		Pagination pi = new Pagination(Integer.parseInt(currentPage), 3, 5, totalCount);
@@ -299,6 +305,9 @@ public class UserController {
 	public String userWriteFreeBoardView(
 			@RequestParam(value = "page", required = false, defaultValue = "1") String currentPage, HttpSession session,
 			Model model) {
+		if(session.getAttribute("loginUser") == null) {
+			return "redirect:/user/login";
+		}
 		User user = (User) session.getAttribute("loginUser");
 		int totalCount = fService.selectCountByUserNo(user.getUserNo());
 		Pagination pi = new Pagination(Integer.parseInt(currentPage), 10, 5, totalCount);
@@ -313,6 +322,9 @@ public class UserController {
 	public String userWriteWithBoard(
 			@RequestParam(value = "page", required = false, defaultValue = "1") String currentPage, HttpSession session,
 			Model model) {
+		if(session.getAttribute("loginUser") == null) {
+			return "redirect:/user/login";
+		}
 		User user = (User) session.getAttribute("loginUser");
 		int totalCount = wService.selectCountByUserNo(user.getUserNo());
 		Pagination pi = new Pagination(Integer.parseInt(currentPage), 9, 5, totalCount);
@@ -328,6 +340,9 @@ public class UserController {
 			@RequestParam(value = "page", required = false, defaultValue = "1") String currentPage,
 			@RequestParam(value = "category", required = false, defaultValue = "with") String category,
 			HttpSession session, Model model) {
+		if(session.getAttribute("loginUser") == null) {
+			return "redirect:/user/login";
+		}
 		User user = (User) session.getAttribute("loginUser");
 		SearchComment sComment = new SearchComment(category, user.getUserNo());
 		int totalCount = cService.selectCountByUserNo(sComment);
@@ -355,7 +370,7 @@ public class UserController {
 			,String mailDomain) {
 		user.setUserEmail(mailId + "@" + mailDomain);
 		int result = uService.updateUserByNo(user);
-		return "redirect:/user/mypage";
+		return "redirect:/user/logout";
 	}
 	
 	// 일반유저 회원탈퇴

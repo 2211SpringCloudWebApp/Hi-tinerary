@@ -9,6 +9,7 @@ public class Timecapsule {
 	private String capsuleImage;
 	private String userEmail;
 	private String groupName;
+	private String userNickname;
 	
 	public Timecapsule() {}
 
@@ -83,6 +84,15 @@ public class Timecapsule {
 
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
+	}	
+
+	public String getUserNickname() {
+		return userNickname;
+	}
+
+
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
 	}
 
 

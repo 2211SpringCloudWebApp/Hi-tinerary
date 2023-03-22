@@ -56,6 +56,9 @@ public class GroupboardController {
 				,String groupTitle
 				,String groupSubject
 				,HttpSession session) {
+		if(session.getAttribute("loginUser") == null) {
+			return "redirect:/user/login";
+		}
 		User user = (User)session.getAttribute("loginUser");
 		int userNo = user.getUserNo();
 		Groupboard gBoard = new Groupboard(groupTitle, groupSubject, Integer.parseInt(groupNo), userNo);
@@ -65,18 +68,27 @@ public class GroupboardController {
 	
 	@RequestMapping(value="/group/board/detail", method=RequestMethod.GET)
 	public String groupBoardView(
-			int groupBoardNo
-			,String groupIndex
+			@RequestParam(value="groupBoardNo", required = false, defaultValue = "-1") String sGroupBoardNo
+			,@RequestParam(value="groupIndex", required=false, defaultValue = "-1") String groupIndex
 			,Model model) {
-		Groupboard gBoard = gBService.selectOneGroupBoard(groupBoardNo);
-		model.addAttribute("gBoard", gBoard);
-		CommentInfo cInfo = null;
-		cInfo = cController.CommentList(groupBoardNo);
-		
-		if(cInfo != null) {
-			model.addAttribute("cInfo", cInfo);			
+		try {
+			if(sGroupBoardNo.equals("-1")) {
+				return "redirect:/group/groupinfopage?groupIndex=" + groupIndex;
+			}
+			int groupBoardNo = Integer.parseInt(sGroupBoardNo);			
+			Groupboard gBoard = gBService.selectOneGroupBoard(groupBoardNo);
+			model.addAttribute("gBoard", gBoard);
+			CommentInfo cInfo = null;
+			cInfo = cController.CommentList(groupBoardNo);
+			
+			if(cInfo != null) {
+				model.addAttribute("cInfo", cInfo);			
+			}
+			model.addAttribute("groupIndex", groupIndex);
+		} catch (Exception e) {
+			groupIndex = "-1";
+			return "redirect:/group/groupinfopage?groupIndex=" + groupIndex;
 		}
-		model.addAttribute("groupIndex", groupIndex);
 		return "groupboard/detail";
 	}
 	

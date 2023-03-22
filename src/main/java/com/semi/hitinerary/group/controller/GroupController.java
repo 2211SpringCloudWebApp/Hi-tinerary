@@ -47,6 +47,9 @@ public class GroupController {
 			,@RequestParam(value="currentPage", required=false, defaultValue = "1")String currentPage
 			,HttpSession session
 			) {
+		if(session.getAttribute("loginUser") == null) {
+			return "redirect:/user/login";
+		}
 		User user = (User)session.getAttribute("loginUser");
 		int userNo = user.getUserNo();
 		List<Group> gList = gService.selectByUserNo(userNo);
@@ -56,16 +59,20 @@ public class GroupController {
 		}else {
 			model.addAttribute("gList", gList);
 			if(Integer.parseInt(groupIndex) > -1 ) {
-				group = gList.get(Integer.parseInt(groupIndex));				
-				model.addAttribute("group", group);
-				int capsuleAmount = tService.selectGetCountCapsule(group.getGroupNo());
-				model.addAttribute("capsuleCount", capsuleAmount);
-				NavigationNList naviNList = gBController.groupBoardList(group.getGroupNo(), Integer.parseInt(currentPage));
-				List<Groupboard> gBList = naviNList.getgBList();
-				Pagination pi = naviNList.getPi();
-				if(!gBList.isEmpty()) {
-					model.addAttribute("gBList", gBList);
-					model.addAttribute("pi", pi);
+				group = gList.get(Integer.parseInt(groupIndex));
+				if(!(group.getDateGap() >= 3)) {
+					model.addAttribute("group", group);
+					int capsuleAmount = tService.selectGetCountCapsule(group.getGroupNo());
+					model.addAttribute("capsuleCount", capsuleAmount);
+					NavigationNList naviNList = gBController.groupBoardList(group.getGroupNo(), Integer.parseInt(currentPage));
+					List<Groupboard> gBList = naviNList.getgBList();
+					Pagination pi = naviNList.getPi();
+					if(!gBList.isEmpty()) {
+						model.addAttribute("gBList", gBList);
+						model.addAttribute("pi", pi);
+					}					
+				}else {
+					groupIndex = "-1";
 				}
 			}
 		}
@@ -95,6 +102,9 @@ public class GroupController {
 			,@RequestParam(value="startTime", required = false, defaultValue= "00:00") String startTime
 			,@RequestParam(value="endTime", required = false, defaultValue = "00:00") String endTime
 			){
+		if(session.getAttribute("loginUser") == null) {
+			return "redirect:/user/login";
+		}
 		User user = (User)session.getAttribute("loginUser");
 		int userNo = user.getUserNo();	
 		startDate = startDate + " " + startTime + ":00";

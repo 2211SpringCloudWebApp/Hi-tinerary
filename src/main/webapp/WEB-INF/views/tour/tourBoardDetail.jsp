@@ -73,11 +73,25 @@
 									</c:choose>
 								</form>                  
 	                        </c:if>
-	                        <c:if test= "${sessionScope.loginUser.userNickname eq null}"> 
-	                        	<button id="pay" onclick="payButtonClicked()">결제하기</button>                       
-	                        </c:if>
+	                        <c:if test="${sessionScope.loginUser.userNickname eq null}"> 
+								<form id="payForm" action="/pay" method="POST">
+									<button id="pay" type="submit">결제하기</button>                       
+								</form>
+							</c:if>
                         </div>
-                        <div><a href="/report/report?tourNo=${tour.tourNo }">신고하기</div>
+                        <div>
+							<c:if test="${tour.userNo != loginUser.userNo && loginUser.userGrade != 4}">
+	                        	<form id="reportForm" action="/report" method="POST">
+								    <input type="hidden" name="userNo" value="${loginUser.userNo}">
+								    <input type="hidden" name="boardNo" value="${tour.tourNo}">
+								    <input type="hidden" name="boardTitle" value="${tour.tourTitle}">
+								    <input type="hidden" name="userNickname" value="${tour.userNickname}">
+								    <input type="hidden" name="commentNo" value=0>
+								    <input type="hidden" name="boardType" value="tour">
+							   		<button id="reportBtn" type="submit">신고하기</button>
+								</form>
+                       		</c:if>
+						</div>
                     </div>
                     <div id="currentDiv">
                         <p>

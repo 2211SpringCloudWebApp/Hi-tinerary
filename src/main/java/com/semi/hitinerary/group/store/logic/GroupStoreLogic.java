@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.semi.hitinerary.group.domain.Group;
 import com.semi.hitinerary.group.store.GroupStore;
@@ -52,6 +53,7 @@ public class GroupStoreLogic implements GroupStore {
 	/**
 	 * 동행게시판 그룹 인원 추가 GroupStoreLogic
 	 */
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int plusCommentPeople(SqlSession session, int groupNo) {
 		int result = session.update("groupMapper.plusCommentPeople", groupNo);

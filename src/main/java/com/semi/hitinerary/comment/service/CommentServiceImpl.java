@@ -38,6 +38,9 @@ public class CommentServiceImpl implements CommentService {
 		return result;
 	}
 
+	/**
+	 * 동행찾기 게시판 댓글, 대댓글 삭제
+	 */
 	@Override
 	public int deleteGroupBoardComment(int commentNo) {
 		int result = cStore.deleteGroupBoardComment(session, commentNo);
@@ -93,6 +96,15 @@ public class CommentServiceImpl implements CommentService {
 	public List<Comment> selectListByUserNo(SearchComment sComment, Pagination pi) {
 		List<Comment> cList = cStore.selectListByUserNo(session, sComment, pi);
 		return cList;
+	}
+
+	/**
+	 * 동행찾기 게시판 대댓글 작성
+	 */
+	@Override
+	public int insertWithBoardReplyComment(Comment comment) {
+		int result = cStore.insertWithBoardReplyComment(session, comment);
+		return result;
 	}
 
 }

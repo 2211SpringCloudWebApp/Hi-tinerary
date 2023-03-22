@@ -11,5 +11,7 @@ public interface TimecapsuleService {
 
 	public int deleteGroupUser(String groupNoUserNo);
 
+	public int registGroup(Timecapsule timecapsule, int boardNo) throws Exception;
+
 
 }

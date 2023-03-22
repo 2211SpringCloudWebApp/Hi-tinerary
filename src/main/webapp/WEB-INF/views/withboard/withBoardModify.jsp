@@ -32,7 +32,7 @@
 		<input type="hidden" value="${withBoard.boardImage }" name="boardImage">
 		
 		<div class="withTitle">
-			<input type="text" name="boardTitle" value="${withBoard.boardTitle }">
+			<input type="text" name="boardTitle" value="${withBoard.boardTitle }" required>
 		</div>
 		
 		<div class="mainImage">
@@ -58,7 +58,7 @@
 	
 	<div class="maxPeople">
 	<label>모집인원</label>
-	<input type="range" min="1" max="15" value="${withBoard.maxPeople}" class="slider" id="myRange" name="maxPeople">
+	<input type="range" min="1" max="15" value="${withBoard.maxPeople}" class="slider" id="myRange" name="maxPeople" required>
 	<strong>${withBoard.currentPeople}</strong> / <span id="value">value="${withBoard.maxPeople}"</span>
 	</div>
 	
@@ -67,7 +67,7 @@
 	</div>
 	<div class="modifyButton">
 	<button type="submit" id="submit">수정하기</button>
-	<button onclick="location.href='/withboard/withBoardList';">목록으로</button>
+	<button onclick="location.href='/withboard/withBoardList'">목록으로</button>
 	</div>
 	</form>
 	</div>
@@ -134,6 +134,12 @@
 				endDate.value = startDate.value;
 			}
 		}
+        
+        //수정 버튼을 눌렀을 때
+        const submitButton = document.getElementById('submit');
+            submitButton.addEventListener('click', () => {
+              alert('글을 수정하시겠습니까?');
+            });
 	</script>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 </body>

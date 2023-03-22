@@ -89,5 +89,4 @@ public interface WithStore {
 	 */
 	public int plusCommentPeople(SqlSession session, int userNo);
 
-
 }

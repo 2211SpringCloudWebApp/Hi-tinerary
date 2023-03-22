@@ -2,6 +2,7 @@ package com.semi.hitinerary.timecapsule.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,15 +28,20 @@ public class TimecapsuleController {
 	@Autowired
 	private WithService wService;
 	
+	
 	@RequestMapping(value="/group/invite", method=RequestMethod.POST)
-	private String invite(@ModelAttribute Timecapsule timecapsule, int boardNo) {
-		timecapsule.createIden();
-		timecapsule.setUserEmail(uService.selectOneByNo(timecapsule.getUserNo()).getUserEmail());
-		int result = tService.registGroup(timecapsule);
-		if(result > 0) {
-			int result1 = gService.plusCommentPeople(timecapsule.getGroupNo());
-			int result2 = wService.plusCommentPeople(boardNo);
+	private String invite(@ModelAttribute Timecapsule timecapsule, int boardNo){
+		try {
+			timecapsule.createIden();
+			timecapsule.setUserEmail(uService.selectOneByNo(timecapsule.getUserNo()).getUserEmail());
+			int result = tService.registGroup(timecapsule,boardNo);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
 		}
+		
+		
 		return "redirect:/withboard/withBoardDetail?boardNo=" + boardNo;
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.withboard.domain.With;
@@ -97,4 +98,5 @@ public class WithServiceImpl implements WithService{
 		int result = wStore.plusCommentPeople(session, userNo);
 		return result;
 	}
+
 }

@@ -40,13 +40,6 @@ public interface FreeboardStore {
 	 * @return
 	 */
 	public String selectNickname(SqlSession session, int boardNo);
-	/**
-	 * 게시글 수 Store
-	 * @param session
-	 * @param pi
-	 * @return
-	 */
-	public List<Freeboard> selectFreeboardList(SqlSession session, PageInfo pi, Search search);
 
 	/**
 	 * 게시글 상세 조회 Store
@@ -79,7 +72,7 @@ public interface FreeboardStore {
 	 * @param search
 	 * @return
 	 */
-	public List<Freeboard> selectListByKeyword(SqlSession session, PageInfo pi, Search search);
+	public List<Freeboard> selectFreeboardList(SqlSession session, PageInfo pi, Search search);
 	
 	/**
 	 * 시퀀스 넘버 조회 Store

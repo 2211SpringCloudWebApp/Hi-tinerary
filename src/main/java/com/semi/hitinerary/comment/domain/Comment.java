@@ -28,7 +28,6 @@ public class Comment {
 		this.userNickname = userNickname;
 		
 	}
-	
 	public int getCommentNo() {
 		return commentNo;
 	}
@@ -101,7 +100,6 @@ public class Comment {
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
-	
 	public String getUserNickname() {
 		return userNickname;
 	}

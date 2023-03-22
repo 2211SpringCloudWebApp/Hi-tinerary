@@ -44,6 +44,20 @@
 					<div id="People">${withBoard.currentPeople } /
 						${withBoard.maxPeople }</div>
 				</div>
+					<div id="report">
+						<button id="listBtn" onclick="location.href='/withboard/withBoardList'">목록으로</button>
+						<c:if test="${loginUser ne null }">
+						<form action="/report" method="POST">
+							<input type="hidden" name="userNo" value="${loginUser.userNo}">
+							<input type="hidden" name="boardNo" value="${withBoard.boardNo}">
+							<input type="hidden" name="boardTitle" value="${withBoard.boardTitle}">
+							<input type="hidden" name="userNickname" value="${withBoard.userNickname}">
+							<input type="hidden" name="commentNo" value=0>
+							<input type="hidden" name="boardType" value="with">
+							<button type="submit" id="singo" onclick="event.preventDefault(); document.querySelector('form').submit();">신고하기</button>
+						</form>
+						</c:if>
+					</div>
 			</div>
 
 			<div id="mainContent">
@@ -67,7 +81,6 @@
 				</c:if>
 			</div>
 		</div>
-
 	<!-- 댓글영역 -->
 	<!-- 댓글 리스트 나오는 영역 -->
 	<div class="comment-container"> 
@@ -82,6 +95,7 @@
 				<c:if test="${comment.status == 0 && loginUser.userNo != comment.userNo && withBoard.userNo == loginUser.userNo }">
 				<button class="comment_button" id="popup_open_btn" onclick="inviteBtn(this)">초대</button>
 				</c:if>
+				<c:if test="${loginUser.userNo ne null }">
 					<div class="comment-others">
 						<a href="" id="replycommentBtn" onclick="replywriteform(this)">댓글달기</a>
 						<form action="/report" method="POST">
@@ -89,7 +103,7 @@
 							<input type="hidden" name="boardNo" value="${withBoard.boardNo}">
 							<input type="hidden" name="boardTitle" value="${withBoard.boardTitle}">
 							<input type="hidden" name="userNickname" value="${withBoard.userNickname}">
-							<input type="hidden" name="commentNo" value=0>
+							<input type="hidden" name="commentNo" value="${comment.commentNo }">
 							<input type="hidden" name="boardType" value="with">
 							<a href="#" onclick="event.preventDefault(); document.querySelector('form').submit();">신고</a>
 						</form>
@@ -97,6 +111,7 @@
 						<a href="javascript:void(0);" onclick="replyRemoveCheck(${comment.commentNo});">삭제</a>
 					</c:if>
 					</div>
+					</c:if>
 				<div class="commentNo">${comment.userNo }</div>
 			</div>
 			</c:if>

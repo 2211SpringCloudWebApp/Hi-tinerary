@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.semi.hitinerary.comment.domain.Comment;
 import com.semi.hitinerary.common.Pagination;
+import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.tour.domain.PageInfo;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
@@ -114,6 +115,12 @@ public class TourServiceImpl implements TourService {
 	public int deleteComment(int commentNo) {
 		int result = tStore.deleteComment(session, commentNo);
 		return result;
+	}
+
+	@Override
+	public List<Tour> selectListByuserNo(int userNo, Pagination pi) {
+		List<Tour> tList = tStore.selectListByuserNo(session, userNo, pi);
+		return tList;
 	}
 
 	

@@ -48,6 +48,13 @@
 		UPDATE USER_TBL SET USER_NICKNAME = #{userNickname}, USER_EMAIL = #{userEmail}, USER_PHONE = #{userPhone} WHERE USER_NO = #{userNo}
 	</update>
 	
+	<update id="updateCoUserByNo">
+		UPDATE USER_TBL SET USER_NAME = #{userName}, USER_NICKNAME = #{userNickname}, USER_EMAIL = #{userEmail}, USER_PHONE = #{userPhone}, USER_BIRTH_DATE = #{userBirthDate}, COMPANY_REGI_NO = #{companyRegiNo} WHERE USER_NO = #{userNo}
+	</update>
+	<update id="deleteApplyUser">
+		UPDATE USER_TBL SET USER_GRADE = 3 WHERE USER_NO = #{userNo}
+	</update>
+	
 	<!-- 일반회원 전체 목록 조회 -->
 	<select id="selectAllUser" resultMap="userResultMap">
 		SELECT * FROM USER_TBL WHERE USER_GRADE = 0 ORDER BY USER_NO

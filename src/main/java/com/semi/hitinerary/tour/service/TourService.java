@@ -122,5 +122,13 @@ public interface TourService {
 	 * @return int
 	 */
 	public int deleteComment(int commentNo);
+	
+	/**
+	 * 유저 번호로 투어상품 게시글 찾기
+	 * @param userNo
+	 * @param pi
+	 * @return
+	 */
+	public List<Tour> selectListByuserNo(int userNo, Pagination pi);
 
 }

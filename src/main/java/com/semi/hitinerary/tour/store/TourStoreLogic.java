@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.semi.hitinerary.comment.domain.Comment;
 import com.semi.hitinerary.common.Pagination;
+import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.tour.domain.PageInfo;
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
@@ -116,6 +117,15 @@ public class TourStoreLogic implements TourStore {
 	public int deleteComment(SqlSession session, int commentNo) {
 		int result = session.delete("commentMapper.deleteTourComment", commentNo);
 		return result;
+	}
+
+	@Override
+	public List<Tour> selectListByuserNo(SqlSession session, int userNo, Pagination pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		List<Tour> tList = session.selectList("TourMapper.selectListByuserNo", userNo, rowbounds);
+		return tList;
 	}
 
 }

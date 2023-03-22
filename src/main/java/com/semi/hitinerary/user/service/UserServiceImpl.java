@@ -82,6 +82,18 @@ public class UserServiceImpl implements UserService {
 		return uStore.updateSellerGarde(session, user);
 	}
 
+	@Override
+	public int updateCoUserByNo(User user) {
+		int result= uStore.updateCoUserByNo(session, user);
+		return result;
+	}
+
+	@Override
+	public int deleteApplyUser(int userNo) {
+		int result= uStore.deleteApplyUser(session, userNo);
+		return result;
+	}
+
 	
 	
 	

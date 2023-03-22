@@ -112,9 +112,6 @@ public class UserController {
 		}
 	}
 	
-
-	
-
 	// 로그인창
 	@RequestMapping(value = "/user/login", method = RequestMethod.GET)
 	public String Login() {
@@ -142,9 +139,7 @@ public class UserController {
 			model.addAttribute("msg", e.getMessage());
 			return "common/error";
 		}
-	}
-	
-	
+	}	
 
 	// 로그아웃
 	@RequestMapping(value = "/user/logout", method = RequestMethod.GET)
@@ -196,13 +191,76 @@ public class UserController {
 		return "redirect:/manager/mypage";
 	}
 	
-	// 유저 탈퇴
+	// 유저 강제탈퇴
 	@RequestMapping(value="/manager/deleteUser", method = RequestMethod.POST)
 	public String deleteUser(@RequestParam("userNo") int userNo) {
 		int result = uService.deleteUser(userNo);
 		return "redirect:/manager/mypage";
 	}
 	
+	// 기업회원 마이페이지 조회
+	@RequestMapping(value="/user/mypageCompany", method=RequestMethod.GET)
+	public String companyMypageView(HttpSession session
+			,Model model) {
+		User uParam = (User)session.getAttribute("loginUser");
+		User user = uService.selectOneByNo(uParam.getUserNo());
+		String email = user.getUserEmail();
+		String[] emailarray = email.split("@");
+		user.setUserEmail(emailarray[0]);
+		String domain = emailarray[1];
+		model.addAttribute("domain", domain);
+		model.addAttribute("user", user);
+		return "user/mypageCompany";
+	}
+	
+	// 기업회원 정보수정
+	@RequestMapping(value="/company/modifyInfo", method =RequestMethod.POST)
+	public String modifyCoUser(
+			@ModelAttribute User user
+			,@RequestParam("userEmail")  String mailId
+			,@RequestParam("domain-input") String mailDomain) {
+		user.setUserEmail(mailId + "@" + mailDomain);
+		int result = uService.updateCoUserByNo(user);
+		return "redirect:/user/mypageCompany";
+	}	
+	
+	// 기업회원 탈퇴신청
+	@RequestMapping(value="/company/deleteApply", method=RequestMethod.POST)
+	public String deleteApply(int userNo) {
+		int result = uService.deleteApplyUser(userNo);
+		return  "redirect:/user/logout";
+	}
+	
+	// 기업회원 작성글 조회
+	@RequestMapping(value = "/company/mypage/write/post", method = RequestMethod.GET)
+	public String CoUserWritePost(
+			@RequestParam(value = "page", required = false, defaultValue = "1") String currentPage, HttpSession session,
+			Model model) {
+		User user = (User) session.getAttribute("loginUser");
+		int totalCount = fService.selectCountByUserNo(user.getUserNo());
+		Pagination pi = new Pagination(Integer.parseInt(currentPage), 10, 5, totalCount);
+		List<Tour> tList = tService.selectListByuserNo(user.getUserNo(), pi);
+		model.addAttribute("pi", pi);
+		model.addAttribute("tList", tList);
+		return "user/postList";
+	}
+	
+	// 기업회원 작성댓글 조회
+	@RequestMapping(value = "/company/mypage/write/comment", method = RequestMethod.GET)
+	public String CoUserWriteComment(
+			@RequestParam(value = "page", required = false, defaultValue = "1") String currentPage,
+			@RequestParam(value = "category", required = false, defaultValue = "tour") String category,
+			HttpSession session, Model model) {
+		User user = (User) session.getAttribute("loginUser");
+		SearchComment sComment = new SearchComment(category, user.getUserNo());
+		int totalCount = cService.selectCountByUserNo(sComment);
+		Pagination pi = new Pagination(Integer.parseInt(currentPage), 10, 5, totalCount);
+		List<Comment> cList = cService.selectListByUserNo(sComment, pi);
+		model.addAttribute("pi", pi);
+		model.addAttribute("cList", cList);
+		model.addAttribute("category", category);
+		return "/user/commentList";
+	}
 
 	// 일반회원 마이페이지 조회
 	@RequestMapping(value="/user/mypage", method=RequestMethod.GET)
@@ -220,11 +278,6 @@ public class UserController {
 		return "user/mypage";
 	}
 
-	 // 기업회원 마이페이지 조회
-	 @RequestMapping(value="/user/mypageCompany", method=RequestMethod.GET)
-	 public String companyMypageView() {
-		 return "user/mypageCompany";
-	 }
 
 	// 일반회원 구매내역 조회 화면 접속
 	@RequestMapping(value = "/user/mypage/buylist", method = RequestMethod.GET)
@@ -238,6 +291,7 @@ public class UserController {
 		model.addAttribute("tList", tList);
 		return "user/buylist";
 	}
+
 
 	// 일반회원 자유게시판 작성글 조회
 	@RequestMapping(value = "/user/mypage/write/freeboard", method = RequestMethod.GET)

@@ -13,28 +13,29 @@
     		<jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
     	</header>
         <main>
-		     <div class="container">
-		        <div class="side-nav">
-		            <h3>${loginUser.userNickname} 님</h3>
+			<div class="container">
+				<div class="side-nav">
+					<h3>${loginUser.userNickname} 님</h3>
 		            <a href="/user/mypageCompany" class="nav-btn nownav">내 정보 조회</a>
-		            <a href="/user/mypage/selllist" class="nav-btn">판매내역 조회</a>
-		            <a href="/user/mypage/write/tourboard" class="nav-btn">작성 글 조회</a>
-		            <a href="/user/mypage/write/comment" class="nav-btn">작성 댓글 조회</a>
+		            <a href="/company/mypage/selllist" class="nav-btn">판매내역 조회</a>
+		            <a href="/company/mypage/write/post" class="nav-btn">작성 글 조회</a>
+		            <a href="/company/mypage/write/comment" class="nav-btn">작성 댓글 조회</a>
 		        </div>
 		        <div id="mypage-contentbox">
 		            <div id="mypage-title">
 		                <h2>내 정보 조회</h2>
 		            </div>
 		            <div id="mypage-content">
-		                <form action="/user/mypageCompany" method="post">
+		                <form action="/company/modifyInfo" method="post">
 		                    <div id="input-area">
+		                			<input type="hidden" name="userNo" value="${user.userNo }">
 		                        <div class="info">
 		                            <label>아이디</label><span id=id-err class="err"></span><br>
 		                            <input type="text" id="userId" name="userId" value="${user.userId}" readonly>
 		                        </div>
 		                        <div class="info">
 		                            <label>비밀번호</label><span id=pw-err class="err"></span><br>
-		                            <input type="password" id="userPw" name="userPw" value="${user.userPw}">
+		                            <input type="password" id="userPw" name="userPw">
 		                        </div>
 		                        <div class="info">
 		                            <label>대표자명</label><span id=name-err class="err"></span><br>
@@ -46,10 +47,10 @@
 		                        </div>
 		                        <div class="info">
 		                            <label>이메일</label><span id=email-err class="err"></span><br>
-		                            <input type="text" id="userEmail" name="userEmail" class="mail-input" value="${emailId}">
+		                            <input type="text" id="userEmail" name="userEmail" class="mail-input form-mailid" value="${user.userEmail}">
 		                            <span> @ </span>
-		                            <input type="text" id="domain-input" name="domain-input" class="mail-input" value="${emailDomain}">
-		                                <select id="domain-select">
+		                            <input type="text" id="domain-input" name="domain-input" class="mail-input form-domain" value="${domain}">
+		                                <select id="domain-select" class="form-damain-select">
 		                                    <option value="">직접입력</option>
 		                                    <option value="naver.com">naver.com</option>
 		                                    <option value="gmail.com">gmail.com</option>
@@ -69,11 +70,16 @@
 		                            <label>사업자등록번호</label><span id=regi-err class="err"></span><br>
 		                            <input type="text" id="companyRegiNo" name="companyRegiNo" value="${user.companyRegiNo}" onkeyup="addHyphenToRegiNo(this)">
 		                        </div>
-		                        <br><br>
-		                        <div class="btn-area">
-		                            <input type="submit" value="수정하기" onclick="return Valid();">
-		                            <input type="submit" value="탈퇴신청">
-		                        </div>
+		        			</div>
+							<br>
+		                    <div class="btn-area">
+		                    	<input type="submit" value="수정하기">
+		                    </div>
+		                </form>
+		                <form action="/company/deleteApply" method="post">
+		                	<div class="btn-area">
+		                		<input type="hidden" name="userNo" value="${loginUser.userNo }">
+		                        <input type="submit" value="탈퇴신청">
 		                    </div>
 		                </form>
 		            </div>
@@ -84,7 +90,7 @@
         	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> 
         </footer>
         <script>
-            // select 요소와 input 요소 가져오기
+/*             // select 요소와 input 요소 가져오기
             var domainSelect = document.getElementById("domain-select");
             var domainInput = document.getElementById("domain-input");
             // 도메인 select 요소값 변경될때
@@ -229,7 +235,22 @@
                     return false;
                 }
                 return isValid;
-            };
+            }; */
+            let selectBox = document.querySelector(".form-damain-select");
+            let domainBox = document.querySelector(".form-domain");
+           	let a = document.querySelectorAll("[value='${domain}']")[1];
+           	if(a != null){
+           		a.selected = true;
+           		domainBox.readOnly = true;
+           	}
+            selectBox.addEventListener("change", function(){
+            	if(selectBox.value == ""){
+            		domainBox.readOnly = false;
+            	}else{
+            		domainBox.readOnly = true;
+            	}
+            		domainBox.value = selectBox.value            		
+            })
         </script>
     </body>
 </html>

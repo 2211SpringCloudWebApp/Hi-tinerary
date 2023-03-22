@@ -168,6 +168,10 @@
   
 /*  <!--여기서부터 댓글영역-->  */
   
+  form {
+  display: inline-block;
+  /* 폼태그가 div 안건드리게 하는거 */
+}
   
   #replyDiv{
     width: 100%;

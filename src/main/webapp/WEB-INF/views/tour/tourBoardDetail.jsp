@@ -22,7 +22,7 @@
                 
             <div id="thumbnailAndInfos">
                 <div id="thumbnail">
-<!--                     520px x 520px <br> thumbnail -->
+<!--                     520px x 520px  thumbnail -->
 					<c:choose>
 					  <c:when test="${empty tour.thumbnail}">
 					    <img src="/resources/images/noThumbnail.png" alt="No Thumbnail">
@@ -86,7 +86,7 @@
 								    <input type="hidden" name="boardNo" value="${tour.tourNo}">
 								    <input type="hidden" name="boardTitle" value="${tour.tourTitle}">
 								    <input type="hidden" name="userNickname" value="${tour.userNickname}">
-								    <input type="hidden" name="commentNo" value=0>
+								    <input type="hidden" name="commentNo" value="0">
 								    <input type="hidden" name="boardType" value="tour">
 							   		<button id="reportBtn" type="submit">신고하기</button>
 								</form>
@@ -134,7 +134,16 @@
 		                    <c:if test="${loginUser.userNo != comment.userNo && loginUser ne null}"> 
 		                    	<div class="modifyDeleteDiv">
 		                    		<button class="reReplyBtn" onclick="writeReply(this)">대댓글쓰기</button> 
-		                    		&nbsp;&nbsp;&nbsp;신고
+		                    		&nbsp;&nbsp;&nbsp;
+		                    		<form id="reportForm" action="/report" method="POST">
+									    <input type="hidden" name="userNo" value="${loginUser.userNo}">
+									    <input type="hidden" name="boardNo" value="${tour.tourNo}">
+									    <input type="hidden" name="boardTitle" value="${tour.tourTitle}">
+									    <input type="hidden" name="userNickname" value="${tour.userNickname}">
+									    <input type="hidden" name="commentNo" value="${comment.commentNo }">
+									    <input type="hidden" name="boardType" value="tour">
+								   		<a href="#" onclick="this.parentNode.submit(); return false;">신고</a>
+									</form>
 		                    	</div>   
 		                    </c:if>	  
 		                </div>              
@@ -155,7 +164,16 @@
 			                    </c:if>	
 			                    <c:if test="${loginUser.userNo != comment.userNo}"> 
 			                    	<div class="modifyDeleteDiv">
-			                    		&nbsp;&nbsp;&nbsp;&nbsp;신고
+			                    		&nbsp;&nbsp;&nbsp;&nbsp;
+			                    		<form id="reportForm" action="/report" method="POST">
+										    <input type="hidden" name="userNo" value="${loginUser.userNo}">
+										    <input type="hidden" name="boardNo" value="${tour.tourNo}">
+										    <input type="hidden" name="boardTitle" value="${tour.tourTitle}">
+										    <input type="hidden" name="userNickname" value="${tour.userNickname}">
+										    <input type="hidden" name="commentNo" value="${comment.commentNo }">
+										    <input type="hidden" name="boardType" value="tour">
+									   		<a href="#" onclick="this.parentNode.submit(); return false;">신고</a>
+										</form>
 			                    	</div>   
 			                    </c:if>	  
 			                </div>   

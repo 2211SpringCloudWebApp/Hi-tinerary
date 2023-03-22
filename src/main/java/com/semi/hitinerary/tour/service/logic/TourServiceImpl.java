@@ -1,4 +1,4 @@
-package com.semi.hitinerary.tour.service;
+package com.semi.hitinerary.tour.service.logic;
 
 
 import java.util.List;
@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 import com.semi.hitinerary.comment.domain.Comment;
 import com.semi.hitinerary.common.Pagination;
 import com.semi.hitinerary.freeboard.domain.Freeboard;
-import com.semi.hitinerary.tour.domain.PageInfo;
+
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
+import com.semi.hitinerary.tour.service.TourService;
 import com.semi.hitinerary.tour.store.TourStore;
 import com.semi.hitinerary.user.domain.User;
 
@@ -31,6 +32,12 @@ public class TourServiceImpl implements TourService {
 	}
 
 	@Override
+	public List<Tour> selectListByuserNo(int userNo, Pagination pi) {
+		List<Tour> tList = tStore.selectListByuserNo(session, userNo, pi);
+		return tList;
+	}
+
+	@Override
 	public Tour selectOneByNo(int tourNo) {
 		Tour tour = tStore.selecOneByNo(session, tourNo);
 		return tour;
@@ -43,20 +50,47 @@ public class TourServiceImpl implements TourService {
 	}
 
 	@Override
+	public int selectGetTotalCountByUserNo(int userNo) {
+		int totalCount = tStore.selectGetTotalCountByUserNo(session, userNo);
+		return totalCount;
+	}
+
+	@Override
+	public List<Tour> selectTourListByUserNo(int userNo, Pagination pi) {
+		List<Tour> tList = tStore.selectTourListByUserNo(session, userNo, pi);
+		return tList;
+	}
+
+	@Override
+	public List<Comment> selectAllComments(int tourNo) {
+		List<Comment> comments = tStore.selectAllComments(session, tourNo);
+		return comments;
+	}
+
+	public int selectCurrCount(int tourNo) {	
+		return tStore.selectCurrCount(session, tourNo);
+	}
+
+	@Override
+	public int getListCount() {
+		int totalCount = tStore.selectTotalCount(session);
+		return totalCount;
+	}
+
+	public int getSequence() {
+		
+		return tStore.getSequence(session);
+	}
+
+	@Override
 	public int insertPosting(Tour tour) {
 		int result = tStore.insertPosting(session, tour);
 		return result;
 	}
 
 	@Override
-	public int deleteTour(int tourNo) {
-		int result = tStore.deleteTour(session, tourNo);
-		return result;
-	}
-
-	@Override
-	public int updatePosting(Tour tour) {
-		int result = tStore.updateTour(session, tour);
+	public int commentUp(Comment comment) {
+		int result = tStore.insertComment(session, comment);
 		return result;
 	}
 
@@ -67,60 +101,27 @@ public class TourServiceImpl implements TourService {
 	}
 
 	@Override
-	public int getListCount() {
-		int totalCount = tStore.selectTotalCount(session);
-		return totalCount;
-	}
-
-	@Override
-	public List<Tour> selectTourListByUserNo(int userNo, Pagination pi) {
-		List<Tour> tList = tStore.selectTourListByUserNo(session, userNo, pi);
-		return tList;
-	}
-	public int getSequence() {
-		
-		return tStore.getSequence(session);
-	}
-
-	@Override
-	public int commentUp(Comment comment) {
-		int result = tStore.insertComment(session, comment);
-		return result;
-	}
-
-	@Override
-	public List<Comment> selectAllComments(int tourNo) {
-		List<Comment> comments = tStore.selectAllComments(session, tourNo);
-		return comments;
-	}
-
-	@Override
 	public int reReplyUp(Comment reReply) {
 		int result = tStore.insertRereply(session, reReply);
 		return result;
 	}
 
 	@Override
-	public int selectGetTotalCountByUserNo(int userNo) {
-		int totalCount = tStore.selectGetTotalCountByUserNo(session, userNo);
-		return totalCount;
+	public int updatePosting(Tour tour) {
+		int result = tStore.updateTour(session, tour);
+		return result;
 	}
-	
-	
-	public int selectCurrCount(int tourNo) {	
-		return tStore.selectCurrCount(session, tourNo);
+
+	@Override
+	public int deleteTour(int tourNo) {
+		int result = tStore.deleteTour(session, tourNo);
+		return result;
 	}
 
 	@Override
 	public int deleteComment(int commentNo) {
 		int result = tStore.deleteComment(session, commentNo);
 		return result;
-	}
-
-	@Override
-	public List<Tour> selectListByuserNo(int userNo, Pagination pi) {
-		List<Tour> tList = tStore.selectListByuserNo(session, userNo, pi);
-		return tList;
 	}
 
 	

@@ -23,6 +23,7 @@ import com.semi.hitinerary.freeboard.service.FreeboardService;
 import com.semi.hitinerary.report.domain.boardReport;
 import com.semi.hitinerary.report.service.ReportService;
 import com.semi.hitinerary.tour.domain.Tour;
+import com.semi.hitinerary.tour.domain.TourSell;
 import com.semi.hitinerary.tour.service.TourService;
 import com.semi.hitinerary.user.domain.TourBuyUser;
 import com.semi.hitinerary.user.domain.User;
@@ -237,7 +238,7 @@ public class UserController {
 			@RequestParam(value = "page", required = false, defaultValue = "1") String currentPage, HttpSession session,
 			Model model) {
 		User user = (User) session.getAttribute("loginUser");
-		int totalCount = fService.selectCountByUserNo(user.getUserNo());
+		int totalCount = tService.selectCountByUserNo(user.getUserNo());
 		Pagination pi = new Pagination(Integer.parseInt(currentPage), 10, 5, totalCount);
 		List<Tour> tList = tService.selectListByuserNo(user.getUserNo(), pi);
 		model.addAttribute("pi", pi);

@@ -12,6 +12,7 @@ import com.semi.hitinerary.freeboard.domain.Freeboard;
 
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
+import com.semi.hitinerary.tour.domain.TourSell;
 import com.semi.hitinerary.tour.store.TourStore;
 import com.semi.hitinerary.user.domain.User;
 
@@ -127,6 +128,18 @@ public class TourStoreLogic implements TourStore {
 	public int deleteComment(SqlSession session, int commentNo) {
 		int result = session.delete("commentMapper.deleteTourComment", commentNo);
 		return result;
+	}
+
+	@Override
+	public int selectCountByUserNo(SqlSession session, int userNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<TourSell> selectTourSellList(SqlSession session, int userNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

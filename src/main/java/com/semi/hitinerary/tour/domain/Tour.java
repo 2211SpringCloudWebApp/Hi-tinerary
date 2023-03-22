@@ -189,6 +189,7 @@ public class Tour {
 		this.payDate = payDate;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Tour [tourNo=" + tourNo + ", tourTitle=" + tourTitle + ", tourContent=" + tourContent + ", startDate="

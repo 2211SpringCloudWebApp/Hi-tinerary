@@ -7,6 +7,7 @@ import com.semi.hitinerary.common.Pagination;
 
 import com.semi.hitinerary.tour.domain.Tour;
 import com.semi.hitinerary.tour.domain.TourPay;
+import com.semi.hitinerary.tour.domain.TourSell;
 import com.semi.hitinerary.user.domain.User;
 
 public interface TourService {
@@ -129,5 +130,18 @@ public interface TourService {
 	 * @return int
 	 */
 	public int deleteComment(int commentNo);
+	
+	/**
+	 * 유저 번호로 투어상품 게시글 개수 찾기 
+	 * @param userNo
+	 * @return
+	 */
+	public int selectCountByUserNo(int userNo);
+	
 
+	/**
+	 * 판매내역 리스트 불러오기 Service
+	 * @return List<TourSell>
+	 */
+	public List<TourSell> selectTourSellList(int userNo);
 }

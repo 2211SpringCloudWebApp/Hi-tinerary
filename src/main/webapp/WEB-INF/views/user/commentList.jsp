@@ -48,7 +48,7 @@
 			                                    <tr>
 			                                        <td>${comment.content }</td>
 			                                        <td><fmt:formatDate value="${comment.writeDate }" pattern="yyyy-MM-dd ahh:mm"/></td>
-			                                        <td><a href="/tourboard/detail?boardNo=${comment.tourNo }" class="detail-btn">원문보기</a></td>
+			                                        <td><a href="/tour/tourBoardDetail?tourNo=${comment.tourNo }" class="detail-btn">원문보기</a></td>
 			                                    </tr>		                                		
 		                                		</c:if>
 		                                		<c:if test="${comment.freeBoardNo ne 0 }">

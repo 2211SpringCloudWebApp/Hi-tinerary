@@ -6,33 +6,26 @@
 		<meta charset="UTF-8">
 		<title>수정페이지</title>
 	</head>
-		<style>
-			#container-update{
-				margin : 0px auto;
-				width : 1200px
-			}
-		</style>
+			<link rel="stylesheet" href="../../../../resources/css/groupboardwrite.css">
 	<body>
-		<div id="container-update">
-			<header>
-				<jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
-			</header>
-			<main>
-				<h1>${groupName } 그룹 글수정하기</h1>
-				<div>
-					<form action="/group/board/update" method="post">
-						<input type="hidden" name="BoardNo" value="${board.boardNo }">
-						<input type="hidden" name="groupIndex" value="${groupIndex }">
-						<input type="text" name="boardTitle" value="${board.boardTitle }">
-						<textarea name="boardSubject" rows="40" cols="150">${board.boardSubject }</textarea>
-						<input type="submit" value="수정하기">
-						<a href="/group/groupinfopage?groupIndex=${groupIndex}">취소</a>
-					</form>
-				</div>
-			</main>
-			<footer>
-				<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
-			</footer>
+		<div id="container-write">
+			<jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
+			<h1>${groupName } 그룹 글쓰기</h1>
+			<div>
+				<form action="/group/board/write" method="post" class="write-box">
+					<input type="hidden" name="groupNo" value="${groupNo }">
+					<input type="hidden" name="groupIndex" value="${groupIndex }">
+					<label class="title-area">
+					<p class="title-plain">제목 : </p><input type="text" name="groupTitle" class="board-title" value="${board.boardTitle }">
+					</label>
+					<textarea name="groupSubject" rows="40" cols="150">${board.boardSubject }</textarea>
+					<div class="btn-box">
+						<input type="submit" value="글쓰기" class="write-btn">
+						<a class="cancel-btn" href="/group/board/detail?groupBoardNo=${board.boardNo }&groupIndex=${groupIndex }">취소</a>
+					</div>
+				</form>
+			</div>
+			<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 		</div>
 	</body>
 </html>

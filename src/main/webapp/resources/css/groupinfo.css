@@ -20,16 +20,39 @@
 	color : black;
 	margin : 20px auto;
 	text-align : center;
-	background-color: darkgray;
+	background-color: #F39081;
 	border: none;
 	border-radius: 15px;
-	padding: 10px 0px;
+	padding: 15px 10px;
 	display : block;
 	width : 200px;
+	font-size : 20px;
+	font-weight : bold;
 }
 
 .now-nav{
 	background-color : #F39081;
+}
+
+.nav-btn:hover {
+	background-color: #0F8D80;
+}
+
+.now-nav:hover {
+	background-color: #F39081;
+}
+
+.capsule-submit-btn{
+	display : block;
+	width : 200px;
+	margin : 0 auto;
+	font-size : 20px;
+	font-weight : bold;
+	background-color: #FBD188;
+	border: none;
+	border-radius: 15px;
+	cursor: pointer;
+	padding : 15px 20px;
 }
 
 .group-area{
@@ -37,4 +60,164 @@
 	border: 3px solid #0F8D80;
 	margin-left : 20px;
 	border-radius: 10px;
+}
+
+.mypage-title {
+  width: 850px;
+  border-bottom: 2px solid black;
+  box-sizing: border-box;
+  margin: 25px auto;
+  font-size : 35px;
+  font-weight : bold;
+}
+.mypage-title p{
+	margin : 0;
+	margin-left : 20px;
+}
+
+.info-area{
+	height: 90px;
+}
+.area1{
+	float : left;
+	font-size : 20px;
+	margin-left : 20px;
+	display : flex;
+	flex-direction: column;
+}
+.start-date,.end-date{
+	display : flex;
+	align-items: center;
+}
+.date-title{
+	margin : 0px;
+	font-size : 25px;
+	font-weight : bold;
+}
+.group-date{
+	margin : 0px;
+	margin-left : 10px; 
+	height: 20px;
+}
+.area2{
+	float : right;
+	margin-right : 20px;
+	text-align : right;
+	font-size: 20px;
+}
+.area2 a{
+	background-color: #0F8D80;
+	padding : 10px;
+	border-radius: 5px;
+	color : white;
+}
+.area2 p{
+	margin : 0px;
+	margin-bottom: 20px;
+	font-size : 25px;
+	font-weight: bold;
+}
+
+.empty{
+	clear : both;
+}
+
+.area3{
+	margin-left : 20px;
+	height: 100px;
+}
+.capsule-amount{
+	display : flex;
+}
+.number{
+	margin : 0px;
+	font-size : 30px;
+}
+.capsule-btn{
+	border : none;
+	margin-left : 20px;
+	background-color: #0F8D80;
+	padding : 10px;
+	border-radius: 5px;
+	color : white;	
+}
+.empty-board{
+	margin-top : 50px;
+	margin-left: 20px;
+	margin-bottom: 20px;
+}
+.empty-btn{
+	margin-left:20px;
+	margin-bottom : 30px;
+}
+.empty-btn input{
+	background-color : #0F8D80;
+	border : none;
+	color : white;
+	border-radius: 5px;
+	padding: 5px 10px;
+}
+
+.groupBoardList-tbl{
+	margin : 0 auto;
+}
+
+.groupBoardList-tbl td,th{
+	border-bottom : 1px dashed #FBD188;
+	text-align: center;
+}
+.board-title{
+	width : 300px;
+	height : 30px;
+	overflow : hidden;
+	display : block;
+	text-align :left;
+}
+.modify-btn{
+	background-color : #FBD188;
+	border: none;
+	border-radius: 5px;
+	padding: 5px 10px;
+	color : white;
+}
+.delete-btn{
+	background-color : #F39081;
+	border: none;
+	border-radius: 5px;
+	padding: 5px 10px;
+	color : white;
+}
+.pagenav{
+	color : #FBD188; 
+	font-size: 20px;
+}
+.list-btn{
+	margin-top : 20px;
+	margin-bottom : 30px;
+	float : right;
+	margin-right: 70px;
+}
+.list-btn input{
+	background-color : #0F8D80;
+	border: none;
+	border-radius: 5px;
+	padding: 5px 10px;
+	color : white;
+}
+.group-memebertbl{
+	margin : 0 auto;
+}
+
+.group-memebertbl td{
+	text-align : center;
+	border-bottom : 1px dashed #FBD188;
+	height: 30px;
+}
+.member-list input{
+	background-color : #F39081;
+	border: none;
+	border-radius: 5px;
+	padding: 5px 10px;
+	color : white;
+	
 }

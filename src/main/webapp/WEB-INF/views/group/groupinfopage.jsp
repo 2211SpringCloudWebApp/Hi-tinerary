@@ -14,9 +14,17 @@
 		<div class="group-container">
 			<div class="group-nav">
 	            <p>${loginUser.userNickname }</p>
-	            <a class="nav-btn now-nav" href="/group/groupinfopage?groupIndex=-1">그룹만들기</a>
+	            <a class="nav-btn" href="/group/groupinfopage?groupIndex=-1">그룹만들기</a>
 	            <c:forEach items="${gList}" var="group" varStatus="status">
-	            	<a class="nav-btn" href="/group/groupinfopage?groupIndex=${status.index }">${group.groupName }</a>
+	            	<c:if test="${group.dateGap < 3 }">
+	            		<a class="nav-btn" href="/group/groupinfopage?groupIndex=${status.index }">${group.groupName }</a>
+	            	</c:if>
+	            	<c:if test="${group.dateGap >= 3 }">
+	            		<form action="/sendMail" class="capsule-form" method="post">
+	            			<input type="hidden" name="groupNo" value="${group.groupNo}">
+	            			<input type="submit" class="capsule-submit-btn" value="${group.groupName }" onclick="return capsulesend()">
+	            		</form>
+	            	</c:if>
 	            </c:forEach>
 	        </div>
 			<div class="group-area">
@@ -39,34 +47,47 @@
 				</c:if>
 				<c:if test="${group ne null }">
 					<c:if test="${groupUserView eq 'F' }">
-			            <div class="title-area">
-			                <h1 class="title">${group.groupName }</h1>
+			            <div class="mypage-title">
+			                <p>${group.groupName }</p>
 			            </div>
-					    <div id="info-area">
-			                <div id="area1">
-			                    <p>시작날짜 ~ 종료날짜</p>
-			                    <p id="second-p"><fmt:formatDate value="${group.startDate }" pattern="yyyy-MM-dd ahh:mm" /> ~ <fmt:formatDate value="${group.endDate }" pattern="yyyy-MM-dd ahh:mm" /></p>
-			                </div>
-			                <div id="area2">
-			                    <p>그룹인원 ${group.currentPeople }/${group.maxPeople }</p>
-			                    <a href="/group/groupinfopage?groupIndex=${groupIndex }&groupUserView=T">인원조회</a>
-			                </div>
-			            </div>
-			            <div id="area3">
-			                <button>타임캡슐 작성/수정</button>
-			                <p>개의 캡슐이 작성됨</p>
-			            </div>
+						    <div class="info-area">
+				                <div class="area1">
+				                    <div class="start-date"><p class="date-title">시작날짜 :</p> <p class="group-date"><fmt:formatDate value="${group.startDate }" pattern="yyyy-MM-dd ahh:mm" /></p></div>
+				                    <div class="end-date"><p class="date-title">종료날짜 : </p><p class="group-date"><fmt:formatDate value="${group.endDate }" pattern="yyyy-MM-dd ahh:mm" /></p></div>
+				                </div>
+				                <div class="area2">
+				                    <p>그룹인원 ${group.currentPeople }/${group.maxPeople }</p>
+				                    <a href="/group/groupinfopage?groupIndex=${groupIndex }&groupUserView=T">인원조회</a>
+				                </div>
+				            </div>
+				        <div class="empty"></div>
+				        <div class="area3">
+				        <div class="capsule-amount">
+				        	<p class="number">${capsuleCount }</p><p class="capsule-info">개의 캡슐이 작성됨</p>
+				        </div> 
+				        	<form action="/group/write/capsuleView" method="POST">
+				        		<input type="hidden" name="groupNo" value="${group.groupNo }">
+				        		<input type="hidden" name="groupName" value="${group.groupName }">
+				        		<input class="capsule-btn" type="submit" value="캡슐쓰기">
+				        	</form>
+				        </div>
 						<div>
 							<c:if test="${gBList eq null }">
-								<h1>그룹 게시글이 없어요!</h1>
+								<h1 class="empty-board">그룹 게시글이 없어요!</h1>
+								<form action="/group/board/writeView" method="post" class="empty-btn">
+								<input type="hidden" name="groupIndex" value="${groupIndex }">
+								<input type="hidden" name="groupName" value="${group.groupName }">
+								<input type="hidden" name="groupNo" value="${group.groupNo }">
+								<input id="writeBoard" type="submit" value="글쓰기">
+							</form>
 							</c:if>
 							<c:if test="${gBList ne null }">
-								<table id="groupBoardList-tbl">
+								<table class="groupBoardList-tbl">
 									<thead>
 										<tr>
-											<th width="240px">제목</th>
-											<th width="100px">작성일</th>
-											<th width="180px">작성자</th>
+											<th width="300px">제목</th>
+											<th width="180px">작성일</th>
+											<th width="130px">작성자</th>
 											<th width="60px">수정</th>
 											<th width="60px">삭제</th>
 										</tr>
@@ -74,7 +95,7 @@
 									<tbody>
 										<c:forEach items="${gBList}" var="groupBoard">
 											<tr>
-												<td><a href="/group/board/detail?groupBoardNo=${groupBoard.boardNo}&groupIndex=${groupIndex}">${groupBoard.boardTitle }</a></td>
+												<td class="board-title"><a href="/group/board/detail?groupBoardNo=${groupBoard.boardNo}&groupIndex=${groupIndex}">${groupBoard.boardTitle }</a></td>
 												<td><fmt:formatDate value="${groupBoard.writeDate }" pattern="yyyy-MM-dd ahh:mm" /></td>
 												<td>${groupBoard.userNickname }</td>
 													<td>
@@ -82,14 +103,14 @@
 															<input type="hidden" name="groupName" value="${group.groupName }">
 															<input type="hidden" name="groupBoardNo" value="${groupBoard.boardNo}">
 															<input type="hidden" name="groupIndex" value="${groupIndex }">
-															<input type="submit" value="수정">
+															<input class="modify-btn" type="submit" value="수정">
 														</form>
 													</td>
 													<td>
 														<form action="/group/board/delete" method="post" onsubmit="return BoardBtn('${groupBoard.userNo}')">
 															<input type="hidden" name="groupIndex" value="${groupIndex }">
 															<input type="hidden" name="groupBoardNo" value="${groupBoard.boardNo}">
-															<input type="submit" value="삭제" >
+															<input class="delete-btn" type="submit" value="삭제" >
 														</form>
 													</td>
 											</tr>								
@@ -99,36 +120,36 @@
 										<tr>
 											<td colspan="5" id="board-navi">
 												<c:if test="${pi.currentPage ne '1' }">
-													<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${1}">&lt;&lt;</a>&nbsp;
-													<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${pi.currentPage - 1}">&lt;</a>&nbsp;
+													<a class="pagenav" href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${1}">&lt;&lt;</a>&nbsp;
+													<a class="pagenav" href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${pi.currentPage - 1}">&lt;</a>&nbsp;
 												</c:if>
 												<c:forEach begin="${pi.startNavi }" end="${pi.endNavi }" var="p">
 														<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${p}">${p}</a>&nbsp;
 												</c:forEach>
 												<c:if test="${pi.currentPage ne pi.maxNavi }">
-													<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${pi.currentPage + 1}">&gt;</a>&nbsp;
-													<a href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${pi.maxNavi}">&gt;&gt;</a>&nbsp;
+													<a class="pagenav" href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${pi.currentPage + 1}">&gt;</a>&nbsp;
+													<a class="pagenav" href="/group/groupinfopage?groupIndex=${groupIndex }&currentPage=${pi.maxNavi}">&gt;&gt;</a>&nbsp;
 												</c:if>
 											</td>
 										</tr>
 									</tfoot>
 								</table>
-							</c:if>
-							<form action="/group/board/writeView" method="post">
+							<form action="/group/board/writeView" method="post" class="list-btn">
 								<input type="hidden" name="groupIndex" value="${groupIndex }">
 								<input type="hidden" name="groupName" value="${group.groupName }">
 								<input type="hidden" name="groupNo" value="${group.groupNo }">
 								<input id="writeBoard" type="submit" value="글쓰기">
 							</form>
+							</c:if>
 				        </div>
 					</c:if>
 					<c:if test="${groupUserView eq 'T' }">
 						<c:if test="${group.leaderUserNo eq sessionScope.loginUser.userNo}">
-							<div class="title-area">
-				                <h1 class="title">${group.groupName }</h1>
+							<div class="mypage-title">
+				                <p class="title">${group.groupName }</p>
 				            </div>
 				            <div>
-				            	<table id="groupList-tbl">
+				            	<table class="group-memebertbl">
 				            		<tr>
 				            			<th width="150">닉네임</th>
 				            			<th width="300">메일주소</th>
@@ -149,7 +170,7 @@
 					            			<td>${User.userGender }</td>
 					  	                    <td>
 					  	                    	<c:if test="${group.leaderUserNo ne User.userNo}">
-						  	                    	<form action="/group/dropUser" method="post">
+						  	                    	<form action="/group/dropUser" method="post" class="member-list">
 						  	                    		<input type="hidden" name="groupNo" value="${group.groupNo }">
 						  	                    		<input type="hidden" name="userNo" value="${User.userNo }">
 						  	                    		<input type="submit" value="내보내기">
@@ -279,6 +300,9 @@
 					alert('권한없음');
 					return false;
 				}
+			}
+			function capsulesend(){
+				return confirm("해당 그룹에 캡슐을 보내시겠습니까?");
 			}
 		</script>
 </html>

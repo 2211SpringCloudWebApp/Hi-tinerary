@@ -11,6 +11,7 @@
 		<result property="writeDate" column="WRITE_DATE"/>
 		<result property="groupName" column="GROUP_NAME"/>
 		<result property="leaderUserNo" column="LEADER_USER_NO"/>
+		<result property="dateGap" column="DATE_GAP"/>
 	</resultMap>	
 	
 	<insert id="createGroup" parameterType="Group">
@@ -21,7 +22,7 @@
 	</insert>
 	
 	<select id="selectByUserNo" resultMap="groupResultMap" parameterType="_int">
-		SELECT I.* FROM USER_TBL E JOIN GROUP_USERS_TBL F ON E.USER_NO = F.USER_NO JOIN GROUP_TBL I ON I.GROUP_NO = F.GROUP_NO WHERE E.USER_NO = #{userNo}
+		SELECT I.*, trunc(SYSDATE - CAST(END_DATE as DATE)) DATE_GAP FROM USER_TBL E JOIN GROUP_USERS_TBL F ON E.USER_NO = F.USER_NO JOIN GROUP_TBL I ON I.GROUP_NO = F.GROUP_NO WHERE E.USER_NO = #{userNo}
 	</select>
 	
 	<select id="SelectOneByGroupNo" resultMap="groupResultMap" parameterType="_int">

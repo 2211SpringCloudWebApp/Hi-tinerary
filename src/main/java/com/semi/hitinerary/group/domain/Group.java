@@ -11,6 +11,7 @@ public class Group {
 	private Timestamp writeDate;
 	private String groupName;
 	private int leaderUserNo;
+	private int dateGap;
 	
 	public Group() {}
 	
@@ -70,6 +71,14 @@ public class Group {
 	}
 	public void setLeaderUserNo(int leaderUserNo) {
 		this.leaderUserNo = leaderUserNo;
+	}
+	
+	public int getDateGap() {
+		return dateGap;
+	}
+
+	public void setDateGap(int dateGap) {
+		this.dateGap = dateGap;
 	}
 
 	@Override

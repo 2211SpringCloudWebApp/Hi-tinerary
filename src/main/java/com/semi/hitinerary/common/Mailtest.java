@@ -2,6 +2,8 @@ package com.semi.hitinerary.common;
 
 
 import java.io.File;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.activation.FileDataSource;
 import javax.mail.internet.MimeMessage;
@@ -17,26 +19,36 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.semi.hitinerary.timecapsule.domain.Timecapsule;
+import com.semi.hitinerary.timecapsule.service.TimecapsuleService;
+
 @Controller
 public class Mailtest {
 
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	@RequestMapping(value = "/sendMail", method = RequestMethod.GET)
-    public String sendMailTest(HttpServletRequest request) throws Exception{
-        
-        String subject = "test 메일입니다";
+	@Autowired
+	private TimecapsuleService tService;
+	
+	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
+    public String sendMailTest(HttpServletRequest request, int groupNo) throws Exception{
+        List<Timecapsule> tList = tService.selectListByGroupNo(groupNo);
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < tList.size(); i++) {
+        	sb.append(tList.get(i).getCapsuleSubject() + "<br> <img src='cid:image" + i + "'/> user1 <br><br><br>");
+        }
+        String subject = tList.get(0).getGroupName() + " 그룹메일입니다";
         // 메일제목
-        String content = "메일 테스트 내용 <br> 테스트테스트 <img src='cid:logo'/>  <img src='cid:logoos'/>";
+        String content = sb.toString();
         // 메일 내용 + src는 아래 이미지 출력
         String from = "truewater98@gmail.com";
         // 보내는 사람 메일
-        String to = "akrsurplus@gmail.com";
+        String to = "chlalswns4@gmail.com";
         // 받는사람 메일
         String filename = "";
         // 아래 작성
-        
+        tList.get(0).toString();
         try {
             MimeMessage mail = mailSender.createMimeMessage();
             MimeMessageHelper mailHelper = new MimeMessageHelper(mail,true,"UTF-8");
@@ -55,13 +67,18 @@ public class Mailtest {
             mailHelper.setSubject(subject);
             mailHelper.setText(content, true);
             // true는 html을 사용하겠다는 의미입니다.
-            String path = request.getSession().getServletContext().getRealPath("resources");
+//            String path = request.getSession().getServletContext().getRealPath("resources");
+            String path = request.getSession().getServletContext().getRealPath("webapp");
             // 현재 프로젝트안에 resources에 절대경로 반환
+            for(int i = 0; i < tList.size(); i++) {
+            	System.out.println(path+"\\" + tList.get(i).getCapsuleImage());
+            	mailHelper.addInline("image" + i, new FileDataSource(path+"\\" + tList.get(i).getCapsuleImage()));
+            }            
             filename = path + "\\images\\noThumbnail.png";
             // resources위치 아래 경로 선택해주기
-            mailHelper.addInline("logo", new FileDataSource(filename));
+//            mailHelper.addInline("logo", new FileDataSource(filename));
             filename = path + "\\images\\icon.png";
-            mailHelper.addInline("logoos", new FileDataSource(filename));
+//            mailHelper.addInline("logoos", new FileDataSource(filename));
             // 경로 선택한 파일 메일 안으로 보내주기            
             mailSender.send(mail);
             // 메일 발송

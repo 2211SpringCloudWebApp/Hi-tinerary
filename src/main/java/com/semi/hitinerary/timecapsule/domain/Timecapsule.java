@@ -8,6 +8,7 @@ public class Timecapsule {
 	private String capsuleTitle;
 	private String capsuleImage;
 	private String userEmail;
+	private String groupName;
 	
 	public Timecapsule() {}
 
@@ -75,6 +76,16 @@ public class Timecapsule {
 		this.userEmail = userEmail;
 	}
 
+	public String getGroupName() {
+		return groupName;
+	}
+
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Timecapsule [capsuleIden=" + capsuleIden + ", groupNo=" + groupNo + ", userNo=" + userNo
@@ -85,4 +96,6 @@ public class Timecapsule {
 	public void createIden() {
 		this.capsuleIden = this.groupNo +","+ this.userNo;
 	}
+
+
 }

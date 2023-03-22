@@ -13,6 +13,14 @@ public interface TimecapsuleStore {
 
 	public int deleteGroupUser(SqlSession session, String groupNoUserNo);
 
+	public int insertTimeCapsule(SqlSession session, Timecapsule timecapsule);
+
+	public Timecapsule SelectOneByIden(SqlSession session, Timecapsule timecapsule);
+
+	public int selectGetCountCapsule(SqlSession session, int groupNo);
+
+	public List<Timecapsule> selectListByGroupNo(SqlSession session, int groupNo);
+
 
 
 }

@@ -13,5 +13,13 @@ public interface TimecapsuleService {
 
 	public int registGroup(Timecapsule timecapsule, int boardNo) throws Exception;
 
+	public int insertTimeCapsule(Timecapsule timecapsule);
+
+	public Timecapsule SelectOneByIden(Timecapsule timecapsule);
+
+	public int selectGetCountCapsule(int groupNo);
+
+	public List<Timecapsule> selectListByGroupNo(int groupNo);
+
 
 }

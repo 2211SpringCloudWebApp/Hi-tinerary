@@ -26,5 +26,29 @@ public class TimecapsuleStoreLogic implements TimecapsuleStore{
 		return result;
 	}
 
+	@Override
+	public int insertTimeCapsule(SqlSession session, Timecapsule timecapsule) {
+		int result = session.update("capsuleMapper.insertTimeCapsule", timecapsule);
+		return result;
+	}
+
+	@Override
+	public Timecapsule SelectOneByIden(SqlSession session, Timecapsule timecapsule) {
+		timecapsule = session.selectOne("capsuleMapper.SelectOneByIden", timecapsule);
+		return timecapsule;
+	}
+
+	@Override
+	public int selectGetCountCapsule(SqlSession session, int groupNo) {
+		int capsuleAmount = session.selectOne("capsuleMapper.selectGetCountCapsule", groupNo);
+		return capsuleAmount;
+	}
+
+	@Override
+	public List<Timecapsule> selectListByGroupNo(SqlSession session, int groupNo) {
+		List<Timecapsule> tList = session.selectList("capsuleMapper.selectListByGroupNo", groupNo);
+		return tList;
+	}
+
 
 }

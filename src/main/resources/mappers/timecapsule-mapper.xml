@@ -10,6 +10,7 @@
 		<result property="capsuleTitle" column="CAPSULE_TITLE"/>
 		<result property="capsuleImage" column="CAPSULE_IMAGE"/>
 		<result property="userEmail" column="USER_EMAIL"/>
+		<result property="groupName" column="GROUP_NAME"/>
 	</resultMap>
 
 	<insert id="registGroup" parameterType="Timecapsule">
@@ -19,6 +20,29 @@
 	<delete id="deleteGroupUser" parameterType="string">
 		DELETE FROM GROUP_USERS_TBL WHERE CAPSULE_IDEN = #{groupNoUserNo}
 	</delete>
+	
+	<select id="SelectOneByIden" resultMap="capsuleResultMap">
+		SELECT * FROM GROUP_USERS_TBL WHERE CAPSULE_IDEN = #{capsuleIden}
+	</select>
+	
+	<select id="selectGetCountCapsule" resultType="_int">
+		SELECT COUNT(*) FROM GROUP_USERS_TBL WHERE GROUP_NO = #{groupNo} AND CAPSULE_TITLE IS NOT NULL
+	</select>
+	
+	<select id="selectListByGroupNo" resultMap="capsuleResultMap">
+		SELECT A.*, B.GROUP_NAME FROM GROUP_USERS_TBL A JOIN GROUP_TBL B ON A.GROUP_NO = B.GROUP_NO WHERE A.GROUP_NO = #{groupNo}
+	</select>
+	
+	<update id="insertTimeCapsule" parameterType="Timecapsule">
+		UPDATE GROUP_USERS_TBL SET CAPSULE_TITLE = #{capsuleTitle},CAPSULE_SUBJECT = #{capsuleSubject}
+		<if test="capsuleImage == ''">
+		, CAPSULE_IMAGE = NULL
+		</if>
+		<if test="capsuleImage != ''">
+		, CAPSULE_IMAGE = #{capsuleImage}
+		</if>
+		WHERE CAPSULE_IDEN = #{capsuleIden}
+	</update>
 	
 	
 </mapper>

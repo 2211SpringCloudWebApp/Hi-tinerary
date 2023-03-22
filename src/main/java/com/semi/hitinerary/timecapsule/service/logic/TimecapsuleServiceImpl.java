@@ -49,5 +49,30 @@ public class TimecapsuleServiceImpl implements TimecapsuleService {
 		return result;
 	}
 
+	@Override
+	public int insertTimeCapsule(Timecapsule timecapsule) {
+		int result = tStore.insertTimeCapsule(session, timecapsule);
+		return result;
+	}
+
+	@Override
+	public Timecapsule SelectOneByIden(Timecapsule timecapsule) {
+		timecapsule = tStore.SelectOneByIden(session, timecapsule);
+		return timecapsule;
+	}
+
+	@Override
+	public int selectGetCountCapsule(int groupNo) {
+		int capsuleCount = tStore.selectGetCountCapsule(session, groupNo);
+		return capsuleCount;
+	}
+
+	@Override
+	public List<Timecapsule> selectListByGroupNo(int groupNo) {
+		List<Timecapsule> tList = tStore.selectListByGroupNo(session, groupNo);
+		return tList;
+	}
+	
+
 
 }

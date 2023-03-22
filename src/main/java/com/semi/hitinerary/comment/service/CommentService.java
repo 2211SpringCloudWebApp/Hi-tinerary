@@ -14,6 +14,11 @@ public interface CommentService {
 
 	public int insertGroupBoardReply(Comment comment);
 
+	/**
+	 * 동행게시판 댓글, 대댓글 삭제
+	 * @param commentNo
+	 * @return int
+	 */
 	public int deleteGroupBoardComment(int commentNo);
 
 	/**
@@ -71,5 +76,12 @@ public interface CommentService {
 	 * @return
 	 */
 	public List<Comment> selectListByUserNo(SearchComment sComment, Pagination pi);
+
+	/**
+	 * 동행찾기 게시판 대댓글 Service
+	 * @param comment
+	 * @return int
+	 */
+	public int insertWithBoardReplyComment(Comment comment);
 
 }

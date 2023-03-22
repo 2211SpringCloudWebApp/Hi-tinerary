@@ -92,4 +92,13 @@ public class CommentStoreLogic implements CommentStore{
 		return cList;
 	}
 
+	/**
+	 * 동행찾기 게시판 대댓글 작성
+	 */
+	@Override
+	public int insertWithBoardReplyComment(SqlSession session, Comment comment) {
+		int result = session.insert("commentMapper.insertWithBoardReplyComment",comment);
+		return result;
+	}
+
 }

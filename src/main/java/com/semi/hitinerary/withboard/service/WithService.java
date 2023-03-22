@@ -77,4 +77,5 @@ public interface WithService {
 	 * @return int
 	 */
 	public int plusCommentPeople(int userNo);
+
 }

@@ -33,6 +33,11 @@
 		DELETE FROM COMMENT_TBL WHERE COMMENT_NO = #{commentNo}
 	</delete>
 	
+	<!-- 동행게시판 댓글, 대댓글 삭제 -->
+	<delete id ="deleteWithComment">
+		DELETE FROM COMMENT_TBL WHERE COMMENT_NO = #{commentNo}
+	</delete>
+	
 	<update id="updateGroupBoardComment">
 		UPDATE COMMENT_TBL SET CONTENT = #{content} WHERE COMMENT_NO = #{commentNo} 
 	</update>
@@ -106,5 +111,9 @@
 			WHERE FREE_BOARD_NO IS NOT NULL
 		</if>
 	</select>
+	
+	<insert id="insertWithBoardReplyComment">
+		INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL, #{content}, DEFAULT, DEFAULT, 1, NULL, #{withBoardNo}, NULL, NULL, 0 , #{refCommentNo}, #{userNo})
+	</insert>
 			
 </mapper>

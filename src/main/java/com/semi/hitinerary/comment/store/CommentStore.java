@@ -81,5 +81,13 @@ public interface CommentStore {
 	 */
 	public List<Comment> selectListByUserNo(SqlSession session, SearchComment sComment, Pagination pi);
 
+	/**
+	 * 동행찾기 게시판 대댓글 달기 Store
+	 * @param session
+	 * @param comment
+	 * @return int
+	 */
+	public int insertWithBoardReplyComment(SqlSession session, Comment comment);
+
 
 }

@@ -240,7 +240,7 @@ public class WithController {
 		try {
 			int result = wService.deleteWithBoard(boardNo);
 			if(result > 0) {
-				return "redirect:/withBoard/withBoardList";
+				return "redirect:/withboard/withBoardList";
 			} else {
 				model.addAttribute("msg","동행 게시판 삭제 실패");
 				return "common/error";

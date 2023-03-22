@@ -126,6 +126,23 @@ public class CommentController {
 	}
 	
 	/**
+	 * 동행찾기 게시판 대댓글 쓰기
+	 */
+	@RequestMapping(value="/withboard/board/reply/write", method=RequestMethod.POST)
+	public String replywriteComment(@RequestParam("CommentBoardNo") int withBoardNo
+			, @RequestParam("CommentUserNo") int userNo
+			, @RequestParam("replycontent") String content
+			, @RequestParam("RefcommentNo") int refCommentNo) {
+		Comment comment = new Comment(); 
+		comment.setRefCommentNo(refCommentNo);
+		comment.setContent(content);
+		comment.setUserNo(userNo);
+		comment.setWithBoardNo(withBoardNo);
+		int result = cService.insertWithBoardReplyComment(comment);
+		return "redirect:/withboard/withBoardDetail?boardNo=" + withBoardNo;
+	}
+	
+	/**
 	 * 동행찾기 게시판 댓글 목록 조회
 	 * 
 	 */
@@ -137,11 +154,12 @@ public class CommentController {
 	/**
 	 * 동행찾기 게시판 댓글 삭제하기
 	 */
-	@RequestMapping(value="/withboard/board/comment/delete", method=RequestMethod.POST)
+	@RequestMapping(value="/withboard/board/comment/delete", method=RequestMethod.GET)
 	public String deleteWithComment(int boardNo, int commentNo) {
 		int result = cService.deleteGroupBoardComment(commentNo);
 		return "redirect:/withboard/withBoardDetail?boardNo=" + boardNo;
 	}
+	
 	//자유게시판 댓글 채택하기
 	@RequestMapping(value="/freeboard/comment/status", method=RequestMethod.POST)
 	public String statusFreeBoardComment(

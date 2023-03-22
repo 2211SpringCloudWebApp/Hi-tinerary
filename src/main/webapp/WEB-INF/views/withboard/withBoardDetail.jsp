@@ -56,14 +56,13 @@
 									${withBoard.userBirthDate }
 								</c:if>
 					)
-					<fmt:formatDate value="${withBoard.writeDate }" pattern="yyyy-MM-dd ahh:mm" />
+					<span id="writeDate"><fmt:formatDate value="${withBoard.writeDate }" pattern="yyyy-MM-dd ahh:mm" /></span>
 				</div>
 				<div id="writeContent">${withBoard.boardContent }</div>
 				<c:if test="${loginUser.userNo == withBoard.userNo}">
 					<div id="modifyBtn">
 						<button class="modify" onclick="location.href='/withboard/withModifyView?boardNo=${withBoard.boardNo }'">수정하기</button>
-						<button class="delete" onclick="removeCheck(${withBoard.boardNo });">삭제하기</button>
-						<!-- <button id="list" onclick="location.href='/withboard/withBoardList'">목록으로</button> -->
+						<button class="delete" onclick="removeCheck('${withBoard.boardNo}');">삭제하기</button>
 					</div>
 				</c:if>
 			</div>
@@ -76,15 +75,29 @@
 		<c:forEach items="${cList }" var="comment">
 			<c:if test="${comment.depth == 0 }">
 			<div class="commentbox">
+				<div class="commentNo">${comment.commentNo }</div>
 				<p class="comment-nickname">${comment.userNickname }</p>
 				<p class="comment-content">${comment.content }</p>
 				<p class="comment-date"><fmt:formatDate value="${comment.writeDate }" pattern="yyyy-MM-dd ahh:mm" /></p>
-				<button class="comment_button" id="popup_open_btn" onclick="inviteBtn()">초대</button>
-				<div class="comment-others">
-					<a href="" id="replycommentBtn" onclick="replywriteform(this)">댓글달기</a>
-					<a href="">신고</a>
-					<a href="">삭제</a>
-				</div>
+				<c:if test="${comment.status == 0 && loginUser.userNo != comment.userNo && withBoard.userNo == loginUser.userNo }">
+				<button class="comment_button" id="popup_open_btn" onclick="inviteBtn(this)">초대</button>
+				</c:if>
+					<div class="comment-others">
+						<a href="" id="replycommentBtn" onclick="replywriteform(this)">댓글달기</a>
+						<form action="/report" method="POST">
+							<input type="hidden" name="userNo" value="${loginUser.userNo}">
+							<input type="hidden" name="boardNo" value="${withBoard.boardNo}">
+							<input type="hidden" name="boardTitle" value="${withBoard.boardTitle}">
+							<input type="hidden" name="userNickname" value="${withBoard.userNickname}">
+							<input type="hidden" name="commentNo" value=0>
+							<input type="hidden" name="boardType" value="with">
+							<a href="#" onclick="event.preventDefault(); document.querySelector('form').submit();">신고</a>
+						</form>
+					<c:if test="${loginUser.userNo == comment.userNo}">
+						<a href="javascript:void(0);" onclick="replyRemoveCheck(${comment.commentNo});">삭제</a>
+					</c:if>
+					</div>
+				<div class="commentNo">${comment.userNo }</div>
 			</div>
 			</c:if>
 			<!-- 대댓글이 나오는 영역 -->
@@ -93,15 +106,20 @@
 				<p class="reply-nickname">${comment.userNickname }</p>
 				<p class="reply-content">${comment.content }</p>
 				<p class="reply-date"><fmt:formatDate value="${comment.writeDate }" pattern="yyyy-MM-dd ahh:mm" /></p>
-				<a href="">삭제</a>
+				<c:if test="${loginUser.userNo == comment.userNo}">
+				<a href="javascript:void(0);" onclick="replyRemoveCheck(${comment.commentNo});">삭제</a>
+				</c:if>
 			</div>
 			</c:if>
 		</c:forEach>
 			<!-- 대댓글을 눌렀을 때 나오는 폼 -->
 			<div class="replywritebox" id="replywrite">
-				<p class="replywrite-nickname">고영고영</p>
-				<form action="">
-					<input type="text" class="replywrite-content">
+				<p class="replywrite-nickname">${loginUser.userNickname }</p>
+				<form action="/withboard/board/reply/write" method="post">
+					<input type="hidden" name="CommentBoardNo" value="${withBoard.boardNo }">
+					<input type="hidden" name="CommentUserNo" value="${loginUser.userNo }">
+					<input type="hidden" name="RefcommentNo" id="refvalue">
+					<input type="text" class="replywrite-content" name="replycontent">
 					<button class="replywritebtn">대댓글쓰기</button>
 				</form>
 			</div>
@@ -111,8 +129,10 @@
 		<c:if test="${loginUser ne null }">
 		<div class="comment-writebox">
 			<p class="commentwrite-nickname">${loginUser.userNickname }</p>
-				<form action="">
-					<input type="text" class="commentwrite-content">
+				<form action="/withboard/board/comment/write" method="post">
+					<input type="hidden" name="CommentBoardNo" value="${withBoard.boardNo }">
+					<input type="hidden" name="CommentUserNo" value="${loginUser.userNo }">
+					<input type="text" name="Commentcontent" class="commentwrite-content">
 					<button class="commentwritebtn">댓글쓰기</button>
 				</form>
 		</div>
@@ -124,10 +144,12 @@
 	    <span class="close">&times;</span>
 	    <p>초대할 그룹을 선택하세요</p>
 	    <form action="/group/invite" method="POST">
-	    	<input type="hidden" name="userNo" value="${comment.userNo }">
+	    	<input type="hidden" name="userNo" id="userNo">
 	    	<input type="hidden" name="boardNo" value="${withBoard.boardNo }">
 	    	<select name="groupNo">
 	    	<c:forEach items="${gList }" var="group">
+	    	<!-- <option disabled selected>그룹을 선택해주세요</option> -->
+	    	<option value="">그룹을 선택해주세요</option>
 	    	<option value="${group.groupNo }">${group.groupName }</option>
 	    	</c:forEach>
 	    	</select>
@@ -195,8 +217,9 @@
 	}
 
 	// 초대 버튼 클릭 시 모달 창 나타내기
-	function inviteBtn() {
+	function inviteBtn(inviteBtn) {
 	  showModal();
+	  document.querySelector("#userNo").value=inviteBtn.parentNode.lastElementChild.innerHTML;
 	}
 
 	// 모달 창 외의 영역 클릭 시 모달 창 닫기
@@ -213,6 +236,7 @@
 	  hideModal();
 	}
 	
+
 	// 대댓글 나오게 하는 스크립트
 	 function replywriteform(writeBtn){
 		var e = window.event;
@@ -225,6 +249,14 @@
 		} else{
 			replywritebox.style.display = "flex";
 			commentbox.after(replywritebox);
+			document.querySelector("#refvalue").value = commentbox.firstElementChild.innerHTML;
+		}
+	}
+	
+	//댓글 삭제하기
+	function replyRemoveCheck(commentNo){
+		if(confirm("정말 삭제 하시겠어요?")){
+			location.href="/withboard/board/comment/delete?commentNo="+commentNo + "&boardNo=${withBoard.boardNo}";
 		}
 	}
 

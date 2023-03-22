@@ -71,7 +71,7 @@
 		
 		<div class="writeButton">
 			<button type="submit" id="submit">글 등록</button>
-			<button id="list">목록으로</button>
+			<button id="list" onclick="location.href='/withboard/withBoardList'">목록으로</button>
 		</div>
     </form>
     </div>
@@ -136,6 +136,11 @@
 					endDate.value = startDate.value;
 				}
 			}
+            
+            const submitButton = document.getElementById('submit');
+            submitButton.addEventListener('click', () => {
+              alert('글을 등록하시겠습니까?');
+            });
         </script>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 </body>

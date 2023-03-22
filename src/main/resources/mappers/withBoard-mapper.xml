@@ -19,48 +19,48 @@
 	<result property="userBirthDate" column="USER_BIRTH_DATE"></result>
 	</resultMap>
 	
-<insert id= "insertWithBoard">
-INSERT INTO WITH_BOARD_TBL VALUES(#{boardNo} ,#{boardTitle}, #{boardContent}, #{boardImage},DEFAULT, DEFAULT,#{startDate}, #{endDate}, #{userNo}, #{maxPeople}, 1)
-</insert>
+	<insert id= "insertWithBoard">
+		INSERT INTO WITH_BOARD_TBL VALUES(#{boardNo} ,#{boardTitle}, #{boardContent}, #{boardImage},DEFAULT, DEFAULT,#{startDate}, #{endDate}, #{userNo}, #{maxPeople}, 1)
+	</insert>
 
-<!-- 동행게시판 리스트 -->
-<select id="selectWithBoardList" resultMap="withBoardResultMap">
-SELECT A.*, B.USER_NICKNAME FROM WITH_BOARD_TBL A JOIN USER_TBL B ON A.USER_NO = B.USER_NO ORDER BY WRITE_DATE DESC
-</select>
+	<!-- 동행게시판 리스트 -->
+	<select id="selectWithBoardList" resultMap="withBoardResultMap">
+		SELECT A.*, B.USER_NICKNAME FROM WITH_BOARD_TBL A JOIN USER_TBL B ON A.USER_NO = B.USER_NO ORDER BY WRITE_DATE DESC
+	</select>
 
-<select id="selectWithBoardCount" resultType="_int">
-SELECT COUNT(*) FROM WITH_BOARD_TBL
-</select>
+	<select id="selectWithBoardCount" resultType="_int">
+		SELECT COUNT(*) FROM WITH_BOARD_TBL
+	</select>
 
-<!-- 동행게시판 상세 조회 -->
-<select id="selectOneByNo" resultMap="withBoardResultMap">
-SELECT A.*, B.USER_NICKNAME, B.USER_GENDER, FLOOR((SYSDATE - TO_DATE(B.USER_BIRTH_DATE, 'YY-MM-DD')) / 365) AS USER_BIRTH_DATE 
-FROM WITH_BOARD_TBL A JOIN USER_TBL B ON A.USER_NO = B.USER_NO WHERE BOARD_NO = #{boardNo}
-</select>
+	<!-- 동행게시판 상세 조회 -->
+	<select id="selectOneByNo" resultMap="withBoardResultMap">
+		SELECT A.*, B.USER_NICKNAME, B.USER_GENDER, FLOOR((SYSDATE - TO_DATE(B.USER_BIRTH_DATE, 'YY-MM-DD')) / 365) AS USER_BIRTH_DATE 
+		FROM WITH_BOARD_TBL A JOIN USER_TBL B ON A.USER_NO = B.USER_NO WHERE BOARD_NO = #{boardNo}
+	</select>
 
-<update id="updateWithBoard">
-UPDATE WITH_BOARD_TBL SET BOARD_TITLE = #{boardTitle}, BOARD_CONTENT = #{boardContent}, BOARD_IMAGE = #{boardImage}, START_DATE = #{startDate}, END_DATE = #{endDate}, MAX_PEOPLE = #{maxPeople} WHERE BOARD_NO = #{boardNo}
-</update>
+	<update id="updateWithBoard">
+		UPDATE WITH_BOARD_TBL SET BOARD_TITLE = #{boardTitle}, BOARD_CONTENT = #{boardContent}, BOARD_IMAGE = #{boardImage}, START_DATE = #{startDate}, END_DATE = #{endDate}, MAX_PEOPLE = #{maxPeople} WHERE BOARD_NO = #{boardNo}
+	</update>
 
-<delete id="deleteWithBoard">
-DELETE FROM WITH_BOARD_TBL WHERE BOARD_NO = #{boardNo}
-</delete>
+	<delete id="deleteWithBoard">
+		DELETE FROM WITH_BOARD_TBL WHERE BOARD_NO = #{boardNo}
+	</delete>
 
-<!-- 시퀀스 넘버 조회 -->
-<select id="getSequence" resultType="_int">
-SELECT SEQ_WITH_BOARD.NEXTVAL FROM DUAL
-</select>
-
-
+	<!-- 시퀀스 넘버 조회 -->
+	<select id="getSequence" resultType="_int">
+		SELECT SEQ_WITH_BOARD.NEXTVAL FROM DUAL
+	</select>
+	
+	
 	<select id="selectCountByUserNo" resultType="_int">
 		SELECT COUNT(*) FROM WITH_BOARD_TBL WHERE USER_NO = #{userNo}
 	</select>
-	
+		
 	<select id="selectByUserNo" resultMap="withBoardResultMap">
 		SELECT * FROM WITH_BOARD_TBL WHERE USER_NO = #{userNo}
 	</select>
-
-<update id="plusCommentPeople">
-UPDATE WITH_BOARD_TBL SET CURRENT_PEOPLE = CURRENT_PEOPLE + 1 WHERE BOARD_NO = #{boardNo}
-</update>
+	
+	<update id="plusCommentPeople">
+		UPDATE WITH_BOARD_TBL SET CURRENT_PEOPLE = CURRENT_PEOPLE + 1 WHERE BOARD_NO = #{boardNo}
+	</update>
 </mapper>

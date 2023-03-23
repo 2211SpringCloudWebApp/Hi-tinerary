@@ -13,6 +13,6 @@
 	  	FROM TOUR_BUY_USER_TBL tbu
 	  	JOIN TOUR_TBL t ON tbu.TOUR_NO = t.TOUR_NO
 	  	JOIN USER_TBL u ON t.USER_NO = u.USER_NO
-	  	WHERE tbu.USER_NO = #{userNo}
+	  	WHERE t.USER_NO = #{userNo}
 	</select>
 </mapper>

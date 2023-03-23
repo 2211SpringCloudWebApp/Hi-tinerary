@@ -48,7 +48,7 @@
 		                                	<c:forEach items="${tsList }" var="ts">
 			                                    <tr>
 			                                    	<td><fmt:formatDate value="${ts.payDate }" pattern="yyyy-MM-dd"/></td>
-			                                        <td><a href="/tour/tourBoardDetail?tourNo=${tour.tourNo }" class="">${ts.tourTitle }</a></td>
+			                                        <td>${ts.tourTitle }</td>
 			                                        <td>${ts.userName }</td>
 			                                        <td>${ts.userPhone }</td>
 			                                        <td><fmt:formatNumber value="${ts.price }" pattern="#,###,###"/></td>

@@ -36,8 +36,8 @@
 		                            <table class="tourboard">
 		                                <thead>
 		                                    <tr>
-		                                        <th width="100">번호</th>
-		                                        <th width="500">상품명</th>
+		                                        <th width="50">번호</th>
+		                                        <th width="450">상품명</th>
 		                                        <th width="200">작성일자</th>
 		                                        <th width="100">비고</th>
 		                                    </tr>

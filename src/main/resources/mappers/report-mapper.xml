@@ -30,7 +30,29 @@
 	
 	<!-- 신고등록 -->
 	<insert id="insertReport">
-		INSERT INTO REPORT_BOARD_TBL VALUES(SEQ_REPORT.NEXTVAL, DEFAULT, #{reportReason }, #{userNo }, #{withBoardNo}, #{freeBoardNo}, #{TourNo}, #{commentNo})
+		<if test="commentNo == 0">
+			<if test="withBoardNo != 0">
+				INSERT INTO REPORT_BOARD_TBL VALUES(SEQ_REPORT.NEXTVAL, DEFAULT, #{reportReason }, #{userNo }, #{withBoardNo}, null, null, null)
+			</if>
+			<if test="freeBoardNo != 0">
+				INSERT INTO REPORT_BOARD_TBL VALUES(SEQ_REPORT.NEXTVAL, DEFAULT, #{reportReason }, #{userNo }, null, #{freeBoardNo}, null, null)
+			</if>
+			<if test="TourNo != 0">
+				INSERT INTO REPORT_BOARD_TBL VALUES(SEQ_REPORT.NEXTVAL, DEFAULT, #{reportReason }, #{userNo }, null, null, #{TourNo}, null)
+			</if>
+		</if>
+		
+		<if test="commentNo != 0">
+			<if test="withBoardNo != 0">
+				INSERT INTO REPORT_BOARD_TBL VALUES(SEQ_REPORT.NEXTVAL, DEFAULT, #{reportReason }, #{userNo }, #{withBoardNo}, null, null, #{commentNo})
+			</if>
+			<if test="freeBoardNo != 0">
+				INSERT INTO REPORT_BOARD_TBL VALUES(SEQ_REPORT.NEXTVAL, DEFAULT, #{reportReason }, #{userNo }, null, #{freeBoardNo}, null, #{commentNo})
+			</if>
+			<if test="TourNo != 0">
+				INSERT INTO REPORT_BOARD_TBL VALUES(SEQ_REPORT.NEXTVAL, DEFAULT, #{reportReason }, #{userNo }, null, null, #{TourNo}, #{commentNo})
+			</if>
+		</if>
 	</insert>
 	
 	<!-- 신고 리스트 조회 -->

@@ -158,7 +158,6 @@ public class UserController {
 	@RequestMapping(value = "/manager/mypage", method=RequestMethod.GET)
 	public String writeView(
 			Model model) {
-		System.out.println("마이페이지접속");
 		//일반회원 목록 조회
 		List<User> userList = uService.selectAllUser();
 		//기업회원 목록 조회
@@ -167,8 +166,6 @@ public class UserController {
 		List<boardReport> bReportList = rService.selectboardReportList();
 		//신고 댓글 목록 조회
 		List<boardReport> cReportList = rService.selectcommentReportList();
-		
-		System.out.println(cReportList);
 		
 		model.addAttribute("uList", userList);
 		model.addAttribute("sList", sellerList);

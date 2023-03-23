@@ -36,7 +36,6 @@
 		</if>
 		
 	</insert>
-	
 	<delete id="deleteGroupBoardComment">
 		DELETE FROM COMMENT_TBL WHERE COMMENT_NO = #{commentNo}
 	</delete>

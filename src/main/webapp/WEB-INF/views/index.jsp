@@ -49,9 +49,11 @@
 						</c:if>
 					</c:forEach> 	
 					<div id="circleNav"> 
-						<div class="circleGreen"></div>
-						<div class="circleYellow"></div>
-						<div class="circleGreen"></div>
+						<a href="/tour/tourBoardList">
+							<div class="circleGreen"></div>
+							<div class="circleYellow"></div>
+							<div class="circleGreen"></div>
+						</a>
 					</div>	      
 				</div>
 			</div>
@@ -100,9 +102,11 @@
 				</div>
 				<div style="display: flex; justify-content: center; align-items: center;">
 					<div id="circleNav" style="item-align:center;">
-						<div class="circleGreen"></div>
-						<div class="circleYellow"></div>
-						<div class="circleGreen"></div>
+						<a href="/withboard/withBoardList">
+							<div class="circleGreen"></div>
+							<div class="circleYellow"></div>
+							<div class="circleGreen"></div>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -111,7 +115,7 @@
 			<div id="freeBoardList">
 				<div id="boardSubTitle2">
                     <div id="subBar2">  </div>
-                    <p>자유게시판 <smarller style="font-size: 15px;">&nbsp;&nbsp;&nbsp;...더보기</smarller></p>
+                    <p>자유게시판 <smarller style="font-size: 15px;">&nbsp;&nbsp;&nbsp;<a href="/freeboard/list">...더보기</a></smarller></p>
                 </div>
 				<div id="free-container">
 					<c:forEach items="${fList}" var="freeboard" varStatus="i" begin="0" end="5">

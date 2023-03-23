@@ -34,11 +34,11 @@
                 </div>
                 <div id="tourInfos">
                     <div id="writerDiv">
-                        <div>한투어</div>
+                        <div>${tour.userNickname}</div>
                         <div>
                         	<c:if test="${sessionScope.loginUser.userNo == tour.userNo}">
 	                        	<a href="/tour/tourBoardModifyView?tourNo=${tour.tourNo }">수정</a> | 
-	                        	<a href="javascript:void(0);" onclick="removeCheck(${tour.tourNo});">삭제</a>
+	                        	<a href="javascript:void(0);" onclick="removeCheckPosting(${tour.tourNo});">삭제</a>
 	                        </c:if>	
                         </div>
                     </div>
@@ -126,6 +126,10 @@
 		                    <div class="commentedTimeDiv"><fmt:formatDate pattern="yy.MM.dd hh:MM" value="${comment.writeDate }"/></div>
 		                    <c:if test="${loginUser.userNo == comment.userNo}"> 
 		                    	<div class="modifyDeleteDiv">
+		                    		<c:url var="deleteCommentURL" value="/tour/commentRemove">
+									     <c:param name="commentNo" value="${comment.commentNo}" />
+      									 <c:param name="tourNo" value="${comment.tourNo}" />
+								    </c:url>
 		                    		<a href="javascript:void(0);" onclick="removeCheck(${comment.commentNo });">
 		                    		&nbsp;&nbsp;&nbsp;&nbsp; 삭제
 		                    		</a>
@@ -190,7 +194,7 @@
                     	<input type="hidden" name="userNickname" value="${loginUser.userNickname }">
                     	<input type="hidden" name="refCommentNo" value="${comment.commentNo }">
                         <div class="writerRe">${loginUser.userNickname}</div>
-                        <div class="commentDiv"><input type="text" name="content"></div>
+                        <div class="commentDiv"><input type="text" name="content" required></div>
                         <div class="writeButton">
                             <button class="reReplyBtn">댓글쓰기</button>
                         </div>
@@ -207,7 +211,7 @@
 	                    	<input type="hidden" name="userNickname" value="${loginUser.userNickname }">
 	                    	
 	                        <div class="writerRe">${loginUser.userNickname}</div>
-	                        <div class="commentDiv"><input type="text" name="content"></div>
+	                        <div class="commentDiv"><input type="text" name="content" required></div>
 	                        <div class="writeButton">
 	                            <button class="reReplyBtn">댓글쓰기</button>
 	                        </div>
@@ -230,8 +234,8 @@
         }
         
         
-        //삭제하기 버튼 눌렀을때 확인 거치기
-        	function removeCheck(tourNo){
+        //게시글 삭제하기 버튼 눌렀을때 확인 거치기
+        	function removeCheckPosting(tourNo){
         		if(confirm("정말 삭제하시겠어요?")){
         			location.href="/tour/deletePosting?tourNo="+tourNo;
         		}
@@ -260,7 +264,7 @@
         	//댓글 삭제 확인
         	function removeCheck(commentNo){
 				if(confirm("정말 삭제 하시겠어요?")){
-				location.href="/tour/commentRemove?commentNo="+commentNo;
+					 location.href="${deleteCommentURL}&commentNo=" + commentNo;
 				}
 			}
         	

@@ -54,9 +54,19 @@ public class GroupController {
 		int userNo = user.getUserNo();
 		List<Group> gList = gService.selectByUserNo(userNo);
 		Group group = null;
+		try {
+			Integer.parseInt(groupIndex);
+		} catch (Exception e) {
+			groupIndex = "-1";
+			return "redirect:/group/groupinfopage?groupIndex=" + groupIndex;
+		}
 		if(gList.isEmpty()) {
 			groupIndex = "-1";
 		}else {
+			if(gList.size() <  Integer.parseInt(groupIndex)) {
+				groupIndex = "-1";
+				return "redirect:/group/groupinfopage?groupIndex=" + groupIndex;
+			}
 			model.addAttribute("gList", gList);
 			if(Integer.parseInt(groupIndex) > -1 ) {
 				group = gList.get(Integer.parseInt(groupIndex));

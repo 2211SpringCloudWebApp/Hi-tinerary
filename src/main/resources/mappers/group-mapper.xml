@@ -43,4 +43,8 @@
 		SELECT * FROM GROUP_TBL WHERE LEADER_USER_NO = #{userNo}
 	</select>
 	
+	<delete id="deleteGroup">
+		DELETE FROM GROUP_TBL WHERE GROUP_NO = #{groupNo}
+	</delete>
+	
 </mapper>

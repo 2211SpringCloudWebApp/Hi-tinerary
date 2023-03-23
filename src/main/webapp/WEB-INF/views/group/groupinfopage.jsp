@@ -9,6 +9,45 @@
 		<title>그룹 페이지</title>
     	<link rel="stylesheet" href="../../../../resources/css/groupinfo.css">
 	</head>
+	<style>
+		.groupcreate{
+			display : block;
+			margin : 20px auto;
+			width : 350px;
+			font-size: 20px;
+			margin-top: 200px;
+		}
+		.create-title{
+		width : 230px;}
+		.groupName{
+			border : 2px solid #0F8D80;
+		}
+		.groupName:focus{
+			outline: none;
+		}
+		.blank{
+		margin-left: 20px;
+		}
+		.grouppeople{
+			border : none;
+			border-bottom: 1px solid #0F8D80;
+		}
+		.grouppeople:focus{
+			outline: none;
+		}
+		.groupcreate-btn{
+			display : block;
+			width : 315px;
+			background-color: #0F8D80;
+			border : none;
+			color: white;
+			border-radius: 5px;
+			padding: 8px 10px;
+		}
+		.create-box{
+			margin : 10px auto;
+		}
+	</style>
 	<body>
 		<jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
 		<div class="group-container">
@@ -29,19 +68,23 @@
 	        </div>
 			<div class="group-area">
 				<c:if test="${groupIndex eq -1}">
-					<form action="/group/register.do" method="post">
-					그룹명 : <input type="text" name="groupName" required>
-					<div>
-					시작날짜 : <input min="${now }" type="date" name="startDate" onchange="startDecide()" required>
-					종료날짜 : <input min="${now }" type="date" name="endDate" onchange="endDecide()">
+					<form action="/group/register.do" method="post" class="groupcreate">
+					<div class="create-box">
+					그룹명&nbsp;&nbsp;&nbsp; : <input type="text" name="groupName" required class="groupName create-title">
 					</div>
-					<div>
+					<div class="create-box">
+					시작날짜 : <input min="${now }" type="date" name="startDate" onchange="startDecide()" required class="groupName">
+					</div>
+					<div class="create-box">
+					종료날짜 : <input min="${now }" type="date" name="endDate" onchange="endDecide()" class="groupName">
+					</div>
+					<div class="create-box">
 					시간추가 : on <input type="radio" name="addtime" onclick="addTime();"> 
 							   off <input type="radio" name="addtime" onclick="removeTime();" checked>
 					</div>
-					최대인원 : <input type="number" min="2" max="5" name="maxPeople">
-					<div>
-					<input type="submit"> <a href="#">321</a>
+					최대인원 : <input type="number" min="2" max="5" name="maxPeople" class="grouppeople">
+					<div class="create-box">
+					<input type="submit" value="만들기" class="groupcreate-btn">
 					</div>
 					</form>	
 				</c:if>
@@ -243,6 +286,7 @@
 					if(document.querySelector("[name=startTime]") == null && document.querySelector("[name=endTime]") == null){
 						var a = document.createElement('input');
 						a.setAttribute("type", "time");
+						a.setAttribute("class", "groupName blank");
 						a.required = true;
 						var b = a.cloneNode(false);
 						a.setAttribute("name", "startTime");

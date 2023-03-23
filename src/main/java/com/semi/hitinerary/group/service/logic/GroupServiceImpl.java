@@ -62,6 +62,12 @@ public class GroupServiceImpl implements GroupService{
 		int result = gStore.plusCommentPeople(session, groupNo);
 		return result;
 	}
+
+	@Override
+	public int deleteGroup(int groupNo) {
+		int result = gStore.deleteGroup(session, groupNo);
+		return result;
+	}
 	
 
 }

@@ -31,6 +31,8 @@ public interface GroupStore {
 	 * @return int
 	 */
 	public int plusCommentPeople(SqlSession session, int groupNo);
+
+	public int deleteGroup(SqlSession session, int groupNo);
 	
 
 }

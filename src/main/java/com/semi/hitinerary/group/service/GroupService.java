@@ -32,5 +32,8 @@ public interface GroupService {
 	public int plusCommentPeople(int groupNo);
 
 
+	public int deleteGroup(int groupNo);
+
+
 
 }

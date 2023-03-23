@@ -60,5 +60,11 @@ public class GroupStoreLogic implements GroupStore {
 		return result;
 	}
 
+	@Override
+	public int deleteGroup(SqlSession session, int groupNo) {
+		int result = session.delete("groupMapper.deleteGroup", groupNo);
+		return result;
+	}
+
 
 }

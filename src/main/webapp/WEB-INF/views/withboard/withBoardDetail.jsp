@@ -46,7 +46,7 @@
 				</div>
 					<div id="report">
 						<button id="listBtn" onclick="location.href='/withboard/withBoardList'">목록으로</button>
-						<c:if test="${loginUser ne null }">
+						<c:if test="${loginUser.userNo ne withBoard.userNo }">
 						<form action="/report" method="POST">
 							<input type="hidden" name="userNo" value="${loginUser.userNo}">
 							<input type="hidden" name="boardNo" value="${withBoard.boardNo}">

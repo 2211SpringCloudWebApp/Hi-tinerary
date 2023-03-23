@@ -12,6 +12,7 @@
 		<typeAlias alias="withBoard" type="com.semi.hitinerary.withboard.domain.With"/>
 		<typeAlias alias="Tour" type="com.semi.hitinerary.tour.domain.Tour"/>
 		<typeAlias alias="TourPay" type="com.semi.hitinerary.tour.domain.TourPay"/>
+		<typeAlias alias="TourSell" type="com.semi.hitinerary.tour.domain.TourSell"/>
 		<typeAlias alias="groupBoard" type="com.semi.hitinerary.groupboard.domain.Groupboard"/>
 		<typeAlias alias="Comment" type="com.semi.hitinerary.comment.domain.Comment"/>
 		<typeAlias alias="Report" type="com.semi.hitinerary.report.domain.Report"/>
@@ -26,6 +27,7 @@
 		<mapper resource="mappers/withBoard-mapper.xml"/>
 		<mapper resource="mappers/tour-mapper.xml"/>
 		<mapper resource="mappers/tour-pay-mapper.xml"/>
+		<mapper resource="mappers/tour-sell-mapper.xml"/>
 		<mapper resource="mappers/groupboard-mapper.xml"/>
 		<mapper resource="mappers/comment-mapper.xml"/>
 		<mapper resource="mappers/report-mapper.xml"/>

@@ -1,0 +1,124 @@
+.container {
+  width: 1200px;
+  display: flex;
+  margin : 0px auto;
+}
+
+.side-nav {
+  width: 200px;
+  height: 500px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 2px solid #0F8D80;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+	.nav-btn {
+	  width: 150px;
+	  height: 50px;
+	  display: block;
+	  margin: 15px auto;
+	  text-align: center;
+	  border-radius: 10px;
+	  background-color: rgb(238, 238, 238);
+	  padding: 15px 10px;
+	  text-decoration: none;
+	  color: black;
+	}
+	
+	.nownav {
+	  background-color: #F39081;
+	  color: black;
+	}
+	
+	.nav-btn:hover {
+	  background-color: #0F8D80;
+	  border: none;
+	}
+	
+	.nownav:hover {
+	  background-color: #F39081;
+	}
+
+#mypage-contentbox {
+  width: 980px;
+  margin-left: 20px;
+  border: 2px solid #0F8D80;
+  border-radius: 10px;
+}
+
+#mypage-title {
+  width: 820px;
+  border-bottom: 2px solid black;
+  box-sizing: border-box;
+  margin: 25px auto;
+}
+
+#mypage-content {
+  width: 820px;
+  margin: 25px auto;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.selectboard {
+	display: flex;
+    height: 50px;
+    align-items: end;
+}
+  
+.selectboard-btn {
+    display: block;
+    width: 410px;
+    height: 50px;
+    box-sizing: border-box;
+    text-align: center;
+    padding-top: 15px;
+    background-color: #F39081;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+  
+.boardlist-box {
+	width: 820px;
+    border: 2px solid #F39081;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  
+.tourboard-box {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 800px;
+}
+  
+.tourboard-box td, .tourboard-box th {
+	height: 50px;
+    border-bottom: 1px solid #FBD188;
+    text-align: center;
+}
+  
+.tourboard-box th {
+    border-top: 1px solid #FBD188;
+}
+  
+.tourboard a {
+    text-decoration: none;
+    color: black;
+}
+  
+a.pagenav {
+    text-decoration: none;
+    color: #FBD188;
+    font-weight: bold;
+}

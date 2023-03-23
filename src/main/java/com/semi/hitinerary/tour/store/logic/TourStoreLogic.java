@@ -132,14 +132,14 @@ public class TourStoreLogic implements TourStore {
 
 	@Override
 	public int selectCountByUserNo(SqlSession session, int userNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int totalCount = session.selectOne("TourMapper.selectCountByUserNo", userNo);
+		return totalCount;
 	}
 
 	@Override
 	public List<TourSell> selectTourSellList(SqlSession session, int userNo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<TourSell> tsList = session.selectList("TourSellMapper.selectTourSellList", userNo);
+		return tsList;
 	}
 
 }

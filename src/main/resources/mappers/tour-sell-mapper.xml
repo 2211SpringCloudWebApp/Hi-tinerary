@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TourSellMapper">
+	<resultMap type="TourSell" id="tourSellResultMap">
+		<result property="payDate" column="PAY_DATE"/>
+		<result property="userName" column="USER_NAME" />
+		<result property="tourTitle" column="TOUR_TITLE" />
+		<result property="userPhone" column="USER_PHONE" />	
+		<result property="price" column="PRICE" />
+	</resultMap>
+	<select id="selectTourSellList" resultMap="tourSellResultMap">
+		SELECT tbu.PAY_DATE, t.TOUR_TITLE, u.USER_NAME, u.USER_PHONE, t.PRICE
+	  	FROM TOUR_BUY_USER_TBL tbu
+	  	JOIN TOUR_TBL t ON tbu.TOUR_NO = t.TOUR_NO
+	  	JOIN USER_TBL u ON t.USER_NO = u.USER_NO
+	  	WHERE tbu.USER_NO = #{userNo}
+	</select>
+</mapper>

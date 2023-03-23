@@ -228,13 +228,13 @@
 						<c:if test="${group.leaderUserNo ne sessionScope.loginUser.userNo}">
 							<div class="title-area">
 				                <h1 class="title">${group.groupName }</h1> 
-				                <form action="/group/dropUser" method="post">
+				                <form action="/group/dropUser" method="post" class="exit-form">
 					  	        	<input type="hidden" name="groupNo" value="${group.groupNo }">
 					  	            <input type="hidden" name="userNo" value="${sessionScope.loginUser.userNo }">
-					  	            <input type="submit" value="나가기">
+					  	            <input type="submit" value="나가기" class="exit-btn">
 					  	        </form>
 				            </div>
-				            <div>
+				            <div class="group-memberbox">
 				            	<table>
 				            		<tr>
 				            			<th width="150">닉네임</th>

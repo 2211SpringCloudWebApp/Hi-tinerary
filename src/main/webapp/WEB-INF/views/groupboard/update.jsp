@@ -12,13 +12,14 @@
 			<jsp:include page="/WEB-INF/views/common/headerNav.jsp"></jsp:include>
 			<h1>${groupName } 그룹 글쓰기</h1>
 			<div>
-				<form action="/group/board/write" method="post" class="write-box">
-					<input type="hidden" name="groupNo" value="${groupNo }">
+				<form action="/group/board/update" method="post" class="write-box">
+					<input type="hidden" name="groupNo" value="${board.groupNo }">
 					<input type="hidden" name="groupIndex" value="${groupIndex }">
+					<input type="hidden" name="boardNo" value="${board.boardNo }">
 					<label class="title-area">
-					<p class="title-plain">제목 : </p><input type="text" name="groupTitle" class="board-title" value="${board.boardTitle }" required>
+					<p class="title-plain">제목 : </p><input type="text" name="boardTitle" class="board-title" value="${board.boardTitle }" required>
 					</label>
-					<textarea name="groupSubject" rows="40" cols="150" required>${board.boardSubject }</textarea>
+					<textarea name="boardSubject" rows="40" cols="150" required>${board.boardSubject }</textarea>
 					<div class="btn-box">
 						<input type="submit" value="글쓰기" class="write-btn">
 						<a class="cancel-btn" href="/group/board/detail?groupBoardNo=${board.boardNo }&groupIndex=${groupIndex }">취소</a>

@@ -226,3 +226,24 @@
 	color : white;
 	
 }
+.exit-btn{
+	float :right;
+	margin-right: 40px;
+	background-color: #0F8D80;
+	border: none;
+	border-radius: 5px;
+	padding: 5px 10px;
+	color : white;
+}
+.title{
+	display : block;
+	width : 500px;
+	margin-right: 400px;
+}
+.title-area{
+	height: 100px;
+}
+.group-memberbox table{
+	text-align : center;
+	margin : 0 auto;
+}

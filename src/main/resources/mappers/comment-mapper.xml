@@ -103,6 +103,7 @@
 		<if test="category == 'tour'">
 			WHERE TOUR_NO IS NOT NULL
 		</if>
+		AND USER_NO = #{userNo}
 	</select>
 	
 	<select id="selectListByUserNo" resultMap="commentResultMapper">
@@ -116,6 +117,7 @@
 		<if test="category == 'tour'">
 			WHERE TOUR_NO IS NOT NULL
 		</if>
+		AND USER_NO = #{userNo} 
 	</select>
 	
 	<insert id="insertWithBoardReplyComment">

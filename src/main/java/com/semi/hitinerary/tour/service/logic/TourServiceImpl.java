@@ -18,12 +18,12 @@ import com.semi.hitinerary.tour.service.TourService;
 import com.semi.hitinerary.tour.store.TourStore;
 import com.semi.hitinerary.user.domain.User;
 
-//@Service
+@Service
 public class TourServiceImpl implements TourService {
 	
-//	@Autowired
+	@Autowired
 	private TourStore tStore;
-//	@Autowired
+	@Autowired
 	private SqlSession session;
 	
 	@Override

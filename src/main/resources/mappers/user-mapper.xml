@@ -49,7 +49,7 @@
 	</update>
 	
 	<update id="updateCoUserByNo">
-		UPDATE USER_TBL SET USER_NAME = #{userName}, USER_NICKNAME = #{userNickname}, USER_EMAIL = #{userEmail}, USER_PHONE = #{userPhone}, USER_BIRTH_DATE = #{userBirthDate}, COMPANY_REGI_NO = #{companyRegiNo} WHERE USER_NO = #{userNo}
+		UPDATE USER_TBL SET USER_PW = #{userPw}, USER_NAME = #{userName}, USER_NICKNAME = #{userNickname}, USER_EMAIL = #{userEmail}, USER_PHONE = #{userPhone}, USER_BIRTH_DATE = #{userBirthDate}, COMPANY_REGI_NO = #{companyRegiNo} WHERE USER_NO = #{userNo}
 	</update>
 	<update id="deleteApplyUser">
 		UPDATE USER_TBL SET USER_GRADE = 3 WHERE USER_NO = #{userNo}

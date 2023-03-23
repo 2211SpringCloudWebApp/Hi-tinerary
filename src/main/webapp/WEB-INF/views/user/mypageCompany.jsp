@@ -73,7 +73,7 @@
 		        			</div>
 							<br>
 		                    <div class="btn-area">
-		                    	<input type="submit" value="수정하기">
+		                    	<input type="submit" value="수정하기" onclick="return Valid();">
 		                    </div>
 		                </form>
 		                <form action="/company/deleteApply" method="post">
@@ -90,16 +90,7 @@
         	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include> 
         </footer>
         <script>
-/*             // select 요소와 input 요소 가져오기
-            var domainSelect = document.getElementById("domain-select");
-            var domainInput = document.getElementById("domain-input");
-            // 도메인 select 요소값 변경될때
-            domainSelect.addEventListener("change", function() {
-            var selectedValue = domainSelect.value;  // 선택값 가져와서
-            domainInput.value = selectedValue;  // input 요소값을 선택값으로 설정
-            });
-
-            // 전화번호 입력시 자동 하이픈
+			// 전화번호 입력시 자동 하이픈
             function addHyphenToPhoneNum(input) {
                 var phoneNum = input.value.replace(/[^0-9]/g, '');
                 if (phoneNum.length === 9) {
@@ -235,7 +226,7 @@
                     return false;
                 }
                 return isValid;
-            }; */
+            };
             let selectBox = document.querySelector(".form-damain-select");
             let domainBox = document.querySelector(".form-domain");
            	let a = document.querySelectorAll("[value='${domain}']")[1];

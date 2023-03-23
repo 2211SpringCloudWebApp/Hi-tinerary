@@ -12,7 +12,7 @@
 
 
 			<script>
-			location.href="/index";
+				location.href="/index";
 			</script>
 	</body>
 </html>

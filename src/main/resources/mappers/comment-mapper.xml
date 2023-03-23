@@ -28,7 +28,13 @@
 	
 	<!-- 자유게시판 댓글 등록하기 -->
 	<insert id="insertFreeboardComment">
-		INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL, #{content}, DEFAULT, DEFAULT, #{depth}, null,null,#{freeBoardNo},null,DEFAULT,#{refCommentNo},#{userNo})
+		<if test="depth == 0">
+			INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL, #{content}, DEFAULT, DEFAULT, #{depth}, null,null,#{freeBoardNo},null,DEFAULT, null,#{userNo})
+		</if>
+		<if test="depth == 1">
+			INSERT INTO COMMENT_TBL VALUES(SEQ_COMMENT_NO.NEXTVAL, #{content}, DEFAULT, DEFAULT, #{depth}, null,null,#{freeBoardNo},null,DEFAULT,#{refCommentNo},#{userNo})
+		</if>
+		
 	</insert>
 	
 	<delete id="deleteGroupBoardComment">

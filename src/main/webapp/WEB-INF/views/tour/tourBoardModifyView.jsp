@@ -28,7 +28,7 @@
     
                             <div class="oneHundred"> 
                                 <div class="infos">제목</div>
-                                <div><input type="text" name="tourTitle"  value="${tour.tourTitle }"></div>
+                                <div><input type="text" name="tourTitle"  value="${tour.tourTitle }" required></div>
                             </div>	
                             <div class="double-half">
                                 <div class="half"> 
@@ -50,9 +50,9 @@
                                 </div> 
                                 <div class="half">                         
                                     <div class="infos1">최소인원</div>
-                                    <div><input type="number" name="minPeople" value="${tour.minPeople }"></div>
+                                    <div><input type="number" name="minPeople" value="${tour.minPeople }" required></div>
                                     <div class="infos1">최대인원</div>
-                                    <div><input type="number" name="maxPeople" value="${tour.maxPeople }"></div>
+                                    <div><input type="number" name="maxPeople" value="${tour.maxPeople }" required></div>
                                 </div>
                             </div>
                             <div class="oneHundredX8times"> 

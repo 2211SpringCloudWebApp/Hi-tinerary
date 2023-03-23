@@ -312,10 +312,12 @@ public class TourController {
 	
 	//댓글, 대댓글 삭제
 	@RequestMapping(value="/tour/commentRemove", method=RequestMethod.GET)
-	public String deleteComment(@RequestParam("commentNo") int commentNo, Model model) {
+	public String deleteComment(@RequestParam("commentNo") int commentNo
+			, @RequestParam("tourNo") int tourNo
+			, Model model) {
 		int result = tService.deleteComment(commentNo);
 		if(result>0) {
-			return"redirect: /tour/tourBoardList"; //어우 고쳐야해. tourNo 어디서 받냐 또			
+			return "redirect:/tour/tourBoardDetail?tourNo="+tourNo;   		
 		}else {
 			model.addAttribute("msg", "댓글 삭제 실패");
 			return "common/error";

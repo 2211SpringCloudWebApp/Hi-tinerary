@@ -19,12 +19,12 @@
 		<div id="withSubTitle">
 			<div id="bar_subtitle"></div>
 			<p>동행찾기 글쓰기</p>
-			<c:if test="${loginUser eq null }">
+			<%-- <c:if test="${loginUser eq null }">
 				<button onclick="noWrite()">글쓰기</button>
 			</c:if>
 			<c:if test="${loginUser ne null }">
 				<button onclick="location.href='/withboard/withWriteView'">글쓰기</button>
-			</c:if>
+			</c:if> --%>
 		</div>
 		<div class="writeFrame">
 		<form action="/withboard/withBoardWrite" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">

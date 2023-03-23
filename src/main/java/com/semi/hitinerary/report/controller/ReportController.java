@@ -28,7 +28,10 @@ public class ReportController {
 			, Model model) {
 		
 		System.out.println("유저넘버 : " + userNo);
+		//System.out.println("게시글 넘버 : " + boardNo);
 		System.out.println("댓글번호 출력 : " + commentNo);
+		//System.out.println(boardTitle);
+		//System.out.println(boardType);
 		
 		model.addAttribute("userNo",userNo);
 		model.addAttribute("boardNo",boardNo);

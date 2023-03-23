@@ -38,7 +38,6 @@ public class Mailtest {
         for(int i = 0; i < tList.size(); i++) {
         	sb.append(tList.get(i).getCapsuleSubject() + "<br> <img src='cid:image" + i + "'/> user1 <br><br><br>");
         }
-        String subject = tList.get(0).getGroupName() + " 그룹메일입니다";
         // 메일제목
         String content = sb.toString();
         // 메일 내용 + src는 아래 이미지 출력
@@ -64,7 +63,6 @@ public class Mailtest {
             // 보내는이와 메일주소를 수신하는이가 볼때 모두 표기 되게 원하신다면 아래의 코드를 사용하시면 됩니다.
             //mailHelper.setFrom("보내는이 이름 <보내는이 아이디@도메인주소>");
             mailHelper.setTo(to);
-            mailHelper.setSubject(subject);
             mailHelper.setText(content, true);
             // true는 html을 사용하겠다는 의미입니다.
 //            String path = request.getSession().getServletContext().getRealPath("resources");

@@ -51,27 +51,28 @@ public class TimecapsuleServiceImpl implements TimecapsuleService {
 
 	@Override
 	public int insertTimeCapsule(Timecapsule timecapsule) {
-		int result = tStore.insertTimeCapsule(session, timecapsule);
-		return result;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public Timecapsule SelectOneByIden(Timecapsule timecapsule) {
-		timecapsule = tStore.SelectOneByIden(session, timecapsule);
-		return timecapsule;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public int selectGetCountCapsule(int groupNo) {
-		int capsuleCount = tStore.selectGetCountCapsule(session, groupNo);
-		return capsuleCount;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public List<Timecapsule> selectListByGroupNo(int groupNo) {
-		List<Timecapsule> tList = tStore.selectListByGroupNo(session, groupNo);
-		return tList;
+		// TODO Auto-generated method stub
+		return null;
 	}
+
 	
 
 

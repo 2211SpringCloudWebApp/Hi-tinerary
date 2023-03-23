@@ -31,6 +31,18 @@ public class FreeboardStoreLogic implements FreeboardStore{
 	}
 
 	@Override
+	public List<Freeboard> selectFreeboardList(SqlSession session, PageInfo pi, Search search) {
+		int limit = pi.getBoardLimit();
+		int currentPage = pi.getCurrentPage();
+		int offset = (currentPage - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		//System.out.println("SearchCondition :" +search.getSearchCondition());
+		List<Freeboard> fList = session.selectList("freeboardMapper.selectFreeboardList", search, rowBounds);
+		return fList;
+	}
+
+	@Override
 	public Freeboard selectOneById(SqlSession session, int boardNo) {
 		return session.selectOne("freeboardMapper.selectOne", boardNo);
 	}
@@ -50,16 +62,6 @@ public class FreeboardStoreLogic implements FreeboardStore{
 		return session.selectOne("freeboardMapper.getSearchListCount", search);
 	}
 
-	@Override
-	public List<Freeboard> selectFreeboardList(SqlSession session, PageInfo pi, Search search) {
-		int limit = pi.getBoardLimit();
-		int currentPage = pi.getCurrentPage();
-		int offset = (currentPage - 1) * limit;
-		
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		List<Freeboard> searchList = session.selectList("freeboardMapper.selectFreeboardList", search, rowBounds);
-		return searchList;
-	}
 
 	@Override
 	public int getSequence(SqlSession session) {

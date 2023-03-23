@@ -20,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.semi.hitinerary.comment.controller.CommentController;
 import com.semi.hitinerary.comment.domain.Comment;
-import com.semi.hitinerary.comment.service.CommentService;
 import com.semi.hitinerary.freeboard.domain.Freeboard;
 import com.semi.hitinerary.freeboard.domain.PageInfo;
 import com.semi.hitinerary.freeboard.domain.Search;
@@ -33,7 +32,7 @@ public class FreeboardController {
 	private FreeboardService fService;
 	
 	@Autowired
-	private CommentService cService;
+	CommentController cController;
 
 	//날짜 바꾸기
 	public String timeFormatted(Timestamp timestamp) {
@@ -48,16 +47,22 @@ public class FreeboardController {
 	
 	//게시글 목록 조회 (페이징 처리)
 	@RequestMapping(value="/freeboard/list", method=RequestMethod.GET)
-	public String freeboardList(@ModelAttribute Search search
+	public String freeboardSearchView(@ModelAttribute Search search
 			, @RequestParam(value="page", required = false, defaultValue = "1") Integer currentPage 
 			, @RequestParam(value="searchCondition", required = false, defaultValue = "all") String searchCondition 
 			,Model model) {
+		
 		search.setSearchCondition(searchCondition);
+		
 		try {
+			// search값을 스트링 값으로 화면이 출력해봄
+			//System.out.println("freeboardSearchView함수 search.toString()값은 : " + search.toString());
+			// 전체 페이지 수 검색해서 가져옴
 			int totalCount = fService.getSearchListCount(search);
+			//System.out.println("freeboardView함수 totalCount값은 : " + totalCount);
 			PageInfo pi = this.getPageInfo(currentPage, totalCount);
 			
-			List<Freeboard> searchList = fService.selectFreeboardList(pi, search);
+			List<Freeboard> searchList = fService.selectListByKeyword(pi, search);
 			
 			if(!searchList.isEmpty()) {
 				model.addAttribute("search", search);
@@ -76,14 +81,17 @@ public class FreeboardController {
 	
 	//게시글 상세 조회
 	@RequestMapping(value = "/freeboard/detail", method=RequestMethod.GET)
-	public String freeboardDetail(@RequestParam("boardNo") int boardNo
+	public String freeboardView(@RequestParam("boardNo") int boardNo
 			, Model model) {
 		
+		//닉네임 호출 테스트
+		//System.out.println(fService.selectNickname(boardNo));
 		try {
 			Freeboard freeboard = fService.selectOneById(boardNo);
+			System.out.println(freeboard);
 			freeboard.setUserNickname(fService.selectNickname(boardNo));
 			//댓글 리스트 가져오기
-			List<Comment> cList = cService.ListFreeboardComment(boardNo);
+			List<Comment> cList = cController.ListFreeboardComment(boardNo);
 			model.addAttribute("freeboard",freeboard);
 			model.addAttribute("cList",cList);
 			return "freeboard/detail";
@@ -97,13 +105,13 @@ public class FreeboardController {
 	
 	// 자유게시판 글등록 화면
 	@RequestMapping(value = "/freeboard/write", method=RequestMethod.GET)
-	public String preeboardWrite() {
+	public String writeView() {
 		return "freeboard/write";
 	}
 	
 	// 자유게시판 글 등록하기
 	@RequestMapping(value = "/freeboard/write", method=RequestMethod.POST)
-	public String freeboardRegister(
+	public String freeboardregister(
 			@ModelAttribute Freeboard freeboard
 			, @RequestParam(value="uploadFile", required = false) MultipartFile uploadFile
 			, HttpServletRequest request
@@ -136,7 +144,7 @@ public class FreeboardController {
 	
 	//게시글 수정화면
 	@RequestMapping(value="/freeboard/modify", method=RequestMethod.GET)
-	public String freeboardModifyView(@RequestParam("boardNo") Integer boardNo, Model model) {
+	public String noticeModifyView(@RequestParam("boardNo") Integer boardNo, Model model) {
 		try {
 			Freeboard freeboard = fService.selectOneById(boardNo);
 			if(freeboard != null) {
@@ -155,7 +163,7 @@ public class FreeboardController {
 	
 	// 게시글 수정
 	@RequestMapping(value="/freeboard/modify", method=RequestMethod.POST)
-	public String freeboardModify(
+	public String noticeModify(
 		@ModelAttribute Freeboard freeboard
 		, @RequestParam(value="reloadFile", required=false) MultipartFile reloadFile
 		, Model model
@@ -173,11 +181,11 @@ public class FreeboardController {
 				if(modifyPath != null) {
 					// notice에 새로운 파일 이름, 파일 경로 set
 					freeboard.setBoardImage(reloadFile.getOriginalFilename());
-					freeboard.setBoardImage(modifyPath);
+					//freeboard.setNoticeFilepath(modifyPath);
 				}
 			}
 			
-			//DB에서 게시글 수정
+			//DB에서 공지사항 수정(UPDATE)
 			int result = fService.modifyFreeboard(freeboard);
 			if(result > 0) {
 				return "redirect:/freeboard/detail?boardNo="+freeboard.getBoardNo();

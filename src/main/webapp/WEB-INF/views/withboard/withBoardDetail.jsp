@@ -173,9 +173,9 @@
 	  </div>
 	</div>
 
-	<c:if test="${comment.status == 0 && loginUser.userNo != comment.userNo && withBoard.userNo == loginUser.userNo }">
+	<%-- <c:if test="${comment.status == 0 && loginUser.userNo != comment.userNo && withBoard.userNo == loginUser.userNo }">
 		<button class="lcomment_button2" id="popup_open_btn" onclick="inviteBtn()">초대</button>
-	</c:if>
+	</c:if> --%>
 	</main>
 
 	<!-- footer -->

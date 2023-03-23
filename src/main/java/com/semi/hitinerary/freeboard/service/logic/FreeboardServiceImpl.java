@@ -37,6 +37,11 @@ public class FreeboardServiceImpl implements FreeboardService{
 		return fStore.getListCount(session, search);
 	}
 
+	@Override
+	public List<Freeboard> selectFreeboardList(PageInfo pi, Search search) {
+		return fStore.selectFreeboardList(session, pi, search);
+	}
+
 
 	@Override
 	public Freeboard selectOneById(int boardNo) {
@@ -61,11 +66,6 @@ public class FreeboardServiceImpl implements FreeboardService{
 
 
 	@Override
-	public List<Freeboard> selectFreeboardList(PageInfo pi, Search search) {
-		return fStore.selectFreeboardList(session, pi, search);
-	}
-
-	@Override
 	public int getSequence() {
 		return fStore.getSequence(session);
 	}
@@ -85,6 +85,12 @@ public class FreeboardServiceImpl implements FreeboardService{
 	public List<Freeboard> selectListByuserNo(int userNo, Pagination pi) {
 		List<Freeboard> fList = fStore.selectListByuserNo(session, userNo, pi);
 		return fList;
+	}
+
+	@Override
+	public List<Freeboard> selectListByKeyword(PageInfo pi, Search search) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

@@ -58,8 +58,6 @@ public class GroupController {
 			if(Integer.parseInt(groupIndex) > -1 ) {
 				group = gList.get(Integer.parseInt(groupIndex));				
 				model.addAttribute("group", group);
-				int capsuleAmount = tService.selectGetCountCapsule(group.getGroupNo());
-				model.addAttribute("capsuleCount", capsuleAmount);
 				NavigationNList naviNList = gBController.groupBoardList(group.getGroupNo(), Integer.parseInt(currentPage));
 				List<Groupboard> gBList = naviNList.getgBList();
 				Pagination pi = naviNList.getPi();

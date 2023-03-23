@@ -32,7 +32,7 @@
 	                <c:forEach items="${tList}" var="tour">
 		                <div class="package-box">
 		                    <div class="thumbnail">
-		                        <img src="${tour.thumbnail }" alt="123">
+		                        <img src="../../../../${tour.thumbnail}" alt="123">
 		                    </div>
 		                    <div class="package-content">
 		                        <div class="corporation">

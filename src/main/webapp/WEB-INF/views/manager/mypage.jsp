@@ -19,7 +19,7 @@
         <div id="container">
             <table class="managerTable" id="managerTable1">
                 <tr>
-                    <td>"닉네임" 님</td>
+                    <td>운영자 님</td>
                 </tr>
                 <tr>
                     <td><button id="user" onclick="selectUser();">일반회원 조회</button></td>

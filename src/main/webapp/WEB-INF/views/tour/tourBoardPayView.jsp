@@ -24,7 +24,7 @@
             <div id="thumbnailAndInfos">
                 <div id="thumbnail">
 <!--                     520px x 520px <br> thumbnail -->
-					<img src="${tour.thumbnail != null ? tour.thumbnail.replace('C:\\Users\\user1\\git\\Hi-tinerary\\src\\main\\webapp\\resources', '\\resources') : '/resources/images/noThumbnail.png'}">
+					<img src="../../../../${tour.thumbnail}">
                 </div>
                 <div id="tourInfos">
                     <div id="writerDiv">

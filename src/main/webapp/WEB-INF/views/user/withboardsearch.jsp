@@ -39,7 +39,7 @@
 	                        		<a href="/withboard/withBoardDetail?boardNo=${withBoard.boardNo }">
 	                        			<div class="withboard">
 			                                <div class="thumbnail">
-			                                    <img src="${withBoard.boardImage }" alt="">
+			                                    <img src="../../../${withBoard.boardImage }" alt="">
 			                                </div>
 			                                <div class="withboard-info">
 			                                    <p class="withboard-title">${withBoard.boardTitle }</p>

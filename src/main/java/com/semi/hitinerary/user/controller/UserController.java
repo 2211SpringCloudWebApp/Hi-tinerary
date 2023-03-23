@@ -232,6 +232,15 @@ public class UserController {
 		return  "redirect:/user/logout";
 	}
 	
+	// 기업회원 판매내역 조회
+	@RequestMapping(value = "/company/mypage/selllist", method = RequestMethod.GET)
+	public String CoUserSellList(HttpSession session, Model model) {
+		User user = (User) session.getAttribute("loginUser");
+		List<TourSell> tsList = tService.selectTourSellList(user.getUserNo());        
+		model.addAttribute("tsList", tsList);
+		return "user/sellList";
+	}
+	
 	// 기업회원 작성글 조회
 	@RequestMapping(value = "/company/mypage/write/post", method = RequestMethod.GET)
 	public String CoUserWritePost(

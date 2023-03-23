@@ -127,14 +127,14 @@ public class TourServiceImpl implements TourService {
 
 	@Override
 	public int selectCountByUserNo(int userNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int totalCount = tStore.selectCountByUserNo(session, userNo);
+		return totalCount;
 	}
 
 	@Override
 	public List<TourSell> selectTourSellList(int userNo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<TourSell> tsList = tStore.selectTourSellList(session, userNo);
+		return tsList;
 	}
 
 	

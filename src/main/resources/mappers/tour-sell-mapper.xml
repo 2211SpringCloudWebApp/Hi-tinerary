@@ -12,7 +12,7 @@
 		SELECT tbu.PAY_DATE, t.TOUR_TITLE, u.USER_NAME, u.USER_PHONE, t.PRICE
 	  	FROM TOUR_BUY_USER_TBL tbu
 	  	JOIN TOUR_TBL t ON tbu.TOUR_NO = t.TOUR_NO
-	  	JOIN USER_TBL u ON t.USER_NO = u.USER_NO
+	  	JOIN USER_TBL u ON tbu.USER_NO = u.USER_NO
 	  	WHERE t.USER_NO = #{userNo}
 	</select>
 </mapper>

@@ -2,7 +2,7 @@
 <img src= "https://user-images.githubusercontent.com/119032753/227706360-179b94f1-6b9b-4c5c-8378-4b31ea084382.png" width="1000" height="250">
 
 # 목차
-* 프로젝트 소개
+* [프로젝트 소개](# 💬 프로젝트 소개)
 * 개발 기간
 * 팀원 소개
 * 개발 환경

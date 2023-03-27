@@ -3,7 +3,7 @@
 
 # 목차
 * 프로젝트 소개
-* 개발 기간
+* [개발 기간](https://github.com/2211SpringCloudWebApp/Hi-tinerary#-%EA%B0%9C%EB%B0%9C-%EA%B8%B0%EA%B0%84)
 * 팀원 소개
 * 개발 환경
 * 기술 스택
